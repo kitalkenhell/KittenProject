@@ -3,15 +3,17 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public float movementSpeed = 5;
-    public float jumpSpeed = 5;
+    public float movementSpeed = 20.0f;
+    public float jumpVelocity = 30.0f;
+    public float jumpDuration = 0.02f;
 
     Rigidbody2D body;
 
     Transform groundedTestOrigin;
     BoxCollider2D groundedTestOriginExtents;
 
-    Vector3 v;
+    Vector3 velocity; 
+    float jumpingCountdown;
 
     static bool blocked = false;
 
@@ -22,22 +24,17 @@ public class PlayerController : MonoBehaviour
         groundedTestOrigin = transform.Find("GroundedTestOrigin");
         groundedTestOriginExtents = groundedTestOrigin.GetComponent<BoxCollider2D>();
 
-        Collider2D col = GameObject.Find("Platform").GetComponent<Collider2D>();
-
-        //Physics2D.IgnoreCollision(col, GetComponent<Collider2D>());
+        jumpingCountdown = Mathf.NegativeInfinity;
     }
 
     void FixedUpdate()
     {
         float input = Input.GetAxis("Horizontal");
-        Vector2 velocity = body.velocity;
 
+        velocity = body.velocity;
         velocity.x = input * movementSpeed;
 
-        if (Input.GetButton("Jump") && IsGrounded())
-        {
-            velocity.y = jumpSpeed;
-        }
+        Jumping();
 
         body.velocity = velocity;
 
@@ -47,11 +44,37 @@ public class PlayerController : MonoBehaviour
             scale.x = body.velocity.x < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             transform.localScale = scale;
         }
+    }
 
-        Debug.DrawLine(transform.position, GameObject.Find("Platform").transform.position);
+    void Jumping()
+    {
+        jumpingCountdown -= Time.fixedDeltaTime;
 
+        if (velocity.y > jumpVelocity)
+        {
+            jumpingCountdown = Mathf.NegativeInfinity;
+        }
 
-        v = body.velocity;
+        if (Input.GetButton("Jump"))
+        {
+            if (jumpingCountdown < 0)
+            {
+                if (IsGrounded())
+                {
+                    velocity.y = jumpVelocity;
+                    jumpingCountdown = jumpDuration;
+                }
+            }
+
+            if (jumpingCountdown > 0)
+            {
+                velocity.y = jumpVelocity;
+            }
+        }
+        else
+        {
+            jumpingCountdown = Mathf.NegativeInfinity;
+        }
     }
 
     bool IsGrounded()
@@ -59,34 +82,28 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit;
 
         hit = Physics2D.BoxCast(new Vector2(groundedTestOrigin.position.x, groundedTestOrigin.position.y),
-                                groundedTestOriginExtents.size, 0, Vector2.down, 0, ~(1 << 8));
+                                groundedTestOriginExtents.size, 0, Vector2.down, 0, ~(1 << Layers.Player));
 
         return hit.collider != null;
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        const int contactPointIndex = 0;
+        const float ignoreCollisionThreshold = 0.01f;
 
-        //Vector3 myCollisionNormal = collisionInfo.contacts[0].normal;
+        Vector3 normal = collision.contacts[contactPointIndex].normal;
 
-        Vector3 normal = collision.contacts[0].normal;
-
-        if (Vector3.Dot(normal, Vector3.up) < 0.01f)
+        if (Vector3.Dot(normal, Vector3.up) < ignoreCollisionThreshold)
         {
-            print(normal.ToString() + Vector3.Dot(normal, Vector3.up) + " - IGNORE");
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
+            body.velocity = velocity;
         }
-        else
-        {
-            print(normal.ToString() + Vector3.Dot(normal, Vector3.up) + " - BLOCK");
-            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), false);
-        }
-
     }
 
     public void OnTriggerExit2D(Collider2D collider)
     {
-        print("LEFT");
+        print("OnTriggerExit2D");
         Physics2D.IgnoreCollision(collider, GetComponent<Collider2D>(), false);
     }
 }
