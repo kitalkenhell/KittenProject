@@ -3,27 +3,24 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    const int contactPointIndex = 0;
+    const float ignoreCollisionThreshold = 0.01f;
+
     public float movementSpeed = 20.0f;
     public float jumpVelocity = 30.0f;
     public float jumpDuration = 0.02f;
 
     Rigidbody2D body;
 
-    Transform groundedTestOrigin;
-    BoxCollider2D groundedTestOriginExtents;
-
     Vector3 velocity; 
     float jumpingCountdown;
-
-    static bool blocked = false;
+    int grounded;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
 
-        groundedTestOrigin = transform.Find("GroundedTestOrigin");
-        groundedTestOriginExtents = groundedTestOrigin.GetComponent<BoxCollider2D>();
-
+        grounded = 0;
         jumpingCountdown = Mathf.NegativeInfinity;
     }
 
@@ -59,8 +56,9 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpingCountdown < 0)
             {
-                if (IsGrounded())
+                if (grounded > 0)
                 {
+                    grounded = 0;
                     velocity.y = jumpVelocity;
                     jumpingCountdown = jumpDuration;
                 }
@@ -77,21 +75,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    bool IsGrounded()
-    {
-        RaycastHit2D hit;
-
-        hit = Physics2D.BoxCast(new Vector2(groundedTestOrigin.position.x, groundedTestOrigin.position.y),
-                                groundedTestOriginExtents.size, 0, Vector2.down, 0, ~(1 << Layers.Player));
-
-        return hit.collider != null;
-    }
-
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        const int contactPointIndex = 0;
-        const float ignoreCollisionThreshold = 0.01f;
-
         Vector3 normal = collision.contacts[contactPointIndex].normal;
 
         if (Vector3.Dot(normal, Vector3.up) < ignoreCollisionThreshold)
@@ -99,11 +84,26 @@ public class PlayerController : MonoBehaviour
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
             body.velocity = velocity;
         }
+        else
+        {
+            ++grounded;
+            print(grounded);
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        Vector3 normal = collision.contacts[contactPointIndex].normal;
+
+        if (Vector3.Dot(normal, Vector3.up) > ignoreCollisionThreshold)
+        {
+            grounded = Mathf.Max(0, --grounded);
+            print(grounded);
+        }
     }
 
     public void OnTriggerExit2D(Collider2D collider)
     {
-        print("OnTriggerExit2D");
         Physics2D.IgnoreCollision(collider, GetComponent<Collider2D>(), false);
     }
 }
