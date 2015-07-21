@@ -12,6 +12,7 @@ public static class Layers
     public const int Water = 4;
     public const int UI = 5;
     public const int Player = 8;
-    public const int Environment = 9;
+    public const int Ground = 9;
+    public const int Wall = 10;
 }
 
