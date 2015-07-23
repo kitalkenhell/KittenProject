@@ -4,24 +4,28 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     const int contactPointIndex = 0;
-    const float ignoreCollisionThreshold = 0.01f;
+    const float ignoreGroundCollisionThreshold = 0.01f;
+    const float ignoreWallCollisionThreshold = 0.99f;
 
     public float movementSpeed;
     public float acceleration;
     public float friction;
-    public float jumpVelocity;
+    public float jumpSpeed;
     public float jumpDuration;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
+    public float wallSlideSpeed;
+    public float wallFriction;
 
     Rigidbody2D body;
 
-    Vector3 velocity; 
+    Vector2 velocity; 
     float jumpingCountdown;
     int groundedCounter;
     int wallSlidingCounter;
     float wallBounceCountdown;
     float wallDirection;
+    float input;
 
     void Start()
     {
@@ -29,6 +33,8 @@ public class PlayerController : MonoBehaviour
 
         groundedCounter = wallSlidingCounter = 0;
         jumpingCountdown = wallBounceCountdown = Mathf.NegativeInfinity;
+
+        input = 0;
     }
 
     void FixedUpdate()
@@ -37,6 +43,7 @@ public class PlayerController : MonoBehaviour
 
         Running();
         Jumping();
+        WallSliding();
 
         body.velocity = velocity;
 
@@ -52,13 +59,13 @@ public class PlayerController : MonoBehaviour
     {
         if (wallBounceCountdown < 0)
         {
-            float input = Input.GetAxis("Horizontal");
+            input = Input.GetAxis("Horizontal");
 
             velocity.x += input * acceleration;
         
             float sign = Mathf.Sign(velocity.x);
 
-            if (Mathf.Sign(velocity.x) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon) //don't apply friction when accelerating
+            if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon) //don't apply friction when accelerating
             {
                 velocity.x -= friction * sign;
                 if (Mathf.Sign(velocity.x) != sign)
@@ -66,7 +73,6 @@ public class PlayerController : MonoBehaviour
                     velocity.x = 0;
                 }
             }
-
             velocity.x = Mathf.Clamp(velocity.x, -movementSpeed, movementSpeed);
         }
     }
@@ -76,7 +82,7 @@ public class PlayerController : MonoBehaviour
         jumpingCountdown -= Time.fixedDeltaTime;
         wallBounceCountdown -= Time.fixedDeltaTime;
 
-        if (velocity.y > jumpVelocity)
+        if (velocity.y > jumpSpeed)
         {
             jumpingCountdown = Mathf.NegativeInfinity;
         }
@@ -88,18 +94,19 @@ public class PlayerController : MonoBehaviour
                 if (groundedCounter > 0) //stands on the ground and jumps 
                 {
                     groundedCounter = 0;
-                    velocity.y = jumpVelocity;
+                    velocity.y = jumpSpeed;
                     jumpingCountdown = jumpDuration;
                 }
             }
 
             if (jumpingCountdown > 0 && wallSlidingCounter <= 0) //Don't decrease velocity when jump button is pressed for some time the jump 
             {
-                velocity.y = jumpVelocity;
+                velocity.y = jumpSpeed;
             }
 
             else if (wallSlidingCounter > 0 && groundedCounter <= 0) //bouncing off the wall
             {
+                wallSlidingCounter = 0;
                 wallBounceCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
                 velocity = new Vector2(wallDirection * wallBounceVelocity.x, wallBounceVelocity.y);
@@ -111,13 +118,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void WallSliding()
+    {
+        if (velocity.y < 0 && wallSlidingCounter > 0 && Mathf.Abs(input) > Mathf.Epsilon && Mathf.Sign(input) != wallDirection)
+        {
+            if (velocity.y < wallSlideSpeed)
+            {
+                velocity.y += wallFriction;
+                velocity.y = Mathf.Min(velocity.y, wallSlideSpeed);
+            }
+        }
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
         if (collision.gameObject.layer == Layers.Ground)
         {
-            if (Vector2.Dot(normal, Vector2.up) < ignoreCollisionThreshold)
+            if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
             {
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
                 body.velocity = velocity;
@@ -130,7 +149,11 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.layer == Layers.Wall)
         {
             wallDirection = Mathf.Sign(normal.x);
-            ++wallSlidingCounter;
+
+            if (Vector2.Dot(normal, Vector2.right * wallDirection) > ignoreWallCollisionThreshold)
+            {
+                ++wallSlidingCounter;
+            }
         }
     }
 
@@ -140,14 +163,17 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.layer == Layers.Ground)
         {
-            if (Vector2.Dot(normal, Vector2.up) > ignoreCollisionThreshold)
+            if (Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold)
             {
                 groundedCounter = Mathf.Max(0, --groundedCounter);
             }
         }
         else if (collision.gameObject.layer == Layers.Wall)
         {
-            wallSlidingCounter = Mathf.Max(0, --wallSlidingCounter);
+            if (Vector2.Dot(normal, Vector2.right * wallDirection) > ignoreWallCollisionThreshold)
+            {
+                wallSlidingCounter = Mathf.Max(0, --wallSlidingCounter);
+            }
         }
     }
 
