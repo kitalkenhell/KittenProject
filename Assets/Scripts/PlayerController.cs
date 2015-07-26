@@ -18,33 +18,45 @@ public class PlayerController : MonoBehaviour
     public float wallFriction;
 
     Rigidbody2D body;
+    MovablePlatformEffector movablePlatformEffector;
 
-    Vector2 velocity; 
+    Vector2 velocity;
+    Vector2 preCollisionVelocity;
+    Vector2 movablePlatformVelocity;
+    float runningMotrSpeed;
+
+    float relativeJumpSpeed;
     float jumpingCountdown;
     int groundedCounter;
+
     int wallSlidingCounter;
     float wallBounceCountdown;
     float wallDirection;
+
     float input;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        GetComponent<MovablePlatformEffector>().onMoved = OnMovablePlatformMoved;
 
-        groundedCounter = wallSlidingCounter = 0;
-        jumpingCountdown = wallBounceCountdown = Mathf.NegativeInfinity;
-
+        groundedCounter = 0;
+        wallSlidingCounter = 0;
+        runningMotrSpeed = 0;
         input = 0;
+        relativeJumpSpeed = jumpSpeed;
+
+        jumpingCountdown = Mathf.NegativeInfinity;
+        wallBounceCountdown = Mathf.NegativeInfinity;
     }
 
     void FixedUpdate()
     {
-        velocity = body.velocity;
-
-        Running();
+        Moving();
         Jumping();
         WallSliding();
 
+        preCollisionVelocity = velocity;
         body.velocity = velocity;
 
         if (Mathf.Abs(body.velocity.x) > Mathf.Epsilon)
@@ -55,25 +67,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Running()
+    void Moving()
     {
         if (wallBounceCountdown < 0)
         {
             input = Input.GetAxis("Horizontal");
 
-            velocity.x += input * acceleration;
-        
-            float sign = Mathf.Sign(velocity.x);
+            runningMotrSpeed += input * acceleration;
+
+            float sign = Mathf.Sign(runningMotrSpeed);
 
             if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon) //don't apply friction when accelerating
             {
-                velocity.x -= friction * sign;
-                if (Mathf.Sign(velocity.x) != sign)
+                runningMotrSpeed -= friction * sign;
+                if (Mathf.Sign(runningMotrSpeed) != sign)
                 {
-                    velocity.x = 0;
+                    runningMotrSpeed = 0;
                 }
             }
-            velocity.x = Mathf.Clamp(velocity.x, -movementSpeed, movementSpeed);
+            runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
+        }
+
+        velocity.x = runningMotrSpeed;
+
+        velocity.x += movablePlatformVelocity.x;
+        if (movablePlatformVelocity.y < 0)
+        {
+            velocity.y += movablePlatformVelocity.y;
         }
     }
 
@@ -82,8 +102,11 @@ public class PlayerController : MonoBehaviour
         jumpingCountdown -= Time.fixedDeltaTime;
         wallBounceCountdown -= Time.fixedDeltaTime;
 
-        if (velocity.y > jumpSpeed)
+        velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
+
+        if (velocity.y > relativeJumpSpeed)
         {
+            relativeJumpSpeed = jumpSpeed;
             jumpingCountdown = Mathf.NegativeInfinity;
         }
 
@@ -93,15 +116,16 @@ public class PlayerController : MonoBehaviour
             {
                 if (groundedCounter > 0) //stands on the ground and jumps 
                 {
+                    relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y;
                     groundedCounter = 0;
-                    velocity.y = jumpSpeed;
+                    velocity.y = relativeJumpSpeed;
                     jumpingCountdown = jumpDuration;
                 }
             }
 
             if (jumpingCountdown > 0 && wallSlidingCounter <= 0) //Don't decrease velocity when jump button is pressed for some time the jump 
             {
-                velocity.y = jumpSpeed;
+                velocity.y = relativeJumpSpeed;
             }
 
             else if (wallSlidingCounter > 0 && groundedCounter <= 0) //bouncing off the wall
@@ -109,11 +133,13 @@ public class PlayerController : MonoBehaviour
                 wallSlidingCounter = 0;
                 wallBounceCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
-                velocity = new Vector2(wallDirection * wallBounceVelocity.x, wallBounceVelocity.y);
+                runningMotrSpeed = wallDirection * wallBounceVelocity.x;
+                velocity = new Vector2(runningMotrSpeed, wallBounceVelocity.y);
             }
         }
         else
         {
+            relativeJumpSpeed = jumpSpeed;
             jumpingCountdown = Mathf.NegativeInfinity;
         }
     }
@@ -130,6 +156,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnMovablePlatformMoved(Vector3 displacement)
+    {
+        movablePlatformVelocity = new Vector2(displacement.x, displacement.y) / Time.deltaTime;
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
@@ -139,10 +170,11 @@ public class PlayerController : MonoBehaviour
             if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
             {
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
-                body.velocity = velocity;
+                body.velocity = preCollisionVelocity;
             }
             else
             {
+                velocity.y = 0;
                 ++groundedCounter;
             }
         }
@@ -154,6 +186,16 @@ public class PlayerController : MonoBehaviour
             {
                 ++wallSlidingCounter;
             }
+        }
+    }
+
+    public void OnCollisionStay2D(Collision2D collision)
+    {
+        Vector2 normal = collision.contacts[contactPointIndex].normal;
+
+        if (collision.gameObject.layer == Layers.Ground && Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold)
+        {
+            velocity.y = 0;
         }
     }
 
