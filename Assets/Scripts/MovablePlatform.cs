@@ -45,7 +45,6 @@ public class MovablePlatform : MonoBehaviour
     {
         Waypoint current = waypoints[currentWaypoint];
         float distance = Vector3.Distance(transform.position, current.transform.position);
-         
 
         if (state == States.wait)
         {
@@ -54,7 +53,7 @@ public class MovablePlatform : MonoBehaviour
 
         if (distance < nextWaypintThreshold)
         {
-            setNextWaypoint();
+            SetNextWaypoint();
             return;
         }
 
@@ -79,15 +78,13 @@ public class MovablePlatform : MonoBehaviour
 
         if (displacement.magnitude > distance)
         {
-            body.MovePosition(current.transform.position);
+            displacement = current.transform.position - transform.position;
         }
-        else
-        {
-            body.MovePosition(transform.position + displacement);
-        }
+
+        body.MovePosition(transform.position + displacement);
 	}
 
-    int setNextWaypoint()
+    int SetNextWaypoint()
     {
         if (waypoints[currentWaypoint].waitTime > 0)
         {
@@ -135,18 +132,40 @@ public class MovablePlatform : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<MovablePlatformEffector>().onMoved(displacement);
+        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
+        
+        if (effector != null)
+        {
+            effector.onEnter();
+            OnCollisionStay2D(collision);
+        }
     }
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<MovablePlatformEffector>().onMoved(displacement);
+        const int contactPointIndex = 0;
+        const float ignoreGroundCollisionThreshold = 0.01f;
+
+        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
+
+        if (effector != null)
+        {
+            Vector2 normal = collision.contacts[contactPointIndex].normal;
+
+            if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
+            {
+                effector.onMoved(displacement);
+            }
+        }
     }
 
     public void OnCollisionExit2D(Collision2D collision)
     {
-        collision.gameObject.GetComponent<MovablePlatformEffector>().onMoved(Vector2.zero);
+        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
+
+        if (effector != null)
+        {
+            effector.onExit();
+        }
     }
-
-
 }
