@@ -9,7 +9,7 @@ public class MovablePlatform : MonoBehaviour
         move
     }
 
-    const float nextWaypintThreshold = 0.05f;
+    const float nextWaypintThreshold = 0.1f;
 
     public Waypoint[] waypoints;
     public bool looping;
@@ -86,6 +86,9 @@ public class MovablePlatform : MonoBehaviour
 
     int SetNextWaypoint()
     {
+        speed = 0;
+        displacement = Vector3.zero;
+
         if (waypoints[currentWaypoint].waitTime > 0)
         {
             StartCoroutine(Wait(waypoints[currentWaypoint].waitTime));
@@ -124,14 +127,35 @@ public class MovablePlatform : MonoBehaviour
 
     IEnumerator Wait(float time)
     {
+        displacement = Vector3.zero;
         body.velocity = Vector2.zero;
+        speed = 0;
         state = States.wait;
         yield return new WaitForSeconds(time);
         state = States.move;
     }
 
+    bool ShouldIgnoreCollision(Collision2D collision)
+    {
+        const int contactPointIndex = 0;
+        const float ignoreGroundCollisionThreshold = 0.01f;
+
+        Vector2 normal = collision.contacts[contactPointIndex].normal;
+
+        if (Vector2.Dot(normal, Vector2.down) < ignoreGroundCollisionThreshold)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void OnCollisionEnter2D(Collision2D collision)
     {
+        if (ShouldIgnoreCollision(collision))
+        {
+            return;
+        }
+
         MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
         
         if (effector != null)
@@ -143,19 +167,16 @@ public class MovablePlatform : MonoBehaviour
 
     public void OnCollisionStay2D(Collision2D collision)
     {
-        const int contactPointIndex = 0;
-        const float ignoreGroundCollisionThreshold = 0.01f;
+        if (ShouldIgnoreCollision(collision))
+        {
+            return;
+        }
 
         MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
 
         if (effector != null)
         {
-            Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-            if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
-            {
                 effector.onMoved(displacement);
-            }
         }
     }
 
