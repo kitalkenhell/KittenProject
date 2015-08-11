@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     public float wallBounceDuration;
     public float wallSlideSpeed;
     public float wallFriction;
+    public float propellerFallingSpeed;
+    public float propellerDelay; 
 
     Rigidbody2D body;
     MovablePlatformEffector movablePlatformEffector;
@@ -35,8 +37,12 @@ public class PlayerController : MonoBehaviour
     float wallBounceCountdown;
     float wallDirection;
 
-    float input;
+    bool usingPropeller;
+    float PropellerCountdown;
 
+    float input;
+    bool jumpKeyReleased;
+    
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -53,8 +59,11 @@ public class PlayerController : MonoBehaviour
 
         jumpingCountdown = Mathf.NegativeInfinity;
         wallBounceCountdown = Mathf.NegativeInfinity;
+        PropellerCountdown = Mathf.Infinity;
 
         onMovablePlatform = false;
+        jumpKeyReleased = true;
+        usingPropeller = false;
     }
 
     void FixedUpdate()
@@ -64,7 +73,6 @@ public class PlayerController : MonoBehaviour
         WallSliding();
 
         preCollisionVelocity = velocity;
-        body.velocity = velocity;
 
         body.MovePosition(transform.position + new Vector3(velocity.x, velocity.y) * Time.fixedDeltaTime);
         if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
@@ -120,6 +128,7 @@ public class PlayerController : MonoBehaviour
         
         jumpingCountdown -= Time.fixedDeltaTime;
         wallBounceCountdown -= Time.fixedDeltaTime;
+        PropellerCountdown -= Time.fixedDeltaTime;
 
         velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
 
@@ -133,8 +142,9 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpingCountdown < 0) 
             {
-                if (groundedCounter > 0) //stands on the ground and jumps 
+                if (groundedCounter > 0 && jumpKeyReleased) //stands on the ground and jumps 
                 {
+                    jumpKeyReleased = false;
                     relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y;
                     groundedCounter = 0;
                     velocity.y = relativeJumpSpeed;
@@ -142,13 +152,26 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (jumpingCountdown > 0 && wallSlidingCounter <= 0) //Don't decrease velocity when jump button is pressed for some time the jump 
+            if (!usingPropeller && groundedCounter <= 0 && wallSlidingCounter <= 0 && jumpingCountdown < 0 && velocity.y < 0 && jumpKeyReleased)
+            {
+                usingPropeller = true;
+                PropellerCountdown = propellerDelay;
+            }
+
+            if (usingPropeller && PropellerCountdown < 0 && velocity.y < propellerFallingSpeed)
+            {
+                jumpKeyReleased = false;
+                velocity.y = propellerFallingSpeed;
+            }
+
+            if (jumpingCountdown > 0 && wallSlidingCounter <= 0) //Don't decrease velocity when jump button is pressed for some time after the jump 
             {
                 velocity.y = relativeJumpSpeed;
             }
 
-            else if (wallSlidingCounter > 0 && groundedCounter <= 0) //bouncing off the wall
+            else if (wallSlidingCounter > 0 && groundedCounter <= 0 && jumpKeyReleased) //bouncing off the wall
             {
+                jumpKeyReleased = false;
                 wallSlidingCounter = 0;
                 wallBounceCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
@@ -158,8 +181,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            usingPropeller = false;
+            jumpKeyReleased = true;
             relativeJumpSpeed = jumpSpeed;
             jumpingCountdown = Mathf.NegativeInfinity;
+            PropellerCountdown = Mathf.NegativeInfinity;
         }
     }
 
@@ -187,7 +213,6 @@ public class PlayerController : MonoBehaviour
 
     void OnMovablePlatformExit()
     {
-
         onMovablePlatform = false;
         movablePlatformVelocity.y = 0;
     }
@@ -205,6 +230,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                usingPropeller = false;
                 velocity.y = 0;
                 ++groundedCounter;
             }
