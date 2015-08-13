@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     const int contactPointIndex = 0;
     const float ignoreGroundCollisionThreshold = 0.01f;
     const float ignoreWallCollisionThreshold = 0.99f;
+    const string spriteName = "sprite";
 
     public float movementSpeed;
     public float acceleration;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D body;
     MovablePlatformEffector movablePlatformEffector;
+    Transform sprite;
 
     Vector2 velocity;
     Vector2 preCollisionVelocity;
@@ -42,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     float input;
     bool jumpKeyReleased;
-    
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour
         onMovablePlatform = false;
         jumpKeyReleased = true;
         usingPropeller = false;
+
+        sprite = transform.Find(spriteName);
     }
 
     void FixedUpdate()
@@ -72,14 +76,14 @@ public class PlayerController : MonoBehaviour
         Jumping();
         WallSliding();
 
-        preCollisionVelocity = velocity;
+        body.velocity = velocity;
+        preCollisionVelocity = body.velocity;
 
-        body.MovePosition(transform.position + new Vector3(velocity.x, velocity.y) * Time.fixedDeltaTime);
         if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
         {
             Vector3 scale = transform.localScale;
             scale.x = runningMotrSpeed < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            sprite.transform.localScale = scale;
         }
     }
 
@@ -231,8 +235,13 @@ public class PlayerController : MonoBehaviour
             else
             {
                 usingPropeller = false;
-                velocity.y = 0;
                 ++groundedCounter;
+
+                if (velocity.y < 0)
+                {
+                    velocity.y = 0;
+                }
+
             }
         }
         else if (collision.gameObject.layer == Layers.Wall)
@@ -255,7 +264,8 @@ public class PlayerController : MonoBehaviour
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
         if ((collision.gameObject.layer == Layers.Ground && Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold) ||
-            (collision.gameObject.layer == Layers.Wall && Vector2.Dot(normal, Vector2.right * wallDirection) < ignoreWallCollisionThreshold))
+            (collision.gameObject.layer == Layers.Wall && Vector2.Dot(normal, Vector2.right * wallDirection) < ignoreWallCollisionThreshold) &&
+            (velocity.y < 0))
         {
             velocity.y = 0;
         }
