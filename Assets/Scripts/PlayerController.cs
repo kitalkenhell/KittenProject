@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float acceleration;
     public float friction;
-    public float jumpSpeed;
+    public float jumpSpeedMin;
+    public float jumpSpeedMax;
     public float jumpDuration;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     Vector2 movablePlatformVelocity;
     bool onMovablePlatform;
 
+    float jumpSpeed;
     float relativeJumpSpeed;
     float jumpingCountdown;
     int groundedCounter;
@@ -66,6 +68,8 @@ public class PlayerController : MonoBehaviour
         onMovablePlatform = false;
         jumpKeyReleased = true;
         usingPropeller = false;
+
+        jumpSpeed = jumpSpeedMin;
 
         sprite = transform.Find(spriteName);
     }
@@ -148,6 +152,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (groundedCounter > 0 && jumpKeyReleased) //stands on the ground and jumps 
                 {
+                    jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
+
                     jumpKeyReleased = false;
                     relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y;
                     groundedCounter = 0;
