@@ -23,7 +23,7 @@ public class Hellfire : MonoBehaviour
             flames.AddFirst(flame);
             flame.transform.SetPositionX(player.position.x - offset * flamesCount / 2.0f);
 
-            for (int i = 0; i < flamesCount - 1; i++)
+            for (int i = 1; i < flamesCount; i++)
             {
                 GameObject newFlame = Instantiate(flame);
                 newFlame.transform.parent = transform;

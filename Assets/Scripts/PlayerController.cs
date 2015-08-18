@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                print("wall");
                 velocity.y = 0;
             }
         }
