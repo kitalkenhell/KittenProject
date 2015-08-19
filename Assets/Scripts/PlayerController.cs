@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.layer == Layers.Ground)
         {
+
             if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
             {
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
@@ -260,7 +261,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                print("wall");
                 velocity.y = 0;
             }
         }
@@ -270,8 +270,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
-        if ((collision.gameObject.layer == Layers.Ground && Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold) ||
-            (collision.gameObject.layer == Layers.Wall && Vector2.Dot(normal, Vector2.right * wallDirection) < ignoreWallCollisionThreshold) &&
+        if (((collision.gameObject.layer == Layers.Ground && Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold) ||
+            (collision.gameObject.layer == Layers.Wall && Vector2.Dot(normal, Vector2.right * wallDirection) < ignoreWallCollisionThreshold)) &&
             (velocity.y < 0))
         {
             velocity.y = 0;
