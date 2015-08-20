@@ -11,7 +11,7 @@ public class MovablePlatform : MonoBehaviour
 
     const float nextWaypintThreshold = 0.1f;
 
-    public Waypoint[] waypoints;
+    public MovablePlatformWaypoint[] waypoints;
     public bool looping;
 
     Rigidbody2D body;
@@ -43,7 +43,7 @@ public class MovablePlatform : MonoBehaviour
 	
 	void FixedUpdate() 
     {
-        Waypoint current = waypoints[currentWaypoint];
+        MovablePlatformWaypoint current = waypoints[currentWaypoint];
         float distance = Vector3.Distance(transform.position, current.transform.position);
 
         if (state == States.wait)

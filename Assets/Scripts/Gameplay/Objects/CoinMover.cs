@@ -6,6 +6,7 @@ public class CoinMover : MonoBehaviour
     public float speed;
     public float shrinkingSpeed;
     public Transform target;
+    public bool destroy;
 
 	void Update ()
     {
@@ -16,7 +17,14 @@ public class CoinMover : MonoBehaviour
 
         if (transform.localScale.x < scaleThreshold)
         {
-            Destroy(gameObject);
+            if (destroy)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
 	
 	}

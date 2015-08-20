@@ -4,16 +4,23 @@ using System.Collections;
 public class DynamicCoinTrigger : MonoBehaviour 
 {
     public float ActivationDelay = 1.0f;
-
+    
     CoinMover coinMover;
     BoxCollider2D boxCollider;
     bool collected;
+    Rigidbody2D parentBody;
+    BoxCollider2D parentCollider;
 
-    void Start()
+    public void Init()
     {
         coinMover = GetComponentInParent<CoinMover>();
         boxCollider = GetComponent<BoxCollider2D>();
+        parentBody = GetComponentInParent<Rigidbody2D>();
+        parentCollider = GetComponentInParent<BoxCollider2D>();
+    }
 
+    public void Reset()
+    {
         boxCollider.enabled = false;
         coinMover.enabled = false;
         collected = false;
@@ -26,8 +33,8 @@ public class DynamicCoinTrigger : MonoBehaviour
         {
             collected = true;
             enabled = false;
-            GetComponentInParent<Rigidbody2D>().isKinematic = true;
-            GetComponentInParent<BoxCollider2D>().enabled = false;
+            parentBody.isKinematic = true;
+            parentCollider.enabled = false;
             coinMover.enabled = true; 
         }
     }

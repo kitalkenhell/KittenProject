@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Waypoint : MonoBehaviour 
+public class MovablePlatformWaypoint : MonoBehaviour 
 {
     public float speed = 10.0f;
     public float acceleration = 2.0f;
