@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
     public float wallSlideSpeed;
     public float wallFriction;
     public float propellerFallingSpeed;
-    public float propellerDelay; 
+    public float propellerDelay;
+    public InputManager inputManager;
 
     Rigidbody2D body;
     MovablePlatformEffector movablePlatformEffector;
@@ -58,7 +59,6 @@ public class PlayerController : MonoBehaviour
         groundedCounter = 0;
         wallSlidingCounter = 0;
         runningMotrSpeed = 0;
-        input = 0;
         relativeJumpSpeed = jumpSpeed;
 
         jumpingCountdown = Mathf.NegativeInfinity;
@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
         jumpKeyReleased = true;
         usingPropeller = false;
 
+        input = 0;
         jumpSpeed = jumpSpeedMin;
 
         sprite = transform.Find(spriteName);
@@ -89,13 +90,15 @@ public class PlayerController : MonoBehaviour
             scale.x = runningMotrSpeed < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             sprite.transform.localScale = scale;
         }
+
+        PostOffice.PostDebugMessage(velocity.ToString());
     }
 
     void Moving()
     {
         if (wallBounceCountdown < 0)
         {
-            input = Input.GetAxis("Horizontal");
+            input = inputManager.horizontalAxis;
 
             runningMotrSpeed += input * acceleration;
 
@@ -146,7 +149,7 @@ public class PlayerController : MonoBehaviour
             jumpingCountdown = Mathf.NegativeInfinity;
         }
 
-        if (Input.GetButton("Jump"))
+        if (inputManager.jumpButtonDown)
         {
             if (jumpingCountdown < 0) 
             {

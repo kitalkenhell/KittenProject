@@ -11,6 +11,16 @@ public class CoinEmitter : MonoBehaviour
     public float HorizontalForceMin;
     public float HorizontalForceMax;
 
+    //void Start()
+    //{
+    //    InvokeRepeating("Test", 3.0f, 5.0f);
+    //}
+
+    //void Test()
+    //{
+    //    StartCoroutine(EmitCourutine(20));
+    //}
+
     void Emit(int amount)
     {
         StartCoroutine(EmitCourutine(amount));
