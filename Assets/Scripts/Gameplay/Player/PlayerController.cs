@@ -39,14 +39,16 @@ public class PlayerController : MonoBehaviour
     int groundedCounter;
 
     int wallSlidingCounter;
-    float wallBounceCountdown;
     float wallDirection;
 
     bool usingPropeller;
     float PropellerCountdown;
 
+    float pushingForce;
+
     float input;
     bool jumpKeyReleased;
+    float disableControlsCountdown;
 
     void Start()
     {
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
         relativeJumpSpeed = jumpSpeed;
 
         jumpingCountdown = Mathf.NegativeInfinity;
-        wallBounceCountdown = Mathf.NegativeInfinity;
+        disableControlsCountdown = Mathf.NegativeInfinity;
         PropellerCountdown = Mathf.Infinity;
 
         onMovablePlatform = false;
@@ -77,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        disableControlsCountdown -= Time.fixedDeltaTime;
+
         Moving();
         Jumping();
         WallSliding();
@@ -96,7 +100,7 @@ public class PlayerController : MonoBehaviour
 
     void Moving()
     {
-        if (wallBounceCountdown < 0)
+        if (disableControlsCountdown < 0)
         {
             input = inputManager.horizontalAxis;
 
@@ -120,25 +124,25 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y += movablePlatformVelocity.y;
         }
-        else if (!onMovablePlatform && Mathf.Abs(movablePlatformVelocity.x) > Mathf.Epsilon)
-        {
-            float sign = Mathf.Sign(movablePlatformVelocity.x);
 
-            movablePlatformVelocity.x -= friction * sign;
-            if (Mathf.Sign(movablePlatformVelocity.x) != sign)
+        else if (Mathf.Abs(pushingForce) > Mathf.Epsilon && disableControlsCountdown < 0)
+        {
+            float sign = Mathf.Sign(pushingForce);
+
+            pushingForce -= friction * sign;
+            if (Mathf.Sign(pushingForce) != sign)
             {
-                movablePlatformVelocity.x = 0;
+                pushingForce = 0;
             }
         }
 
-        velocity.x = runningMotrSpeed + movablePlatformVelocity.x;
+        velocity.x = runningMotrSpeed + movablePlatformVelocity.x + pushingForce;
     }
 
     void Jumping()
     {
         
         jumpingCountdown -= Time.fixedDeltaTime;
-        wallBounceCountdown -= Time.fixedDeltaTime;
         PropellerCountdown -= Time.fixedDeltaTime;
 
         velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
@@ -186,7 +190,7 @@ public class PlayerController : MonoBehaviour
             {
                 jumpKeyReleased = false;
                 wallSlidingCounter = 0;
-                wallBounceCountdown = wallBounceDuration;
+                disableControlsCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
                 runningMotrSpeed = wallDirection * wallBounceVelocity.x;
                 velocity = new Vector2(runningMotrSpeed, wallBounceVelocity.y);
@@ -214,6 +218,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f)
+    {
+        pushingForce = force.x;
+
+        if (overrideVelocityX)
+        {
+            runningMotrSpeed = 0;
+        }
+
+        velocity.y = overrideVelocityY ? force.y : velocity.y + force.y;
+
+        disableControlsCountdown = disableControlsDuration;
+    }
+
     public void OnMovablePlatformMoved(Vector3 displacement)
     {
         movablePlatformVelocity = new Vector2(displacement.x, displacement.y) / Time.deltaTime;
@@ -227,7 +245,8 @@ public class PlayerController : MonoBehaviour
     void OnMovablePlatformExit()
     {
         onMovablePlatform = false;
-        movablePlatformVelocity.y = 0;
+        pushingForce += movablePlatformVelocity.x;
+        movablePlatformVelocity = Vector2.zero;
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
