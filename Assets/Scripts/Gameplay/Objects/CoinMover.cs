@@ -17,6 +17,8 @@ public class CoinMover : MonoBehaviour
 
         if (transform.localScale.x < scaleThreshold)
         {
+            PostOffice.PostCoinCollected();
+
             if (destroy)
             {
                 Destroy(gameObject);

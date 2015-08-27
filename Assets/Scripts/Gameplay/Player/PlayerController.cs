@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D body;
     MovablePlatformEffector movablePlatformEffector;
+    CoinEmitter coinEmitter;
     Transform sprite;
 
     Vector2 velocity;
@@ -50,10 +51,14 @@ public class PlayerController : MonoBehaviour
     bool jumpKeyReleased;
     float disableControlsCountdown;
 
+    int coins;
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         movablePlatformEffector = GetComponent<MovablePlatformEffector>();
+        coinEmitter = GetComponent<CoinEmitter>();
+
         movablePlatformEffector.onMoved = OnMovablePlatformMoved;
         movablePlatformEffector.onEnter = OnMovablePlatformEnter;
         movablePlatformEffector.onExit = OnMovablePlatformExit;
@@ -75,6 +80,15 @@ public class PlayerController : MonoBehaviour
         jumpSpeed = jumpSpeedMin;
 
         sprite = transform.Find(spriteName);
+
+        coins = 0;
+
+        PostOffice.coinCollected += OnCoinCollected;
+    }
+
+    void OnDestroy()
+    {
+        PostOffice.coinCollected -= OnCoinCollected;
     }
 
     void FixedUpdate()
@@ -94,8 +108,6 @@ public class PlayerController : MonoBehaviour
             scale.x = runningMotrSpeed < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             sprite.transform.localScale = scale;
         }
-
-        PostOffice.PostDebugMessage(velocity.ToString());
     }
 
     void Moving()
@@ -230,6 +242,17 @@ public class PlayerController : MonoBehaviour
         velocity.y = overrideVelocityY ? force.y : velocity.y + force.y;
 
         disableControlsCountdown = disableControlsDuration;
+    }
+
+    public void Hit(int damage)
+    {
+        coinEmitter.Emit(coins);
+        coins = 0;
+    }
+
+    void OnCoinCollected(int amount)
+    {
+        coins += amount;
     }
 
     public void OnMovablePlatformMoved(Vector3 displacement)

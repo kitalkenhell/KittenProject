@@ -11,17 +11,7 @@ public class CoinEmitter : MonoBehaviour
     public float HorizontalForceMin;
     public float HorizontalForceMax;
 
-    //void Start()
-    //{
-    //    InvokeRepeating("Test", 3.0f, 5.0f);
-    //}
-
-    //void Test()
-    //{
-    //    StartCoroutine(EmitCourutine(20));
-    //}
-
-    void Emit(int amount)
+    public void Emit(int amount)
     {
         StartCoroutine(EmitCourutine(amount));
     }
@@ -33,6 +23,7 @@ public class CoinEmitter : MonoBehaviour
             Vector2 velocity = new Vector2(Utils.RandomSign() * Random.Range(HorizontalForceMin, HorizontalForceMax), Random.Range(VerticalForceMin, VerticalForceMax));
 
             coinFactory.Spawn(transform.position, velocity, transform);
+            PostOffice.PostCoinDropped();
 
             if (i % coinsPerTick == 0)
             {
