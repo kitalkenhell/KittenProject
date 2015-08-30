@@ -22,9 +22,9 @@ public class CoinFactory : MonoBehaviour
         }
 	}
 
-    public void Spawn(Vector3 position, Vector2 velocity, Transform target)
+	public void Spawn(Vector3 position, Vector2 velocity, float angularSpeed, Transform target)
     {
-        coins[currentCoin].Reset(position, velocity, target);
+        coins[currentCoin].Reset(position, velocity,angularSpeed, target);
 
         if (++currentCoin >= coins.Length)
         {

@@ -3,11 +3,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    const int contactPointIndex = 0;
-    const float ignoreGroundCollisionThreshold = 0.01f;
-    const float ignoreWallCollisionThreshold = 0.99f;
     const string spriteName = "sprite";
 
+    Vector2 tmp;
     public float movementSpeed;
     public float acceleration;
     public float friction;
@@ -20,15 +18,17 @@ public class PlayerController : MonoBehaviour
     public float wallFriction;
     public float propellerFallingSpeed;
     public float propellerDelay;
+    public LayerMask onewayMask;
+    public LayerMask obstaclesMask;
     public InputManager inputManager;
 
     Rigidbody2D body;
+    BoxCollider2D boxCollider;
     MovablePlatformEffector movablePlatformEffector;
     CoinEmitter coinEmitter;
     Transform sprite;
 
     Vector2 velocity;
-    Vector2 preCollisionVelocity;
     float runningMotrSpeed;
 
     Vector2 movablePlatformVelocity;
@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
         movablePlatformEffector = GetComponent<MovablePlatformEffector>();
         coinEmitter = GetComponent<CoinEmitter>();
 
@@ -91,16 +92,14 @@ public class PlayerController : MonoBehaviour
         PostOffice.coinCollected -= OnCoinCollected;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        disableControlsCountdown -= Time.fixedDeltaTime;
+        disableControlsCountdown -= Time.deltaTime;
 
-        Moving();
+        Movement();
         Jumping();
         WallSliding();
-
-        body.velocity = velocity;
-        preCollisionVelocity = body.velocity;
+        Move();
 
         if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
         {
@@ -110,7 +109,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Moving()
+    void Movement()
     {
         if (disableControlsCountdown < 0)
         {
@@ -120,8 +119,8 @@ public class PlayerController : MonoBehaviour
 
             float sign = Mathf.Sign(runningMotrSpeed);
 
-            if ((Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon)  && //don't apply friction when accelerating
-                (onMovablePlatform || (!onMovablePlatform && Mathf.Abs(movablePlatformVelocity.x) < Mathf.Epsilon)))  
+            if ((Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon) && //don't apply friction when accelerating
+                (onMovablePlatform || (!onMovablePlatform && Mathf.Abs(movablePlatformVelocity.x) < Mathf.Epsilon)))
             {
                 runningMotrSpeed -= friction * sign;
                 if (Mathf.Sign(runningMotrSpeed) != sign)
@@ -153,11 +152,11 @@ public class PlayerController : MonoBehaviour
 
     void Jumping()
     {
-        
-        jumpingCountdown -= Time.fixedDeltaTime;
-        PropellerCountdown -= Time.fixedDeltaTime;
 
-        velocity.y += Physics2D.gravity.y * Time.fixedDeltaTime;
+        jumpingCountdown -= Time.deltaTime;
+        PropellerCountdown -= Time.deltaTime;
+
+        velocity.y += Physics2D.gravity.y * Time.deltaTime;
 
         if (velocity.y > relativeJumpSpeed)
         {
@@ -167,7 +166,7 @@ public class PlayerController : MonoBehaviour
 
         if (inputManager.jumpButtonDown)
         {
-            if (jumpingCountdown < 0) 
+            if (jumpingCountdown < 0)
             {
                 if (groundedCounter > 0 && jumpKeyReleased) //stands on the ground and jumps 
                 {
@@ -272,20 +271,23 @@ public class PlayerController : MonoBehaviour
         movablePlatformVelocity = Vector2.zero;
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    /*public void OnColdlisionEnter2D(Collision2D collision)
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
         if (collision.gameObject.layer == Layers.Ground)
         {
-
+            PostOffice.PostDebugMessage(Vector2.Dot(normal, Vector2.up).ToString());
             if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
             {
+                //PostOffice.PostDebugMessage("ignore");
                 Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
-                body.velocity = preCollisionVelocity;
+                //     body.velocity = velocity;
             }
             else
             {
+
+                //PostOffice.PostDebugMessage("reset");
                 usingPropeller = false;
                 ++groundedCounter;
 
@@ -311,7 +313,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnCollisionStay2D(Collision2D collision)
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
+    }
+
+    public void OnCollisfionStay2D(Collision2D collision)
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
@@ -323,7 +331,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnCollisionExit2D(Collision2D collision)
+    public void OnCollisfionExit2D(Collision2D collision)
     {
         Vector2 normal = collision.contacts[contactPointIndex].normal;
 
@@ -342,9 +350,67 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    */
 
-    public void OnTriggerExit2D(Collider2D collider)
+    public void Move()
     {
-        Physics2D.IgnoreCollision(collider, GetComponent<Collider2D>(), false);
+        const float bias = 1.2f;
+
+        Vector2 displacement = velocity * Time.deltaTime;
+        RaycastHit2D hit;
+
+        groundedCounter = 0;
+        wallSlidingCounter = 0;
+
+        if (velocity.y < Mathf.Epsilon)
+        {
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, 
+                Mathf.Max(Mathf.Abs(displacement.y),bias), obstaclesMask | onewayMask);
+            if (hit.collider != null && hit.collider.bounds.max.y < boxCollider.bounds.min.y)
+            {
+                displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y;
+                velocity.y = 0;
+                groundedCounter = 1;
+                print(displacement.y);
+                //Debug.Break();
+            }
+        }
+        else if (velocity.y > Mathf.Epsilon)
+        {
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Abs(displacement.y), obstaclesMask);
+            if (hit.collider != null && hit.collider.bounds.min.y > boxCollider.bounds.max.y - bias)
+            {
+                displacement.y = hit.collider.bounds.min.y - boxCollider.bounds.max.y - bias;
+                velocity.y = 0;
+            }
+        }
+        
+        hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.right * Mathf.Sign(displacement.x), Mathf.Abs(displacement.x), obstaclesMask);
+        if (hit.collider != null)
+        {
+            if (velocity.x < 0 && hit.collider.bounds.max.x < boxCollider.bounds.min.x + bias)
+            {
+                displacement.x = hit.collider.bounds.max.x - boxCollider.bounds.min.x + bias; 
+            }
+            else if (velocity.x > 0 && hit.collider.bounds.min.x > boxCollider.bounds.max.x - bias)
+            {
+                displacement.x = hit.collider.bounds.min.x - boxCollider.bounds.max.x - bias;
+            }
+            wallDirection = -Mathf.Sign(velocity.x);
+            wallSlidingCounter = 1;
+            velocity.x = 0;
+        }
+
+        print("V = " + velocity.y);
+
+        if (Mathf.Abs(velocity.y) > Mathf.Epsilon)
+        {
+            print("");
+            transform.SetPositionY(transform.position.y + displacement.y);
+        }
+        if (Mathf.Abs(velocity.x) > Mathf.Epsilon)
+        {
+            transform.SetPositionX(transform.position.x + displacement.x);
+        }
     }
 }

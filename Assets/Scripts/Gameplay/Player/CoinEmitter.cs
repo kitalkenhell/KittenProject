@@ -6,10 +6,9 @@ public class CoinEmitter : MonoBehaviour
     public CoinFactory coinFactory;
     public float emitTickInterval = 0.02f;
     public float coinsPerTick = 3;
-    public float VerticalForceMin;
-    public float VerticalForceMax;
-    public float HorizontalForceMin;
-    public float HorizontalForceMax;
+    public MinMax VerticalForce;
+    public MinMax HorizontalForce;
+	public MinMax angularSpeed;
 
     public void Emit(int amount)
     {
@@ -20,9 +19,9 @@ public class CoinEmitter : MonoBehaviour
     {
         for (int i = 0; i < amount; ++i)
         {
-            Vector2 velocity = new Vector2(Utils.RandomSign() * Random.Range(HorizontalForceMin, HorizontalForceMax), Random.Range(VerticalForceMin, VerticalForceMax));
+            Vector2 velocity = new Vector2(Utils.RandomSign() * Random.Range(HorizontalForce.min, HorizontalForce.max), Random.Range(VerticalForce.min, VerticalForce.max));
 
-            coinFactory.Spawn(transform.position, velocity, transform);
+            coinFactory.Spawn(transform.position, velocity, Random.Range(angularSpeed.min, angularSpeed.max), transform);
             PostOffice.PostCoinDropped();
 
             if (i % coinsPerTick == 0)

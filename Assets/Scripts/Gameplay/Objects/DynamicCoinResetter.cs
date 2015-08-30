@@ -17,13 +17,14 @@ public class DynamicCoinResetter : MonoBehaviour
         trigger.Init();
     }
 
-    public void Reset(Vector3 position, Vector2 velocity, Transform target)
+	public void Reset(Vector3 position, Vector2 velocity, float angularSpeed, Transform target)
     {
         gameObject.SetActive(true);
         mover.target = target;
         transform.position = position;
         transform.localScale = coinScale;
         body.velocity = velocity;
+		body.angularVelocity = angularSpeed;
         body.isKinematic = false;
         trigger.Reset();
         
