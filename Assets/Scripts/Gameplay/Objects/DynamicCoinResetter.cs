@@ -8,13 +8,12 @@ public class DynamicCoinResetter : MonoBehaviour
     CoinMover mover;
     DynamicCoinTrigger trigger;
 
-    public void Init()
+    public void Awake()
     {
         coinScale = transform.localScale;
         mover = GetComponent<CoinMover>();
         body = GetComponent<Rigidbody2D>();
         trigger = GetComponentInChildren<DynamicCoinTrigger>();
-        trigger.Init();
     }
 
 	public void Reset(Vector3 position, Vector2 velocity, float angularSpeed, Transform target)

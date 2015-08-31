@@ -21,15 +21,24 @@ public class MovablePlatform : MonoBehaviour
     float speed;
     Vector2 velocity;
     States state;
-
+    Vector3 lastFramePosition;
     Vector3 displacement;
+    Vector2 lastFrameDisplacement;
+
+    public Vector2 LastFrameDisplacement
+    {
+        get
+        {
+            return lastFrameDisplacement;
+        }
+    }
 
 	void Start () 
     {
         body = GetComponent<Rigidbody2D>();
 
         currentWaypoint = 0;
-        transform.position = waypoints[currentWaypoint].transform.position;
+        lastFramePosition = transform.position = waypoints[currentWaypoint].transform.position;
         moveForward = true;
         speed = 0;
         velocity = Vector2.zero;
@@ -41,8 +50,15 @@ public class MovablePlatform : MonoBehaviour
         }
 	}
 	
+    void Update()
+    {
+        lastFrameDisplacement = transform.position - lastFramePosition;
+        lastFramePosition = transform.position;
+    }
+
 	void FixedUpdate() 
     {
+
         MovablePlatformWaypoint current = waypoints[currentWaypoint];
         float distance = Vector3.Distance(transform.position, current.transform.position);
 
@@ -133,60 +149,5 @@ public class MovablePlatform : MonoBehaviour
         state = States.wait;
         yield return new WaitForSeconds(time);
         state = States.move;
-    }
-
-    bool ShouldIgnoreCollision(Collision2D collision)
-    {
-        const int contactPointIndex = 0;
-        const float ignoreGroundCollisionThreshold = 0.01f;
-
-        Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-        if (Vector2.Dot(normal, Vector2.down) < ignoreGroundCollisionThreshold)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (ShouldIgnoreCollision(collision))
-        {
-            return;
-        }
-
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-        
-        if (effector != null)
-        {
-            effector.onEnter();
-            OnCollisionStay2D(collision);
-        }
-    }
-
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-        if (ShouldIgnoreCollision(collision))
-        {
-            return;
-        }
-
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-
-        if (effector != null)
-        {
-                effector.onMoved(displacement);
-        }
-    }
-
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-
-        if (effector != null)
-        {
-            effector.onExit();
-        }
     }
 }

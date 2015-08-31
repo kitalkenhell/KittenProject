@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeedMin;
     public float jumpSpeedMax;
     public float jumpDuration;
+    public float movablePlatformJumpSpeedInfluence;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
     public float wallSlideSpeed;
@@ -22,9 +23,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask obstaclesMask;
     public InputManager inputManager;
 
-    Rigidbody2D body;
     BoxCollider2D boxCollider;
-    MovablePlatformEffector movablePlatformEffector;
     CoinEmitter coinEmitter;
     Transform sprite;
 
@@ -32,14 +31,15 @@ public class PlayerController : MonoBehaviour
     float runningMotrSpeed;
 
     Vector2 movablePlatformVelocity;
-    bool onMovablePlatform;
+    MovablePlatform movablePlatform;
+    BoxCollider2D movablePlatformCollider;
 
     float jumpSpeed;
     float relativeJumpSpeed;
     float jumpingCountdown;
-    int groundedCounter;
+    bool isGrounded;
 
-    int wallSlidingCounter;
+    bool isTouchingWall;
     float wallDirection;
 
     bool usingPropeller;
@@ -55,17 +55,11 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
         boxCollider = GetComponent<BoxCollider2D>();
-        movablePlatformEffector = GetComponent<MovablePlatformEffector>();
         coinEmitter = GetComponent<CoinEmitter>();
 
-        movablePlatformEffector.onMoved = OnMovablePlatformMoved;
-        movablePlatformEffector.onEnter = OnMovablePlatformEnter;
-        movablePlatformEffector.onExit = OnMovablePlatformExit;
-
-        groundedCounter = 0;
-        wallSlidingCounter = 0;
+        isGrounded = false;
+        isTouchingWall = false;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
 
@@ -73,7 +67,6 @@ public class PlayerController : MonoBehaviour
         disableControlsCountdown = Mathf.NegativeInfinity;
         PropellerCountdown = Mathf.Infinity;
 
-        onMovablePlatform = false;
         jumpKeyReleased = true;
         usingPropeller = false;
 
@@ -82,8 +75,9 @@ public class PlayerController : MonoBehaviour
 
         sprite = transform.Find(spriteName);
 
-        coins = 0;
+        movablePlatform = null;
 
+        coins = 0;
         PostOffice.coinCollected += OnCoinCollected;
     }
 
@@ -104,7 +98,7 @@ public class PlayerController : MonoBehaviour
         if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
         {
             Vector3 scale = transform.localScale;
-            scale.x = runningMotrSpeed < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            scale.x = runningMotrSpeed + pushingForce < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             sprite.transform.localScale = scale;
         }
     }
@@ -119,8 +113,7 @@ public class PlayerController : MonoBehaviour
 
             float sign = Mathf.Sign(runningMotrSpeed);
 
-            if ((Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon) && //don't apply friction when accelerating
-                (onMovablePlatform || (!onMovablePlatform && Mathf.Abs(movablePlatformVelocity.x) < Mathf.Epsilon)))
+            if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon)
             {
                 runningMotrSpeed -= friction * sign;
                 if (Mathf.Sign(runningMotrSpeed) != sign)
@@ -131,12 +124,7 @@ public class PlayerController : MonoBehaviour
             runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
         }
 
-        if (onMovablePlatform && movablePlatformVelocity.y < 0)
-        {
-            velocity.y += movablePlatformVelocity.y;
-        }
-
-        else if (Mathf.Abs(pushingForce) > Mathf.Epsilon && disableControlsCountdown < 0)
+        if (Mathf.Abs(pushingForce) > Mathf.Epsilon && disableControlsCountdown < 0)
         {
             float sign = Mathf.Sign(pushingForce);
 
@@ -147,7 +135,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        velocity.x = runningMotrSpeed + movablePlatformVelocity.x + pushingForce;
+        velocity.x = runningMotrSpeed + pushingForce;
     }
 
     void Jumping()
@@ -168,19 +156,19 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpingCountdown < 0)
             {
-                if (groundedCounter > 0 && jumpKeyReleased) //stands on the ground and jumps 
+                if (isGrounded && jumpKeyReleased) //stands on the ground and jumps 
                 {
                     jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
 
                     jumpKeyReleased = false;
-                    relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y;
-                    groundedCounter = 0;
+                    relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y * movablePlatformJumpSpeedInfluence;
+                    isGrounded = false;
                     velocity.y = relativeJumpSpeed;
                     jumpingCountdown = jumpDuration;
                 }
             }
 
-            if (!usingPropeller && groundedCounter <= 0 && wallSlidingCounter <= 0 && jumpingCountdown < 0 && velocity.y < 0 && jumpKeyReleased)
+            if (!usingPropeller && !isGrounded && !isTouchingWall && jumpingCountdown < 0 && velocity.y < 0 && jumpKeyReleased)
             {
                 usingPropeller = true;
                 PropellerCountdown = propellerDelay;
@@ -192,15 +180,15 @@ public class PlayerController : MonoBehaviour
                 velocity.y = propellerFallingSpeed;
             }
 
-            if (jumpingCountdown > 0 && wallSlidingCounter <= 0) //Don't decrease velocity when jump button is pressed for some time after the jump 
+            if (jumpingCountdown > 0 && !isTouchingWall) //Don't decrease velocity when jump button is pressed for some time after the jump 
             {
                 velocity.y = relativeJumpSpeed;
             }
 
-            else if (wallSlidingCounter > 0 && groundedCounter <= 0 && jumpKeyReleased) //bouncing off the wall
+            else if (isTouchingWall && !isGrounded  && jumpKeyReleased) //bouncing off the wall
             {
                 jumpKeyReleased = false;
-                wallSlidingCounter = 0;
+                isTouchingWall = false;
                 disableControlsCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
                 runningMotrSpeed = wallDirection * wallBounceVelocity.x;
@@ -219,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
     void WallSliding()
     {
-        if (velocity.y < 0 && wallSlidingCounter > 0 && Mathf.Abs(input) > Mathf.Epsilon && Mathf.Sign(input) != wallDirection)
+        if (velocity.y < 0 && isTouchingWall && Mathf.Abs(input) > Mathf.Epsilon && Mathf.Sign(input) != wallDirection)
         {
             if (velocity.y < wallSlideSpeed)
             {
@@ -254,163 +242,95 @@ public class PlayerController : MonoBehaviour
         coins += amount;
     }
 
-    public void OnMovablePlatformMoved(Vector3 displacement)
-    {
-        movablePlatformVelocity = new Vector2(displacement.x, displacement.y) / Time.deltaTime;
-    }
-
-    void OnMovablePlatformEnter()
-    {
-        onMovablePlatform = true;
-    }
-
-    void OnMovablePlatformExit()
-    {
-        onMovablePlatform = false;
-        pushingForce += movablePlatformVelocity.x;
-        movablePlatformVelocity = Vector2.zero;
-    }
-
-    /*public void OnColdlisionEnter2D(Collision2D collision)
-    {
-        Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-        if (collision.gameObject.layer == Layers.Ground)
-        {
-            PostOffice.PostDebugMessage(Vector2.Dot(normal, Vector2.up).ToString());
-            if (Vector2.Dot(normal, Vector2.up) < ignoreGroundCollisionThreshold)
-            {
-                //PostOffice.PostDebugMessage("ignore");
-                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
-                //     body.velocity = velocity;
-            }
-            else
-            {
-
-                //PostOffice.PostDebugMessage("reset");
-                usingPropeller = false;
-                ++groundedCounter;
-
-                if (velocity.y < 0)
-                {
-                    velocity.y = 0;
-                }
-
-            }
-        }
-        else if (collision.gameObject.layer == Layers.Wall)
-        {
-            wallDirection = Mathf.Sign(normal.x);
-
-            if (Vector2.Dot(normal, Vector2.right * wallDirection) > ignoreWallCollisionThreshold)
-            {
-                ++wallSlidingCounter;
-            }
-            else
-            {
-                velocity.y = 0;
-            }
-        }
-    }
-
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>(), true);
-    }
-
-    public void OnCollisfionStay2D(Collision2D collision)
-    {
-        Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-        if (((collision.gameObject.layer == Layers.Ground && Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold) ||
-            (collision.gameObject.layer == Layers.Wall && Vector2.Dot(normal, Vector2.right * wallDirection) < ignoreWallCollisionThreshold)) &&
-            (velocity.y < 0))
-        {
-            velocity.y = 0;
-        }
-    }
-
-    public void OnCollisfionExit2D(Collision2D collision)
-    {
-        Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-        if (collision.gameObject.layer == Layers.Ground)
-        {
-            if (Vector2.Dot(normal, Vector2.up) > ignoreGroundCollisionThreshold)
-            {
-                groundedCounter = Mathf.Max(0, --groundedCounter);
-            }
-        }
-        else if (collision.gameObject.layer == Layers.Wall)
-        {
-            if (Vector2.Dot(normal, Vector2.right * wallDirection) > ignoreWallCollisionThreshold)
-            {
-                wallSlidingCounter = Mathf.Max(0, --wallSlidingCounter);
-            }
-        }
-    }
-    */
-
     public void Move()
     {
-        const float bias = 1.2f;
+        const float bias = 0.1f;
 
         Vector2 displacement = velocity * Time.deltaTime;
         RaycastHit2D hit;
 
-        groundedCounter = 0;
-        wallSlidingCounter = 0;
+        isGrounded = false;
+        isTouchingWall = false;
+        movablePlatformVelocity = Vector2.zero;
 
-        if (velocity.y < Mathf.Epsilon)
+        if (velocity.y > 0 || (movablePlatformCollider != null && (boxCollider.bounds.max.x < movablePlatformCollider.bounds.min.x || boxCollider.bounds.min.x > movablePlatformCollider.bounds.max.x)))
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, 
-                Mathf.Max(Mathf.Abs(displacement.y),bias), obstaclesMask | onewayMask);
+            movablePlatform = null;
+        }
+
+        if (movablePlatform != null && velocity.y <= 0)
+        {
+            velocity.y = displacement.y = 0;
+            isGrounded = true;
+            transform.SetPositionXy(transform.position.x + movablePlatform.LastFrameDisplacement.x, transform.position.y + movablePlatform.LastFrameDisplacement.y);
+            movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
+        }
+        else 
+        {
+            float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), bias) : bias;
+
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
+            
+            if (hit.collider != null && hit.collider.gameObject.layer == Layers.MovablePlatform)
+            {
+                movablePlatform = hit.collider.GetComponent<MovablePlatform>();
+                movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
+
+                if (hit.collider.bounds.max.y - movablePlatform.LastFrameDisplacement.y < boxCollider.bounds.min.y + movablePlatform.LastFrameDisplacement.y && (velocity.y <= 0 || movablePlatformVelocity.y > velocity.y))
+                {
+                    movablePlatformCollider = hit.collider.GetComponent<BoxCollider2D>();
+
+                    velocity.y = displacement.y = 0;
+                    isGrounded = true;
+                    transform.SetPositionX(transform.position.x + movablePlatform.LastFrameDisplacement.x);
+                    transform.SetPositionY(transform.position.y + hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias);
+                }
+                else
+                {
+                    movablePlatform = null;
+                }
+            }
+            else
+            {
+                movablePlatform = null;
+            }
+        }
+
+        if (velocity.y < Mathf.Epsilon && movablePlatform == null)
+        {
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y),bias), obstaclesMask | onewayMask);
             if (hit.collider != null && hit.collider.bounds.max.y < boxCollider.bounds.min.y)
             {
-                displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y;
+                displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias;
                 velocity.y = 0;
-                groundedCounter = 1;
-                print(displacement.y);
-                //Debug.Break();
+                isGrounded = true;
             }
         }
         else if (velocity.y > Mathf.Epsilon)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Abs(displacement.y), obstaclesMask);
-            if (hit.collider != null && hit.collider.bounds.min.y > boxCollider.bounds.max.y - bias)
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), bias), obstaclesMask);
+            if (hit.collider != null && hit.collider.bounds.min.y > boxCollider.bounds.max.y)
             {
                 displacement.y = hit.collider.bounds.min.y - boxCollider.bounds.max.y - bias;
                 velocity.y = 0;
             }
         }
-        
-        hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.right * Mathf.Sign(displacement.x), Mathf.Abs(displacement.x), obstaclesMask);
+
+        hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.right * Mathf.Sign(displacement.x), Mathf.Max(Mathf.Abs(displacement.x), bias), obstaclesMask);
         if (hit.collider != null)
         {
-            if (velocity.x < 0 && hit.collider.bounds.max.x < boxCollider.bounds.min.x + bias)
+            if (velocity.x < 0 && hit.collider.bounds.max.x < boxCollider.bounds.min.x)
             {
                 displacement.x = hit.collider.bounds.max.x - boxCollider.bounds.min.x + bias; 
             }
-            else if (velocity.x > 0 && hit.collider.bounds.min.x > boxCollider.bounds.max.x - bias)
+            else if (velocity.x > 0 && hit.collider.bounds.min.x > boxCollider.bounds.max.x)
             {
                 displacement.x = hit.collider.bounds.min.x - boxCollider.bounds.max.x - bias;
             }
             wallDirection = -Mathf.Sign(velocity.x);
-            wallSlidingCounter = 1;
+            isTouchingWall = true;
             velocity.x = 0;
         }
-
-        print("V = " + velocity.y);
-
-        if (Mathf.Abs(velocity.y) > Mathf.Epsilon)
-        {
-            print("");
-            transform.SetPositionY(transform.position.y + displacement.y);
-        }
-        if (Mathf.Abs(velocity.x) > Mathf.Epsilon)
-        {
-            transform.SetPositionX(transform.position.x + displacement.x);
-        }
+        transform.SetPositionXy(transform.position.x + displacement.x, transform.position.y + displacement.y);
     }
 }
