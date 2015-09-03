@@ -11,7 +11,7 @@ public class MovablePlatform : MonoBehaviour
 
     const float nextWaypintThreshold = 0.1f;
 
-    public MovablePlatformWaypoint[] waypoints;
+    public Waypoint[] waypoints;
     public bool looping;
 
     Rigidbody2D body;
@@ -33,7 +33,7 @@ public class MovablePlatform : MonoBehaviour
         }
     }
 
-	void Start () 
+	public void Start () 
     {
         body = GetComponent<Rigidbody2D>();
 
@@ -49,17 +49,17 @@ public class MovablePlatform : MonoBehaviour
             StartCoroutine(Wait(waypoints[currentWaypoint].waitTime));
         }
 	}
-	
-    void Update()
+
+    public void Update()
     {
         lastFrameDisplacement = transform.position - lastFramePosition;
         lastFramePosition = transform.position;
     }
 
-	void FixedUpdate() 
+    public void FixedUpdate() 
     {
 
-        MovablePlatformWaypoint current = waypoints[currentWaypoint];
+        Waypoint current = waypoints[currentWaypoint];
         float distance = Vector3.Distance(transform.position, current.transform.position);
 
         if (state == States.wait)
@@ -100,7 +100,7 @@ public class MovablePlatform : MonoBehaviour
         body.MovePosition(transform.position + displacement);
 	}
 
-    int SetNextWaypoint()
+    public int SetNextWaypoint()
     {
         speed = 0;
         displacement = Vector3.zero;
@@ -141,7 +141,7 @@ public class MovablePlatform : MonoBehaviour
         return currentWaypoint;
     }
 
-    IEnumerator Wait(float time)
+    public IEnumerator Wait(float time)
     {
         displacement = Vector3.zero;
         body.velocity = Vector2.zero;
