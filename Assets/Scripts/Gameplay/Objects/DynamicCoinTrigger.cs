@@ -11,7 +11,7 @@ public class DynamicCoinTrigger : MonoBehaviour
     Rigidbody2D parentBody;
     BoxCollider2D parentCollider;
 
-    public void Init()
+    public void Awake()
     {
         coinMover = GetComponentInParent<CoinMover>();
         boxCollider = GetComponent<BoxCollider2D>();

@@ -14,5 +14,8 @@ public static class Layers
     public const int Player = 8;
     public const int Ground = 9;
     public const int Wall = 10;
+    public const int Tirgger = 11;
+    public const int IgnorePlayer = 12;
+    public const int MovablePlatform = 13;
 }
 

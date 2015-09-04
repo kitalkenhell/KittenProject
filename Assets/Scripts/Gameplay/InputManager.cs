@@ -12,7 +12,7 @@ public class InputManager : MonoBehaviour
         jumpButtonDown = false;
 	}
 	
-#if !UNITY_ANDROID
+#if UNITY_EDITOR || UNITY_STANDALONE
 	void Update ()
     {
         horizontalAxis = Input.GetAxis("Horizontal");

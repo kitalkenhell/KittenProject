@@ -17,7 +17,6 @@ public class CoinFactory : MonoBehaviour
         for (int i = 0; i < coins.Length; i++)
         {
             coins[i] = Instantiate(coinPrefab).GetComponent<DynamicCoinResetter>();
-            coins[i].Init();
             coins[i].gameObject.SetActive(false);
         }
 	}

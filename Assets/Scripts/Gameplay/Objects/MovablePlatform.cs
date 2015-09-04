@@ -11,7 +11,7 @@ public class MovablePlatform : MonoBehaviour
 
     const float nextWaypintThreshold = 0.1f;
 
-    public MovablePlatformWaypoint[] waypoints;
+    public Waypoint[] waypoints;
     public bool looping;
 
     Rigidbody2D body;
@@ -21,15 +21,24 @@ public class MovablePlatform : MonoBehaviour
     float speed;
     Vector2 velocity;
     States state;
-
+    Vector3 lastFramePosition;
     Vector3 displacement;
+    Vector2 lastFrameDisplacement;
 
-	void Start () 
+    public Vector2 LastFrameDisplacement
+    {
+        get
+        {
+            return lastFrameDisplacement;
+        }
+    }
+
+	public void Start () 
     {
         body = GetComponent<Rigidbody2D>();
 
         currentWaypoint = 0;
-        transform.position = waypoints[currentWaypoint].transform.position;
+        lastFramePosition = transform.position = waypoints[currentWaypoint].transform.position;
         moveForward = true;
         speed = 0;
         velocity = Vector2.zero;
@@ -40,10 +49,17 @@ public class MovablePlatform : MonoBehaviour
             StartCoroutine(Wait(waypoints[currentWaypoint].waitTime));
         }
 	}
-	
-	void FixedUpdate() 
+
+    public void Update()
     {
-        MovablePlatformWaypoint current = waypoints[currentWaypoint];
+        lastFrameDisplacement = transform.position - lastFramePosition;
+        lastFramePosition = transform.position;
+    }
+
+    public void FixedUpdate() 
+    {
+
+        Waypoint current = waypoints[currentWaypoint];
         float distance = Vector3.Distance(transform.position, current.transform.position);
 
         if (state == States.wait)
@@ -84,7 +100,7 @@ public class MovablePlatform : MonoBehaviour
         body.MovePosition(transform.position + displacement);
 	}
 
-    int SetNextWaypoint()
+    public int SetNextWaypoint()
     {
         speed = 0;
         displacement = Vector3.zero;
@@ -125,7 +141,7 @@ public class MovablePlatform : MonoBehaviour
         return currentWaypoint;
     }
 
-    IEnumerator Wait(float time)
+    public IEnumerator Wait(float time)
     {
         displacement = Vector3.zero;
         body.velocity = Vector2.zero;
@@ -133,60 +149,5 @@ public class MovablePlatform : MonoBehaviour
         state = States.wait;
         yield return new WaitForSeconds(time);
         state = States.move;
-    }
-
-    bool ShouldIgnoreCollision(Collision2D collision)
-    {
-        const int contactPointIndex = 0;
-        const float ignoreGroundCollisionThreshold = 0.01f;
-
-        Vector2 normal = collision.contacts[contactPointIndex].normal;
-
-        if (Vector2.Dot(normal, Vector2.down) < ignoreGroundCollisionThreshold)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (ShouldIgnoreCollision(collision))
-        {
-            return;
-        }
-
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-        
-        if (effector != null)
-        {
-            effector.onEnter();
-            OnCollisionStay2D(collision);
-        }
-    }
-
-    public void OnCollisionStay2D(Collision2D collision)
-    {
-        if (ShouldIgnoreCollision(collision))
-        {
-            return;
-        }
-
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-
-        if (effector != null)
-        {
-                effector.onMoved(displacement);
-        }
-    }
-
-    public void OnCollisionExit2D(Collision2D collision)
-    {
-        MovablePlatformEffector effector = collision.gameObject.GetComponent<MovablePlatformEffector>();
-
-        if (effector != null)
-        {
-            effector.onExit();
-        }
     }
 }
