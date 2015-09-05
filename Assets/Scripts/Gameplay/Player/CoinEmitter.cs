@@ -21,7 +21,7 @@ public class CoinEmitter : MonoBehaviour
         {
             Vector2 velocity = new Vector2(Utils.RandomSign() * Random.Range(HorizontalForce.min, HorizontalForce.max), Random.Range(VerticalForce.min, VerticalForce.max));
 
-            coinFactory.Spawn(transform.position, velocity, Random.Range(angularSpeed.min, angularSpeed.max) * Utils.RandomSign(), transform);
+            coinFactory.Spawn(transform.position, velocity, Random.Range(angularSpeed.min, angularSpeed.max) * Utils.RandomSign());
             PostOffice.PostCoinDropped();
 
             if (i % coinsPerTick == 0)

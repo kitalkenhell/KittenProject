@@ -26,6 +26,5 @@ public class DynamicCoinResetter : MonoBehaviour
 		body.angularVelocity = angularSpeed;
         body.isKinematic = false;
         trigger.Reset();
-        
     }
 }

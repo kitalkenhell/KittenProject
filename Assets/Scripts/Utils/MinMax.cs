@@ -9,6 +9,13 @@ public struct MinMax
     public float max;
 }
 
+[System.Serializable]
+public struct MinMaxVec3
+{
+    public Vector3 min;
+    public Vector3 max;
+}
+
 public struct MinMax<T>
 {
     public T min;

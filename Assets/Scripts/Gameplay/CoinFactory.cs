@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class CoinFactory : MonoBehaviour 
 {
     public int coinsCount;
     public GameObject coinPrefab;
+    public Transform player;
 
     DynamicCoinResetter[] coins;
     int currentCoin;
@@ -21,9 +23,9 @@ public class CoinFactory : MonoBehaviour
         }
 	}
 
-	public void Spawn(Vector3 position, Vector2 velocity, float angularSpeed, Transform target)
+	public void Spawn(Vector3 position, Vector2 velocity, float angularSpeed)
     {
-        coins[currentCoin].Reset(position, velocity,angularSpeed, target);
+        coins[currentCoin].Reset(position, velocity, angularSpeed, player);
 
         if (++currentCoin >= coins.Length)
         {

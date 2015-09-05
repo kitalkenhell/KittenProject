@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    const string spriteName = "sprite";
-
     Vector2 tmp;
     public float movementSpeed;
     public float acceleration;
@@ -17,15 +15,23 @@ public class PlayerController : MonoBehaviour
     public float wallBounceDuration;
     public float wallSlideSpeed;
     public float wallFriction;
-    public float propellerFallingSpeed;
-    public float propellerDelay;
+    public float parachuteFallingSpeed;
+    public float parachuteDelay;
+    public float parachuteMaxScale;
+    public float parachuteMaxRotation;
+    public float parachuteOpeningSpeed;
+    public float parachuteClosingSpeed;
+    public AnimationCurve parachuteOpeningCurve;
+    public int coinsDropRate;
     public LayerMask onewayMask;
     public LayerMask obstaclesMask;
     public InputManager inputManager;
+    public Transform sprite;
+    public Transform parachute;
+    public Transform parachutePivot;
 
     BoxCollider2D boxCollider;
     CoinEmitter coinEmitter;
-    Transform sprite;
 
     Vector2 velocity;
     float runningMotrSpeed;
@@ -42,14 +48,17 @@ public class PlayerController : MonoBehaviour
     bool isTouchingWall;
     float wallDirection;
 
-    bool usingPropeller;
-    float PropellerCountdown;
+    bool usingParachute;
+    float ParachuteCountdown;
+    float parachuteScale;
+    float parachuteRotation;
 
     float pushingForce;
 
     float input;
     bool jumpKeyReleased;
     float disableControlsCountdown;
+    
 
     int coins;
 
@@ -65,15 +74,14 @@ public class PlayerController : MonoBehaviour
 
         jumpingCountdown = Mathf.NegativeInfinity;
         disableControlsCountdown = Mathf.NegativeInfinity;
-        PropellerCountdown = Mathf.Infinity;
+        ParachuteCountdown = Mathf.Infinity;
 
         jumpKeyReleased = true;
-        usingPropeller = false;
+        usingParachute = false;
+        parachuteScale = 0;
 
         input = 0;
         jumpSpeed = jumpSpeedMin;
-
-        sprite = transform.Find(spriteName);
 
         movablePlatform = null;
 
@@ -94,13 +102,30 @@ public class PlayerController : MonoBehaviour
         Jumping();
         WallSliding();
         Move();
+        UpdateSprites();
+    }
 
+    void UpdateSprites()
+    {
         if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
         {
             Vector3 scale = transform.localScale;
             scale.x = runningMotrSpeed + pushingForce < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             sprite.transform.localScale = scale;
         }
+
+        parachute.localScale = Vector3.one * parachuteOpeningCurve.Evaluate(parachuteScale) * parachuteMaxScale;
+
+        if (!usingParachute)
+        {
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosingSpeed * Time.fixedDeltaTime);
+        }
+        else
+        {
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpeningSpeed * Time.fixedDeltaTime);
+        }
+
+        parachutePivot.rotation = Quaternion.Euler(0, 0, parachuteRotation);
     }
 
     void Movement()
@@ -142,7 +167,7 @@ public class PlayerController : MonoBehaviour
     {
 
         jumpingCountdown -= Time.deltaTime;
-        PropellerCountdown -= Time.deltaTime;
+        ParachuteCountdown -= Time.deltaTime;
 
         velocity.y += Physics2D.gravity.y * Time.deltaTime;
 
@@ -168,16 +193,21 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            if (!usingPropeller && !isGrounded && !isTouchingWall && jumpingCountdown < 0 && velocity.y < 0 && jumpKeyReleased)
+            if (velocity.y >= 0)
             {
-                usingPropeller = true;
-                PropellerCountdown = propellerDelay;
+                usingParachute = false;
+            }
+            else if (!usingParachute && !isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
+            {
+                usingParachute = true;
+                ParachuteCountdown = parachuteDelay;
             }
 
-            if (usingPropeller && PropellerCountdown < 0 && velocity.y < propellerFallingSpeed)
+
+            if (usingParachute && ParachuteCountdown < 0 && velocity.y < parachuteFallingSpeed)
             {
                 jumpKeyReleased = false;
-                velocity.y = propellerFallingSpeed;
+                velocity.y = parachuteFallingSpeed;
             }
 
             if (jumpingCountdown > 0 && !isTouchingWall) //Don't decrease velocity when jump button is pressed for some time after the jump 
@@ -197,12 +227,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            usingPropeller = false;
+            usingParachute = false;
             jumpKeyReleased = true;
             relativeJumpSpeed = jumpSpeed;
             jumpingCountdown = Mathf.NegativeInfinity;
-            PropellerCountdown = Mathf.NegativeInfinity;
         }
+
+        parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime) / parachuteDelay;
+
+        parachuteScale = Mathf.Clamp01(parachuteScale);
     }
 
     void WallSliding()
@@ -233,8 +266,10 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(int damage)
     {
-        coinEmitter.Emit(coins);
-        coins = 0;
+        int drop = Mathf.Min(coins, coinsDropRate);
+        coins -= drop;
+
+        coinEmitter.Emit(drop);
     }
 
     void OnCoinCollected(int amount)
@@ -262,6 +297,7 @@ public class PlayerController : MonoBehaviour
         {
             velocity.y = displacement.y = 0;
             isGrounded = true;
+            usingParachute = false;
             transform.SetPositionXy(transform.position.x + movablePlatform.LastFrameDisplacement.x, transform.position.y + movablePlatform.LastFrameDisplacement.y);
             movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
         }
@@ -282,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
                     velocity.y = displacement.y = 0;
                     isGrounded = true;
+                    usingParachute = false;
                     transform.SetPositionX(transform.position.x + movablePlatform.LastFrameDisplacement.x);
                     transform.SetPositionY(transform.position.y + hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias);
                 }
@@ -304,6 +341,7 @@ public class PlayerController : MonoBehaviour
                 displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias;
                 velocity.y = 0;
                 isGrounded = true;
+                usingParachute = false;
             }
         }
         else if (velocity.y > Mathf.Epsilon)
