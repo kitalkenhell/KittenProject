@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeedMin;
     public float jumpSpeedMax;
     public float jumpDuration;
+    public float doubleJumpSpeed;
     public float movablePlatformJumpSpeedInfluence;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
@@ -19,8 +20,9 @@ public class PlayerController : MonoBehaviour
     public float parachuteDelay;
     public float parachuteMaxScale;
     public float parachuteMaxRotation;
-    public float parachuteOpeningSpeed;
-    public float parachuteClosingSpeed;
+    public float parachuteOpenRotateSpeed;
+    public float parachuteClosedRotateSpeed;
+    public float parachuteClosingSpeedFactor;
     public AnimationCurve parachuteOpeningCurve;
     public int coinsDropRate;
     public LayerMask onewayMask;
@@ -44,11 +46,16 @@ public class PlayerController : MonoBehaviour
     float relativeJumpSpeed;
     float jumpingCountdown;
     bool isGrounded;
+    bool doubleJump;
 
     bool isTouchingWall;
     float wallDirection;
 
     bool usingParachute;
+    bool inWindZone;
+    float windZoneAcceleration;
+    float windZoneMaxSpeed;
+    float windZoneHeightLimit;
     float ParachuteCountdown;
     float parachuteScale;
     float parachuteRotation;
@@ -69,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = false;
         isTouchingWall = false;
+        doubleJump = false;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
 
@@ -79,6 +87,9 @@ public class PlayerController : MonoBehaviour
         jumpKeyReleased = true;
         usingParachute = false;
         parachuteScale = 0;
+
+        windZoneAcceleration = 0;
+        windZoneMaxSpeed = 0;
 
         input = 0;
         jumpSpeed = jumpSpeedMin;
@@ -114,15 +125,17 @@ public class PlayerController : MonoBehaviour
             sprite.transform.localScale = scale;
         }
 
+        parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
+        parachuteScale = Mathf.Clamp01(parachuteScale);
         parachute.localScale = Vector3.one * parachuteOpeningCurve.Evaluate(parachuteScale) * parachuteMaxScale;
 
         if (!usingParachute)
         {
-            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosingSpeed * Time.fixedDeltaTime);
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.fixedDeltaTime);
         }
         else
         {
-            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpeningSpeed * Time.fixedDeltaTime);
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
         }
 
         parachutePivot.rotation = Quaternion.Euler(0, 0, parachuteRotation);
@@ -179,35 +192,19 @@ public class PlayerController : MonoBehaviour
 
         if (inputManager.jumpButtonDown)
         {
-            if (jumpingCountdown < 0)
+            if (jumpingCountdown < 0) //stands on the ground and jumps 
             {
-                if (isGrounded && jumpKeyReleased) //stands on the ground and jumps 
+                if (isGrounded && jumpKeyReleased) 
                 {
                     jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
 
                     jumpKeyReleased = false;
                     relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y * movablePlatformJumpSpeedInfluence;
                     isGrounded = false;
+                    doubleJump = false;
                     velocity.y = relativeJumpSpeed;
                     jumpingCountdown = jumpDuration;
                 }
-            }
-
-            if (velocity.y >= 0)
-            {
-                usingParachute = false;
-            }
-            else if (!usingParachute && !isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
-            {
-                usingParachute = true;
-                ParachuteCountdown = parachuteDelay;
-            }
-
-
-            if (usingParachute && ParachuteCountdown < 0 && velocity.y < parachuteFallingSpeed)
-            {
-                jumpKeyReleased = false;
-                velocity.y = parachuteFallingSpeed;
             }
 
             if (jumpingCountdown > 0 && !isTouchingWall) //Don't decrease velocity when jump button is pressed for some time after the jump 
@@ -215,14 +212,61 @@ public class PlayerController : MonoBehaviour
                 velocity.y = relativeJumpSpeed;
             }
 
-            else if (isTouchingWall && !isGrounded  && jumpKeyReleased) //bouncing off the wall
+            else if (isTouchingWall && !isGrounded && jumpKeyReleased) //bouncing off the wall
             {
                 jumpKeyReleased = false;
                 isTouchingWall = false;
+                doubleJump = false;
                 disableControlsCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
                 runningMotrSpeed = wallDirection * wallBounceVelocity.x;
                 velocity = new Vector2(runningMotrSpeed, wallBounceVelocity.y);
+            }
+
+            //Parachute
+            if (!isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
+            {
+                if (doubleJump)
+                {
+                    if (!usingParachute && velocity.y < 0)
+                    {
+                        usingParachute = true;
+                        ParachuteCountdown = parachuteDelay;
+                    }
+                }
+                else
+                {
+                    jumpKeyReleased = false;
+                    isGrounded = false;
+                    velocity.y = doubleJumpSpeed;
+                    doubleJump = true;
+                }
+            }
+
+            if (usingParachute && ParachuteCountdown < 0)
+            {
+                jumpKeyReleased = false;
+
+                if (inWindZone)
+                {
+                    if (transform.position.y > windZoneHeightLimit && velocity.y < 0)
+                    {
+                        velocity.y = Mathf.MoveTowards(velocity.y, 0, Time.deltaTime * windZoneAcceleration);
+                    }
+
+                    else if (velocity.y < windZoneMaxSpeed)
+                    {
+                        velocity.y = Mathf.MoveTowards(velocity.y, windZoneMaxSpeed, Time.deltaTime * windZoneAcceleration);
+                    }
+                }
+                else
+                {
+                    if (velocity.y < parachuteFallingSpeed)
+                    {
+                        velocity.y = parachuteFallingSpeed;
+                    }
+                }
+                
             }
         }
         else
@@ -232,10 +276,6 @@ public class PlayerController : MonoBehaviour
             relativeJumpSpeed = jumpSpeed;
             jumpingCountdown = Mathf.NegativeInfinity;
         }
-
-        parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime) / parachuteDelay;
-
-        parachuteScale = Mathf.Clamp01(parachuteScale);
     }
 
     void WallSliding()
@@ -250,9 +290,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void EnterWindZone(float windSpeed, float windAcceleration, float windHeightLimit)
+    {
+        inWindZone = true;
+        windZoneAcceleration = windAcceleration;
+        windZoneMaxSpeed = windSpeed;
+        windZoneHeightLimit = windHeightLimit;
+    }
+
+    public void ExitWindZone()
+    {
+        inWindZone = false;
+        windZoneAcceleration = 0;
+        windZoneMaxSpeed = 0;
+    }
+
     public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f)
     {
         pushingForce = force.x;
+        usingParachute = false;
+        doubleJump = true;
 
         if (overrideVelocityX)
         {
@@ -277,6 +334,14 @@ public class PlayerController : MonoBehaviour
         coins += amount;
     }
 
+    void onGrounded()
+    {
+        velocity.y = 0;
+        isGrounded = true;
+        doubleJump = false;
+        usingParachute = false;
+    }
+
     public void Move()
     {
         const float bias = 0.1f;
@@ -295,9 +360,8 @@ public class PlayerController : MonoBehaviour
 
         if (movablePlatform != null && velocity.y <= 0)
         {
-            velocity.y = displacement.y = 0;
-            isGrounded = true;
-            usingParachute = false;
+            onGrounded();
+            displacement.y = 0;
             transform.SetPositionXy(transform.position.x + movablePlatform.LastFrameDisplacement.x, transform.position.y + movablePlatform.LastFrameDisplacement.y);
             movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
         }
@@ -316,9 +380,8 @@ public class PlayerController : MonoBehaviour
                 {
                     movablePlatformCollider = hit.collider.GetComponent<BoxCollider2D>();
 
-                    velocity.y = displacement.y = 0;
-                    isGrounded = true;
-                    usingParachute = false;
+                    onGrounded();
+                    displacement.y = 0;
                     transform.SetPositionX(transform.position.x + movablePlatform.LastFrameDisplacement.x);
                     transform.SetPositionY(transform.position.y + hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias);
                 }
@@ -338,10 +401,8 @@ public class PlayerController : MonoBehaviour
             hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y),bias), obstaclesMask | onewayMask);
             if (hit.collider != null && hit.collider.bounds.max.y < boxCollider.bounds.min.y)
             {
+                onGrounded();
                 displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias;
-                velocity.y = 0;
-                isGrounded = true;
-                usingParachute = false;
             }
         }
         else if (velocity.y > Mathf.Epsilon)
