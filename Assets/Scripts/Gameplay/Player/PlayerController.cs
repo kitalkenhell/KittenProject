@@ -24,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public float parachuteClosedRotateSpeed;
     public float parachuteClosingSpeedFactor;
     public AnimationCurve parachuteOpeningCurve;
+    public float parachuteRandomRotationAmplitude;
+    public float parachuteRandomRotationFrequency;
+    public AnimationCurve parachuteRandomRotationCurve;
     public int coinsDropRate;
     public LayerMask onewayMask;
     public LayerMask obstaclesMask;
@@ -59,6 +62,8 @@ public class PlayerController : MonoBehaviour
     float ParachuteCountdown;
     float parachuteScale;
     float parachuteRotation;
+    float parachuteRandomRotationOffset;
+    float usingParachuteTimer;
 
     float pushingForce;
 
@@ -131,11 +136,30 @@ public class PlayerController : MonoBehaviour
 
         if (!usingParachute)
         {
+            usingParachuteTimer = 0;
             parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.fixedDeltaTime);
         }
         else
         {
-            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+            if (Mathf.Approximately(input, 0))
+            {
+                const float phaseShift = 0.5f;
+
+                parachuteRandomRotationOffset = Mathf.PingPong(usingParachuteTimer * parachuteRandomRotationFrequency + phaseShift, 1.0f);
+                parachuteRandomRotationOffset *= parachuteRandomRotationCurve.Evaluate(parachuteRandomRotationOffset);
+                parachuteRandomRotationOffset = parachuteRandomRotationOffset * 2 - 1; //scale form 0 - 1 to -1 - 1
+                parachuteRandomRotationOffset *= parachuteRandomRotationAmplitude * Mathf.Clamp01(usingParachuteTimer);
+
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation + parachuteRandomRotationOffset, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+
+                usingParachuteTimer += Time.fixedDeltaTime;
+            }
+            else
+            {
+                usingParachuteTimer = 0;
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+            }
+            
         }
 
         parachutePivot.rotation = Quaternion.Euler(0, 0, parachuteRotation);
@@ -353,7 +377,8 @@ public class PlayerController : MonoBehaviour
         isTouchingWall = false;
         movablePlatformVelocity = Vector2.zero;
 
-        if (velocity.y > 0 || (movablePlatformCollider != null && (boxCollider.bounds.max.x < movablePlatformCollider.bounds.min.x || boxCollider.bounds.min.x > movablePlatformCollider.bounds.max.x)))
+        if (velocity.y > 0 || (movablePlatformCollider != null && 
+            (boxCollider.bounds.max.x < movablePlatformCollider.bounds.min.x || boxCollider.bounds.min.x > movablePlatformCollider.bounds.max.x)))
         {
             movablePlatform = null;
         }
@@ -376,7 +401,8 @@ public class PlayerController : MonoBehaviour
                 movablePlatform = hit.collider.GetComponent<MovablePlatform>();
                 movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
 
-                if (hit.collider.bounds.max.y - movablePlatform.LastFrameDisplacement.y < boxCollider.bounds.min.y + movablePlatform.LastFrameDisplacement.y && (velocity.y <= 0 || movablePlatformVelocity.y > velocity.y))
+                if (hit.collider.bounds.max.y - movablePlatform.LastFrameDisplacement.y < boxCollider.bounds.min.y + movablePlatform.LastFrameDisplacement.y && 
+                    (velocity.y <= 0 || movablePlatformVelocity.y > velocity.y))
                 {
                     movablePlatformCollider = hit.collider.GetComponent<BoxCollider2D>();
 
