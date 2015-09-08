@@ -369,14 +369,18 @@ public class PlayerController : MonoBehaviour
     public void Move()
     {
         const float bias = 0.1f;
+        const float minGravityRayLenght = 0.3f;
 
         Vector2 displacement = velocity * Time.deltaTime;
         RaycastHit2D hit;
+        Vector2 HorizontalMovmentDirection = Vector2.right * Mathf.Sign(velocity.x);
+        bool onSlope = false;
 
         isGrounded = false;
         isTouchingWall = false;
         movablePlatformVelocity = Vector2.zero;
 
+        //Movable Platform
         if (velocity.y > 0 || (movablePlatformCollider != null && 
             (boxCollider.bounds.max.x < movablePlatformCollider.bounds.min.x || boxCollider.bounds.min.x > movablePlatformCollider.bounds.max.x)))
         {
@@ -392,7 +396,7 @@ public class PlayerController : MonoBehaviour
         }
         else 
         {
-            float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), bias) : bias;
+            float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght) : minGravityRayLenght;
 
             hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
             
@@ -422,40 +426,70 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //Vertical Movement
         if (velocity.y < Mathf.Epsilon && movablePlatform == null)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y),bias), obstaclesMask | onewayMask);
-            if (hit.collider != null && hit.collider.bounds.max.y < boxCollider.bounds.min.y)
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
+            if (hit.collider != null)
             {
-                onGrounded();
-                displacement.y = hit.collider.bounds.max.y - boxCollider.bounds.min.y + bias;
+                if ((onewayMask.value & (1 << hit.collider.gameObject.layer)) == 0 || (hit.collider.bounds.max.y < boxCollider.bounds.min.y))
+                {
+                    onGrounded();
+                    displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
+
+                    HorizontalMovmentDirection = Vector3.Cross(hit.normal * Mathf.Sign(velocity.x), Vector3.forward).normalized;
+                    if (!Mathf.Approximately(hit.normal.x, 0))
+                    {
+                        onSlope = true;
+                    }
+                }
             }
         }
         else if (velocity.y > Mathf.Epsilon)
         {
             hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), bias), obstaclesMask);
-            if (hit.collider != null && hit.collider.bounds.min.y > boxCollider.bounds.max.y)
+            if (hit.collider != null)
             {
-                displacement.y = hit.collider.bounds.min.y - boxCollider.bounds.max.y - bias;
+                displacement.y = hit.point.y - boxCollider.bounds.max.y - bias;
                 velocity.y = 0;
             }
         }
 
-        hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.right * Mathf.Sign(displacement.x), Mathf.Max(Mathf.Abs(displacement.x), bias), obstaclesMask);
-        if (hit.collider != null)
+        transform.SetPositionY(transform.position.y + displacement.y);
+
+        //HorizontalMovement
+        if (!onSlope)
         {
-            if (velocity.x < 0 && hit.collider.bounds.max.x < boxCollider.bounds.min.x)
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.right * Mathf.Sign(displacement.x), Mathf.Max(Mathf.Abs(displacement.x), bias), obstaclesMask);
+            if (hit.collider != null)
             {
-                displacement.x = hit.collider.bounds.max.x - boxCollider.bounds.min.x + bias; 
+                if (velocity.x < 0)
+                {
+                    displacement.x = hit.point.x - boxCollider.bounds.min.x + bias;
+                }
+                else if (velocity.x > 0)
+                {
+                    displacement.x = hit.point.x - boxCollider.bounds.max.x - bias;
+                }
+                wallDirection = -Mathf.Sign(velocity.x);
+                isTouchingWall = true;
+                velocity.x = 0;
             }
-            else if (velocity.x > 0 && hit.collider.bounds.min.x > boxCollider.bounds.max.x)
-            {
-                displacement.x = hit.collider.bounds.min.x - boxCollider.bounds.max.x - bias;
-            }
-            wallDirection = -Mathf.Sign(velocity.x);
-            isTouchingWall = true;
-            velocity.x = 0;
+
+            transform.SetPositionX(transform.position.x + displacement.x);
         }
-        transform.SetPositionXy(transform.position.x + displacement.x, transform.position.y + displacement.y);
+        else
+        {
+            displacement = HorizontalMovmentDirection * Mathf.Abs(displacement.x);
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, displacement, displacement.magnitude, obstaclesMask);
+            if (hit.collider != null)
+            {
+                transform.SetPositionXy(transform.position.xy() + displacement.normalized * (hit.distance - bias));
+            }
+            else
+            {
+                transform.SetPositionXy(transform.position.x + displacement.x, transform.position.y + displacement.y);
+            }
+        }
     }
 }
