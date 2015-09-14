@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MeshBuilder : MonoBehaviour
 {
     public Vector3[] vertices;
     public Color[] colors;
-    public int[] triangles; 
+    public int[] triangles;
+
+    public List<int> selectedVertices = new List<int>();
 
     public void BuildQuad()
     {
@@ -44,6 +47,8 @@ public class MeshBuilder : MonoBehaviour
         mesh.vertices = vertices;
         mesh.colors = colors;
         mesh.triangles = triangles;
+
+        selectedVertices.Clear();
     }
 
     public void Refresh()
