@@ -2,17 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MeshBuilder : MonoBehaviour
+[ExecuteInEditMode]
+public class PolygonBuilder : MonoBehaviour
 {
+    public enum SelectionMode
+    {
+        vertex,
+        face
+    };
+
     public Vector3[] vertices;
     public Color[] colors;
     public int[] triangles;
 
-    public List<int> selectedVertices = new List<int>();
+    public SelectionMode selectionMode;
+    public List<int> selection = new List<int>();
 
     public void BuildQuad()
     {
-        Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
+        Mesh polygon = GetComponent<MeshFilter>().sharedMesh;
 
         colors = new Color[] 
         {
@@ -44,19 +52,20 @@ public class MeshBuilder : MonoBehaviour
             3,2,1
         };
 
-        mesh.vertices = vertices;
-        mesh.colors = colors;
-        mesh.triangles = triangles;
+        polygon.vertices = vertices;
+        polygon.colors = colors;
+        polygon.triangles = triangles;
 
-        selectedVertices.Clear();
+        selection.Clear();
     }
 
     public void Refresh()
     {
-        Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
+        Mesh polygon = GetComponent<MeshFilter>().sharedMesh;
 
-        mesh.vertices = vertices;
-        mesh.colors = colors;
-        mesh.triangles = triangles;
+        polygon.vertices = vertices;
+        polygon.colors = colors;
+        polygon.triangles = triangles;
     }
 }
+
