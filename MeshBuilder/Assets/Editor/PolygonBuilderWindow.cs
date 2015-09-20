@@ -32,7 +32,7 @@ class PolygonBuilderWindow : EditorWindow
             {
                 if (GUILayout.Button("Apply color to polygon"))
                 {
-                    for (int i = 0; i < polygon.colors.Length; i++)
+                    for (int i = 0; i < polygon.colors.Count; i++)
                     {
                         polygon.colors[i] = polygon.colors[selectedIdx];
                     }

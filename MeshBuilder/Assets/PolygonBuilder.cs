@@ -11,9 +11,9 @@ public class PolygonBuilder : MonoBehaviour
         face
     };
 
-    public Vector3[] vertices;
-    public Color[] colors;
-    public int[] triangles;
+    public List<Vector3> vertices = new List<Vector3>();
+    public List<Color> colors = new List<Color>();
+    public List<int> triangles = new List<int>();
 
     public SelectionMode selectionMode;
     public List<int> selection = new List<int>();
@@ -22,39 +22,29 @@ public class PolygonBuilder : MonoBehaviour
     {
         Mesh polygon = GetComponent<MeshFilter>().sharedMesh;
 
-        colors = new Color[] 
-        {
-            new Color(1,1,1,1),
-            new Color(1,1,1,1),
-            new Color(1,1,1,1),
-            new Color(1,1,1,1)
-        };
+        polygon.Clear();
 
-        colors = new Color[] 
-        {
-            new Color(Random.value,Random.value,Random.value,1),
-            new Color(Random.value,Random.value,Random.value,1),
-            new Color(Random.value,Random.value,Random.value,1),
-            new Color(Random.value,Random.value,Random.value,1)
-        };
+        triangles.Clear();
+        colors.Clear();
+        vertices.Clear();
 
-        vertices = new Vector3[] 
-        {
-            new Vector3(-0.5f, -0.5f, 0),
-            new Vector3(0.5f, -0.5f, 0),
-            new Vector3(0.5f, 0.5f, 0),
-            new Vector3(-0.5f, 0.5f, 0),
-        };
+        colors.Add(new Color(0, 0, 0, 1));
+        colors.Add(new Color(0, 0, 0, 1));
+        colors.Add(new Color(0, 0, 0, 1));
+        colors.Add(new Color(0, 0, 0, 1));
 
-        triangles = new int[] 
-        {
-            3,1,0,
-            3,2,1
-        };
+        vertices.Add(new Vector3(-0.5f, -0.5f, 0));
+        vertices.Add(new Vector3(0.5f, -0.5f, 0));
+        vertices.Add(new Vector3(0.5f, 0.5f, 0));
+        vertices.Add(new Vector3(-0.5f, 0.5f, 0));
 
-        polygon.vertices = vertices;
-        polygon.colors = colors;
-        polygon.triangles = triangles;
+        triangles.AddRange(new int[]  { 3,1,0, 3,2,1 });
+
+        polygon.vertices = vertices.ToArray();
+        polygon.colors = colors.ToArray();
+        polygon.triangles = triangles.ToArray();
+
+
 
         selection.Clear();
     }
@@ -63,9 +53,11 @@ public class PolygonBuilder : MonoBehaviour
     {
         Mesh polygon = GetComponent<MeshFilter>().sharedMesh;
 
-        polygon.vertices = vertices;
-        polygon.colors = colors;
-        polygon.triangles = triangles;
+        polygon.Clear();
+
+        polygon.vertices = vertices.ToArray();
+        polygon.colors = colors.ToArray();
+        polygon.triangles = triangles.ToArray();
     }
 }
 
