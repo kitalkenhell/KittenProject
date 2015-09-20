@@ -76,6 +76,8 @@ class PolygonBuilderWindow : EditorWindow
 
     void OnSelectionChanged()
     {
+        Debug.Log("CHANGED");
+
         //Repaint();
     } 
 }

@@ -1,9 +1,16 @@
 fileFormatVersion: 2
-guid: 5e849f56df7ae2e498ae70726a59a844
-timeCreated: 1440696347
+guid: 9a11a08bca1a55e4fac3717edc9e4162
+timeCreated: 1442674434
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Spikes_0
+    21300002: Spikes_1
+    21300004: Spikes_2
+    21300006: Spikes_3
+    21300008: Spikes_4
+    21300010: Spikes_5
+    21300012: Spikes_6
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,26 +36,77 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 2
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  allowsAlphaSplitting: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 40
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Spikes_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 170
+        height: 373
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Spikes_1
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 17
+        width: 217
+        height: 115
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Spikes_4
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 23
+        width: 245
+        height: 96
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Spikes_5
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 22
+        width: 35
+        height: 248
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Spikes_6
+      rect:
+        serializedVersion: 2
+        x: 991
+        y: 31
+        width: 34
+        height: 248
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
