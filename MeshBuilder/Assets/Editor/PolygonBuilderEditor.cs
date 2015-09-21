@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using System;
+using System.Linq;
 
 [CustomEditor(typeof(PolygonBuilder))]
 public class MeshBuilderEditor : Editor
@@ -42,10 +43,11 @@ public class MeshBuilderEditor : Editor
         ProcessEvents();
         Selection();
         Translation();
+        DoubleClick();
         Align();
         Extrude();
         CreateTriangle();
-        DoubleClick();
+        SetProperNormals();
         Delete();
         
         builder.Refresh();
@@ -116,7 +118,8 @@ public class MeshBuilderEditor : Editor
         if (builder.selection.Count == 0)
         {
             Tools.current = UnityEditor.Tool.Move;
-            builder.transform.position = Handles.PositionHandle(builder.transform.position, Quaternion.identity);
+            Handles.color = Color.magenta;
+            builder.transform.position = Handles.FreeMoveHandle(builder.transform.position, Quaternion.identity, vertexButtonPickSize, Vector3.zero, Handles.DotCap);
         }
         else
         {
@@ -127,7 +130,8 @@ public class MeshBuilderEditor : Editor
                 Vector3 position = builder.transform.TransformPoint(handler);
                 Vector3 displacement;
 
-                handler = builder.transform.InverseTransformPoint(Handles.PositionHandle(position, Quaternion.identity));
+                Handles.color = Color.magenta;
+                handler = builder.transform.InverseTransformPoint(Handles.FreeMoveHandle(position, Quaternion.identity, vertexButtonPickSize, Vector3.zero, Handles.RectangleCap));
                 displacement = handler - handlerLastFrame;
 
                 for (int i = 0; i < builder.selection.Count; i++)
@@ -229,8 +233,6 @@ public class MeshBuilderEditor : Editor
             int b = newVertices[i + 1].Second;
             int c = builder.vertices.Count - newVertices.Length + i;
 
-            SetProperNormal(ref a, ref b, ref c);
-
             builder.triangles.Add(a);
             builder.triangles.Add(b);
             builder.triangles.Add(c);
@@ -238,8 +240,6 @@ public class MeshBuilderEditor : Editor
             a = builder.vertices.Count - newVertices.Length + i;
             b = builder.vertices.Count - newVertices.Length + i + 1;
             c = newVertices[i + 1].Second;
-
-            SetProperNormal(ref a, ref b, ref c);
 
             builder.triangles.Add(a);
             builder.triangles.Add(b);
@@ -282,6 +282,7 @@ public class MeshBuilderEditor : Editor
                     builder.selection.Add(i);
                 }
 
+                lastMouseClick = 0;
                 handler = handlerLastFrame = builder.vertices[i];
                 return;
             }
@@ -373,7 +374,11 @@ public class MeshBuilderEditor : Editor
             toRemoveVertices.Add(vertex);
         }
 
+        toRemoveTriangles.Sort();
         toRemoveVertices.Sort();
+
+        toRemoveTriangles = toRemoveTriangles.Distinct().ToList();
+        toRemoveVertices = toRemoveVertices.Distinct().ToList();
 
         for (int i = toRemoveTriangles.Count - 1; i >= 0; i--)
         {
@@ -412,8 +417,6 @@ public class MeshBuilderEditor : Editor
         {
             return;
         }
-
-        SetProperNormal(ref a, ref b, ref c);
 
         builder.triangles.Add(a);
         builder.triangles.Add(b);
@@ -455,15 +458,17 @@ public class MeshBuilderEditor : Editor
         return false;
     }
 
-    void SetProperNormal(ref int a, ref int b, ref int c)
+    void SetProperNormals()
     {
-        if (Vector3.Cross(builder.vertices[a] - builder.vertices[b], builder.vertices[c] - builder.vertices[a]).z < 0)
+        for (int i = 0; i < builder.triangles.Count - 2; i += 3)
         {
-            int newA = c;
-            int newC = a;
 
-            a = newA;
-            c = newC;
+            if (Vector3.Cross(builder.vertices[builder.triangles[i]] - builder.vertices[builder.triangles[i + 1]], builder.vertices[builder.triangles[i + 2]] - builder.vertices[builder.triangles[i]]).z < 0)
+            {
+                int tmp = builder.triangles[i];
+                builder.triangles[i] = builder.triangles[i + 2];
+                builder.triangles[i + 2] = tmp;
+            }
         }
     }
 }
