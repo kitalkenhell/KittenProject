@@ -353,6 +353,7 @@ public class MeshBuilderEditor : Editor
             else if (addVertex)
             {
                 List<int> newTriangles = new List<int>();
+                List<int> toRemoveTriangles = new List<int>();
 
                 builder.vertices.Add(builder.transform.InverseTransformPoint(vertex));
                 builder.colors.Add((builder.colors[edgeBeginIndex] + builder.colors[edgeEndIndex]) / 2.0f);
@@ -361,8 +362,8 @@ public class MeshBuilderEditor : Editor
 
                 for (int i = 0; i < builder.triangles.Count; i += 3)
                 {
+                    
                     int count = 0;
-
                     if (builder.triangles[i] == edgeBeginIndex || builder.triangles[i] == edgeEndIndex) ++count;
                     if (builder.triangles[i + 1] == edgeBeginIndex || builder.triangles[i + 1] == edgeEndIndex) ++count;
                     if (builder.triangles[i + 2] == edgeBeginIndex || builder.triangles[i + 2] == edgeEndIndex) ++count;
@@ -371,19 +372,33 @@ public class MeshBuilderEditor : Editor
                     {
                         int free = 0;
                         
-                        if (builder.triangles[i+1] == edgeBeginIndex || builder.triangles[i+1] == edgeEndIndex) free = 1;
-                        else if (builder.triangles[i+2] == edgeBeginIndex || builder.triangles[i+2] == edgeEndIndex) free = 2;
+                        if (builder.triangles[i+1] != edgeBeginIndex && builder.triangles[i+1] != edgeEndIndex) free = 1;
+                        else if (builder.triangles[i+2] != edgeBeginIndex && builder.triangles[i+2] != edgeEndIndex) free = 2;
 
-                        Debug.Log("" + (i + free) + " " + edgeBeginIndex + " " + (builder.vertices.Count - 1));
+                        Debug.Log("" + builder.triangles[(i + free)] + " " + builder.triangles[edgeBeginIndex] + " " + builder.triangles[(builder.vertices.Count - 1)]);
 
-                        newTriangles.Add(i + free);
+                        newTriangles.Add(builder.triangles[i + free]);
                         newTriangles.Add(edgeBeginIndex);
                         newTriangles.Add(builder.vertices.Count - 1);
 
-                        newTriangles.Add(i + free);
-                        newTriangles.Add(edgeBeginIndex);
+                        newTriangles.Add(builder.triangles[i + free]);
+                        newTriangles.Add(edgeEndIndex);
                         newTriangles.Add(builder.vertices.Count - 1);
+
+                        toRemoveTriangles.Add(i);
+                        toRemoveTriangles.Add(i + 1);
+                        toRemoveTriangles.Add(i + 2);
+
+                        builder.selection.Add(edgeEndIndex);
                     }
+                }
+
+                toRemoveTriangles.Sort();
+                toRemoveTriangles = toRemoveTriangles.Distinct().ToList();
+
+                for (int i = toRemoveTriangles.Count - 1; i >= 0; i--)
+                {
+                    builder.triangles.RemoveAt(toRemoveTriangles[i]);
                 }
 
                 builder.triangles.AddRange(newTriangles);

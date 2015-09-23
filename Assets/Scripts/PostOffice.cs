@@ -13,11 +13,11 @@ public static class PostOffice
     public static event CoinEvent coinCollected;
     public static event CoinEvent coinDropped;
 
-    public static void PostDebugMessage(string message)
+    public static void PostDebugMessage(object message)
     {
         if (debugMessage != null)
         {
-            debugMessage(message);
+            debugMessage(message.ToString());
         }
     }
 
