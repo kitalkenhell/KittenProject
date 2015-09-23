@@ -22,7 +22,7 @@ class PolygonBuilderWindow : EditorWindow
 
         if (polygon.selection.Count == 0)
         {
-
+            
         }
         else
         {
@@ -30,35 +30,45 @@ class PolygonBuilderWindow : EditorWindow
 
             if (polygon.selection.Count == 1)
             {
-                if (GUILayout.Button("Apply color to polygon"))
-                {
-                    for (int i = 0; i < polygon.colors.Count; i++)
-                    {
-                        polygon.colors[i] = polygon.colors[selectedIdx];
-                    }
-                }
+                VertexColorPicker();
             }
             else
             {
-
+                VertexColorPicker();
             }
         }
 
         polygon.Refresh();
     }
 
-    void SigleSelectionMenu()
+    public void OnInspectorUpdate()
     {
-        
-
-        
-
-        CommonMenu();
+        Repaint();
     }
 
-    void CommonMenu()
+    void VertexColorPicker()
     {
+        EditorGUILayout.BeginHorizontal();
+        Color oldColor = polygon.colors[polygon.selection[0]];
+        Color color = EditorGUILayout.ColorField(oldColor);
 
+        if (oldColor != color)
+        {
+            foreach (var index in polygon.selection)
+            {
+                polygon.colors[index] = color;
+            } 
+        }
+
+        EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Apply color to polygon"))
+        {
+            for (int i = 0; i < polygon.colors.Count; i++)
+            {
+                polygon.colors[i] = polygon.colors[selectedIdx];
+            }
+        }
     }
 
 
@@ -74,10 +84,8 @@ class PolygonBuilderWindow : EditorWindow
         return polygon != null;
     }
 
-    void OnSelectionChanged()
+    void OnSelectionChange()
     {
-        Debug.Log("CHANGED");
-
-        //Repaint();
+        Repaint();
     } 
 }

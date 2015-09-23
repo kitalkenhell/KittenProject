@@ -18,7 +18,8 @@ public class MeshBuilderEditor : Editor
     Vector3 handlerLastFrame = Vector3.zero;
     
     bool multiselect = false;
-    bool doubleClick = false;
+    bool addVertexAndTriangle = false;
+    bool addVertex = false;
     bool createTriangle = false;
     bool delete = false;
     bool align = false;
@@ -43,7 +44,7 @@ public class MeshBuilderEditor : Editor
         ProcessEvents();
         Selection();
         Translation();
-        DoubleClick();
+        AddVertex();
         Align();
         Extrude();
         CreateTriangle();
@@ -66,6 +67,7 @@ public class MeshBuilderEditor : Editor
         createTriangle = false;
         align = false;
         extrude = false;
+        addVertex = false;
 
         if (Event.current.control)
         {
@@ -81,7 +83,7 @@ public class MeshBuilderEditor : Editor
             case EventType.mouseDown:
                 if (EditorApplication.timeSinceStartup < lastMouseClick + doubleClickTimeThreshold)
                 {
-                    doubleClick = true;
+                    addVertexAndTriangle = true;
                     lastMouseClick = 0;
                 }
                 else
@@ -108,6 +110,10 @@ public class MeshBuilderEditor : Editor
                     case KeyCode.E:
                         extrude = true;
                         break;
+
+                    case KeyCode.V:
+                        addVertex = true;
+                        break;
                 }
                 break;
         }
@@ -119,7 +125,7 @@ public class MeshBuilderEditor : Editor
         {
             Tools.current = UnityEditor.Tool.Move;
             Handles.color = Color.magenta;
-            builder.transform.position = Handles.FreeMoveHandle(builder.transform.position, Quaternion.identity, vertexButtonPickSize, Vector3.zero, Handles.DotCap);
+            builder.transform.position = Handles.PositionHandle(builder.transform.position, Quaternion.identity);
         }
         else
         {
@@ -131,7 +137,7 @@ public class MeshBuilderEditor : Editor
                 Vector3 displacement;
 
                 Handles.color = Color.magenta;
-                handler = builder.transform.InverseTransformPoint(Handles.FreeMoveHandle(position, Quaternion.identity, vertexButtonPickSize, Vector3.zero, Handles.RectangleCap));
+                handler = builder.transform.InverseTransformPoint(Handles.PositionHandle(position, Quaternion.identity));
                 displacement = handler - handlerLastFrame;
 
                 for (int i = 0; i < builder.selection.Count; i++)
@@ -289,7 +295,7 @@ public class MeshBuilderEditor : Editor
         }
     }
 
-    void DoubleClick()
+    void AddVertex()
     {
         float closest = Mathf.Infinity;
         int closestIndexBegin = 0;
@@ -334,7 +340,7 @@ public class MeshBuilderEditor : Editor
             Handles.DrawLine(builder.transform.TransformPoint(builder.vertices[edgeBeginIndex]), builder.transform.TransformPoint(builder.vertices[edgeEndIndex]));
             Handles.DrawSolidDisc(vertex, Vector3.forward, vertexButtonSize);
 
-            if (doubleClick)
+            if (addVertexAndTriangle)
             {
                 builder.vertices.Add(builder.transform.InverseTransformPoint(vertex));
                 builder.colors.Add((builder.colors[edgeBeginIndex] + builder.colors[edgeEndIndex]) / 2.0f);
@@ -344,9 +350,47 @@ public class MeshBuilderEditor : Editor
                 builder.selection.Add(builder.vertices.Count - 1);
                 handler = handlerLastFrame = builder.vertices[builder.vertices.Count - 1];
             }
+            else if (addVertex)
+            {
+                List<int> newTriangles = new List<int>();
+
+                builder.vertices.Add(builder.transform.InverseTransformPoint(vertex));
+                builder.colors.Add((builder.colors[edgeBeginIndex] + builder.colors[edgeEndIndex]) / 2.0f);
+
+                builder.selection.Clear();
+
+                for (int i = 0; i < builder.triangles.Count; i += 3)
+                {
+                    int count = 0;
+
+                    if (builder.triangles[i] == edgeBeginIndex || builder.triangles[i] == edgeEndIndex) ++count;
+                    if (builder.triangles[i + 1] == edgeBeginIndex || builder.triangles[i + 1] == edgeEndIndex) ++count;
+                    if (builder.triangles[i + 2] == edgeBeginIndex || builder.triangles[i + 2] == edgeEndIndex) ++count;
+
+                    if (count >= 2)
+                    {
+                        int free = 0;
+                        
+                        if (builder.triangles[i+1] == edgeBeginIndex || builder.triangles[i+1] == edgeEndIndex) free = 1;
+                        else if (builder.triangles[i+2] == edgeBeginIndex || builder.triangles[i+2] == edgeEndIndex) free = 2;
+
+                        Debug.Log("" + (i + free) + " " + edgeBeginIndex + " " + (builder.vertices.Count - 1));
+
+                        newTriangles.Add(i + free);
+                        newTriangles.Add(edgeBeginIndex);
+                        newTriangles.Add(builder.vertices.Count - 1);
+
+                        newTriangles.Add(i + free);
+                        newTriangles.Add(edgeBeginIndex);
+                        newTriangles.Add(builder.vertices.Count - 1);
+                    }
+                }
+
+                builder.triangles.AddRange(newTriangles);
+            }
         }
 
-        doubleClick = false;
+        addVertexAndTriangle = false;
     }
 
     void Delete()
