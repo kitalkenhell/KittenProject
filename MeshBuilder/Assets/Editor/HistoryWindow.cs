@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 class HistoryWindow : EditorWindow 
 {
-    List<Object> history = new List<Object>();
+    List<UnityEngine.Object> history = new List<UnityEngine.Object>();
     Vector2 scrollPosition;
+    UnityEngine.Object hoveredObject;
 
     [MenuItem ("Window/History")]
     public static void  ShowWindow() 
@@ -16,36 +18,50 @@ class HistoryWindow : EditorWindow
 
     void OnGUI ()
     {
-
-        GUIStyle style = new GUIStyle();
-
-        style.active.textColor = Color.white;
-
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
-        foreach (Object obj in history)
+        hoveredObject = null;
+
+        foreach (UnityEngine.Object obj in history)
         {
-            //EditorGUILayout.ObjectField(obj, typeof(Object), true);
-            //EditorGUILayout.SelectableLabel(obj.name, GUILayout.Height(17));
-            EditorGUILayout.LabelField(obj.name);
+            string type = obj.GetType().Name;
+            DefaultAsset asset = obj as DefaultAsset;
+
+            type = type.Remove(0, type.IndexOf(".") + 1);
+
+            if (asset != null)
+            {
+                type = AssetDatabase.GetAssetPath(obj);
+            }
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(type, GUILayout.MaxWidth(100));
+            GUILayout.Label(obj.name);
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                hoveredObject = obj;
+            }
+
+            GUILayout.EndHorizontal();
         }
 
         EditorGUILayout.EndScrollView();
 
-
-
-        if (Event.current.type == EventType.MouseDown) 
+        if (Event.current.type == EventType.MouseDown && hoveredObject != null)
         {
-            Debug.Log("Start");
-            DragAndDrop.PrepareStartDrag();
-            DragAndDrop.objectReferences = new Object[] { history[0] };
-            DragAndDrop.StartDrag("Yep");
-            Event.current.Use();
-        }
+
+                DragAndDrop.PrepareStartDrag();
+                DragAndDrop.objectReferences = new UnityEngine.Object[] { hoveredObject };
+                DragAndDrop.StartDrag(hoveredObject.name);
+                Event.current.Use();
+            }
+
+
     }
 
     void OnSelectionChange()
     {
-        Object obj = Selection.activeObject;
+        UnityEngine.Object obj = Selection.activeObject;
 
         if (obj == null)
         {
