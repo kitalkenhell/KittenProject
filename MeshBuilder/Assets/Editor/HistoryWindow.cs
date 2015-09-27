@@ -24,14 +24,8 @@ class HistoryWindow : EditorWindow
         foreach (UnityEngine.Object obj in history)
         {
             string type = obj.GetType().Name;
-            DefaultAsset asset = obj as DefaultAsset;
 
             type = type.Remove(0, type.IndexOf(".") + 1);
-
-            if (asset != null)
-            {
-                type = AssetDatabase.GetAssetPath(obj);
-            }
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(type, GUILayout.MaxWidth(100));
@@ -63,7 +57,7 @@ class HistoryWindow : EditorWindow
     {
         UnityEngine.Object obj = Selection.activeObject;
 
-        if (obj == null)
+        if (obj == null || obj as DefaultAsset != null)
         {
             return;
         }
@@ -79,7 +73,5 @@ class HistoryWindow : EditorWindow
             history.Remove(obj);
             history.Insert(0, Selection.activeObject);
         }
-
-        Debug.Log("OnSelectionChanged: " + history.Count);
     } 
 }
