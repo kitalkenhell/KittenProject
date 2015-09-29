@@ -1,14 +1,39 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 class HistoryWindow : EditorWindow 
 {
-    List<UnityEngine.Object> history = new List<UnityEngine.Object>();
+    class HistoryItem
+    {
+        public UnityEngine.Object obj;
+        public Rect rect;
+
+        public void SetRect(Rect newRect)
+        {
+            this.rect = newRect;
+        }
+
+        public void SetObj(UnityEngine.Object newObj)
+        {
+            this.obj = newObj;
+        }
+
+        public HistoryItem(UnityEngine.Object obj = null)
+        {
+            this.obj = obj;
+            rect = new Rect();
+        }
+    }
+
+    List<HistoryItem> history = new List<HistoryItem>();
     Vector2 scrollPosition;
+    Vector2 lastDragPosition = Vector2.zero;
     UnityEngine.Object hoveredObject;
+    bool select = false;
 
     [MenuItem ("Window/History")]
     public static void  ShowWindow() 
@@ -16,41 +41,73 @@ class HistoryWindow : EditorWindow
         EditorWindow.GetWindow(typeof(HistoryWindow));
     }
 
-    void OnGUI ()
+    void OnGUI()
     {
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         hoveredObject = null;
+        wantsMouseMove = true;
 
-        foreach (UnityEngine.Object obj in history)
+        history.RemoveAll(item => item.obj == null);
+
+        for (int i = 0; i < history.Count; ++i)
         {
-            string type = obj.GetType().Name;
-
-            type = type.Remove(0, type.IndexOf(".") + 1);
+            string type = history[i].obj.GetType().Name;
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(type, GUILayout.MaxWidth(100));
-            GUILayout.Label(obj.name);
+            GUILayout.Label(history[i].obj.name);
+            GUILayout.EndHorizontal();
 
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            if (Event.current.type == EventType.Repaint)
             {
-                hoveredObject = obj;
+                Rect rect = GUILayoutUtility.GetLastRect();
+
+                history[i].SetRect(rect);
             }
 
-            GUILayout.EndHorizontal();
+
+            if (history[i].rect.Contains(Event.current.mousePosition))
+            {
+                hoveredObject = history[i].obj;
+            }
+
+            if (select && history[i].rect.Contains(lastDragPosition))
+            {
+                Selection.activeObject = history[i].obj;
+                select = false;
+            }
         }
 
         EditorGUILayout.EndScrollView();
 
-        if (Event.current.type == EventType.MouseDown && hoveredObject != null)
+        if (Event.current.type == EventType.DragUpdated)
         {
+            lastDragPosition = Event.current.mousePosition;
+        }
+        else if (Event.current.type == EventType.DragExited)
+        {
+            select = true;
+        }
+        else
+        {
+            select = false;
+        }
 
+        if (hoveredObject != null)
+        {
+            if (Event.current.type == EventType.MouseUp)
+            {
+                Selection.activeGameObject = hoveredObject as GameObject;
+            }
+            else if (Event.current.type == EventType.MouseDown)
+            {
                 DragAndDrop.PrepareStartDrag();
                 DragAndDrop.objectReferences = new UnityEngine.Object[] { hoveredObject };
                 DragAndDrop.StartDrag(hoveredObject.name);
-                Event.current.Use();
             }
+        }
 
-
+        SceneView.RepaintAll();
     }
 
     void OnSelectionChange()
@@ -64,14 +121,16 @@ class HistoryWindow : EditorWindow
 
         Repaint();
 
-        if (!history.Contains(obj))
+        if (!history.Any(item => item.obj == obj))
         {
-            history.Insert(0, Selection.activeObject);
+            HistoryItem item = new HistoryItem(Selection.activeObject);
+            history.Insert(0, item);
         }
         else
         {
-            history.Remove(obj);
-            history.Insert(0, Selection.activeObject);
+            //HistoryItem itemToAdd = new HistoryItem(Selection.activeObject);
+            //history.RemoveAll(item => item.obj == obj);
+            //history.Insert(0, itemToAdd);
         }
     } 
 }

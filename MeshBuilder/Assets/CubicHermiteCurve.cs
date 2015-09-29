@@ -14,20 +14,23 @@ public class CubicHermiteCurve : MonoBehaviour
     public void Refresh()
     {
         path.Clear();
+
         path.Add(begin);
-        int steps = 20;
+        
+        int steps = 500;
 
         for (int t = 0; t < steps; t++)
         {
             float s = (float)t / (float)steps;   
-            float h1 = 2 * s * s * s - 3 * s * s + 1;          
-            float h2 = -2 * s * s * s + 3 * s * s;             
-            float h3 = s * s * s - 2 * s * s * s + s;         
-            float h4 = s * s * s - s * s;
-            Vector2 p = h1 * begin +  h2 * end + h3 * tangentBegin + h4 * tangentEnd;
+            float h1 = 2 * pow3(s) - 3 * pow2(s) + 1;          
+            float h2 = -2 * pow3(s) + 3 * pow2(s);
+            float h3 = pow3(s) - 2 * pow2(s) + s;         
+            float h4 = pow3(s) - pow2(s);
+            Vector2 p = h1 * begin + h2 * end + h3 * tangentBegin * 3 + h4 * -tangentEnd * 3;
 
             path.Add(p);
         }
+        path.Add(end);
     }
 
     public void Reset()
@@ -36,5 +39,15 @@ public class CubicHermiteCurve : MonoBehaviour
         end = Vector2.one;
         tangentBegin = Vector2.left;
         tangentEnd = Vector2.right;
+    }
+
+    float pow3(float value)
+    {
+        return value * value * value;
+    }
+
+    float pow2(float value)
+    {
+        return value * value;
     }
 }

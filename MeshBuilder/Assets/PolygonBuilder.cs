@@ -12,11 +12,15 @@ public class PolygonBuilder : MonoBehaviour
     };
 
     public List<Vector3> vertices = new List<Vector3>();
+    public List<Vector2> uvs = new List<Vector2>();
     public List<Color> colors = new List<Color>();
     public List<int> triangles = new List<int>();
 
     public SelectionMode selectionMode;
     public List<int> selection = new List<int>();
+
+    public float uvScale = 1;
+    public Vector3 uvOffset = Vector3.zero;
 
     public void BuildQuad()
     {
@@ -55,7 +59,15 @@ public class PolygonBuilder : MonoBehaviour
 
         polygon.Clear();
 
+        uvs.Clear();
+        uvs.Capacity = vertices.Count;
+        for (int i = 0; i < vertices.Count; ++i)
+        {
+            uvs.Add(vertices[i] * uvScale + uvOffset);
+        }
+
         polygon.vertices = vertices.ToArray();
+        polygon.uv = uvs.ToArray();
         polygon.colors = colors.ToArray();
         polygon.triangles = triangles.ToArray();
     }

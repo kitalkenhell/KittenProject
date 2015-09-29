@@ -24,15 +24,18 @@ public class CubicHermiteCurveEditor : Editor
         curve.end = Handles.FreeMoveHandle(curve.end, Quaternion.identity, 0.25f, Vector3.zero, Handles.DotCap);
 
         Handles.color = Color.red;
-        curve.tangentBegin = Handles.FreeMoveHandle(curve.begin + curve.tangentBegin, Quaternion.identity, 0.25f, Vector3.zero, Handles.DotCap) - 
+        curve.tangentBegin = Handles.FreeMoveHandle(curve.begin + curve.tangentBegin, Quaternion.identity, 0.25f, Vector3.one, Handles.DotCap) - 
             new Vector3(curve.begin.x, curve.begin.y, 0);
-        curve.tangentEnd = Handles.FreeMoveHandle(curve.end + curve.tangentEnd, Quaternion.identity, 0.25f, Vector3.zero, Handles.DotCap) - 
+        curve.tangentEnd = Handles.FreeMoveHandle(curve.end + curve.tangentEnd, Quaternion.identity, 0.25f, Vector3.one, Handles.DotCap) - 
             new Vector3(curve.end.x, curve.end.y, 0);
-
-        Handles.color = Color.white;
-        for (int i = 0; i < curve.path.Count - 1; ++i)
+        
+        if (curve.path.Count >= 2)
         {
-            Handles.DrawLine(curve.path[i], curve.path[i + 1]);
+            Handles.color = Color.white;
+            for (int i = 0; i < curve.path.Count - 1; ++i)
+            {
+                Handles.DrawLine(curve.path[i], curve.path[i + 1]);
+            }
         }
 
         curve.Refresh();

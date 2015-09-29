@@ -10,6 +10,7 @@ public class MeshBuilderEditor : Editor
 {
     const float vertexButtonSize = 0.075f;
     const float vertexButtonPickSize = 0.2f;
+    const float newVertexCircleSize = 0.025f;
     const float doubleClickTimeThreshold = 0.25f;
     const float pickLineDistanceThreshold = 12.0f;
 
@@ -35,6 +36,9 @@ public class MeshBuilderEditor : Editor
         {
             builder.BuildQuad();
         }
+
+        builder.uvScale = EditorGUILayout.FloatField("UV Scale: ", builder.uvScale);
+        builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset: ", -builder.uvOffset);
     }
 
     public void OnSceneGUI()
@@ -338,7 +342,7 @@ public class MeshBuilderEditor : Editor
 
             Handles.color = Color.white;
             Handles.DrawLine(builder.transform.TransformPoint(builder.vertices[edgeBeginIndex]), builder.transform.TransformPoint(builder.vertices[edgeEndIndex]));
-            Handles.DrawSolidDisc(vertex, Vector3.forward, vertexButtonSize);
+            Handles.DrawSolidDisc(vertex, Vector3.forward, newVertexCircleSize);
 
             if (addVertexAndTriangle)
             {
@@ -374,8 +378,6 @@ public class MeshBuilderEditor : Editor
                         
                         if (builder.triangles[i+1] != edgeBeginIndex && builder.triangles[i+1] != edgeEndIndex) free = 1;
                         else if (builder.triangles[i+2] != edgeBeginIndex && builder.triangles[i+2] != edgeEndIndex) free = 2;
-
-                        Debug.Log("" + builder.triangles[(i + free)] + " " + builder.triangles[edgeBeginIndex] + " " + builder.triangles[(builder.vertices.Count - 1)]);
 
                         newTriangles.Add(builder.triangles[i + free]);
                         newTriangles.Add(edgeBeginIndex);
