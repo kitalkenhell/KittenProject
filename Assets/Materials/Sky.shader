@@ -30,7 +30,7 @@
                 return o;
             }
 
-            fixed4 frag(vertOut i:COLOR) : SV_Target 
+            fixed4 frag(vertOut i) : SV_Target 
 			{
                 float2 uv = (i.scrPos.xy/i.scrPos.w);
 				float factor = _ScreenParams.x / _ScreenParams.y / (2.0f);
