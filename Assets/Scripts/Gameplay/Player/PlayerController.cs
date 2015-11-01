@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    Vector2 tmp;
     public float movementSpeed;
     public float acceleration;
     public float friction;
@@ -427,27 +426,32 @@ public class PlayerController : MonoBehaviour
         }
 
         //Vertical Movement
+        const float colliderHeight = 0.05f;
+        const float halfColliderHeight = colliderHeight / 2.0f;
+        Vector2 boxSize = new Vector2(boxCollider.size.x, colliderHeight);
+
         if (velocity.y < Mathf.Epsilon && movablePlatform == null)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
+            Vector2 boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + halfColliderHeight);
+
+            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
             if (hit.collider != null)
             {
-                if ((onewayMask.value & (1 << hit.collider.gameObject.layer)) == 0 || (hit.collider.bounds.max.y < boxCollider.bounds.min.y))
-                {
-                    onGrounded();
-                    displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
+                onGrounded();
+                displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
 
-                    HorizontalMovmentDirection = Vector3.Cross(hit.normal * Mathf.Sign(velocity.x), Vector3.forward).normalized;
-                    if (!Mathf.Approximately(hit.normal.x, 0))
-                    {
-                        onSlope = true;
-                    }
+                HorizontalMovmentDirection = Vector3.Cross(hit.normal * Mathf.Sign(velocity.x), Vector3.forward).normalized;
+                if (!Mathf.Approximately(hit.normal.x, 0))
+                {
+                    onSlope = true;
                 }
             }
         }
         else if (velocity.y > Mathf.Epsilon)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), bias), obstaclesMask);
+            Vector2 boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - halfColliderHeight);
+
+            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), bias), obstaclesMask);
             if (hit.collider != null)
             {
                 displacement.y = hit.point.y - boxCollider.bounds.max.y - bias;
