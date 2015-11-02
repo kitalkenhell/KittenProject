@@ -30,8 +30,8 @@ public class CoinThrower : MonoBehaviour
         {
             const float amplification = 3.0f;
 
-            forceA = ((forceBoundsA.position - transform.position).xy()) * amplification;
-            forceB = ((forceBoundsB.position - transform.position).xy()) * amplification;
+            forceA = ((forceBoundsA.position - transform.position).XY()) * amplification;
+            forceB = ((forceBoundsB.position - transform.position).XY()) * amplification;
 
             float factor = Random.value;
             Vector2 velocity = forceA * factor + forceB * (1 - factor);

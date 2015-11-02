@@ -1,11 +1,12 @@
-﻿Shader "Custom/VertexColored" 
+﻿Shader "PolygonBuilder/VertexColored" 
 {
     Properties {
     }
 
     SubShader 
     {
-        Tags {"Queue" = "Transparent" }
+		Tags { "RenderType" = "Transparent" "Queue" = "Transparent" }
+		Blend SrcAlpha OneMinusSrcAlpha
 		     
         pass
         {
@@ -26,7 +27,7 @@
 				 float4 color : COLOR;
 			 };
 
-			 VertOut vert(VertIn input, float3 normal : NORMAL)
+			 VertOut vert(VertIn input)
 			 {
 				 VertOut output;
 				 output.position = mul(UNITY_MATRIX_MVP,input.vertex);

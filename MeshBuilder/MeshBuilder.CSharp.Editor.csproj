@@ -54,6 +54,9 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -68,6 +71,9 @@
     </Reference>
     <Reference Include="UnityEditor.Networking">
       <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
@@ -119,14 +125,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\CubicHermiteCurveEditor.cs" />
-    <Compile Include="Assets\Editor\HistoryWindow.cs" />
-    <Compile Include="Assets\Editor\PolygonBuilderEditor.cs" />
-    <Compile Include="Assets\Editor\PolygonBuilderWindow.cs" />
-    <Compile Include="Assets\Editor\Utils.cs" />
+    <Compile Include="Assets\PolygonBuilder\Editor\CubicHermiteCurveEditor.cs" />
+    <Compile Include="Assets\PolygonBuilder\Editor\HistoryWindow.cs" />
+    <Compile Include="Assets\PolygonBuilder\Editor\PolygonBuilderEditor.cs" />
+    <Compile Include="Assets\PolygonBuilder\Editor\PolygonBuilderWindow.cs" />
+    <Compile Include="Assets\PolygonBuilder\Editor\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\VertexColored.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\ConicalGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\LinearGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\RadialGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\ReflectiveGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\VertexColored.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

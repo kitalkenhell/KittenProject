@@ -24,7 +24,7 @@ public class Spikes : MonoBehaviour
         {
             active = false;
             player.Hit(damage);
-            player.Push((force.position - transform.position).xy() * amplification, true, true, disableControlsDuration);
+            player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
         }
 
     }

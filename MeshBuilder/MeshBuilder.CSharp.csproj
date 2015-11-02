@@ -54,11 +54,17 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Advertisements.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
@@ -68,11 +74,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CubicHermiteCurve.cs" />
-    <Compile Include="Assets\PolygonBuilder.cs" />
+    <Compile Include="Assets\PolygonBuilder\CubicHermiteCurve.cs" />
+    <Compile Include="Assets\PolygonBuilder\PolygonBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\VertexColored.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\ConicalGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\LinearGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\RadialGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\ReflectiveGradient.shader" />
+    <None Include="Assets\PolygonBuilder\Shaders\VertexColored.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

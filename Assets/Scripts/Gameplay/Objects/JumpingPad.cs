@@ -22,7 +22,7 @@ public class JumpingPad : MonoBehaviour
         if (player != null && active)
         {
             active = false;
-            player.Push((force.position - transform.position).xy() * amplification, true, true, disableControlsDuration);
+            player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
         }
 
     }

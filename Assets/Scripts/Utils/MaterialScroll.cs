@@ -7,7 +7,7 @@ public class MaterialScroll : MonoBehaviour
 	
 	void Start () 
     {
-        material = GetComponent<MeshRenderer>().material;
+        material = GetComponent<MeshRenderer>().sharedMaterial;
 	}
 
     void LateUpdate() 

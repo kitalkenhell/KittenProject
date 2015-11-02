@@ -484,7 +484,7 @@ public class PlayerController : MonoBehaviour
             hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, displacement, displacement.magnitude, obstaclesMask);
             if (hit.collider != null)
             {
-                transform.SetPositionXy(transform.position.xy() + displacement.normalized * (hit.distance - bias));
+                transform.SetPositionXy(transform.position.XY() + displacement.normalized * (hit.distance - bias));
             }
             else
             {

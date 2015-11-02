@@ -3,64 +3,64 @@ using System.Collections;
 
 public static class Vector3Extensions
 {
-    public static Vector2 xx(this Vector3 v)
+    public static Vector2 XX(this Vector3 v)
     {
         return new Vector2(v.x, v.x);
     }
 
-    public static Vector2 xy(this Vector3 v)
+    public static Vector2 XY(this Vector3 v)
     {
         return new Vector2(v.x, v.y);
     }
 
-    public static Vector2 xz(this Vector3 v)
+    public static Vector2 XZ(this Vector3 v)
     {
         return new Vector2(v.x, v.z);
     }
 
-    public static Vector2 yx(this Vector3 v)
+    public static Vector2 YX(this Vector3 v)
     {
         return new Vector2(v.y, v.x);
     }
 
-    public static Vector2 yy(this Vector3 v)
+    public static Vector2 YY(this Vector3 v)
     {
         return new Vector2(v.y, v.y);
     }
 
-    public static Vector2 yz(this Vector3 v)
+    public static Vector2 YZ(this Vector3 v)
     {
         return new Vector2(v.y, v.z);
     }
 
-    public static Vector2 zx(this Vector3 v)
+    public static Vector2 ZX(this Vector3 v)
     {
         return new Vector2(v.z, v.x);
     }
 
-    public static Vector2 zy(this Vector3 v)
+    public static Vector2 ZY(this Vector3 v)
     {
         return new Vector2(v.z, v.y);
     }
 
-    public static Vector2 zz(this Vector3 v)
+    public static Vector2 ZZ(this Vector3 v)
     {
         return new Vector2(v.z, v.z);
     }
 
-    public static void xy(this Vector3 v, Vector2 xy)
+    public static void XY(this Vector3 v, Vector2 xy)
     {
         v.x = xy.x;
         v.y = xy.y;
     }
 
-    public static void xz(this Vector3 v, Vector2 xz)
+    public static void XZ(this Vector3 v, Vector2 xz)
     {
         v.x = xz.x;
         v.z = xz.y;
     }
 
-    public static void yz(this Vector3 v, Vector2 yz)
+    public static void YZ(this Vector3 v, Vector2 yz)
     {
         v.y = yz.x;
         v.z = yz.y;

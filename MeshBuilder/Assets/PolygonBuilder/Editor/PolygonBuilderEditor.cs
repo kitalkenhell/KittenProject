@@ -8,8 +8,9 @@ using System.Linq;
 [CustomEditor(typeof(PolygonBuilder))]
 public class MeshBuilderEditor : Editor
 {
-    const float vertexButtonSize = 0.075f;
+    const float vertexButtonSize = 0.1f;
     const float vertexButtonPickSize = 0.2f;
+    const float gradientHandleSize = 0.075f;
     const float newVertexCircleSize = 0.025f;
     const float doubleClickTimeThreshold = 0.25f;
     const float pickLineDistanceThreshold = 12.0f;
@@ -25,39 +26,63 @@ public class MeshBuilderEditor : Editor
     bool delete = false;
     bool align = false;
     bool extrude = false;
-    double lastMouseClick = 0;
+    bool deselect = false;
+    double lastMouseClickTime = 0;
     Vector2 mousePosition;
     
     public override void OnInspectorGUI()
     {
         PolygonBuilder builder = (PolygonBuilder)target;
+        MeshFilter meshFilter = builder.GetComponent<MeshFilter>();
 
-        if (GUILayout.Button("Build Quad"))
+        if (meshFilter == null || meshFilter.sharedMesh == null)
         {
-            builder.BuildQuad();
+            if (GUILayout.Button("Initialize"))
+            {
+                builder.BuildSquare();
+            }
         }
 
-        builder.uvScale = EditorGUILayout.FloatField("UV Scale: ", builder.uvScale);
-        builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset: ", -builder.uvOffset);
+        builder.uvScale = EditorGUILayout.FloatField("UV Scale", builder.uvScale);
+        builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset", -builder.uvOffset);
+
+        //builder.reflectiveGradientShader = EditorGUILayout.ObjectField(builder.reflectiveGradientShader, typeof(Shader), false) as Shader;
+        //builder.linearGradientShader = EditorGUILayout.ObjectField(builder.linearGradientShader, typeof(Shader), false) as Shader;
+        //builder.radialGradientShader = EditorGUILayout.ObjectField(builder.radialGradientShader, typeof(Shader), false) as Shader;
+        //builder.conicalGradientShader = EditorGUILayout.ObjectField(builder.conicalGradientShader, typeof(Shader), false) as Shader;
+        //builder.vertexColorShader = EditorGUILayout.ObjectField(builder.vertexColorShader, typeof(Shader), false) as Shader;
+
+        builder.renderMode = (PolygonBuilder.RenderMode)EditorGUILayout.EnumPopup("Render Mode: ", builder.renderMode);
+
+        if (builder.renderMode == PolygonBuilder.RenderMode.customMaterial)
+	    {
+		    builder.customMaterial = EditorGUILayout.ObjectField("Custom Material", builder.customMaterial, typeof(Material), false) as Material; 
+	    }
     }
 
     public void OnSceneGUI()
     {
-        builder = (PolygonBuilder)target;
+        builder = (PolygonBuilder) target;
+        MeshFilter meshFilter = builder.GetComponent<MeshFilter>();
 
-        ProcessEvents();
-        Selection();
-        Translation();
-        AddVertex();
-        Align();
-        Extrude();
-        CreateTriangle();
-        SetProperNormals();
-        Delete();
-        
-        builder.Refresh();
+        if (meshFilter != null && meshFilter.sharedMesh != null)
+        {
 
-        SceneView.RepaintAll();
+            ProcessEvents();
+            Selection();
+            Translation();
+            AddVertex();
+            Align();
+            Extrude();
+            CreateTriangle();
+            SetProperNormals();
+            Delete();
+
+            builder.Refresh();
+
+            EditorUtility.SetDirty(builder);
+            SceneView.RepaintAll();
+        }
     }
 
     void ProcessEvents()
@@ -72,6 +97,7 @@ public class MeshBuilderEditor : Editor
         align = false;
         extrude = false;
         addVertex = false;
+        deselect = false;
 
         if (Event.current.control)
         {
@@ -85,14 +111,23 @@ public class MeshBuilderEditor : Editor
         switch (Event.current.type)
         {
             case EventType.mouseDown:
-                if (EditorApplication.timeSinceStartup < lastMouseClick + doubleClickTimeThreshold)
+                if (EditorApplication.timeSinceStartup < lastMouseClickTime + doubleClickTimeThreshold)
                 {
                     addVertexAndTriangle = true;
-                    lastMouseClick = 0;
+                    lastMouseClickTime = 0;
                 }
                 else
                 {
-                    lastMouseClick = EditorApplication.timeSinceStartup;
+                    lastMouseClickTime = EditorApplication.timeSinceStartup;
+                }
+                break;
+
+            case EventType.mouseUp:
+                const int rightMouseButton = 1;
+
+                if (Event.current.button == rightMouseButton)
+                {
+                    deselect = true;
                 }
                 break;
 
@@ -118,6 +153,10 @@ public class MeshBuilderEditor : Editor
                     case KeyCode.V:
                         addVertex = true;
                         break;
+
+                    case KeyCode.Escape:
+                        deselect = true;
+                        break;
                 }
                 break;
         }
@@ -127,9 +166,21 @@ public class MeshBuilderEditor : Editor
     {
         if (builder.selection.Count == 0)
         {
-            Tools.current = UnityEditor.Tool.Move;
-            Handles.color = Color.magenta;
-            builder.transform.position = Handles.PositionHandle(builder.transform.position, Quaternion.identity);
+            Vector3 middle = Vector3.zero;
+            Vector3 displacement; 
+
+            foreach (var vertex in builder.vertices)
+            {
+                middle += vertex;
+            }
+
+            middle /= builder.vertices.Count;
+            displacement = middle;
+
+            middle = builder.transform.InverseTransformPoint(Handles.PositionHandle(builder.transform.TransformPoint(middle), Quaternion.identity));
+            displacement = middle - displacement;
+
+            builder.transform.position += displacement;
         }
         else
         {
@@ -158,7 +209,6 @@ public class MeshBuilderEditor : Editor
     {
         Vector2 distance = Vector2.zero;
         
-
         for (int i = 0; i < builder.selection.Count - 1; ++i)
         {
             distance.x += Mathf.Abs(builder.vertices[builder.selection[i]].x - builder.vertices[builder.selection[i + 1]].x);
@@ -292,10 +342,29 @@ public class MeshBuilderEditor : Editor
                     builder.selection.Add(i);
                 }
 
-                lastMouseClick = 0;
+                lastMouseClickTime = 0;
                 handler = handlerLastFrame = builder.vertices[i];
                 return;
             }
+        }
+
+        if (builder.renderMode == PolygonBuilder.RenderMode.conicalGradient ||
+            builder.renderMode == PolygonBuilder.RenderMode.linearGradient ||
+            builder.renderMode == PolygonBuilder.RenderMode.radialGradient ||
+            builder.renderMode == PolygonBuilder.RenderMode.reflectiveGradient)
+        {
+            Handles.color = Color.magenta;
+            for (int i = 0; i < builder.gradientPoints.Count; ++i)
+            {
+                Vector4 position = builder.transform.TransformPoint(builder.gradientPoints[i].position);
+                position = Handles.FreeMoveHandle(position, Quaternion.identity, gradientHandleSize, Vector3.one, Handles.DotCap);
+                builder.gradientPoints[i].position = builder.transform.InverseTransformPoint(position);
+            }
+        }
+
+        if (deselect)
+        {
+            builder.selection.Clear();
         }
     }
 

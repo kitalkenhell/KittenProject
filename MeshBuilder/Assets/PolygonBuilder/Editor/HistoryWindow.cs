@@ -107,7 +107,7 @@ class HistoryWindow : EditorWindow
             }
         }
 
-        SceneView.RepaintAll();
+        Repaint();
     }
 
     void OnSelectionChange()
