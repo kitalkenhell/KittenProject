@@ -11,21 +11,14 @@ public class SortSprites : MonoBehaviour
     [MenuItem("Ulility/Sort Sprites")]
     static void Sort()
     {
-        const float offset = 0.02f;
+        const float offset = 0.03f;
 
-        SpriteRenderer[] sprites = FindObjectsOfType<SpriteRenderer>();
-        string[] layers = GetSortingLayerNames();
+        Renderer[] sprites = FindObjectsOfType<Renderer>();
+        string[] layers = EditorUtils.GetSortingLayerNames();
 
         foreach (var sprite in sprites)
         {
             sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.sortingLayerName));
         }
-    }
-
-    static string[] GetSortingLayerNames()
-    {
-        Type internalEditorUtilityType = typeof(InternalEditorUtility);
-        PropertyInfo sortingLayersProperty = internalEditorUtilityType.GetProperty("sortingLayerNames", BindingFlags.Static | BindingFlags.NonPublic);
-        return (string[])sortingLayersProperty.GetValue(null, new object[0]);
     }
 }

@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System;
+using System.Reflection;
 
-class Utils
+public class Utils
 {
     public static float RandomSign()
     {
-        return Random.value < 0.5f ? -1.0f : 1.0f;
+        return UnityEngine.Random.value < 0.5f ? -1.0f : 1.0f;
     }
 }
 
