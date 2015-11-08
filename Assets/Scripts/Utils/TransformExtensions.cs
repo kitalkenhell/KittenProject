@@ -18,32 +18,32 @@ public static class TransformExtensions
         t.position = new Vector3(t.position.x, t.position.y, z);
     }
 
-    public static void SetPositionXy(this Transform t, float x, float y)
+    public static void SetPositionXY(this Transform t, float x, float y)
     {
         t.position = new Vector3(x, y, t.position.z);
     }
 
-    public static void SetPositionXz(this Transform t, float x, float z)
+    public static void SetPositionXZ(this Transform t, float x, float z)
     {
         t.position = new Vector3(x, t.position.y, z);
     }
 
-    public static void SetPositionYz(this Transform t, float y, float z)
+    public static void SetPositionYZ(this Transform t, float y, float z)
     {
         t.position = new Vector3(t.position.x, y, z);
     }
 
-    public static void SetPositionXy(this Transform t, Vector2 v)
+    public static void SetPositionXY(this Transform t, Vector2 v)
     {
         t.position = new Vector3(v.x, v.y, t.position.z);
     }
 
-    public static void SetPositionXz(this Transform t, Vector2 v)
+    public static void SetPositionXZ(this Transform t, Vector2 v)
     {
         t.position = new Vector3(v.x, t.position.y, v.y);
     }
 
-    public static void SetPositionYz(this Transform t, Vector2 v)
+    public static void SetPositionYZ(this Transform t, Vector2 v)
     {
         t.position = new Vector3(t.position.x, v.x, v.y);
     }

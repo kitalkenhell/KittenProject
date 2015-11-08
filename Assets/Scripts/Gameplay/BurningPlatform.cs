@@ -11,10 +11,6 @@ public class BurningPlatform : MonoBehaviour
     public float maxScale;
     public AnimationCurve scaleCurve;
     public Transform force;
-    public Transform leftLeg;
-    public Transform rightLeg;
-    public GameObject leftFlame;
-    public GameObject rightFlame;
 
     float counter;
     float decreaseCounter;
@@ -25,13 +21,6 @@ public class BurningPlatform : MonoBehaviour
         counter = 0;
         decreaseCounter = 0;
         active = true;
-        leftFlame.SetActive(false);
-        rightFlame.SetActive(false);
-    }
-
-    void Update()
-    {
-        UpdateFlames();
     }
 
     IEnumerator DecreaseCounter()
@@ -47,17 +36,12 @@ public class BurningPlatform : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
-
-        leftFlame.SetActive(false);
-        rightFlame.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         active = true;
         StopAllCoroutines();
-        leftFlame.SetActive(true);
-        rightFlame.SetActive(true);
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -77,18 +61,6 @@ public class BurningPlatform : MonoBehaviour
                 player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
             }
         }
-    }
-
-    void UpdateFlames()
-    {
-        float targetScale = counter / delay;
-        targetScale = scaleCurve.Evaluate(targetScale);
-
-        leftFlame.transform.position = leftLeg.position;
-        rightFlame.transform.position = rightLeg.position;
-
-        leftFlame.transform.localScale = Vector3.one * targetScale * maxScale;
-        rightFlame.transform.localScale = Vector3.one * targetScale * maxScale;
     }
 
     void OnTriggerExit2D(Collider2D other)

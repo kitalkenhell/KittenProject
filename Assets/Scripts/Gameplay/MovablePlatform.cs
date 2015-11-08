@@ -21,8 +21,8 @@ public class MovablePlatform : MonoBehaviour
     float speed;
     Vector2 velocity;
     States state;
-    Vector3 lastFramePosition;
-    Vector3 displacement;
+    Vector2 lastFramePosition;
+    Vector2 displacement;
     Vector2 lastFrameDisplacement;
 
     public Vector2 LastFrameDisplacement
@@ -38,7 +38,8 @@ public class MovablePlatform : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         currentWaypoint = 0;
-        lastFramePosition = transform.position = waypoints[currentWaypoint].transform.position;
+        transform.SetPositionXY(waypoints[currentWaypoint].transform.position);
+        lastFramePosition = transform.position;
         moveForward = true;
         speed = 0;
         velocity = Vector2.zero;
@@ -52,7 +53,7 @@ public class MovablePlatform : MonoBehaviour
 
     public void Update()
     {
-        lastFrameDisplacement = transform.position - lastFramePosition;
+        lastFrameDisplacement = transform.position.XY() - lastFramePosition;
         lastFramePosition = transform.position;
     }
 
@@ -60,7 +61,7 @@ public class MovablePlatform : MonoBehaviour
     {
 
         Waypoint current = waypoints[currentWaypoint];
-        float distance = Vector3.Distance(transform.position, current.transform.position);
+        float distance = Vector2.Distance(transform.position, current.transform.position);
 
         if (state == States.wait)
         {
@@ -97,7 +98,7 @@ public class MovablePlatform : MonoBehaviour
             displacement = current.transform.position - transform.position;
         }
 
-        body.MovePosition(transform.position + displacement);
+        body.MovePosition(transform.position.XY() + displacement);
 	}
 
     public int SetNextWaypoint()
