@@ -6,7 +6,9 @@ public class SpinningAxe : MonoBehaviour
     public AnimationCurve positionCurve;
     public float maxAngle = 45.0f;
     public float frequency = 1.0f;
-    public float force = 20.0f;
+    public Vector2 forceMultiplier;
+    public Vector2 force;
+    public float disableControlsDuraton;
 
     Rigidbody2D body;
     float speed = 0;
@@ -23,7 +25,10 @@ public class SpinningAxe : MonoBehaviour
 
         if (player != null)
         {
-            player.Push(new Vector2(force * speed, Mathf.Abs(force * speed)));
+            player.Push(new Vector2(forceMultiplier.x * speed + force.x * Mathf.Sign(speed), forceMultiplier.y * Mathf.Abs(speed) + force.y),
+                true, true, disableControlsDuraton);
+
+            player.Hit();
         }
     }
 

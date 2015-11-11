@@ -382,7 +382,7 @@ public class PlayerController : MonoBehaviour
         disableControlsCountdown = disableControlsDuration;
     }
 
-    public void Hit(int damage)
+    public void Hit(int damage = 1)
     {
         int drop = Mathf.Min(coins, coinsDropRate);
         coins -= drop;

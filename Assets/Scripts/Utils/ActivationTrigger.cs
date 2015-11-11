@@ -19,7 +19,7 @@ public class ActivationTrigger : MonoBehaviour
         }
         else if (disableOnEnter)
         {
-            target.SetActive(true);
+            target.SetActive(false);
         }
 
         if (disableSelfOnEnter)
@@ -37,7 +37,7 @@ public class ActivationTrigger : MonoBehaviour
         }
         else if (disableOnExit)
         {
-            target.SetActive(true);
+            target.SetActive(false);
         }
 
         if (disableSelfOnExit)

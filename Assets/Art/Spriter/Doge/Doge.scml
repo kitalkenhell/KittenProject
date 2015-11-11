@@ -13,20 +13,20 @@
         <file id="9" name="tounge.png" width="35" height="66" pivot_x="0.6" pivot_y="0.878788"/>
     </folder>
     <entity id="0" name="Doge">
-        <obj_info name="tail_000" type="bone" w="77.0024" h="10"/>
+        <obj_info name="bone_tail" type="bone" w="77.0024" h="10"/>
         <obj_info name="tougue" type="bone" w="58.8931" h="10"/>
-        <obj_info name="mouth_000" type="bone" w="38.7265" h="10"/>
-        <obj_info name="hair_000" type="bone" w="46.7811" h="10"/>
-        <obj_info name="eyeSmall_000" type="bone" w="27.4312" h="10"/>
-        <obj_info name="eyeBIg" type="bone" w="36.2993" h="10"/>
-        <obj_info name="nose_000" type="bone" w="66.9403" h="10"/>
-        <obj_info name="ear_000" type="bone" w="72.0997" h="10"/>
-        <obj_info name="legFront_000" type="bone" w="46.802" h="10"/>
-        <obj_info name="legBack_001" type="bone" w="52.4442" h="10"/>
-        <obj_info name="body_000" type="bone" w="117.753" h="10"/>
+        <obj_info name="bone_mouth" type="bone" w="38.7265" h="10"/>
+        <obj_info name="bone_hair" type="bone" w="46.7811" h="10"/>
+        <obj_info name="bone_eyeSmall" type="bone" w="27.4312" h="10"/>
+        <obj_info name="bone_eyeBIg" type="bone" w="36.2993" h="10"/>
+        <obj_info name="bone_nose" type="bone" w="66.9403" h="10"/>
+        <obj_info name="bone_ear" type="bone" w="72.0997" h="10"/>
+        <obj_info name="bone_legFront" type="bone" w="46.802" h="10"/>
+        <obj_info name="bone_legBack" type="bone" w="52.4442" h="10"/>
+        <obj_info name="bone_body" type="bone" w="117.753" h="10"/>
         <animation id="0" name="Idle" length="1000" interval="100">
             <mainline>
-                <key id="0" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="0">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -50,7 +50,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="1" time="249" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="1" time="249">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -74,7 +74,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="2" time="500" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="2" time="500" curve_type="instant">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -98,7 +98,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="1" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="3" time="750" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="3" time="750">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -181,27 +181,27 @@
                     <object folder="0" file="7" x="-3.568239" y="-2.901411" angle="359.309723"/>
                 </key>
             </timeline>
-            <timeline id="11" obj="10" name="body_000" object_type="bone">
+            <timeline id="11" obj="10" name="bone_body" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-12.096774" y="-16.129032" angle="270.784825"/>
                 </key>
             </timeline>
-            <timeline id="12" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="12" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="91.705934" y="-76.263282" angle="0.977566"/>
                 </key>
             </timeline>
-            <timeline id="13" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="13" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="100.101081" y="65.570516" angle="1.190109"/>
                 </key>
             </timeline>
-            <timeline id="14" obj="7" name="ear_000" object_type="bone">
+            <timeline id="14" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-66.365846" y="42.042012" angle="322.857978"/>
                 </key>
             </timeline>
-            <timeline id="15" obj="0" name="tail_000" object_type="bone">
+            <timeline id="15" obj="0" name="bone_tail" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="-6.799013" y="-124.311911" angle="308.203393"/>
                 </key>
@@ -215,27 +215,27 @@
                     <bone x="-6.799013" y="-124.311911" angle="294.340287"/>
                 </key>
             </timeline>
-            <timeline id="16" obj="6" name="nose_000" object_type="bone">
+            <timeline id="16" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="17" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="17" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="18" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="18" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="19" obj="3" name="hair_000" object_type="bone">
+            <timeline id="19" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
             </timeline>
-            <timeline id="20" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="20" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>
@@ -300,12 +300,12 @@
                     <object_ref id="10" parent="5" timeline="21" key="0" z_index="10"/>
                 </key>
             </mainline>
-            <timeline id="0" obj="10" name="body_000" object_type="bone">
+            <timeline id="0" obj="10" name="bone_body" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-4.015966" y="-16.129032" angle="8.214377"/>
                 </key>
             </timeline>
-            <timeline id="1" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="1" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0">
                     <bone x="102.94872" y="-78.36372" angle="294.220744"/>
                 </key>
@@ -313,7 +313,7 @@
                     <bone x="98.186144" y="-111.355067" angle="35.697192"/>
                 </key>
             </timeline>
-            <timeline id="2" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="2" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="124.894134" y="104.702004" angle="31.76134"/>
                 </key>
@@ -321,37 +321,37 @@
                     <bone x="120.131558" y="71.710657" angle="336.24628"/>
                 </key>
             </timeline>
-            <timeline id="3" obj="7" name="ear_000" object_type="bone">
+            <timeline id="3" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-66.365846" y="42.042012" angle="296.972478"/>
                 </key>
             </timeline>
-            <timeline id="4" obj="0" name="tail_000" object_type="bone">
+            <timeline id="4" obj="0" name="bone_tail" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-6.799013" y="-124.311911" angle="308.203393"/>
                 </key>
             </timeline>
-            <timeline id="5" obj="6" name="nose_000" object_type="bone">
+            <timeline id="5" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="6" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="6" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="7" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="7" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="8" obj="3" name="hair_000" object_type="bone">
+            <timeline id="8" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
             </timeline>
-            <timeline id="9" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="9" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>
@@ -419,7 +419,7 @@
         </animation>
         <animation id="2" name="Run" length="400" interval="100">
             <mainline>
-                <key id="0" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="0">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -443,7 +443,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="1" time="100" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="1" time="100">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="1"/>
                     <bone_ref id="2" parent="0" timeline="13" key="1"/>
@@ -467,7 +467,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="2" time="199" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="2" time="199">
                     <bone_ref id="0" timeline="11" key="1"/>
                     <bone_ref id="1" parent="0" timeline="12" key="2"/>
                     <bone_ref id="2" parent="0" timeline="13" key="2"/>
@@ -491,7 +491,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="3" time="300" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="3" time="300">
                     <bone_ref id="0" timeline="11" key="1"/>
                     <bone_ref id="1" parent="0" timeline="12" key="3"/>
                     <bone_ref id="2" parent="0" timeline="13" key="3"/>
@@ -571,7 +571,7 @@
                     <object folder="0" file="7" x="-3.568239" y="-2.901411" angle="359.309723"/>
                 </key>
             </timeline>
-            <timeline id="11" obj="10" name="body_000" object_type="bone">
+            <timeline id="11" obj="10" name="bone_body" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-12.096774" y="-16.129032" angle="270.784825"/>
                 </key>
@@ -579,7 +579,7 @@
                     <bone x="-11.227209" y="-8.302945" angle="270.784825"/>
                 </key>
             </timeline>
-            <timeline id="12" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="12" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="91.705934" y="-76.263282" angle="0.977566"/>
                 </key>
@@ -593,7 +593,7 @@
                     <bone x="91.705934" y="-76.263282" angle="40.025325"/>
                 </key>
             </timeline>
-            <timeline id="13" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="13" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="100.101081" y="65.570516" angle="50.938713"/>
                 </key>
@@ -607,7 +607,7 @@
                     <bone x="100.101081" y="65.570516" angle="3.058904"/>
                 </key>
             </timeline>
-            <timeline id="14" obj="7" name="ear_000" object_type="bone">
+            <timeline id="14" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
@@ -615,7 +615,7 @@
                     <bone x="-69.755974" y="42.088452" angle="317.304112"/>
                 </key>
             </timeline>
-            <timeline id="15" obj="0" name="tail_000" object_type="bone">
+            <timeline id="15" obj="0" name="bone_tail" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="-6.799013" y="-124.311911" angle="277.742695"/>
                 </key>
@@ -623,7 +623,7 @@
                     <bone x="-6.799013" y="-124.311911" angle="254.042817"/>
                 </key>
             </timeline>
-            <timeline id="16" obj="6" name="nose_000" object_type="bone">
+            <timeline id="16" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
@@ -631,7 +631,7 @@
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="17" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="17" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
@@ -639,7 +639,7 @@
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="18" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="18" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
@@ -647,7 +647,7 @@
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="19" obj="3" name="hair_000" object_type="bone">
+            <timeline id="19" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
@@ -655,7 +655,7 @@
                     <bone x="-127.562049" y="49.332535" angle="357.732667"/>
                 </key>
             </timeline>
-            <timeline id="20" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="20" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>
@@ -674,7 +674,7 @@
         </animation>
         <animation id="3" name="Jump" length="700" interval="100" looping="false">
             <mainline>
-                <key id="0" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="0">
                     <bone_ref id="0" timeline="11" key="0"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -698,7 +698,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="1" time="284" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="1" time="284">
                     <bone_ref id="0" timeline="11" key="1"/>
                     <bone_ref id="1" parent="0" timeline="12" key="0"/>
                     <bone_ref id="2" parent="0" timeline="13" key="0"/>
@@ -722,7 +722,7 @@
                     <object_ref id="9" parent="10" timeline="9" key="0" z_index="9"/>
                     <object_ref id="10" parent="5" timeline="10" key="0" z_index="10"/>
                 </key>
-                <key id="2" time="350" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="2" time="350">
                     <bone_ref id="0" timeline="11" key="1"/>
                     <bone_ref id="1" parent="0" timeline="12" key="1"/>
                     <bone_ref id="2" parent="0" timeline="13" key="1"/>
@@ -859,18 +859,18 @@
                     <object folder="0" file="7" x="-3.568239" y="-2.901411" angle="359.309723"/>
                 </key>
             </timeline>
-            <timeline id="11" obj="10" name="body_000" object_type="bone">
-                <key id="0" curve_type="cubic" c1="0.995261" c2="0.9953">
+            <timeline id="11" obj="10" name="bone_body" object_type="bone">
+                <key id="0">
                     <bone x="-12.096774" y="-16.129032" angle="270.784825"/>
                 </key>
-                <key id="1" time="284" curve_type="cubic" c1="0" c2="0.995261" spin="-1">
+                <key id="1" time="284" spin="-1">
                     <bone x="-12.096774" y="-16.129032" angle="277.330894"/>
                 </key>
                 <key id="2" time="700" curve_type="cubic" c1="0" c2="0.995261">
                     <bone x="-12.096774" y="-16.129032" angle="267.866375"/>
                 </key>
             </timeline>
-            <timeline id="12" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="12" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="91.705934" y="-76.263282" angle="0.977566"/>
                 </key>
@@ -881,7 +881,7 @@
                     <bone x="93.82486" y="-82.922765" angle="311.432372"/>
                 </key>
             </timeline>
-            <timeline id="13" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="13" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0">
                     <bone x="100.101081" y="65.570516" angle="357.878718"/>
                 </key>
@@ -892,7 +892,7 @@
                     <bone x="106.351914" y="78.193263" angle="57.006851"/>
                 </key>
             </timeline>
-            <timeline id="14" obj="7" name="ear_000" object_type="bone">
+            <timeline id="14" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" curve_type="cubic" c1="0" c2="0.995261" spin="-1">
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
@@ -903,7 +903,7 @@
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
             </timeline>
-            <timeline id="15" obj="0" name="tail_000" object_type="bone">
+            <timeline id="15" obj="0" name="bone_tail" object_type="bone">
                 <key id="0">
                     <bone x="-6.799013" y="-124.311911" angle="277.742695"/>
                 </key>
@@ -914,7 +914,7 @@
                     <bone x="-6.799013" y="-124.311911" angle="238.234247"/>
                 </key>
             </timeline>
-            <timeline id="16" obj="6" name="nose_000" object_type="bone">
+            <timeline id="16" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
@@ -925,7 +925,7 @@
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="17" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="17" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
@@ -936,7 +936,7 @@
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="18" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="18" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
@@ -947,7 +947,7 @@
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="19" obj="3" name="hair_000" object_type="bone">
+            <timeline id="19" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
@@ -958,7 +958,7 @@
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
             </timeline>
-            <timeline id="20" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="20" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>
@@ -970,13 +970,13 @@
                 </key>
             </timeline>
             <timeline id="21" obj="1" name="tougue" object_type="bone">
-                <key id="0" spin="0">
-                    <bone x="39.439491" y="-1.346382" angle="32.422726" scale_y="0.95"/>
+                <key id="0">
+                    <bone x="36.644502" y="-8.588137" angle="345.75377" scale_y="0.95"/>
                 </key>
                 <key id="1" time="350" spin="-1">
                     <bone x="39.439491" y="-1.346382" angle="32.422726" scale_y="0.95"/>
                 </key>
-                <key id="2" time="700">
+                <key id="2" time="700" spin="-1">
                     <bone x="38.352841" y="-2.008973" angle="21.597473" scale_y="0.95"/>
                 </key>
             </timeline>
@@ -1080,15 +1080,15 @@
                     <object_ref id="10" parent="5" timeline="21" key="1" z_index="10"/>
                 </key>
             </mainline>
-            <timeline id="0" obj="10" name="body_000" object_type="bone">
-                <key id="0" curve_type="cubic" c1="0" c2="0.995261" spin="-1">
+            <timeline id="0" obj="10" name="bone_body" object_type="bone">
+                <key id="0" spin="-1">
                     <bone x="-12.096774" y="-16.129032" angle="267.866375"/>
                 </key>
-                <key id="1" time="300" curve_type="cubic" c1="0" c2="0.995261">
+                <key id="1" time="300">
                     <bone x="-12.096774" y="-16.129032" angle="263.231808"/>
                 </key>
             </timeline>
-            <timeline id="1" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="1" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="93.82486" y="-82.922765" angle="311.432372"/>
                 </key>
@@ -1096,7 +1096,7 @@
                     <bone x="93.82486" y="-82.922765" angle="311.432372"/>
                 </key>
             </timeline>
-            <timeline id="2" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="2" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="106.351914" y="78.193263" angle="57.006851"/>
                 </key>
@@ -1104,7 +1104,7 @@
                     <bone x="106.351914" y="78.193263" angle="57.006851"/>
                 </key>
             </timeline>
-            <timeline id="3" obj="7" name="ear_000" object_type="bone">
+            <timeline id="3" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
@@ -1112,7 +1112,7 @@
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
             </timeline>
-            <timeline id="4" obj="0" name="tail_000" object_type="bone">
+            <timeline id="4" obj="0" name="bone_tail" object_type="bone">
                 <key id="0">
                     <bone x="-6.799013" y="-124.311911" angle="238.234247"/>
                 </key>
@@ -1120,7 +1120,7 @@
                     <bone x="-6.799013" y="-124.311911" angle="249.858411"/>
                 </key>
             </timeline>
-            <timeline id="5" obj="6" name="nose_000" object_type="bone">
+            <timeline id="5" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
@@ -1128,7 +1128,7 @@
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="6" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="6" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
@@ -1136,7 +1136,7 @@
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="7" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="7" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
@@ -1144,7 +1144,7 @@
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="8" obj="3" name="hair_000" object_type="bone">
+            <timeline id="8" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
@@ -1152,7 +1152,7 @@
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
             </timeline>
-            <timeline id="9" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="9" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>
@@ -1434,7 +1434,7 @@
                     <object_ref id="10" parent="5" timeline="21" key="2" z_index="10"/>
                 </key>
             </mainline>
-            <timeline id="0" obj="10" name="body_000" object_type="bone">
+            <timeline id="0" obj="10" name="bone_body" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="-12.096774" y="-16.129032" angle="267.866375"/>
                 </key>
@@ -1448,7 +1448,7 @@
                     <bone x="-12.096774" y="-16.129032" angle="267.866375"/>
                 </key>
             </timeline>
-            <timeline id="1" obj="9" name="legBack_001" object_type="bone">
+            <timeline id="1" obj="9" name="bone_legBack" object_type="bone">
                 <key id="0">
                     <bone x="93.82486" y="-82.922765" angle="311.432372"/>
                 </key>
@@ -1459,7 +1459,7 @@
                     <bone x="93.82486" y="-82.922765" angle="311.432372"/>
                 </key>
             </timeline>
-            <timeline id="2" obj="8" name="legFront_000" object_type="bone">
+            <timeline id="2" obj="8" name="bone_legFront" object_type="bone">
                 <key id="0" spin="-1">
                     <bone x="106.351914" y="78.193263" angle="57.006851"/>
                 </key>
@@ -1470,7 +1470,7 @@
                     <bone x="106.351914" y="78.193263" angle="57.006851"/>
                 </key>
             </timeline>
-            <timeline id="3" obj="7" name="ear_000" object_type="bone">
+            <timeline id="3" obj="7" name="bone_ear" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
@@ -1478,7 +1478,7 @@
                     <bone x="-69.755974" y="42.088452" angle="320.198311"/>
                 </key>
             </timeline>
-            <timeline id="4" obj="0" name="tail_000" object_type="bone">
+            <timeline id="4" obj="0" name="bone_tail" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-6.799013" y="-124.311911" angle="238.234247"/>
                 </key>
@@ -1486,7 +1486,7 @@
                     <bone x="-6.799013" y="-124.311911" angle="238.234247"/>
                 </key>
             </timeline>
-            <timeline id="5" obj="6" name="nose_000" object_type="bone">
+            <timeline id="5" obj="6" name="bone_nose" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
@@ -1494,7 +1494,7 @@
                     <bone x="0.231971" y="134.686877" angle="89.905453"/>
                 </key>
             </timeline>
-            <timeline id="6" obj="5" name="eyeBIg" object_type="bone">
+            <timeline id="6" obj="5" name="bone_eyeBIg" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
@@ -1502,7 +1502,7 @@
                     <bone x="-36.684583" y="89.220529" angle="0.488205"/>
                 </key>
             </timeline>
-            <timeline id="7" obj="4" name="eyeSmall_000" object_type="bone">
+            <timeline id="7" obj="4" name="bone_eyeSmall" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
@@ -1510,7 +1510,7 @@
                     <bone x="-62.632215" y="137.967612" angle="0.89986"/>
                 </key>
             </timeline>
-            <timeline id="8" obj="3" name="hair_000" object_type="bone">
+            <timeline id="8" obj="3" name="bone_hair" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
@@ -1518,7 +1518,7 @@
                     <bone x="-127.562049" y="49.332535" angle="0.202936"/>
                 </key>
             </timeline>
-            <timeline id="9" obj="2" name="mouth_000" object_type="bone">
+            <timeline id="9" obj="2" name="bone_mouth" object_type="bone">
                 <key id="0" spin="0">
                     <bone x="33.558495" y="94.710513" angle="327.84217"/>
                 </key>

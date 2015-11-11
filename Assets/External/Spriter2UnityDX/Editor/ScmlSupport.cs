@@ -97,7 +97,7 @@ namespace Spriter2UnityDX.Importing {
 		[XmlElement ("key")] public TimeLineKey[] keys { get; set; } // <key> tags within <timeline> tags   
 	}
 
-	public enum CurveType {instant, linear, quadratic, cubic}
+	public enum CurveType {instant, linear, quadratic, cubic, quartic}
 	public class TimeLineKey : ScmlElement {
 		public TimeLineKey () {time=0; spin=1;}
 		private float _time;
