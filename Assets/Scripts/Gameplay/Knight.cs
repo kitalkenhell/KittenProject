@@ -10,33 +10,64 @@ public class Knight : MonoBehaviour
         attack
     }
 
+    const int walkingLeft = -1;
+    const int walkingRight = 1;
+
     public Transform raycastDirection;
     public LayerMask obstacles;
     public float maxSpeed;
-    public int walkingDirection = 1;
     public float acceleration;
+    public MinMax waitTimeOnEdge;
+    public float waitOnEdgeChance;
+    public float randomWaitChance;
+    public float randomWaitInterval;
+    public MinMax randomWaitTime;
+    public GameObject swordsTrail;
+    public GameObject longColliderSword;
+    public GameObject shortColliderSword;
 
     Animator animator;
 
     int speedAnimHash;
     int attackAnimHash;
+    int walkingDirection;
     State state;
     float speed;
+    bool isAttacking;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
 
         speedAnimHash = Animator.StringToHash("Speed");
         attackAnimHash = Animator.StringToHash("Attack");
-        state = State.walk;
-        speed = maxSpeed;
+    }
 
-        Attack();
+    void OnEnable()
+    {
+        state = State.walk;
+        speed = 0;
+        isAttacking = false;
+        swordsTrail.SetActive(false);
+        longColliderSword.SetActive(false);
+        shortColliderSword.SetActive(true);
+        walkingDirection = walkingRight;
+
+        if (!Mathf.Approximately(randomWaitInterval, 0))
+        {
+            StartCoroutine(RandomWaiting());
+        }
+    }
+
+    void OnDisable()
+    {
+        StopAllCoroutines();
     }
 
     void Update()
     {
+        const float wallRayDistance = 0.5f;
+
         if (state == State.idle || state == State.attack)
         {
             speed = Mathf.MoveTowards(speed, 0, acceleration * Time.deltaTime);
@@ -52,12 +83,19 @@ public class Knight : MonoBehaviour
 
             if (hit.collider == null)
             {
-                StartCoroutine(Idle(2.0f));
-                return;
+                if (Random.value < waitOnEdgeChance)
+                {
+                    StartCoroutine(Idle(Random.Range(waitTimeOnEdge.min, waitTimeOnEdge.max)));
+                    return;
+                }
+                else
+                {
+                    QuickTurn();
+                }
             }
-            else if (hit.distance < distance * 0.7f)
-            {              
-                StartCoroutine(Idle(0.25f));
+            else if (hit.distance < distance * wallRayDistance)
+            {
+                QuickTurn();
             }
 
             speed = Mathf.MoveTowards(speed, maxSpeed, acceleration * Time.deltaTime);
@@ -65,6 +103,13 @@ public class Knight : MonoBehaviour
 
         transform.SetPositionX(transform.position.x + speed * walkingDirection * Time.deltaTime);
         animator.SetFloat(speedAnimHash, speed);
+    }
+
+    void QuickTurn()
+    {
+        const float deaccelerationDuration = 0.3f;
+
+        StartCoroutine(Idle(deaccelerationDuration));
     }
 
     IEnumerator Idle(float time)
@@ -75,25 +120,65 @@ public class Knight : MonoBehaviour
 
         state = State.walk;
         walkingDirection *= -1;
+
         transform.SetScaleX(transform.localScale.x * -1);
+    }
+
+    IEnumerator RandomWaiting()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(randomWaitInterval);
+
+            if (Random.value < randomWaitChance && state == State.walk)
+            {
+                StartCoroutine(Idle(Random.Range(randomWaitTime.min, randomWaitTime.max)));
+            }
+        }
     }
 
     void Attack()
     {
-        state = State.attack;
-        animator.SetTrigger(attackAnimHash);
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            state = State.attack;
+            animator.SetTrigger(attackAnimHash);
+        }
     }
 
     void AttackFinished()
     {
         state = State.walk;
+        isAttacking = false;
+        swordsTrail.SetActive(false);
+        longColliderSword.SetActive(false);
+        shortColliderSword.SetActive(true);
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.layer == Layers.Player)
         {
+            if (other.transform.position.x < transform.position.x)
+            {
+                walkingDirection = walkingLeft;
+                transform.SetScaleX(-Mathf.Abs(transform.localScale.x));
+            }
+            else
+            {
+                walkingDirection = walkingRight;
+                transform.SetScaleX(Mathf.Abs(transform.localScale.x));
+            }
+
             Attack();
         }
+    }
+
+    void EnableSwordsTrail()
+    {
+        swordsTrail.SetActive(true);
+        longColliderSword.SetActive(true);
+        shortColliderSword.SetActive(false);
     }
 }

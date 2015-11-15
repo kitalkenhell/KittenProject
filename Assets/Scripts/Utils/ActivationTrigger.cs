@@ -13,36 +13,42 @@ public class ActivationTrigger : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (enableOnEnter)
+        if (other.gameObject.layer == Layers.Player)
         {
-            target.SetActive(true);
-        }
-        else if (disableOnEnter)
-        {
-            target.SetActive(false);
-        }
+            if (enableOnEnter)
+            {
+                target.SetActive(true);
+            }
+            else if (disableOnEnter)
+            {
+                target.SetActive(false);
+            }
 
-        if (disableSelfOnEnter)
-        {
-            gameObject.SetActive(false);
+            if (disableSelfOnEnter)
+            {
+                gameObject.SetActive(false);
+            } 
         }
     }
 
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (enableOnExit)
+        if (other.gameObject.layer == Layers.Player)
         {
-            target.SetActive(true);
-        }
-        else if (disableOnExit)
-        {
-            target.SetActive(false);
-        }
+            if (enableOnExit)
+            {
+                target.SetActive(true);
+            }
+            else if (disableOnExit)
+            {
+                target.SetActive(false);
+            }
 
-        if (disableSelfOnExit)
-        {
-            gameObject.SetActive(false);
+            if (disableSelfOnExit)
+            {
+                gameObject.SetActive(false);
+            } 
         }
     }
 }
