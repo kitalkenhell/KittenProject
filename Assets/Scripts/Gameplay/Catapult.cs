@@ -25,6 +25,11 @@ public class Catapult : MonoBehaviour
         StartCoroutine(Fire());
     }
 
+    void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
     IEnumerator Fire()
     {
         while (true)
@@ -41,7 +46,7 @@ public class Catapult : MonoBehaviour
 
         yield return new WaitForSeconds(instantiateRockDelay);
 
-        rock = (Instantiate(RockPrefab, rockPlacement.position, Quaternion.identity) as GameObject).GetComponent<Rigidbody2D>();
+        rock = (Instantiate(RockPrefab, rockPlacement.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
         rock.velocity = (rockForce.position - rockPlacement.position) * 
             forceMultiplier * Random.Range(randomForceMultiplier.min, randomForceMultiplier.max);
 
