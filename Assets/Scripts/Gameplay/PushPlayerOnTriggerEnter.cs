@@ -14,8 +14,10 @@ public class PushPlayerOnTriggerEnter : MonoBehaviour
 
         if (player != null)
         {
-            player.Push((player.transform.position - transform.position + Vector3.up * pushingForceUpAmplification).normalized * pushingForce,
-                true, true, disableControlsDuration);
+            Vector2 force = (player.transform.position - transform.position).normalized;
+            force.y = Mathf.Max(pushingForceUpAmplification, force.y);
+
+            player.Push(force.normalized * pushingForce, true, true, disableControlsDuration);
 
             if (dealDamage)
             {

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Reflection;
+using System;
 
 public static class TransformExtensions
 {
@@ -46,5 +48,51 @@ public static class TransformExtensions
     public static void SetPositionYZ(this Transform t, Vector2 v)
     {
         t.position = new Vector3(t.position.x, v.x, v.y);
+    }
+
+
+    public static void SetScaleX(this Transform t, float x)
+    {
+        t.localScale = new Vector3(x, t.localScale.y, t.localScale.z);
+    }
+
+    public static void SetScaleY(this Transform t, float y)
+    {
+        t.localScale = new Vector3(t.localScale.x, y, t.localScale.z);
+    }
+
+    public static void SetScaleZ(this Transform t, float z)
+    {
+        t.localScale = new Vector3(t.localScale.x, t.localScale.y, z);
+    }
+
+    public static void SetScaleXY(this Transform t, float x, float y)
+    {
+        t.localScale = new Vector3(x, y, t.localScale.z);
+    }
+
+    public static void SetScaleXZ(this Transform t, float x, float z)
+    {
+        t.localScale = new Vector3(x, t.localScale.y, z);
+    }
+
+    public static void SetScaleYZ(this Transform t, float y, float z)
+    {
+        t.localScale = new Vector3(t.localScale.x, y, z);
+    }
+
+    public static void SetScaleXY(this Transform t, Vector2 v)
+    {
+        t.localScale = new Vector3(v.x, v.y, t.localScale.z);
+    }
+
+    public static void SetScaleXZ(this Transform t, Vector2 v)
+    {
+        t.localScale = new Vector3(v.x, t.localScale.y, v.y);
+    }
+
+    public static void SetScaleYZ(this Transform t, Vector2 v)
+    {
+        t.localScale = new Vector3(t.localScale.x, v.x, v.y);
     }
 }

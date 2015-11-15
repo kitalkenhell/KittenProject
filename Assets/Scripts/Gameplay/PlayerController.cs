@@ -35,6 +35,14 @@ public class PlayerController : MonoBehaviour
     public Transform parachute;
     public Transform parachutePivot;
 
+    public Vector2 Velocity
+    {
+        get
+        {
+            return velocity;
+        }
+    }
+
     BoxCollider2D boxCollider;
     CoinEmitter coinEmitter;
     Animator animator;
@@ -79,7 +87,7 @@ public class PlayerController : MonoBehaviour
     float input;
     bool jumpKeyReleased;
     float disableControlsCountdown;
-    
+
     int coins;
 
     void Start()
@@ -93,7 +101,7 @@ public class PlayerController : MonoBehaviour
         doubleJump = false;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
-        HorizontalMovmentDirection = Vector2.right* Mathf.Sign(velocity.x);
+        HorizontalMovmentDirection = Vector2.right * Mathf.Sign(velocity.x);
 
         jumpingCountdown = Mathf.NegativeInfinity;
         disableControlsCountdown = Mathf.NegativeInfinity;
@@ -148,11 +156,12 @@ public class PlayerController : MonoBehaviour
 
     void UpdateSprites()
     {
-        if (Mathf.Abs(runningMotrSpeed) > Mathf.Epsilon)
+
+        if (Mathf.Abs(velocity.x) > Mathf.Epsilon)
         {
             Vector3 scale = transform.localScale;
-            scale.x = runningMotrSpeed + pushingForce < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-            sprite.transform.localScale = scale;
+            scale.x = velocity.x < 0 ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            sprite.transform.localScale = scale; 
         }
 
         parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
@@ -184,7 +193,7 @@ public class PlayerController : MonoBehaviour
                 usingParachuteTimer = 0;
                 parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
             }
-            
+
         }
 
         parachutePivot.rotation = Quaternion.Euler(0, 0, parachuteRotation);
@@ -243,7 +252,7 @@ public class PlayerController : MonoBehaviour
         {
             if (jumpingCountdown < 0) //stands on the ground and jumps 
             {
-                if (isGrounded && jumpKeyReleased) 
+                if (isGrounded && jumpKeyReleased)
                 {
                     jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
 
@@ -277,9 +286,9 @@ public class PlayerController : MonoBehaviour
             //Parachute / double jump
             if (!isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
             {
-                if ( velocity.y < 0)
+                if (velocity.y < 0)
                 {
-                    if (!usingParachute )
+                    if (!usingParachute)
                     {
                         usingParachute = true;
                         ParachuteCountdown = parachuteDelay;
@@ -318,7 +327,7 @@ public class PlayerController : MonoBehaviour
                         velocity.y = parachuteFallingSpeed;
                     }
                 }
-                
+
             }
         }
         else
@@ -422,7 +431,7 @@ public class PlayerController : MonoBehaviour
         movablePlatformVelocity = Vector2.zero;
 
         //Movable Platform
-        if (velocity.y > 0 || (movablePlatformCollider != null && 
+        if (velocity.y > 0 || (movablePlatformCollider != null &&
             (boxCollider.bounds.max.x < movablePlatformCollider.bounds.min.x || boxCollider.bounds.min.x > movablePlatformCollider.bounds.max.x)))
         {
             movablePlatform = null;
@@ -435,7 +444,7 @@ public class PlayerController : MonoBehaviour
             transform.SetPositionXY(transform.position.x + movablePlatform.LastFrameDisplacement.x, transform.position.y + movablePlatform.LastFrameDisplacement.y);
             movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
         }
-        else 
+        else
         {
             float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght) : minGravityRayLenght;
 
