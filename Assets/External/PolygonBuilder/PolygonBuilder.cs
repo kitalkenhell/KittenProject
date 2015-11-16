@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -69,11 +70,17 @@ public class PolygonBuilder : MonoBehaviour
     public Material uniqueMaterial;
     public Material customMaterial;
 
+    public bool lockPolygon = false;
 
     public string uniqueMaterialPath = "";
     public string uniqueMeshPath = "";
 
-    public void BuildSquare()
+    bool inEditMode = false;
+    bool enteringPlayMode = false;
+    bool editModeCallbackAdded = false;
+    bool updateCallbackAdded = false;
+
+    public void BuildSquare(string assetsPath)
     {
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         MeshRenderer renderer = GetComponent<MeshRenderer>();
@@ -94,7 +101,7 @@ public class PolygonBuilder : MonoBehaviour
         {
             meshFilter.sharedMesh = new Mesh();
             meshFilter.sharedMesh = meshFilter.sharedMesh;
-            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/PolygonBuilder/Meshes/Polygon.asset");
+            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Meshes/Polygon.asset");
             AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
         }
 
@@ -103,7 +110,7 @@ public class PolygonBuilder : MonoBehaviour
             uniqueMaterial = new Material(vertexColorShader);
             customMaterial = uniqueMaterial;
             renderer.sharedMaterial = uniqueMaterial;
-            uniqueMaterialPath = AssetDatabase.GenerateUniqueAssetPath("Assets/PolygonBuilder/Materials/Material.mat");
+            uniqueMaterialPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Materials/Material.mat");
             AssetDatabase.CreateAsset(renderer.sharedMaterial, uniqueMaterialPath);
         }
 
@@ -242,20 +249,56 @@ public class PolygonBuilder : MonoBehaviour
         polygon.triangles = triangles.ToArray();
     }
 
+    void OnEnable()
+    {
+        if (!editModeCallbackAdded)
+        {
+            editModeCallbackAdded = true;
+            UnityEditor.EditorApplication.playmodeStateChanged += EditModeCallback;
+        }
+
+        if (!updateCallbackAdded)
+        {
+            updateCallbackAdded = true;
+            UnityEditor.EditorApplication.update += UpdateCallback;
+        }
+    }
+
+
+    private void EditModeCallback()
+    {
+        if (!Application.isPlaying && inEditMode)
+        {
+            enteringPlayMode = true;
+        }
+    }
+
+
+    private void UpdateCallback()
+    {
+
+        if (inEditMode == Application.isPlaying && !enteringPlayMode)
+        {
+            inEditMode = !inEditMode;
+        }
+        else if (enteringPlayMode)
+        {
+            inEditMode = false;
+        }
+    }
+
+
     void OnDestroy()
     {
-        if (Application.isEditor)
+        if (inEditMode)
         {
             GetComponent<MeshFilter>().sharedMesh = null;
             GetComponent<MeshRenderer>().sharedMaterial = null;
 
             AssetDatabase.DeleteAsset(uniqueMaterialPath);
-            AssetDatabase.DeleteAsset(uniqueMeshPath); 
+            AssetDatabase.DeleteAsset(uniqueMeshPath);
         }
     }
-
-
-
 }
 
 #endif

@@ -39,12 +39,13 @@ public class MeshBuilderEditor : Editor
         {
             if (GUILayout.Button("Initialize"))
             {
-                builder.BuildSquare();
+                builder.BuildSquare(AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(builder)).Replace("PolygonBuilder.cs", ""));
             }
         }
 
         builder.uvScale = EditorGUILayout.FloatField("UV Scale", builder.uvScale);
         builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset", -builder.uvOffset);
+        builder.lockPolygon = EditorGUILayout.Toggle("Allow editing", builder.lockPolygon);
 
         //builder.reflectiveGradientShader = EditorGUILayout.ObjectField(builder.reflectiveGradientShader, typeof(Shader), false) as Shader;
         //builder.linearGradientShader = EditorGUILayout.ObjectField(builder.linearGradientShader, typeof(Shader), false) as Shader;
@@ -65,7 +66,7 @@ public class MeshBuilderEditor : Editor
         builder = (PolygonBuilder) target;
         MeshFilter meshFilter = builder.GetComponent<MeshFilter>();
 
-        if (meshFilter != null && meshFilter.sharedMesh != null)
+        if (meshFilter != null && meshFilter.sharedMesh != null && !builder.lockPolygon)
         {
 
             ProcessEvents();
