@@ -16,6 +16,18 @@ public class PolygonBuilder : MonoBehaviour
         face
     };
 
+    public struct Edge
+    {
+        public int a;
+        public int b;
+
+        public Edge(int a = 0, int b = 0)
+        {
+            this.a = a;
+            this.b = b;
+        }
+    }
+
     public enum RenderMode
     {
         vertexColor,
@@ -74,11 +86,6 @@ public class PolygonBuilder : MonoBehaviour
 
     public string uniqueMaterialPath = "";
     public string uniqueMeshPath = "";
-
-    bool inEditMode = false;
-    bool enteringPlayMode = false;
-    bool editModeCallbackAdded = false;
-    bool updateCallbackAdded = false;
 
     public void BuildSquare(string assetsPath)
     {
@@ -146,6 +153,72 @@ public class PolygonBuilder : MonoBehaviour
         conicalGradientMaxRange = 1;
 
         selection.Clear();
+    }
+
+    public void BuildCollider()
+    {
+        PolygonCollider2D collider2d = GetComponent<PolygonCollider2D>();
+        List<Vector2> edges = new List<Vector2>();
+
+        if (collider2d == null)
+        {
+            collider2d = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
+        List<Vector2> points = new List<Vector2>();
+
+        for (int i = 0; i < triangles.Count; i += 3)
+        {
+            if (isOuterEdge(triangles[i], triangles[i + 1]))
+            {
+                edges.Add(new Vector2(triangles[i], triangles[i + 1]));
+            }
+
+            if (isOuterEdge(triangles[i + 1], triangles[i + 2]))
+            {
+                edges.Add(new Vector2(triangles[i + 1], triangles[i + 2]));
+            }
+
+            if (isOuterEdge(triangles[i + 2], triangles[i]))
+            {
+                edges.Add(new Vector2(triangles[i + 2], triangles[i]));
+            }
+        }
+
+        points.Add(vertices[(int)edges[0].x]);
+        points.Add(vertices[(int)edges[0].y]);
+
+        edges.RemoveAt(0);
+
+        int z = 0;
+
+        while (edges.Count != 1)
+        {
+            ++z;
+
+            if (z > 1000)
+            {
+                print("ERROR");
+                break;
+            }
+
+            for (int i = 0; i < edges.Count; ++i)
+            {
+                if (vertices[(int)edges[i].x].XY() == points[points.Count - 1]) 
+                {
+                    points.Add(vertices[(int)edges[i].y]);
+                    edges.RemoveAt(i);
+                    break;
+                }
+                else if (vertices[(int)edges[i].y].XY() == points[points.Count - 1])
+                {
+                    points.Add(vertices[(int)edges[i].x]);
+                    edges.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+        collider2d.SetPath(0, points.ToArray());
     }
 
     public void OnDrawGizmos()
@@ -243,61 +316,75 @@ public class PolygonBuilder : MonoBehaviour
             }
         }
 
+        SetProperNormals();
+
         polygon.vertices = vertices.ToArray();
         polygon.uv = uvs.ToArray();
         polygon.colors = colors.ToArray();
         polygon.triangles = triangles.ToArray();
-    }
 
-    void OnEnable()
-    {
-        if (!editModeCallbackAdded)
+        if (GetComponent<PolygonCollider2D>() != null)
         {
-            editModeCallbackAdded = true;
-            UnityEditor.EditorApplication.playmodeStateChanged += EditModeCallback;
-        }
-
-        if (!updateCallbackAdded)
-        {
-            updateCallbackAdded = true;
-            UnityEditor.EditorApplication.update += UpdateCallback;
+            BuildCollider(); 
         }
     }
 
-
-    private void EditModeCallback()
+    public bool isOuterEdge(int vertexA, int vertexB)
     {
-        if (!Application.isPlaying && inEditMode)
+        bool first = true;
+
+        for (int i = 0; i < triangles.Count; i += 3)
         {
-            enteringPlayMode = true;
+            if (((vertexA == triangles[i] && vertexB == triangles[i + 1]) || (vertexB == triangles[i] && vertexA == triangles[i + 1])) ||
+                 ((vertexA == triangles[i + 1] && vertexB == triangles[i + 2]) || (vertexB == triangles[i + 1] && vertexA == triangles[i + 2])) ||
+                 ((vertexA == triangles[i + 2] && vertexB == triangles[i]) || (vertexB == triangles[i + 2] && vertexA == triangles[i])))
+            {
+                if (!first)
+                {
+                    return false;
+                }
+                first = false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool HasTriangle(int a, int b, int c)
+    {
+        for (int i = 0; i < triangles.Count; i += 3)
+        {
+            if ((triangles[i] == a || triangles[i + 1] == a || triangles[i + 2] == a) &&
+                (triangles[i] == b || triangles[i + 1] == b || triangles[i + 2] == b) &&
+                (triangles[i] == c || triangles[i + 1] == c || triangles[i + 2] == c))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void SetProperNormals()
+    {
+        for (int i = 0; i < triangles.Count - 2; i += 3)
+        {
+
+            if (Vector3.Cross(vertices[triangles[i]] - vertices[triangles[i + 1]], vertices[triangles[i + 2]] - vertices[triangles[i]]).z < 0)
+            {
+                int tmp = triangles[i];
+                triangles[i] = triangles[i + 2];
+                triangles[i + 2] = tmp;
+            }
         }
     }
 
-
-    private void UpdateCallback()
+    public void FreeAssets()
     {
+        GetComponent<MeshFilter>().sharedMesh = null;
+        GetComponent<MeshRenderer>().sharedMaterial = null;
 
-        if (inEditMode == Application.isPlaying && !enteringPlayMode)
-        {
-            inEditMode = !inEditMode;
-        }
-        else if (enteringPlayMode)
-        {
-            inEditMode = false;
-        }
-    }
-
-
-    void OnDestroy()
-    {
-        if (inEditMode)
-        {
-            GetComponent<MeshFilter>().sharedMesh = null;
-            GetComponent<MeshRenderer>().sharedMaterial = null;
-
-            AssetDatabase.DeleteAsset(uniqueMaterialPath);
-            AssetDatabase.DeleteAsset(uniqueMeshPath);
-        }
+        AssetDatabase.DeleteAsset(uniqueMaterialPath);
+        AssetDatabase.DeleteAsset(uniqueMeshPath);
     }
 }
 

@@ -9,15 +9,17 @@ public class CurvePath : MonoBehaviour
     public int quality = 20;
     public float length;
 
-    float find = 0;
-    public Vector3 handle;
+    public bool showPoints = true;
+    public bool showTangents = true;
+    public bool useTansformTool = false;
+    public float handleScale = 1;
+
+    public float animatedPointTime = 0;
+    public Vector3 animatedPointPosition;
 
     public void Refresh()
     {
-        find += Time.deltaTime * 100;
-
-        if (find > 1)
-            find = 0;
+        const float animationTimeScale = 50.0f;
 
         length = 0;
 
@@ -26,7 +28,13 @@ public class CurvePath : MonoBehaviour
             length += curve.lenght;
         }
 
-        handle = PointOnPath(find * length);
+        animatedPointPosition = PointOnPath(animatedPointTime * length);
+        animatedPointTime += Time.deltaTime * animationTimeScale;
+
+        if (animatedPointTime > 1)
+        {
+            animatedPointTime = 0;
+        }
     }
 
     public void Reset()
@@ -65,7 +73,7 @@ public class CurvePath : MonoBehaviour
     public Vector3 PointOnPath(float distance, int startingPoint = 0)
     {
         float distanceToGo = distance;
-        int index = 0;
+        int index = startingPoint;
 
         if (distance >= length)
         {
@@ -83,7 +91,6 @@ public class CurvePath : MonoBehaviour
         }
         --index;
 
-        Debug.Log(distance / length + " " + index);
         return curves[index].PointOnCurve(Mathf.Abs(distanceToGo));
     }
 }

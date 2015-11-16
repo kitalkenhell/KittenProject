@@ -5,9 +5,7 @@ using System.Collections;
 [CustomEditor(typeof(CurvePath))]
 public class CCurvePathEditor : Editor
 {
-    public bool showPoints = true;
-    public bool showTangents = true;
-    public bool useTansformTool = false;
+    const float handleSize = 0.4f;
 
     public override void OnInspectorGUI()
     {
@@ -23,10 +21,10 @@ public class CCurvePathEditor : Editor
             path.AddPoint();
         }
 
-        showPoints = EditorGUILayout.Toggle("Show Points", showPoints);
-        showTangents = EditorGUILayout.Toggle("Show Tangents", showTangents);
-        useTansformTool = EditorGUILayout.Toggle("Use transform handle", useTansformTool);
-
+        path.showPoints = EditorGUILayout.Toggle("Show Points", path.showPoints);
+        path.showTangents = EditorGUILayout.Toggle("Show Tangents", path.showTangents);
+        path.useTansformTool = EditorGUILayout.Toggle("Use transform handle", path.useTansformTool);
+        path.handleScale = EditorGUILayout.FloatField("Handle Scale", path.handleScale);
         path.quality = Mathf.Max(EditorGUILayout.IntField("Path Quality", path.quality), 1);
     }
 
@@ -34,29 +32,30 @@ public class CCurvePathEditor : Editor
     {
         CurvePath path = (CurvePath)target;
 
-        Handles.SphereCap(0, path.handle, Quaternion.identity, 0.25f);
+        Handles.color = Color.yellow;
+        Handles.SphereCap(0, path.animatedPointPosition, Quaternion.identity, handleSize * path.handleScale * 2);
 
         for (int i = 0; i < path.points.Count - 1; i++)
         {
             Curve curve = path.curves[i];
             curve.quality = path.quality;
 
-            if (showPoints)
+            if (path.showPoints)
             {
                 Handles.color = Color.white;
 
-                if (!useTansformTool)
+                if (!path.useTansformTool)
                 {
-                    path.points[i] = curve.begin = Handles.FreeMoveHandle(curve.begin, Quaternion.identity, 0.25f, Vector3.zero, Handles.DotCap);
-                    path.points[i + 1] = curve.end = Handles.FreeMoveHandle(curve.end, Quaternion.identity, 0.25f, Vector3.zero, Handles.DotCap);
+                    path.points[i] = curve.begin = Handles.FreeMoveHandle(curve.begin, Quaternion.identity, handleSize * path.handleScale, Vector3.zero, Handles.DotCap);
+                    path.points[i + 1] = curve.end = Handles.FreeMoveHandle(curve.end, Quaternion.identity, handleSize * path.handleScale, Vector3.zero, Handles.DotCap);
                 }
                 else
                 {
                     path.points[i] = curve.begin = Handles.PositionHandle(curve.begin, Quaternion.identity);
                     path.points[i + 1] = curve.end = Handles.PositionHandle(curve.end, Quaternion.identity);
 
-                    Handles.SphereCap(0, curve.begin, Quaternion.identity, 0.25f);
-                    Handles.SphereCap(0, curve.end, Quaternion.identity, 0.25f);
+                    Handles.SphereCap(0, curve.begin, Quaternion.identity, handleSize * path.handleScale);
+                    Handles.SphereCap(0, curve.end, Quaternion.identity, handleSize * path.handleScale);
                 }
 
                 if (i != 0)
@@ -69,22 +68,22 @@ public class CCurvePathEditor : Editor
                 } 
             }
 
-            if (showTangents)
+            if (path.showTangents)
             {
                 Handles.color = Color.red;
 
-                if (!useTansformTool)
+                if (!path.useTansformTool)
                 {
-                    curve.tangentBegin = Handles.FreeMoveHandle(curve.begin + curve.tangentBegin, Quaternion.identity, 0.25f, Vector3.one, Handles.DotCap) - curve.begin;
-                    curve.tangentEnd = Handles.FreeMoveHandle(curve.end + curve.tangentEnd, Quaternion.identity, 0.25f, Vector3.one, Handles.DotCap) - curve.end;
+                    curve.tangentBegin = Handles.FreeMoveHandle(curve.begin + curve.tangentBegin, Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap) - curve.begin;
+                    curve.tangentEnd = Handles.FreeMoveHandle(curve.end + curve.tangentEnd, Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap) - curve.end;
                 }
                 else
                 {
                     curve.tangentBegin = Handles.PositionHandle(curve.begin + curve.tangentBegin, Quaternion.identity) - curve.begin;
                     curve.tangentEnd = Handles.PositionHandle(curve.end + curve.tangentEnd, Quaternion.identity) - curve.end;
 
-                    Handles.SphereCap(0, curve.begin + curve.tangentBegin, Quaternion.identity, 0.25f);
-                    Handles.SphereCap(0,curve.end + curve.tangentEnd, Quaternion.identity, 0.25f);
+                    Handles.SphereCap(0, curve.begin + curve.tangentBegin, Quaternion.identity, handleSize * path.handleScale);
+                    Handles.SphereCap(0, curve.end + curve.tangentEnd, Quaternion.identity, handleSize * path.handleScale);
                 }
 
                 Handles.DrawLine(curve.begin, curve.begin + curve.tangentBegin);

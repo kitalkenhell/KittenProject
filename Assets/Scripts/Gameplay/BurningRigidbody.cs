@@ -10,15 +10,17 @@ public class BurningRigidbody : MonoBehaviour
 
 	void Update () 
     {
-        const float maxRotation = 3.0f;
+        const float maxRotationFlying = 8.0f;
+        const float maxRotationColliding = 3.0f;
         const float collisionCooldown = 0.1f;
+        const float velocityThreshold = 20.0f;
 
         transform.position = body.position + offset;
         collisionCounter -= Time.deltaTime;
 
-        if (!body.IsTouchingLayers() && collisionCounter < 0)
+        if ((!body.IsTouchingLayers() && collisionCounter < 0) || body.velocity.magnitude > velocityThreshold)
         {
-            transform.up = Vector3.MoveTowards(transform.up, -body.velocity.normalized, maxRotation * Time.deltaTime); 
+            transform.up = Vector3.MoveTowards(transform.up, -body.velocity.normalized, maxRotationFlying * Time.deltaTime); 
         }
         else
         {
@@ -29,7 +31,7 @@ public class BurningRigidbody : MonoBehaviour
             Vector2 target = new Vector2(Mathf.Sign(-body.velocity.x) * weightX + Random.Range(-randomFactor, randomFactor), weightY).normalized;
 
             collisionCounter = collisionCooldown;
-            transform.up = Vector3.MoveTowards(transform.up, target, maxRotation * Time.deltaTime);
+            transform.up = Vector3.MoveTowards(transform.up, target, maxRotationColliding * Time.deltaTime);
         }
 	}
 }

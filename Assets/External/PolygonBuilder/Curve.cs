@@ -9,7 +9,7 @@ public class Curve
     public Vector3 end = Vector3.up;
     public Vector3 tangentBegin = Vector3.left;
     public Vector3 tangentEnd = Vector3.right;
-    public int quality = 20;
+    public int quality = 15;
 
     public float lenght;
     public List<Vector3> path = new List<Vector3>();
@@ -62,9 +62,9 @@ public class Curve
             index = ~index;
         }
 
-        float distanceToGo = -(distance - additiveDistance[index]);
+        float distanceToGo = additiveDistance[index] - distance;
 
-        return Evaluate(additiveDistance[index] / lenght - distanceToGo / lenght);
+        return Evaluate(1 - (additiveDistance[index] / lenght - distanceToGo / lenght));
     }
 
     public Vector3 Evaluate(float value)
