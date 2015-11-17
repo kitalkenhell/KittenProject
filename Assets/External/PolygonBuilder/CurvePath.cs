@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -9,19 +10,20 @@ public class CurvePath : MonoBehaviour
     public int quality = 20;
 
     public bool fill;
+    public bool addCollider;
     public bool showPoints = true;
     public bool showTangents = true;
     public bool useTansformTool = false;
     public float handleScale = 1;
 
     public float length;
-    public float animatedPointTime = 0;
-    public Vector3 animatedPointPosition;
+    public bool hasAsset = false;
+    public string uniqueMeshPath;
+
+    List<Vector2> vertices2d;
 
     public void Refresh()
     {
-        const float animationTimeScale = 50.0f;
-
         length = 0;
 
         foreach (Curve curve in curves)
@@ -29,12 +31,31 @@ public class CurvePath : MonoBehaviour
             length += curve.lenght;
         }
 
-        animatedPointPosition = PointOnPath(animatedPointTime * length);
-        animatedPointTime += Time.deltaTime * animationTimeScale;
-
-        if (animatedPointTime > 1)
+        vertices2d = new List<Vector2>();
+        
+        for (float d = 0; d <= length; d += length / curves.Count / quality)
         {
-            animatedPointTime = 0;
+            vertices2d.Add(PointOnPath(d));
+        }
+
+        if (fill)
+        {
+            Fill();
+            
+            if (addCollider)
+            {
+                BuildCollider();
+            }
+
+        }
+        else
+        {
+            Renderer meshRenderer = GetComponent<Renderer>();
+
+            if (meshRenderer != null)
+            {
+                meshRenderer.enabled = false;
+            }
         }
     }
 
@@ -71,10 +92,10 @@ public class CurvePath : MonoBehaviour
         }
     }
 
-    public Vector3 PointOnPath(float distance, int startingPoint = 0)
+    public Vector3 PointOnPath(float distance)
     {
         float distanceToGo = distance;
-        int index = startingPoint;
+        int index = 0;
 
         if (distance >= length)
         {
@@ -85,7 +106,7 @@ public class CurvePath : MonoBehaviour
             return points[index];
         }
 
-        while (distanceToGo > 0)
+        while (distanceToGo > 0 && index < curves.Count)
         {
             distanceToGo -= curves[index].lenght;
             ++index;
@@ -93,5 +114,80 @@ public class CurvePath : MonoBehaviour
         --index;
 
         return curves[index].PointOnCurve(Mathf.Abs(distanceToGo));
+    }
+
+    public void Fill()
+    {
+        if (!hasAsset)
+        {
+            GenerateMeshAsset(); 
+        }
+
+        int[] triangles;
+        Vector3[] vertices = new Vector3[vertices2d.Count];
+        Mesh mesh = new Mesh();
+
+        triangles = new Triangulator(vertices2d.ToArray()).Triangulate();
+        
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = new Vector3(vertices2d[i].x, vertices2d[i].y, 0);
+        }
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+
+        GetComponent<MeshFilter>().sharedMesh = mesh;
+        GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    public void BuildCollider()
+    {
+        PolygonCollider2D collider2d = GetComponent<PolygonCollider2D>();
+
+        if (collider2d == null)
+        {
+            collider2d = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
+        collider2d.SetPath(0, vertices2d.ToArray());
+    }
+
+    void GenerateMeshAsset()
+    {
+        string assetsPath = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(this)).Replace("CurvePath.cs", "");
+
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+
+        if (meshFilter == null)
+        {
+            gameObject.AddComponent<MeshFilter>();
+            meshFilter = GetComponent<MeshFilter>();
+        }
+
+        if (renderer == null)
+        {
+            gameObject.AddComponent<MeshRenderer>();
+            renderer = GetComponent<MeshRenderer>();
+        }
+
+        if (meshFilter.sharedMesh == null)
+        {
+            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Meshes/Polygon.asset");
+            meshFilter.sharedMesh = new Mesh();
+            meshFilter.sharedMesh = meshFilter.sharedMesh;
+            AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
+        }
+
+        hasAsset = true;
+    }
+
+    public void FreeMeshAsset()
+    {
+        GetComponent<MeshFilter>().sharedMesh = null;
+        AssetDatabase.DeleteAsset(uniqueMeshPath);
     }
 }

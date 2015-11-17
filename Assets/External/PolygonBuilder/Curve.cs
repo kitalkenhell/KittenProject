@@ -43,7 +43,7 @@ public class Curve
         tangentEnd = Vector3.right;
     }
 
-    public Vector3 PointOnCurve(float distance)
+    public Vector3 PointOnCurveSmooth(float distance)
     {
 
         if (distance > lenght)
@@ -65,6 +65,11 @@ public class Curve
         float distanceToGo = additiveDistance[index] - distance;
 
         return Evaluate(1 - (additiveDistance[index] / lenght - distanceToGo / lenght));
+    }
+
+    public Vector3 PointOnCurve(float distance)
+    {
+        return Evaluate(1 - distance / lenght);
     }
 
     public Vector3 Evaluate(float value)

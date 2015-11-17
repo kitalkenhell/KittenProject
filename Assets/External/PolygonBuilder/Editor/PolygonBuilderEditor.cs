@@ -177,6 +177,14 @@ public class MeshBuilderEditor : Editor
                 {
                     builder.FreeAssets();
                 }
+                if (Event.current.commandName.Contains("Copy"))
+                {
+                    Event.current.Use();
+                }
+                if (Event.current.commandName.Contains("Duplicate"))
+                {
+                    Event.current.Use();
+                }
                 break;
         }
     }

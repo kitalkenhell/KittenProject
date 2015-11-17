@@ -50,9 +50,6 @@ public class PolygonBuilder : MonoBehaviour
     public List<Color> colors = new List<Color>();
     public List<int> triangles = new List<int>();
     public int[] autoTriangles;
-    public Vector3[] autoVertices;
-
-    public List<Vector2> outlinePath;
 
     public SelectionMode selectionMode;
     public List<int> selection = new List<int>();
@@ -80,6 +77,10 @@ public class PolygonBuilder : MonoBehaviour
 
     public string uniqueMaterialPath = "";
     public string uniqueMeshPath = "";
+
+    Vector3[] autoVertices;
+    List<int> autoIndices;
+    List<Vector2> outlinePath;
 
     public void BuildSquare(string assetsPath)
     {
@@ -153,7 +154,8 @@ public class PolygonBuilder : MonoBehaviour
     {
         List<Vector2> edges = new List<Vector2>();
 
-        outlinePath.Clear();
+        autoIndices = new List<int>();
+        outlinePath = new List<Vector2>();
 
         for (int i = 0; i < triangles.Count; i += 3)
         {
@@ -176,6 +178,9 @@ public class PolygonBuilder : MonoBehaviour
         outlinePath.Add(vertices[(int)edges[0].x]);
         outlinePath.Add(vertices[(int)edges[0].y]);
 
+        autoIndices.Add((int)edges[0].x);
+        autoIndices.Add((int)edges[0].y);
+
         edges.RemoveAt(0);
 
         while (edges.Count != 1)
@@ -187,12 +192,14 @@ public class PolygonBuilder : MonoBehaviour
                 {
                     outlinePath.Add(vertices[(int)edges[i].y]);
                     edges.RemoveAt(i);
+                    autoIndices.Add((int)edges[i].x);
                     break;
                 }
                 else if (vertices[(int)edges[i].y].XY() == outlinePath[outlinePath.Count - 1])
                 {
                     outlinePath.Add(vertices[(int)edges[i].x]);
                     edges.RemoveAt(i);
+                    autoIndices.Add((int)edges[i].y);
                     break;
                 }
             }
@@ -301,7 +308,7 @@ public class PolygonBuilder : MonoBehaviour
         }
 
         SetProperNormals();
-        //polygon.colors = colors.ToArray();
+        
         polygon.colors = null;
 
         if (autoTriangulation || buildCollider)
@@ -311,6 +318,8 @@ public class PolygonBuilder : MonoBehaviour
 
         if (autoTriangulation)
         {
+            List<Color> autoColors = new List<Color>();
+
             autoVertices = new Vector3[outlinePath.Count];
 
             for (int i = 0; i < autoVertices.Length; ++i)
@@ -321,26 +330,42 @@ public class PolygonBuilder : MonoBehaviour
             polygon.vertices = autoVertices;
             autoTriangles = new Triangulator(outlinePath.ToArray()).Triangulate();
             polygon.triangles = autoTriangles;
+
+            uvs.Clear();
+            uvs.Capacity = autoVertices.Length;
+            autoColors.Capacity = autoIndices.Count;
+
+            for (int i = 0; i < autoIndices.Count; ++i)
+            {
+                autoColors.Add(colors[autoIndices[i]]);
+            }
+            polygon.colors = autoColors.ToArray();
+
+            for (int i = 0; i < autoVertices.Length; ++i)
+            {
+                uvs.Add(autoVertices[i] * uvScale + uvOffset);
+            }
+            polygon.uv = uvs.ToArray();
         }
         else
         {
             polygon.vertices = vertices.ToArray();
             polygon.triangles = triangles.ToArray();
+            polygon.colors = colors.ToArray();
+
+            uvs.Clear();
+            uvs.Capacity = vertices.Count;
+            for (int i = 0; i < vertices.Count; ++i)
+            {
+                uvs.Add(vertices[i] * uvScale + uvOffset);
+            }
+            polygon.uv = uvs.ToArray();
         }
 
         if (buildCollider)
         {
             BuildCollider();
         }
-
-        uvs.Clear();
-        uvs.Capacity = vertices.Count;
-        for (int i = 0; i < vertices.Count; ++i)
-        {
-            uvs.Add(vertices[i] * uvScale + uvOffset);
-        }
-        //polygon.uv = uvs.ToArray();
-        polygon.uv = null;
     }
 
     public bool isOuterEdge(int vertexA, int vertexB)
@@ -390,6 +415,23 @@ public class PolygonBuilder : MonoBehaviour
                 triangles[i + 2] = tmp;
             }
         }
+    }
+
+    public void OnDuplicate(string assetsPath)
+    {
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshRenderer renderer = GetComponent<MeshRenderer>();
+
+        meshFilter.sharedMesh = new Mesh();
+        meshFilter.sharedMesh = meshFilter.sharedMesh;
+        uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Meshes/Polygon.asset");
+        AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
+
+        uniqueMaterial = new Material(vertexColorShader);
+        customMaterial = uniqueMaterial;
+        renderer.sharedMaterial = uniqueMaterial;
+        uniqueMaterialPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Materials/Material.mat");
+        AssetDatabase.CreateAsset(renderer.sharedMaterial, uniqueMaterialPath);
     }
 
     public void FreeAssets()
