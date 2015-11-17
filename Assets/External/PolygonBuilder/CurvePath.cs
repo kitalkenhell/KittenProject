@@ -7,13 +7,14 @@ public class CurvePath : MonoBehaviour
     public List<Vector3> points = new List<Vector3>();
     public List<Curve> curves = new List<Curve>();
     public int quality = 20;
-    public float length;
 
+    public bool fill;
     public bool showPoints = true;
     public bool showTangents = true;
     public bool useTansformTool = false;
     public float handleScale = 1;
 
+    public float length;
     public float animatedPointTime = 0;
     public Vector3 animatedPointPosition;
 

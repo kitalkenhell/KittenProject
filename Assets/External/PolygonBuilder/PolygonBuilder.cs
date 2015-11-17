@@ -16,18 +16,6 @@ public class PolygonBuilder : MonoBehaviour
         face
     };
 
-    public struct Edge
-    {
-        public int a;
-        public int b;
-
-        public Edge(int a = 0, int b = 0)
-        {
-            this.a = a;
-            this.b = b;
-        }
-    }
-
     public enum RenderMode
     {
         vertexColor,
@@ -61,6 +49,10 @@ public class PolygonBuilder : MonoBehaviour
     public List<Vector2> uvs = new List<Vector2>();
     public List<Color> colors = new List<Color>();
     public List<int> triangles = new List<int>();
+    public int[] autoTriangles;
+    public Vector3[] autoVertices;
+
+    public List<Vector2> outlinePath;
 
     public SelectionMode selectionMode;
     public List<int> selection = new List<int>();
@@ -82,6 +74,8 @@ public class PolygonBuilder : MonoBehaviour
     public Material uniqueMaterial;
     public Material customMaterial;
 
+    public bool buildCollider = false;
+    public bool autoTriangulation = false;
     public bool lockPolygon = false;
 
     public string uniqueMaterialPath = "";
@@ -112,7 +106,7 @@ public class PolygonBuilder : MonoBehaviour
             AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
         }
 
-        if ( renderMode != RenderMode.customMaterial && (renderer.sharedMaterial == null || string.IsNullOrEmpty(uniqueMaterialPath)))
+        if (renderMode != RenderMode.customMaterial && (renderer.sharedMaterial == null || string.IsNullOrEmpty(uniqueMaterialPath)))
         {
             uniqueMaterial = new Material(vertexColorShader);
             customMaterial = uniqueMaterial;
@@ -137,7 +131,7 @@ public class PolygonBuilder : MonoBehaviour
         vertices.Add(new Vector3(0.5f, 0.5f, 0));
         vertices.Add(new Vector3(-0.5f, 0.5f, 0));
 
-        triangles.AddRange(new int[]  { 3,1,0, 3,2,1 });
+        triangles.AddRange(new int[] { 3, 1, 0, 3, 2, 1 });
 
         meshFilter.sharedMesh.vertices = vertices.ToArray();
         meshFilter.sharedMesh.colors = colors.ToArray();
@@ -155,17 +149,11 @@ public class PolygonBuilder : MonoBehaviour
         selection.Clear();
     }
 
-    public void BuildCollider()
+    public void BuildOutlinePath()
     {
-        PolygonCollider2D collider2d = GetComponent<PolygonCollider2D>();
         List<Vector2> edges = new List<Vector2>();
 
-        if (collider2d == null)
-        {
-            collider2d = gameObject.AddComponent<PolygonCollider2D>();
-        }
-
-        List<Vector2> points = new List<Vector2>();
+        outlinePath.Clear();
 
         for (int i = 0; i < triangles.Count; i += 3)
         {
@@ -185,40 +173,43 @@ public class PolygonBuilder : MonoBehaviour
             }
         }
 
-        points.Add(vertices[(int)edges[0].x]);
-        points.Add(vertices[(int)edges[0].y]);
+        outlinePath.Add(vertices[(int)edges[0].x]);
+        outlinePath.Add(vertices[(int)edges[0].y]);
 
         edges.RemoveAt(0);
 
-        int z = 0;
-
         while (edges.Count != 1)
         {
-            ++z;
-
-            if (z > 1000)
-            {
-                print("ERROR");
-                break;
-            }
 
             for (int i = 0; i < edges.Count; ++i)
             {
-                if (vertices[(int)edges[i].x].XY() == points[points.Count - 1]) 
+                if (vertices[(int)edges[i].x].XY() == outlinePath[outlinePath.Count - 1])
                 {
-                    points.Add(vertices[(int)edges[i].y]);
+                    outlinePath.Add(vertices[(int)edges[i].y]);
                     edges.RemoveAt(i);
                     break;
                 }
-                else if (vertices[(int)edges[i].y].XY() == points[points.Count - 1])
+                else if (vertices[(int)edges[i].y].XY() == outlinePath[outlinePath.Count - 1])
                 {
-                    points.Add(vertices[(int)edges[i].x]);
+                    outlinePath.Add(vertices[(int)edges[i].x]);
                     edges.RemoveAt(i);
                     break;
                 }
             }
         }
-        collider2d.SetPath(0, points.ToArray());
+
+    }
+
+    public void BuildCollider()
+    {
+        PolygonCollider2D collider2d = GetComponent<PolygonCollider2D>();
+
+        if (collider2d == null)
+        {
+            collider2d = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
+        collider2d.SetPath(0, outlinePath.ToArray());
     }
 
     public void OnDrawGizmos()
@@ -243,13 +234,6 @@ public class PolygonBuilder : MonoBehaviour
         polygon = meshFilter.sharedMesh;
 
         polygon.Clear();
-
-        uvs.Clear();
-        uvs.Capacity = vertices.Count;
-        for (int i = 0; i < vertices.Count; ++i)
-        {
-            uvs.Add(vertices[i] * uvScale + uvOffset);
-        }
 
         if (renderMode == RenderMode.vertexColor)
         {
@@ -317,16 +301,46 @@ public class PolygonBuilder : MonoBehaviour
         }
 
         SetProperNormals();
+        //polygon.colors = colors.ToArray();
+        polygon.colors = null;
 
-        polygon.vertices = vertices.ToArray();
-        polygon.uv = uvs.ToArray();
-        polygon.colors = colors.ToArray();
-        polygon.triangles = triangles.ToArray();
-
-        if (GetComponent<PolygonCollider2D>() != null)
+        if (autoTriangulation || buildCollider)
         {
-            BuildCollider(); 
+            BuildOutlinePath();
         }
+
+        if (autoTriangulation)
+        {
+            autoVertices = new Vector3[outlinePath.Count];
+
+            for (int i = 0; i < autoVertices.Length; ++i)
+            {
+                autoVertices[i] = new Vector3(outlinePath[i].x, outlinePath[i].y, 0);
+            }
+
+            polygon.vertices = autoVertices;
+            autoTriangles = new Triangulator(outlinePath.ToArray()).Triangulate();
+            polygon.triangles = autoTriangles;
+        }
+        else
+        {
+            polygon.vertices = vertices.ToArray();
+            polygon.triangles = triangles.ToArray();
+        }
+
+        if (buildCollider)
+        {
+            BuildCollider();
+        }
+
+        uvs.Clear();
+        uvs.Capacity = vertices.Count;
+        for (int i = 0; i < vertices.Count; ++i)
+        {
+            uvs.Add(vertices[i] * uvScale + uvOffset);
+        }
+        //polygon.uv = uvs.ToArray();
+        polygon.uv = null;
     }
 
     public bool isOuterEdge(int vertexA, int vertexB)

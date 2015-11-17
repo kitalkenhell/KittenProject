@@ -25,6 +25,7 @@ public class CCurvePathEditor : Editor
         path.showTangents = EditorGUILayout.Toggle("Show Tangents", path.showTangents);
         path.useTansformTool = EditorGUILayout.Toggle("Use transform handle", path.useTansformTool);
         path.handleScale = EditorGUILayout.FloatField("Handle Scale", path.handleScale);
+        path.fill = EditorGUILayout.Toggle("Fill", path.fill);
         path.quality = Mathf.Max(EditorGUILayout.IntField("Path Quality", path.quality), 1);
     }
 

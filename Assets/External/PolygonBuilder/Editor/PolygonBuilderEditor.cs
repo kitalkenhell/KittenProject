@@ -34,7 +34,6 @@ public class MeshBuilderEditor : Editor
     {
         PolygonBuilder builder = (PolygonBuilder)target;
         MeshFilter meshFilter = builder.GetComponent<MeshFilter>();
-        PolygonCollider2D collider = builder.GetComponent<PolygonCollider2D>();
 
         if (meshFilter == null || meshFilter.sharedMesh == null)
         {
@@ -50,7 +49,9 @@ public class MeshBuilderEditor : Editor
 
         builder.uvScale = EditorGUILayout.FloatField("UV Scale", builder.uvScale);
         builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset", -builder.uvOffset);
-        builder.lockPolygon = EditorGUILayout.Toggle("Allow editing", builder.lockPolygon);
+        builder.buildCollider = EditorGUILayout.Toggle("Build Collider", builder.buildCollider);
+        builder.autoTriangulation = EditorGUILayout.Toggle("Auto Triangulation", builder.autoTriangulation);
+        builder.lockPolygon = EditorGUILayout.Toggle("Allow Editing", builder.lockPolygon);
 
         //builder.reflectiveGradientShader = EditorGUILayout.ObjectField(builder.reflectiveGradientShader, typeof(Shader), false) as Shader;
         //builder.linearGradientShader = EditorGUILayout.ObjectField(builder.linearGradientShader, typeof(Shader), false) as Shader;
