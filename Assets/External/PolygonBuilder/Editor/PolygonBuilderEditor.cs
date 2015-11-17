@@ -39,12 +39,19 @@ public class MeshBuilderEditor : Editor
         {
             if (GUILayout.Button("Initialize"))
             {
-                builder.BuildSquare();
+                builder.BuildSquare(AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(builder)).Replace("PolygonBuilder.cs", ""));
             }
+        }
+        else if (GUILayout.Button("Build Collider"))
+        {
+            builder.BuildCollider();
         }
 
         builder.uvScale = EditorGUILayout.FloatField("UV Scale", builder.uvScale);
         builder.uvOffset = -EditorGUILayout.Vector2Field("UV Offset", -builder.uvOffset);
+        builder.buildCollider = EditorGUILayout.Toggle("Build Collider", builder.buildCollider);
+        builder.autoTriangulation = EditorGUILayout.Toggle("Auto Triangulation", builder.autoTriangulation);
+        builder.lockPolygon = EditorGUILayout.Toggle("Allow Editing", builder.lockPolygon);
 
         //builder.reflectiveGradientShader = EditorGUILayout.ObjectField(builder.reflectiveGradientShader, typeof(Shader), false) as Shader;
         //builder.linearGradientShader = EditorGUILayout.ObjectField(builder.linearGradientShader, typeof(Shader), false) as Shader;
@@ -67,18 +74,23 @@ public class MeshBuilderEditor : Editor
 
         if (meshFilter != null && meshFilter.sharedMesh != null)
         {
+            if (builder.lockPolygon)
+            {
+                builder.transform.position = Handles.PositionHandle(builder.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                ProcessEvents();
+                Selection();
+                Translation();
+                AddVertex();
+                Align();
+                Extrude();
+                CreateTriangle();
+                Delete();
 
-            ProcessEvents();
-            Selection();
-            Translation();
-            AddVertex();
-            Align();
-            Extrude();
-            CreateTriangle();
-            SetProperNormals();
-            Delete();
-
-            builder.Refresh();
+                builder.Refresh();
+            }
 
             EditorUtility.SetDirty(builder);
             SceneView.RepaintAll();
@@ -157,6 +169,13 @@ public class MeshBuilderEditor : Editor
                     case KeyCode.Escape:
                         deselect = true;
                         break;
+                }
+                break;
+
+            case EventType.ValidateCommand:
+                if (Event.current.commandName.Contains("Delete"))
+                {
+                    builder.FreeAssets();
                 }
                 break;
         }
@@ -543,7 +562,7 @@ public class MeshBuilderEditor : Editor
         int b = builder.selection[1];
         int c = builder.selection[2];
 
-        if (HasTriangle(a,b,c))
+        if (builder.HasTriangle(a,b,c))
         {
             return;
         }
@@ -551,54 +570,5 @@ public class MeshBuilderEditor : Editor
         builder.triangles.Add(a);
         builder.triangles.Add(b);
         builder.triangles.Add(c);
-    }
-
-    bool isOuterEdge(int vertexA, int vertexB)
-    {
-        bool first = true;
-
-        for (int i = 0; i < builder.triangles.Count; i += 3)
-        {
-            if ( ((vertexA == builder.triangles[i] && vertexB == builder.triangles[i + 1]) || (vertexB == builder.triangles[i] && vertexA == builder.triangles[i + 1])) ||
-                 ((vertexA == builder.triangles[i + 1] && vertexB == builder.triangles[i + 2]) || (vertexB == builder.triangles[i + 1] && vertexA == builder.triangles[i + 2])) ||
-                 ((vertexA == builder.triangles[i + 2] && vertexB == builder.triangles[i]) || (vertexB == builder.triangles[i + 2] && vertexA == builder.triangles[i])) )
-            {
-                if (!first)
-                {
-                    return false;
-                }
-                first = false;
-            }
-        }
-
-        return true;
-    }
-
-    bool HasTriangle(int a, int b, int c)
-    {
-        for (int i = 0; i < builder.triangles.Count; i += 3)
-        {
-            if ((builder.triangles[i] == a || builder.triangles[i + 1] == a || builder.triangles[i + 2] == a) &&
-                (builder.triangles[i] == b || builder.triangles[i + 1] == b || builder.triangles[i + 2] == b) &&
-                (builder.triangles[i] == c || builder.triangles[i + 1] == c || builder.triangles[i + 2] == c))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    void SetProperNormals()
-    {
-        for (int i = 0; i < builder.triangles.Count - 2; i += 3)
-        {
-
-            if (Vector3.Cross(builder.vertices[builder.triangles[i]] - builder.vertices[builder.triangles[i + 1]], builder.vertices[builder.triangles[i + 2]] - builder.vertices[builder.triangles[i]]).z < 0)
-            {
-                int tmp = builder.triangles[i];
-                builder.triangles[i] = builder.triangles[i + 2];
-                builder.triangles[i + 2] = tmp;
-            }
-        }
     }
 }

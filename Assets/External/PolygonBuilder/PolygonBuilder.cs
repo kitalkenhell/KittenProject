@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEditor;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -48,6 +49,10 @@ public class PolygonBuilder : MonoBehaviour
     public List<Vector2> uvs = new List<Vector2>();
     public List<Color> colors = new List<Color>();
     public List<int> triangles = new List<int>();
+    public int[] autoTriangles;
+    public Vector3[] autoVertices;
+
+    public List<Vector2> outlinePath;
 
     public SelectionMode selectionMode;
     public List<int> selection = new List<int>();
@@ -69,11 +74,14 @@ public class PolygonBuilder : MonoBehaviour
     public Material uniqueMaterial;
     public Material customMaterial;
 
+    public bool buildCollider = false;
+    public bool autoTriangulation = false;
+    public bool lockPolygon = false;
 
     public string uniqueMaterialPath = "";
     public string uniqueMeshPath = "";
 
-    public void BuildSquare()
+    public void BuildSquare(string assetsPath)
     {
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         MeshRenderer renderer = GetComponent<MeshRenderer>();
@@ -94,16 +102,16 @@ public class PolygonBuilder : MonoBehaviour
         {
             meshFilter.sharedMesh = new Mesh();
             meshFilter.sharedMesh = meshFilter.sharedMesh;
-            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath("Assets/PolygonBuilder/Meshes/Polygon.asset");
+            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Meshes/Polygon.asset");
             AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
         }
 
-        if ( renderMode != RenderMode.customMaterial && (renderer.sharedMaterial == null || string.IsNullOrEmpty(uniqueMaterialPath)))
+        if (renderMode != RenderMode.customMaterial && (renderer.sharedMaterial == null || string.IsNullOrEmpty(uniqueMaterialPath)))
         {
             uniqueMaterial = new Material(vertexColorShader);
             customMaterial = uniqueMaterial;
             renderer.sharedMaterial = uniqueMaterial;
-            uniqueMaterialPath = AssetDatabase.GenerateUniqueAssetPath("Assets/PolygonBuilder/Materials/Material.mat");
+            uniqueMaterialPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Materials/Material.mat");
             AssetDatabase.CreateAsset(renderer.sharedMaterial, uniqueMaterialPath);
         }
 
@@ -123,7 +131,7 @@ public class PolygonBuilder : MonoBehaviour
         vertices.Add(new Vector3(0.5f, 0.5f, 0));
         vertices.Add(new Vector3(-0.5f, 0.5f, 0));
 
-        triangles.AddRange(new int[]  { 3,1,0, 3,2,1 });
+        triangles.AddRange(new int[] { 3, 1, 0, 3, 2, 1 });
 
         meshFilter.sharedMesh.vertices = vertices.ToArray();
         meshFilter.sharedMesh.colors = colors.ToArray();
@@ -139,6 +147,69 @@ public class PolygonBuilder : MonoBehaviour
         conicalGradientMaxRange = 1;
 
         selection.Clear();
+    }
+
+    public void BuildOutlinePath()
+    {
+        List<Vector2> edges = new List<Vector2>();
+
+        outlinePath.Clear();
+
+        for (int i = 0; i < triangles.Count; i += 3)
+        {
+            if (isOuterEdge(triangles[i], triangles[i + 1]))
+            {
+                edges.Add(new Vector2(triangles[i], triangles[i + 1]));
+            }
+
+            if (isOuterEdge(triangles[i + 1], triangles[i + 2]))
+            {
+                edges.Add(new Vector2(triangles[i + 1], triangles[i + 2]));
+            }
+
+            if (isOuterEdge(triangles[i + 2], triangles[i]))
+            {
+                edges.Add(new Vector2(triangles[i + 2], triangles[i]));
+            }
+        }
+
+        outlinePath.Add(vertices[(int)edges[0].x]);
+        outlinePath.Add(vertices[(int)edges[0].y]);
+
+        edges.RemoveAt(0);
+
+        while (edges.Count != 1)
+        {
+
+            for (int i = 0; i < edges.Count; ++i)
+            {
+                if (vertices[(int)edges[i].x].XY() == outlinePath[outlinePath.Count - 1])
+                {
+                    outlinePath.Add(vertices[(int)edges[i].y]);
+                    edges.RemoveAt(i);
+                    break;
+                }
+                else if (vertices[(int)edges[i].y].XY() == outlinePath[outlinePath.Count - 1])
+                {
+                    outlinePath.Add(vertices[(int)edges[i].x]);
+                    edges.RemoveAt(i);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public void BuildCollider()
+    {
+        PolygonCollider2D collider2d = GetComponent<PolygonCollider2D>();
+
+        if (collider2d == null)
+        {
+            collider2d = gameObject.AddComponent<PolygonCollider2D>();
+        }
+
+        collider2d.SetPath(0, outlinePath.ToArray());
     }
 
     public void OnDrawGizmos()
@@ -163,13 +234,6 @@ public class PolygonBuilder : MonoBehaviour
         polygon = meshFilter.sharedMesh;
 
         polygon.Clear();
-
-        uvs.Clear();
-        uvs.Capacity = vertices.Count;
-        for (int i = 0; i < vertices.Count; ++i)
-        {
-            uvs.Add(vertices[i] * uvScale + uvOffset);
-        }
 
         if (renderMode == RenderMode.vertexColor)
         {
@@ -236,26 +300,106 @@ public class PolygonBuilder : MonoBehaviour
             }
         }
 
-        polygon.vertices = vertices.ToArray();
-        polygon.uv = uvs.ToArray();
-        polygon.colors = colors.ToArray();
-        polygon.triangles = triangles.ToArray();
+        SetProperNormals();
+        //polygon.colors = colors.ToArray();
+        polygon.colors = null;
+
+        if (autoTriangulation || buildCollider)
+        {
+            BuildOutlinePath();
+        }
+
+        if (autoTriangulation)
+        {
+            autoVertices = new Vector3[outlinePath.Count];
+
+            for (int i = 0; i < autoVertices.Length; ++i)
+            {
+                autoVertices[i] = new Vector3(outlinePath[i].x, outlinePath[i].y, 0);
+            }
+
+            polygon.vertices = autoVertices;
+            autoTriangles = new Triangulator(outlinePath.ToArray()).Triangulate();
+            polygon.triangles = autoTriangles;
+        }
+        else
+        {
+            polygon.vertices = vertices.ToArray();
+            polygon.triangles = triangles.ToArray();
+        }
+
+        if (buildCollider)
+        {
+            BuildCollider();
+        }
+
+        uvs.Clear();
+        uvs.Capacity = vertices.Count;
+        for (int i = 0; i < vertices.Count; ++i)
+        {
+            uvs.Add(vertices[i] * uvScale + uvOffset);
+        }
+        //polygon.uv = uvs.ToArray();
+        polygon.uv = null;
     }
 
-    void OnDestroy()
+    public bool isOuterEdge(int vertexA, int vertexB)
     {
-        if (Application.isEditor)
-        {
-            GetComponent<MeshFilter>().sharedMesh = null;
-            GetComponent<MeshRenderer>().sharedMaterial = null;
+        bool first = true;
 
-            AssetDatabase.DeleteAsset(uniqueMaterialPath);
-            AssetDatabase.DeleteAsset(uniqueMeshPath); 
+        for (int i = 0; i < triangles.Count; i += 3)
+        {
+            if (((vertexA == triangles[i] && vertexB == triangles[i + 1]) || (vertexB == triangles[i] && vertexA == triangles[i + 1])) ||
+                 ((vertexA == triangles[i + 1] && vertexB == triangles[i + 2]) || (vertexB == triangles[i + 1] && vertexA == triangles[i + 2])) ||
+                 ((vertexA == triangles[i + 2] && vertexB == triangles[i]) || (vertexB == triangles[i + 2] && vertexA == triangles[i])))
+            {
+                if (!first)
+                {
+                    return false;
+                }
+                first = false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool HasTriangle(int a, int b, int c)
+    {
+        for (int i = 0; i < triangles.Count; i += 3)
+        {
+            if ((triangles[i] == a || triangles[i + 1] == a || triangles[i + 2] == a) &&
+                (triangles[i] == b || triangles[i + 1] == b || triangles[i + 2] == b) &&
+                (triangles[i] == c || triangles[i + 1] == c || triangles[i + 2] == c))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void SetProperNormals()
+    {
+        for (int i = 0; i < triangles.Count - 2; i += 3)
+        {
+
+            if (Vector3.Cross(vertices[triangles[i]] - vertices[triangles[i + 1]], vertices[triangles[i + 2]] - vertices[triangles[i]]).z < 0)
+            {
+                int tmp = triangles[i];
+                triangles[i] = triangles[i + 2];
+                triangles[i + 2] = tmp;
+            }
         }
     }
 
+    public void FreeAssets()
+    {
+        GetComponent<MeshFilter>().sharedMesh = null;
+        GetComponent<MeshRenderer>().sharedMaterial = null;
 
-
+        AssetDatabase.DeleteAsset(uniqueMaterialPath);
+        AssetDatabase.DeleteAsset(uniqueMeshPath);
+    }
 }
 
 #endif

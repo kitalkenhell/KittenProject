@@ -9,7 +9,16 @@ public class ActivationTrigger : MonoBehaviour
     public bool disableOnExit = false;
     public bool disableSelfOnEnter = false;
     public bool disableSelfOnExit = false;
+    public bool disableOnStart = true;
     public GameObject target;
+
+    void Start()
+    {
+        if (disableOnStart)
+        {
+            target.SetActive(false); 
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
