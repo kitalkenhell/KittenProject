@@ -22,6 +22,7 @@ public class Knight : MonoBehaviour
     public float randomWaitChance;
     public float randomWaitInterval;
     public MinMax randomWaitTime;
+    public float attackCooldown;
     public GameObject swordsTrail;
     public GameObject longColliderSword;
     public GameObject shortColliderSword;
@@ -140,7 +141,7 @@ public class Knight : MonoBehaviour
     void Attack()
     {
         if (!isAttacking)
-        {
+       {
             isAttacking = true;
             state = State.attack;
             animator.SetTrigger(attackAnimHash);
@@ -150,10 +151,16 @@ public class Knight : MonoBehaviour
     void AttackFinished()
     {
         state = State.walk;
-        isAttacking = false;
         swordsTrail.SetActive(false);
         longColliderSword.SetActive(false);
         shortColliderSword.SetActive(true);
+        StartCoroutine(ResetAttackCooldown());
+    }
+
+    IEnumerator ResetAttackCooldown()
+    {
+        yield return new WaitForSeconds(attackCooldown);
+        isAttacking = false;
     }
 
     void OnTriggerStay2D(Collider2D other)

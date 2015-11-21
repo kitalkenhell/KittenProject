@@ -11,7 +11,7 @@ public class SortSprites : MonoBehaviour
     [MenuItem("Ulility/Sort Sprites")]
     static void Sort()
     {
-        const float offset = 0.03f;
+        const float offset = 0.5f;
 
         Renderer[] sprites = FindObjectsOfType<Renderer>();
         string[] layers = EditorUtils.GetSortingLayerNames();
