@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[ExecuteInEditMode]
 public class CurvePath : MonoBehaviour
 {
     public float length;
@@ -48,11 +49,19 @@ public class CurvePath : MonoBehaviour
     public bool useTansformTool = false;
     public float handleScale = 1;
 
-    
-    public bool hasAsset = false;
-    public string uniqueMeshPath;
-    public Vector3 edgePoint;
     public List<Vector2> vertices2d = new List<Vector2>();
+
+    void Awake()
+    {
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+
+        if (meshFilter != null)
+        {
+            meshFilter.sharedMesh = new Mesh();
+        }
+
+        Refresh();
+    }
 
     public void Refresh()
     {
@@ -116,8 +125,8 @@ public class CurvePath : MonoBehaviour
 
         curve.begin = Vector3.zero;
         curve.end = Vector3.up;
-        curve.tangentBegin = Vector3.left;
-        curve.tangentEnd = Vector3.right;
+        curve.beginTangent = Vector3.left;
+        curve.endTangent = Vector3.right;
 
         points.Add(curve.begin);
         points.Add(curve.end);
@@ -126,17 +135,15 @@ public class CurvePath : MonoBehaviour
 
     public void Fill()
     {
-        if (!hasAsset)
-        {
-            GenerateMeshAsset(); 
-        }
+        CheckRenderer();
 
         int[] triangles;
         Vector3[] vertices = new Vector3[vertices2d.Count];
-        Mesh mesh = new Mesh();
+        
+        Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
 
         triangles = new Triangulator(vertices2d.GetRange(0, vertices2d.Count - 1).ToArray()).Triangulate();
-        
+
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i] = new Vector3(vertices2d[i].x, vertices2d[i].y, 0);
@@ -147,7 +154,6 @@ public class CurvePath : MonoBehaviour
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
 
-        GetComponent<MeshFilter>().sharedMesh = mesh;
         GetComponent<MeshRenderer>().enabled = true;
     }
 
@@ -163,10 +169,8 @@ public class CurvePath : MonoBehaviour
         collider2d.SetPath(0, vertices2d.GetRange(0, vertices2d.Count - 1).ToArray());
     }
 
-    void GenerateMeshAsset()
+    void CheckRenderer()
     {
-        string assetsPath = AssetDatabase.GetAssetPath(MonoScript.FromMonoBehaviour(this)).Replace("CurvePath.cs", "");
-
         MeshFilter meshFilter = GetComponent<MeshFilter>();
         MeshRenderer renderer = GetComponent<MeshRenderer>();
 
@@ -184,13 +188,8 @@ public class CurvePath : MonoBehaviour
 
         if (meshFilter.sharedMesh == null)
         {
-            uniqueMeshPath = AssetDatabase.GenerateUniqueAssetPath(assetsPath + "Meshes/Polygon.asset");
             meshFilter.sharedMesh = new Mesh();
-            meshFilter.sharedMesh = meshFilter.sharedMesh;
-            AssetDatabase.CreateAsset(meshFilter.sharedMesh, uniqueMeshPath);
         }
-
-        hasAsset = true;
     }
 
     public void AddPoint()
@@ -198,6 +197,7 @@ public class CurvePath : MonoBehaviour
         int closest = -1;
         float closestDistance = Mathf.Infinity;
         int curveIndex;
+        Vector3 edgePoint;
         Curve curve = new Curve();
 
         for (int i = 0; i < vertices2d.Count - 1; i++)
@@ -212,28 +212,81 @@ public class CurvePath : MonoBehaviour
         }
 
         curveIndex = closest / quality;
-
-        if (closest >= 0 )
-        {
-            edgePoint = transform.InverseTransformPoint(HandleUtility.ClosestPointToPolyLine(new Vector3[] { transform.TransformPoint(vertices2d[closest]), transform.TransformPoint(vertices2d[closest + 1]) }));
-        }
-
+        edgePoint = transform.InverseTransformPoint(HandleUtility.ClosestPointToPolyLine(new Vector3[] { transform.TransformPoint(vertices2d[closest]), transform.TransformPoint(vertices2d[closest + 1]) }));
         curve.begin = edgePoint;
 
         if (curveIndex == curves.Count - 1)
         {
             curve.end = curves[curveIndex].end;
+            curve.beginTangent = (curve.end - curve.begin) / 2.0f;
+            curve.endTangent = -curves[curveIndex].beginTangent;
+
             curves.Add(curve);
             points.Add(curve.begin);
         }
         else
         {
             curve.end = curves[curveIndex + 1].begin;
+            curve.beginTangent = (curve.end - curve.begin) / 2.0f;
+            curve.endTangent = -curves[curveIndex + 1].beginTangent;
+
             curves.Insert(curveIndex + 1, curve);
             points.Insert(curveIndex + 1, curve.begin);
         }
 
         curves[curveIndex].end = edgePoint;
+    }
+
+    public void RemovePoint(Vector2 mousePosition)
+    {
+        const int extraEditorSpace = 35; //wtf?
+
+        int closest = -1;
+        float closestDistance = Mathf.Infinity;
+
+        if (points.Count <= 2)
+        {
+            return;
+        }
+
+        mousePosition.y = Screen.height - mousePosition.y - extraEditorSpace;
+
+        for (int i = 0; i < points.Count - 1; i++)
+        {
+            float distance = Vector3.Distance(transform.TransformPoint(points[i]), Camera.current.ScreenToWorldPoint(mousePosition));
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closest = i;
+            }
+        }
+
+        points.RemoveAt(closest);
+
+        if (closest == 0)
+        {
+            curves.RemoveAt(0);
+            if (loop)
+            {
+                curves[curves.Count - 1].end = curves[0].begin;
+            }
+        }
+        else if (closest == points.Count - 1)
+        {
+            --closest;
+            curves.RemoveAt(curves.Count - 1);
+
+            if (loop)
+            {
+                curves[curves.Count - 1].end = curves[0].begin; 
+            }
+        }
+        else
+        {
+            curves[closest - 1].end = curves[closest].end;
+            curves.RemoveAt(closest);
+        }
     }
 
     public void CenterPivot()
@@ -254,12 +307,6 @@ public class CurvePath : MonoBehaviour
         }
 
         Refresh();
-    }
-
-    public void FreeMeshAsset()
-    {
-        GetComponent<MeshFilter>().sharedMesh = null;
-        AssetDatabase.DeleteAsset(uniqueMeshPath);
     }
 
  #endif

@@ -41,7 +41,8 @@ public class Wind : MonoBehaviour
         if (boxCollider != null)
         {
             Gizmos.color = gizmoColor;
-            Gizmos.DrawCube(transform.position, new Vector3(boxCollider.size.x * transform.lossyScale.x, boxCollider.size.y * transform.lossyScale.y, 1.0f));
+            Gizmos.DrawCube(transform.position + boxCollider.offset.Vec3() , 
+                new Vector3(boxCollider.size.x * transform.lossyScale.x, boxCollider.size.y * transform.lossyScale.y, 1.0f));
         }
     }
 }

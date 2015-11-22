@@ -7,8 +7,8 @@ public class Curve
 {
     public Vector3 begin = Vector3.zero;
     public Vector3 end = Vector3.up;
-    public Vector3 tangentBegin = Vector3.left;
-    public Vector3 tangentEnd = Vector3.right;
+    public Vector3 beginTangent = Vector3.left;
+    public Vector3 endTangent = Vector3.right;
     public int quality = 15;
 
     public float lenght;
@@ -39,8 +39,8 @@ public class Curve
     {
         begin = Vector3.zero;
         end = Vector3.up;
-        tangentBegin = Vector3.left;
-        tangentEnd = Vector3.right;
+        beginTangent = Vector3.left;
+        endTangent = Vector3.right;
     }
 
     public Vector3 PointOnCurveSmooth(float distance)
@@ -78,7 +78,7 @@ public class Curve
         float h2 = -2 * Pow3(value) + 3 * Pow2(value);
         float h3 = Pow3(value) - 2 * Pow2(value) + value;
         float h4 = Pow3(value) - Pow2(value);
-        return h1 * begin + h2 * end + h3 * tangentBegin * 3 + h4 * -tangentEnd * 3;
+        return h1 * begin + h2 * end + h3 * beginTangent * 3 + h4 * -endTangent * 3;
     }
 
     float Pow3(float value)

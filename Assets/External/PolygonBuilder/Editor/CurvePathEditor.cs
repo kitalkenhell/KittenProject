@@ -38,19 +38,16 @@ public class CurvePathEditor : Editor
     {
         CurvePath path = (CurvePath)target;
 
-        if (Event.current.type == EventType.ValidateCommand)
-        {
-            if (Event.current.commandName.Contains("Delete"))
-            {
-                path.FreeMeshAsset();
-            }
-        }
-        else if (Event.current.type == EventType.keyDown)
+        if (Event.current.type == EventType.keyDown)
         {
             switch (Event.current.keyCode)
             {
-                case KeyCode.V:
+                case KeyCode.A:
                     path.AddPoint();
+                    break;
+
+                case KeyCode.X:
+                    path.RemovePoint(Event.current.mousePosition);
                     break;
             }
         }
@@ -118,11 +115,11 @@ public class CurvePathEditor : Editor
             {
                 Handles.color = Color.red;
 
-                curve.tangentBegin = path.transform.InverseTransformPoint(Handles.FreeMoveHandle(path.transform.TransformPoint(curve.begin + curve.tangentBegin), Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap)) - curve.begin;
-                curve.tangentEnd = path.transform.InverseTransformPoint(Handles.FreeMoveHandle(path.transform.TransformPoint(curve.end + curve.tangentEnd), Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap)) - curve.end;
+                curve.beginTangent = path.transform.InverseTransformPoint(Handles.FreeMoveHandle(path.transform.TransformPoint(curve.begin + curve.beginTangent), Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap)) - curve.begin;
+                curve.endTangent = path.transform.InverseTransformPoint(Handles.FreeMoveHandle(path.transform.TransformPoint(curve.end + curve.endTangent), Quaternion.identity, handleSize * path.handleScale, Vector3.one, Handles.DotCap)) - curve.end;
 
-                Handles.DrawLine(path.transform.TransformPoint(curve.begin), path.transform.TransformPoint(curve.begin + curve.tangentBegin));
-                Handles.DrawLine(path.transform.TransformPoint(curve.end), path.transform.TransformPoint(curve.end + curve.tangentEnd)); 
+                Handles.DrawLine(path.transform.TransformPoint(curve.begin), path.transform.TransformPoint(curve.begin + curve.beginTangent));
+                Handles.DrawLine(path.transform.TransformPoint(curve.end), path.transform.TransformPoint(curve.end + curve.endTangent)); 
             }
 
             if (curve.path.Count >= 2)
