@@ -139,6 +139,7 @@ public class CurvePath : MonoBehaviour
 
         int[] triangles;
         Vector3[] vertices = new Vector3[vertices2d.Count];
+        Vector2[] uvs = vertices2d.ToArray();
         
         Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
 
@@ -151,6 +152,7 @@ public class CurvePath : MonoBehaviour
 
         mesh.vertices = vertices;
         mesh.triangles = triangles;
+        mesh.uv = uvs;
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
 
