@@ -8,6 +8,11 @@ public class BurningRigidbody : MonoBehaviour
 
     float collisionCounter = 0;
 
+    void Start()
+    {
+        transform.up = -body.velocity.normalized;
+    }
+
 	void Update () 
     {
         const float maxRotationFlying = 8.0f;
