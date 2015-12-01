@@ -36,9 +36,9 @@ public class CoinThrower : MonoBehaviour
             float factor = Random.value;
             Vector2 velocity = forceA * factor + forceB * (1 - factor);
 
-            coinFactory.Spawn(transform.position, velocity, Random.Range(angularSpeed.min, angularSpeed.max) * Utils.RandomSign());
+            coinFactory.Spawn(transform.position, velocity, angularSpeed.Random() * Utils.RandomSign());
 
-            yield return new WaitForSeconds(Random.Range(interval.min, interval.max));
+            yield return new WaitForSeconds(interval.Random());
         }
     }
 	

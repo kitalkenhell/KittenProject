@@ -86,7 +86,7 @@ public class Knight : MonoBehaviour
             {
                 if (Random.value < waitOnEdgeChance)
                 {
-                    StartCoroutine(Idle(Random.Range(waitTimeOnEdge.min, waitTimeOnEdge.max)));
+                    StartCoroutine(Idle(waitTimeOnEdge.Random()));
                     return;
                 }
                 else
@@ -133,7 +133,7 @@ public class Knight : MonoBehaviour
 
             if (Random.value < randomWaitChance && state == State.walk)
             {
-                StartCoroutine(Idle(Random.Range(randomWaitTime.min, randomWaitTime.max)));
+                StartCoroutine(Idle(randomWaitTime.Random()));
             }
         }
     }

@@ -43,10 +43,9 @@ public class Catapult : MonoBehaviour
         Rigidbody2D rock;
 
         rock = (Instantiate(RockPrefab, rockPlacement.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
-        rock.velocity = (rockForce.position - rockPlacement.position) * 
-            forceMultiplier * Random.Range(randomForceMultiplier.min, randomForceMultiplier.max);
+        rock.velocity = (rockForce.position - rockPlacement.position) * forceMultiplier * randomForceMultiplier.Random();
 
-        rock.angularVelocity = Random.Range(rockAngularVelocity.min, rockAngularVelocity.max) * Utils.RandomSign();
+        rock.angularVelocity = rockAngularVelocity.Random() * Utils.RandomSign();
     }
 
 }

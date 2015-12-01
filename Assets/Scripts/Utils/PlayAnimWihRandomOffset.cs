@@ -8,7 +8,7 @@ public class PlayAnimWihRandomOffset : MonoBehaviour
 
 	void OnEnable()
     {
-        GetComponent<Animator>().Play(stateName, 0, Random.Range(offset.min, offset.max));
+        GetComponent<Animator>().Play(stateName, 0,offset.Random());
 	}
 
 }
