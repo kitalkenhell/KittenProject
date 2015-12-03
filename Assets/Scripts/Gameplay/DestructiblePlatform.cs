@@ -27,25 +27,28 @@ public class DestructiblePlatform : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        durability -= Time.fixedDeltaTime;
-        detachTimer -= Time.fixedDeltaTime;
-
-        if (detachTimer < 0)
+        if (other.gameObject.layer == Layers.Player && other.GetComponent<PlayerController>().Velocity.y < Mathf.Epsilon)
         {
-            detachTimer += detachInterval;
-            DetachChunk(chunks[detachedChunks++]);
-        }
+            durability -= Time.fixedDeltaTime;
+            detachTimer -= Time.fixedDeltaTime;
 
-        if (durability < 0)
-        {
-            platform.SetActive(false);
-
-            foreach (var chunk in chunks)
+            if (detachTimer < 0)
             {
-                DetachChunk(chunk);
+                detachTimer += detachInterval;
+                DetachChunk(chunks[detachedChunks++]);
             }
-            boxCollider.enabled = false;
-        } 
+
+            if (durability < 0)
+            {
+                platform.SetActive(false);
+
+                foreach (var chunk in chunks)
+                {
+                    DetachChunk(chunk);
+                }
+                boxCollider.enabled = false;
+            }  
+        }
     }
 
     void DetachChunk(Rigidbody2D chunk)
