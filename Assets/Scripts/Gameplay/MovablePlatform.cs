@@ -9,7 +9,7 @@ public class MovablePlatform : MonoBehaviour
         move
     }
 
-    const float nextWaypintThreshold = 0.1f;
+    const float nextWaypintThreshold = 0.4f;
 
     public Waypoint[] waypoints;
     public bool looping;
@@ -61,7 +61,7 @@ public class MovablePlatform : MonoBehaviour
     {
 
         Waypoint current = waypoints[currentWaypoint];
-        float distance = Vector2.Distance(transform.position, current.transform.position);
+        float distance = Vector2.Distance(transform.position.XY(), current.transform.position.XY());
 
         if (state == States.wait)
         {

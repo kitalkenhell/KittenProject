@@ -25,10 +25,8 @@ public class SpinningAxe : MonoBehaviour
 
         if (player != null)
         {
-            player.Push(new Vector2(forceMultiplier.x * speed + force.x * Mathf.Sign(speed), forceMultiplier.y * Mathf.Abs(speed) + force.y),
+            player.PushAndHit(new Vector2(forceMultiplier.x * speed + force.x * Mathf.Sign(speed), forceMultiplier.y * Mathf.Abs(speed) + force.y),
                 true, true, disableControlsDuraton);
-
-            player.Hit();
         }
     }
 

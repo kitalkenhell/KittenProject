@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEditorInternal;
 using System;
 using System.Reflection;
+using Spriter2UnityDX;
 
 public class SortSprites : MonoBehaviour 
 {
@@ -11,14 +12,33 @@ public class SortSprites : MonoBehaviour
     [MenuItem("Ulility/Sort Sprites")]
     static void Sort()
     {
-        const float offset = 0.5f;
+        const float offset = 1.0f;
+        const float baseOffset = 20.0f;
 
         Renderer[] sprites = FindObjectsOfType<Renderer>();
         string[] layers = EditorUtils.GetSortingLayerNames();
+        EntityRenderer[] entities = FindObjectsOfType<EntityRenderer>();
+        SetSortingLayer[] objects = FindObjectsOfType<SetSortingLayer>();
+
+        foreach (var sprite in objects)
+        {
+            if (sprite.GetComponent<Renderer>() == null && sprite.GetComponent<EntityRenderer>() == null)
+            {
+                sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.sortingLayer) - baseOffset); 
+            }
+        }
+
+        foreach (var sprite in entities)
+        {
+            sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.SortingLayerName) - baseOffset);
+        }
 
         foreach (var sprite in sprites)
         {
-            sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.sortingLayerName));
+            if (!(sprite.sortingLayerName == "Default" && sprite.GetComponent<SpriteRenderer>() == null))
+            {
+                sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.sortingLayerName) - baseOffset);
+            }
         }
     }
 }

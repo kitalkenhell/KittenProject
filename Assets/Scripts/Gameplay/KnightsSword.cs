@@ -9,9 +9,7 @@ public class KnightsSword : MonoBehaviour
         if (other.gameObject.layer == Layers.Player)
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
-            player.Push(Vector2.up*30);
-            player.Hit();
-
+            player.PushAndHit(Vector2.up*30);
         }
     }
 }

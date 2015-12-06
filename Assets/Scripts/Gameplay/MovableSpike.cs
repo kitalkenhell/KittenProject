@@ -6,7 +6,6 @@ public class MovableSpike : MovablePlatform
     public float normalDirectionForce;
     public Vector3 additionalForce;
     public float disableControlsDuration;
-    public int damage;
 
     bool active;
 
@@ -23,8 +22,7 @@ public class MovableSpike : MovablePlatform
         if (player != null && active)
         {
             active = false;
-            player.Hit(damage);
-            player.Push((other.transform.position - transform.position).normalized * normalDirectionForce + additionalForce, true, true, disableControlsDuration);
+            player.PushAndHit((other.transform.position - transform.position).normalized * normalDirectionForce + additionalForce, true, true, disableControlsDuration);
         }
     }
 

@@ -9,7 +9,12 @@ public class SetSortingLayer : MonoBehaviour
 #if UNITY_EDITOR
 	void Update () 
     {
-        GetComponent<Renderer>().sortingLayerName = sortingLayer;
+        Renderer renderer = GetComponent<Renderer>();
+
+        if (renderer != null)
+        {
+            renderer.sortingLayerName = sortingLayer;
+        }
 	}
 
 #endif

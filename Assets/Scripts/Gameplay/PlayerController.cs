@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeedMax;
     public float jumpDuration;
     public float doubleJumpSpeed;
+    public float doubleJumpSpeedThreshold;
     public float movablePlatformJumpSpeedInfluence;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
@@ -26,7 +27,6 @@ public class PlayerController : MonoBehaviour
     public float parachuteRandomRotationAmplitude;
     public float parachuteRandomRotationFrequency;
     public AnimationCurve parachuteRandomRotationCurve;
-    public int coinsDropRate;
     public LayerMask onewayMask;
     public LayerMask obstaclesMask;
     public LayerMask movablePlatformMask;
@@ -44,8 +44,8 @@ public class PlayerController : MonoBehaviour
     }
 
     BoxCollider2D boxCollider;
-    CoinEmitter coinEmitter;
     Animator animator;
+    PlayerLogic playerLogic;
 
     Vector2 velocity;
     Vector2 HorizontalMovmentDirection;
@@ -88,13 +88,11 @@ public class PlayerController : MonoBehaviour
     bool jumpKeyReleased;
     float disableControlsCountdown;
 
-    int coins;
-
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        coinEmitter = GetComponent<CoinEmitter>();
         animator = sprite.GetComponent<Animator>();
+        playerLogic = GetComponent<PlayerLogic>();
 
         isGrounded = false;
         isTouchingWall = false;
@@ -119,20 +117,12 @@ public class PlayerController : MonoBehaviour
 
         movablePlatform = null;
 
-        coins = 0;
-        PostOffice.coinCollected += OnCoinCollected;
-
         speedAnimHash = Animator.StringToHash("Speed");
         jumpAnimHash = Animator.StringToHash("Jump");
         doubleJumpAnimHash = Animator.StringToHash("DoubleJump");
         fallingSpeedAnimHash = Animator.StringToHash("FallingSpeed");
         isGroundedAnimHash = Animator.StringToHash("IsGrounded");
         wallSlidingAnimHash = Animator.StringToHash("IsWallSliding");
-    }
-
-    void OnDestroy()
-    {
-        PostOffice.coinCollected -= OnCoinCollected;
     }
 
     void Update()
@@ -286,21 +276,18 @@ public class PlayerController : MonoBehaviour
             //Parachute / double jump
             if (!isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
             {
-                if (velocity.y < 0)
-                {
-                    if (!usingParachute)
-                    {
-                        usingParachute = true;
-                        ParachuteCountdown = parachuteDelay;
-                    }
-                }
-                else if (!doubleJump)
+                if (!doubleJump && velocity.y > doubleJumpSpeedThreshold)
                 {
                     jumpKeyReleased = false;
                     isGrounded = false;
                     velocity.y = doubleJumpSpeed;
                     doubleJump = true;
                     animator.SetTrigger(doubleJumpAnimHash);
+                }
+                else if (!usingParachute && velocity.y < 0)
+                {
+                        usingParachute = true;
+                        ParachuteCountdown = parachuteDelay;
                 }
             }
 
@@ -391,17 +378,10 @@ public class PlayerController : MonoBehaviour
         disableControlsCountdown = disableControlsDuration;
     }
 
-    public void Hit(int damage = 1)
+    public void PushAndHit(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, int damage = 1)
     {
-        int drop = Mathf.Min(coins, coinsDropRate);
-        coins -= drop;
-
-        coinEmitter.Emit(drop);
-    }
-
-    void OnCoinCollected(int amount)
-    {
-        coins += amount;
+        Push(force, overrideVelocityX, overrideVelocityY, disableControlsDuration);
+        playerLogic.DealDamage(damage);
     }
 
     void OnGrounded()

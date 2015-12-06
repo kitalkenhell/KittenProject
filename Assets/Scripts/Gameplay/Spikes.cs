@@ -5,7 +5,6 @@ public class Spikes : MonoBehaviour
 {
     public Transform force;
     public float disableControlsDuration;
-    public int damage;
 
     bool active;
 
@@ -23,8 +22,7 @@ public class Spikes : MonoBehaviour
         if (player != null && active)
         {
             active = false;
-            player.Hit(damage);
-            player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
+            player.PushAndHit((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
         }
 
     }

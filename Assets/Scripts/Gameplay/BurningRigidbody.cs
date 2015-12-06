@@ -38,5 +38,7 @@ public class BurningRigidbody : MonoBehaviour
             collisionCounter = collisionCooldown;
             transform.up = Vector3.MoveTowards(transform.up, target, maxRotationColliding * Time.deltaTime);
         }
+
+        transform.SetPositionZ(transform.parent.position.z);
 	}
 }

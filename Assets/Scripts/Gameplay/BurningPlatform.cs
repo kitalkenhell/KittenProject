@@ -7,7 +7,6 @@ public class BurningPlatform : MonoBehaviour
     public float decreaseRate;
     public float decreaseDelay;
     public float disableControlsDuration;
-    public int damage;
     public float maxScale;
     public AnimationCurve scaleCurve;
     public Transform force;
@@ -57,8 +56,7 @@ public class BurningPlatform : MonoBehaviour
             if (player != null)
             {
                 active = false;
-                player.Hit(damage);
-                player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
+                player.PushAndHit((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
             }
         }
     }

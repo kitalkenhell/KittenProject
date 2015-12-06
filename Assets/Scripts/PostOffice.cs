@@ -12,6 +12,7 @@ public static class PostOffice
     public static event DebugMessage debugMessage;
     public static event CoinEvent coinCollected;
     public static event CoinEvent coinDropped;
+    public static event Action playedDied;
 
     public static void PostDebugMessage(object message)
     {
@@ -34,6 +35,14 @@ public static class PostOffice
         if (coinDropped != null)
         {
             coinDropped(amount);
+        }
+    }
+
+    public static void PostPlayerDied()
+    {
+        if (playedDied != null)
+        {
+            playedDied();
         }
     }
 }

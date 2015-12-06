@@ -19,9 +19,6 @@ public class Knight : MonoBehaviour
     public float acceleration;
     public MinMax waitTimeOnEdge;
     public float waitOnEdgeChance;
-    public float randomWaitChance;
-    public float randomWaitInterval;
-    public MinMax randomWaitTime;
     public float attackCooldown;
     public GameObject swordsTrail;
     public GameObject longColliderSword;
@@ -53,11 +50,6 @@ public class Knight : MonoBehaviour
         longColliderSword.SetActive(false);
         shortColliderSword.SetActive(true);
         walkingDirection = walkingRight;
-
-        if (!Mathf.Approximately(randomWaitInterval, 0))
-        {
-            StartCoroutine(RandomWaiting());
-        }
     }
 
     void OnDisable()
@@ -125,23 +117,10 @@ public class Knight : MonoBehaviour
         transform.SetScaleX(transform.localScale.x * -1);
     }
 
-    IEnumerator RandomWaiting()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(randomWaitInterval);
-
-            if (Random.value < randomWaitChance && state == State.walk)
-            {
-                StartCoroutine(Idle(randomWaitTime.Random()));
-            }
-        }
-    }
-
     void Attack()
     {
         if (!isAttacking)
-       {
+        {
             isAttacking = true;
             state = State.attack;
             animator.SetTrigger(attackAnimHash);
@@ -165,7 +144,7 @@ public class Knight : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.layer == Layers.Player)
+        if (other.gameObject.layer == Layers.Player && !isAttacking)
         {
             if (other.transform.position.x < transform.position.x)
             {

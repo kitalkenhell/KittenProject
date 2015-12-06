@@ -17,11 +17,13 @@ public class PushPlayerOnTriggerEnter : MonoBehaviour
             Vector2 force = (player.transform.position - transform.position).normalized;
             force.y = Mathf.Max(pushingForceUpAmplification, force.y);
 
-            player.Push(force.normalized * pushingForce, true, true, disableControlsDuration);
-
             if (dealDamage)
             {
-                player.Hit(); 
+                player.PushAndHit(force.normalized * pushingForce, true, true, disableControlsDuration);
+            }
+            else
+            {
+                player.Push(force.normalized * pushingForce, true, true, disableControlsDuration);
             }
         }
     }
