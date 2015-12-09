@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Hellfire
+  m_Shader: {fileID: 4800000, guid: ff903ee2477d6534aa06a1753d05b544, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: 3000
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _BumpMap
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: PixelSnap
+        second: 0
+      data:
+        first:
+          name: radius
+        second: 1
+      data:
+        first:
+          name: maxRange
+        second: 3.33
+      data:
+        first:
+          name: maxAngle
+        second: 0.1
+      data:
+        first:
+          name: cutoff
+        second: 0
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: center
+        second: {r: 0, g: -0.5, b: 0, a: 0}
+      data:
+        first:
+          name: direction
+        second: {r: -0.9727879, g: 0.23169756, b: 0, a: 0}
+      data:
+        first:
+          name: colorCenter
+        second: {r: 1, g: 0.5019608, b: 0, a: 0.19607843}
+      data:
+        first:
+          name: colorEdge
+        second: {r: 1, g: 0.22012399, b: 0.19099998, a: 0}
+      data:
+        first:
+          name: begin
+        second: {r: 0, g: 0, b: 0, a: 1}
+      data:
+        first:
+          name: colorBegin
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: colorEnd
+        second: {r: 0.9852941, g: 0.014489633, b: 0.014489633, a: 1}
