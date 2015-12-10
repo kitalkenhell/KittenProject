@@ -23,7 +23,7 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   m_ActiveColorSpace: 0
   m_MTRendering: 1
-  m_MobileMTRendering: 0
+  m_MobileMTRendering: 1
   m_Stereoscopic3D: 0
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: 2
@@ -97,7 +97,7 @@ PlayerSettings:
   virtualRealitySupported: 0
   productGUID: 2535503f83321fc4a94bdb5dff164fea
   AndroidBundleVersionCode: 0
-  AndroidMinSdkVersion: 9
+  AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
@@ -154,7 +154,7 @@ PlayerSettings:
   AndroidTargetDevice: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: D:/KittenProject/key.keystore
+  AndroidKeystoreName: D:/KittenProject/KittenProject/key.keystore
   AndroidKeyaliasName: doge
   AndroidTVCompatibility: 1
   AndroidIsGame: 1
@@ -173,7 +173,10 @@ PlayerSettings:
       m_Width: 0
       m_Height: 0
   m_BuildTargetBatching: []
-  m_BuildTargetGraphicsAPIs: []
+  m_BuildTargetGraphicsAPIs:
+  - m_BuildTarget: AndroidPlayer
+    m_APIs: 08000000
+    m_Automatic: 0
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
   wiiUTitleID: 0005000011000000
