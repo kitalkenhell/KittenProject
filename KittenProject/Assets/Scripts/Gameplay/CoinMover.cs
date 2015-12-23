@@ -5,17 +5,25 @@ public class CoinMover : MonoBehaviour
 {
     public float speed;
     public float shrinkingSpeed;
+    public Transform sprite;
+    public Animator explosion;
     public Transform target;
     public bool destroy;
 
-	void Update ()
+    void OnEnable()
+    {
+        explosion.transform.parent = null;
+        explosion.enabled = true;
+    }
+
+	void Update()
     {
         const float scaleThreshold = 0.5f;
 
         transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-        transform.localScale -= Vector3.one * shrinkingSpeed * Time.deltaTime;
+        sprite.localScale -= Vector3.one * shrinkingSpeed * Time.deltaTime;
 
-        if (transform.localScale.x < scaleThreshold)
+        if (sprite.localScale.x < scaleThreshold)
         {
             PostOffice.PostCoinCollected();
 

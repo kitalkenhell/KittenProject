@@ -20,7 +20,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -30,7 +30,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 512
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -45,7 +45,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
@@ -61,8 +61,21 @@ TextureImporter:
         width: 214
         height: 190
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 83, y: 95}
+        - {x: -70, y: 95}
+        - {x: -80, y: 94}
+        - {x: -105, y: 72}
+        - {x: -107, y: 59}
+        - {x: -107, y: -10}
+        - {x: -104, y: -21}
+        - {x: -3, y: -95}
+        - {x: 14, y: -95}
+        - {x: 96, y: -15}
+        - {x: 107, y: 10}
+        - {x: 107, y: 65}
     - name: BrokenHeartLeft
       rect:
         serializedVersion: 2
@@ -71,8 +84,16 @@ TextureImporter:
         width: 117
         height: 189
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -46.5, y: 94.5}
+        - {x: -58.5, y: 71.5}
+        - {x: -58.5, y: -21.5}
+        - {x: 44.5, y: -94.5}
+        - {x: 58.5, y: -94.5}
+        - {x: 58.5, y: 81.5}
+        - {x: 45.5, y: 94.5}
     - name: BrokenHeartRight
       rect:
         serializedVersion: 2
@@ -81,9 +102,20 @@ TextureImporter:
         width: 125
         height: 191
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+      outline:
+      - - {x: -42.5, y: 95.5}
+        - {x: -62.5, y: 57.5}
+        - {x: -62.5, y: -32.5}
+        - {x: -52.5, y: -95.5}
+        - {x: -40.5, y: -95.5}
+        - {x: 60.5, y: -8.5}
+        - {x: 62.5, y: -1.5}
+        - {x: 62.5, y: 70.5}
+        - {x: 38.5, y: 95.5}
+    outline: []
+  spritePackingTag: Game
   userData: 
   assetBundleName: 
   assetBundleVariant: 

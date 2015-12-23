@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 893fd6c6a36a2244d8f6e2aee87a3cf9
-timeCreated: 1444579253
+timeCreated: 1450605760
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,7 +26,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -51,7 +51,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 20
   alphaIsTransparency: 1
@@ -59,97 +59,95 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Objects_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 68
-        width: 228
-        height: 156
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Objects_1
-      rect:
-        serializedVersion: 2
-        x: 355
-        y: 65
-        width: 70
-        height: 196
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Objects_2
       rect:
         serializedVersion: 2
-        x: 468
-        y: 36
-        width: 127
-        height: 290
+        x: 467
+        y: 35
+        width: 130
+        height: 293
       alignment: 9
-      pivot: {x: .509237468, y: .0323625877}
+      pivot: {x: 0.50939286, y: 0.036026053}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 0.77893066, y: 251.44437}
+        - {x: -2.2210693, y: 251.44437}
+        - {x: -6.2210693, y: 246.44437}
+        - {x: -8.221069, y: 241.44437}
+        - {x: -21.22107, y: 258.44437}
+        - {x: -44.22107, y: 282.44437}
+        - {x: -52.22107, y: 282.44437}
+        - {x: -66.22107, y: 267.44437}
+        - {x: -66.22107, y: 180.44437}
+        - {x: -54.22107, y: 144.44437}
+        - {x: -32.22107, y: 155.44437}
+        - {x: -17.22107, y: -10.555634}
+        - {x: 19.77893, y: -10.555634}
+        - {x: 63.77893, y: 73.44437}
+        - {x: 63.77893, y: 277.44437}
+        - {x: 59.77893, y: 282.44437}
+        - {x: 39.77893, y: 282.44437}
+        - {x: 18.77893, y: 257.44437}
+        - {x: 18.77893, y: 245.44437}
     - name: Objects_3
       rect:
         serializedVersion: 2
-        x: 648
-        y: 30
-        width: 170
-        height: 317
+        x: 647
+        y: 29
+        width: 172
+        height: 318
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Objects_4
-      rect:
-        serializedVersion: 2
-        x: 920
-        y: 10
-        width: 141
-        height: 329
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Objects_5
-      rect:
-        serializedVersion: 2
-        x: 1097
-        y: 17
-        width: 142
-        height: 322
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Objects_6
-      rect:
-        serializedVersion: 2
-        x: 1354
-        y: 17
-        width: 348
-        height: 216
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -86, y: 159}
+        - {x: -86, y: 127}
+        - {x: -73, y: -159}
+        - {x: -22, y: -159}
+        - {x: 70, y: -29}
+        - {x: 86, y: 135}
+        - {x: 86, y: 159}
     - name: Objects_7
       rect:
         serializedVersion: 2
-        x: 1763
+        x: 1761
         y: 0
-        width: 138
-        height: 137
+        width: 142
+        height: 139
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -33, y: 69.5}
+        - {x: -71, y: 35.5}
+        - {x: -71, y: -38.5}
+        - {x: -48, y: -69.5}
+        - {x: 36, y: -69.5}
+        - {x: 58, y: -62.5}
+        - {x: 71, y: -45.5}
+        - {x: 71, y: 34.5}
+        - {x: 50, y: 69.5}
     - name: Objects_8
       rect:
         serializedVersion: 2
-        x: 1927
-        y: 5
-        width: 119
-        height: 132
+        x: 1925
+        y: 3
+        width: 121
+        height: 136
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+      outline:
+      - - {x: -42.5, y: 68}
+        - {x: -60.5, y: 47}
+        - {x: -60.5, y: -57}
+        - {x: -58.5, y: -68}
+        - {x: 59.5, y: -68}
+        - {x: 60.5, y: -65}
+        - {x: 60.5, y: 54}
+        - {x: 50.5, y: 68}
+    outline: []
+  spritePackingTag: Game
   userData: 
   assetBundleName: 
   assetBundleVariant: 

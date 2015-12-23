@@ -22,37 +22,31 @@ public class InputManager : MonoBehaviour
 
     public void LeftArrowDown()
     {
-        Debug.Log("LeftArrowDown");
         horizontalAxis -= 1.0f;
     }
 
     public void LeftArrowUp()
     {
-        Debug.Log("LeftArrowUp");
         horizontalAxis += 1;
     }
 
     public void RightArrowDown()
     {
-        Debug.Log("RightArrowDown");
         horizontalAxis += 1.0f;
     }
 
     public void RightArrowUp()
     {
-        Debug.Log("RightArrowUp");
         horizontalAxis -= 1.0f;
     }
 
     public void JumpDown()
     {
-        Debug.Log("JumpDown");
         jumpButtonDown = true;
     }
 
     public void JumpUp()
     {
-        Debug.Log("JumpUp");
         jumpButtonDown = false;
     }
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9a11a08bca1a55e4fac3717edc9e4162
-timeCreated: 1442674434
+timeCreated: 1450546355
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -24,7 +24,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -49,7 +49,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 40
   alphaIsTransparency: 1
@@ -57,16 +57,6 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Spikes_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 170
-        height: 373
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: Spikes_1
       rect:
         serializedVersion: 2
@@ -75,8 +65,15 @@ TextureImporter:
         width: 217
         height: 115
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93.5, y: 57.5}
+        - {x: -108.5, y: -17.5}
+        - {x: -108.5, y: -57.5}
+        - {x: 108.5, y: -57.5}
+        - {x: 108.5, y: -35.5}
+        - {x: 88.5, y: 57.5}
     - name: Spikes_4
       rect:
         serializedVersion: 2
@@ -85,8 +82,15 @@ TextureImporter:
         width: 245
         height: 96
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -118.5, y: 48}
+        - {x: -122.5, y: -12}
+        - {x: -122.5, y: -48}
+        - {x: 122.5, y: -48}
+        - {x: 122.5, y: 2}
+        - {x: 118.5, y: 48}
     - name: Spikes_5
       rect:
         serializedVersion: 2
@@ -95,8 +99,18 @@ TextureImporter:
         width: 35
         height: 248
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -3.5, y: 124}
+        - {x: -17.5, y: 109}
+        - {x: -17.5, y: 15}
+        - {x: -7.5, y: -123}
+        - {x: -6.5, y: -124}
+        - {x: 9.5, y: -124}
+        - {x: 17.5, y: -8}
+        - {x: 17.5, y: 112}
+        - {x: 4.5, y: 124}
     - name: Spikes_6
       rect:
         serializedVersion: 2
@@ -105,9 +119,20 @@ TextureImporter:
         width: 34
         height: 248
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-  spritePackingTag: 
+      outline:
+      - - {x: 5, y: 124}
+        - {x: -17, y: 124}
+        - {x: -17, y: -41}
+        - {x: -8, y: -123}
+        - {x: -7, y: -124}
+        - {x: 7, y: -124}
+        - {x: 7, y: -122}
+        - {x: 17, y: 8}
+        - {x: 17, y: 105}
+    outline: []
+  spritePackingTag: Game
   userData: 
   assetBundleName: 
   assetBundleVariant: 
