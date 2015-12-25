@@ -43,6 +43,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsGrounded
+    {
+        get
+        {
+            return isGrounded;
+        }
+    }
+
     BoxCollider2D boxCollider;
     Animator animator;
     PlayerLogic playerLogic;

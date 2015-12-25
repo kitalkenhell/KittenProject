@@ -15,6 +15,7 @@ public static class PostOffice
     public static event CoinEvent coinDropped;
     public static event Action playedDied;
     public static event PlayerHealthChangedEvent PlayerHealthChanged;
+    public static event Action victory;
 
     public static void PostDebugMessage(object message)
     {
@@ -53,6 +54,14 @@ public static class PostOffice
         if (playedDied != null)
         {
             playedDied();
+        }
+    }
+
+    public static void PostVictory()
+    {
+        if (victory != null)
+        {
+            victory();
         }
     }
 }

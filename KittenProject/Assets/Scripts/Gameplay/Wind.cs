@@ -12,6 +12,12 @@ public class Wind : MonoBehaviour
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        MeshRenderer[] windRenderers = GetComponentsInChildren<MeshRenderer>();
+
+        for (int i = 0; i < windRenderers.Length; ++i)
+        {
+            windRenderers[i].material.SetFloat("_TimeOffset", Random.value * i);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

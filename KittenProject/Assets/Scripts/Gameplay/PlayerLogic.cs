@@ -21,6 +21,8 @@ public class PlayerLogic : MonoBehaviour
     bool isInvulnerable;
     int health;
 
+    int victoryAnimHash;
+
     public bool IsAlive
     {
         get
@@ -36,16 +38,19 @@ public class PlayerLogic : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         collder = GetComponent<Collider2D>();
 
+        victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
         coins = 0;
         health = GameSettings.maxPlayerHealth;
 
         PostOffice.coinCollected += OnCoinCollected;
+        PostOffice.victory += OnVictory;
     }
 
     void OnDestroy()
     {
         PostOffice.coinCollected -= OnCoinCollected;
+        PostOffice.victory -= OnVictory;
     }
 
     IEnumerator InvulnerableCountdown()
@@ -86,6 +91,12 @@ public class PlayerLogic : MonoBehaviour
             health = 0;
             OnDeath(true); 
         }
+    }
+
+    void OnVictory()
+    {
+        controller.enabled = false;
+        animator.SetTrigger(victoryAnimHash);
     }
 
     void OnDeath(bool useHellfireDeathAnimation)
