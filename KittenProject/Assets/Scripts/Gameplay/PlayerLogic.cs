@@ -7,10 +7,12 @@ public class PlayerLogic : MonoBehaviour
     public float invulnerableDuration;
     public GameObject[] objectsToDisableOnDeath;
     public GameObject[] objectsToEnableOnDeath;
+    public Transform parachute;
     public Animator animator;
     public float angularSpeedOnDeath;
     public Vector2 velocityOnDeath;
     public Vector2 velocityOnHellfireDeath;
+    public float parachuteClosingSpeedOnHellfireDeath;
 
     CoinEmitter coinEmitter;
     PlayerController controller;
@@ -57,6 +59,15 @@ public class PlayerLogic : MonoBehaviour
     {
         yield return new WaitForSeconds(invulnerableDuration);
         isInvulnerable = false;
+    }
+
+    IEnumerator ScaleDownParachute()
+    {
+        while (parachute.localScale.x > Mathf.Epsilon)
+        {
+            parachute.localScale = Vector3.MoveTowards(parachute.localScale, Vector3.zero, Time.deltaTime * parachuteClosingSpeedOnHellfireDeath);
+            yield return null;
+        }
     }
 
     void OnCoinCollected(int amount)
@@ -120,6 +131,7 @@ public class PlayerLogic : MonoBehaviour
 
         if (useHellfireDeathAnimation)
         {
+            StartCoroutine(ScaleDownParachute());
             body.velocity = new Vector2(Mathf.Sign(controller.Velocity.x) * velocityOnHellfireDeath.x, velocityOnHellfireDeath.y);
         }
         else

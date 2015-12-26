@@ -59,7 +59,7 @@ public class Knight : MonoBehaviour
 
     void Update()
     {
-        const float wallRayDistance = 0.5f;
+        const float wallRayDistance = 2.0f;
 
         if (state == State.idle || state == State.attack)
         {
@@ -72,7 +72,7 @@ public class Knight : MonoBehaviour
             float distance = direction.magnitude;
 
             direction.Normalize();
-            hit = Physics2D.Raycast(transform.position, direction, distance, obstacles);
+            hit = Physics2D.Raycast(transform.position, direction.normalized, distance, obstacles);
 
             if (hit.collider == null)
             {
@@ -86,15 +86,16 @@ public class Knight : MonoBehaviour
                     QuickTurn();
                 }
             }
-            else if (hit.distance < distance * wallRayDistance)
+            else if (hit.distance < wallRayDistance)
             {
+                Debug.Log(hit.distance);
                 QuickTurn();
             }
 
             speed = Mathf.MoveTowards(speed, maxSpeed, acceleration * Time.deltaTime);
         }
 
-        transform.SetPositionX(transform.position.x + speed * walkingDirection * Time.deltaTime);
+        transform.SetPositionXY(transform.position.XY() + transform.right.XY() * speed * walkingDirection * Time.deltaTime);
         animator.SetFloat(speedAnimHash, speed);
     }
 
