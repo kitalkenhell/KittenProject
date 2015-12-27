@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     float runningMotrSpeed;
 
     Vector2 movablePlatformVelocity;
-    MovablePlatform movablePlatform;
+    MoveAlongWaypoints movablePlatform;
     Collider2D movablePlatformCollider;
 
     float jumpSpeed;
@@ -441,7 +441,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null && hit.collider.gameObject.layer == Layers.MovablePlatform)
             {
-                movablePlatform = hit.collider.GetComponent<MovablePlatform>();
+                movablePlatform = hit.collider.GetComponent<MoveAlongWaypoints>();
                 movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
                 movablePlatformCollider = hit.collider.GetComponent<Collider2D>();
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovableSpike : MovablePlatform 
+public class MovableSpike : MoveAlongWaypoints 
 {
     public float normalDirectionForce;
     public Vector3 additionalForce;

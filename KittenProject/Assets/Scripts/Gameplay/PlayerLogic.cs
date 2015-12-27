@@ -108,6 +108,7 @@ public class PlayerLogic : MonoBehaviour
     {
         controller.enabled = false;
         animator.SetTrigger(victoryAnimHash);
+        StartCoroutine(ScaleDownParachute());
     }
 
     void OnDeath(bool useHellfireDeathAnimation)

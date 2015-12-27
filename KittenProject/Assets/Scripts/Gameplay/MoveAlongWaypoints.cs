@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovablePlatform : MonoBehaviour 
+public class MoveAlongWaypoints : MonoBehaviour 
 {
     enum States
     {
