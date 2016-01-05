@@ -402,7 +402,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        const float bias = 0.1f;
+        const float bias = 0.3f;
         const float minGravityRayLenght = 0.3f;
 
         //vertical box cast collider
