@@ -1,18 +1,19 @@
 fileFormatVersion: 2
 guid: dd7f8845e04c14c448b88fa87351e109
-timeCreated: 1450528163
+timeCreated: 1452105650
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: warningSignAxe
     21300002: warningSign
     21300004: warningSignDoge
-    21300006: warningSign_3
+    21300006: warningSignLabel
     21300008: warningSign_9
     21300010: warningSignDangerLabel
     21300012: warningSign_12
     21300014: warningSign_13
     21300016: warningSign_14
+    21300018: warningSignCannon
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,7 +27,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -51,7 +52,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 50
   alphaIsTransparency: 1
@@ -59,46 +60,133 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: warningSignAxe
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 266
-        width: 88
-        height: 100
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: warningSign
       rect:
         serializedVersion: 2
-        x: 309
+        x: 0
         y: 0
-        width: 287
+        width: 290
         height: 406
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: warningSignDoge
+      outline:
+      - - {x: 49, y: -2}
+        - {x: 85, y: -3}
+        - {x: 133, y: -4}
+        - {x: 137, y: 0}
+        - {x: 143, y: 34}
+        - {x: 144, y: 45}
+        - {x: 144, y: 170}
+        - {x: 137, y: 180}
+        - {x: 27, y: 203}
+        - {x: -32, y: 203}
+        - {x: -34, y: 184}
+        - {x: -103, y: 184}
+        - {x: -141, y: 183}
+        - {x: -145, y: 96}
+        - {x: -145, y: 2}
+        - {x: -100, y: 1}
+        - {x: -31, y: 1}
+        - {x: -31, y: -203}
+        - {x: 28, y: -203}
+        - {x: 28, y: -192}
+        - {x: 27, y: -107}
+        - {x: 26, y: -1}
+    - name: warningSignCannon
       rect:
         serializedVersion: 2
-        x: 57
-        y: 148
-        width: 128
-        height: 95
+        x: 349
+        y: 249
+        width: 206
+        height: 125
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: warningSignDangerLabel
+      outline:
+      - - {x: -32, y: 60.5}
+        - {x: -75, y: 24.5}
+        - {x: -103, y: -39.5}
+        - {x: -103, y: -62.5}
+        - {x: 44, y: -62.5}
+        - {x: 103, y: -6.5}
+        - {x: 103, y: 60.5}
+    - name: warningSignAxe
       rect:
         serializedVersion: 2
-        x: 0
-        y: 35
-        width: 250
-        height: 78
+        x: 389
+        y: 86
+        width: 118
+        height: 128
       alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 2, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31, y: 63}
+        - {x: -12, y: 63}
+        - {x: -59, y: 49}
+        - {x: -59, y: -35}
+        - {x: -55, y: -56}
+        - {x: -26, y: -31}
+        - {x: -25, y: -24}
+        - {x: -12, y: -31}
+        - {x: -10, y: -31}
+        - {x: -4, y: -26}
+        - {x: -1, y: -22}
+        - {x: 5, y: -40}
+        - {x: 16, y: -64}
+        - {x: 26, y: -64}
+        - {x: 55, y: -33}
+        - {x: 55, y: 29}
+        - {x: 50, y: 46}
+    - name: warningSignLabel
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 16
+        width: 228
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13, y: 17.5}
+        - {x: 1, y: 2.5}
+        - {x: 1, y: -14.5}
+        - {x: 3, y: -18.5}
+        - {x: 15, y: -20.5}
+        - {x: 38, y: -20.5}
+        - {x: 39, y: -18.5}
+        - {x: 42, y: -5.5}
+        - {x: 42, y: 17.5}
+      - - {x: 78, y: 14.5}
+        - {x: 76, y: -2.5}
+        - {x: 76, y: -20.5}
+        - {x: 114, y: -20.5}
+        - {x: 114, y: 13.5}
+        - {x: 106, y: 14.5}
+      - - {x: 57, y: 15.5}
+        - {x: 44, y: 14.5}
+        - {x: 41, y: -15.5}
+        - {x: 41, y: -18.5}
+        - {x: 43, y: -20.5}
+        - {x: 76, y: -20.5}
+        - {x: 79, y: -11.5}
+        - {x: 79, y: 14.5}
+        - {x: 78, y: 15.5}
+      - - {x: -63, y: 20.5}
+        - {x: -83, y: 5.5}
+        - {x: -83, y: -17.5}
+        - {x: -4, y: -17.5}
+        - {x: 3, y: 3.5}
+        - {x: 3, y: 20.5}
+      - - {x: -114, y: 20.5}
+        - {x: -114, y: -14.5}
+        - {x: -94, y: -14.5}
+        - {x: -76, y: -4.5}
+        - {x: -76, y: 19.5}
+        - {x: -77, y: 20.5}
+    outline: []
   spritePackingTag: Game
   userData: 
   assetBundleName: 

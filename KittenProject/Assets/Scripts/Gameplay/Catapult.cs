@@ -16,12 +16,20 @@ public class Catapult : MonoBehaviour
 
     int fireAnimHash;
 
-    void OnEnable()
+    void Awake()
     {
         animator = GetComponent<Animator>();
         fireAnimHash = Animator.StringToHash("Fire");
+    }
 
+    void OnEnable()
+    {
         StartCoroutine(Fire());
+    }
+
+    void Start()
+    {
+        animator.SetTrigger(fireAnimHash);
     }
 
     void OnDisable()
@@ -33,8 +41,8 @@ public class Catapult : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(interval);
             animator.SetTrigger(fireAnimHash);
-            yield return new WaitForSeconds(interval); 
         }
     }
 

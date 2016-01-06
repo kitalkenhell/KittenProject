@@ -19,7 +19,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -44,7 +44,7 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 75
   alphaIsTransparency: 1
@@ -60,8 +60,9 @@ TextureImporter:
         width: 41
         height: 118
       alignment: 9
-      pivot: {x: .423231184, y: .976026893}
+      pivot: {x: 0.42323118, y: 0.9760269}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: ChainLinks_1
       rect:
         serializedVersion: 2
@@ -70,8 +71,18 @@ TextureImporter:
         width: 81
         height: 129
       alignment: 9
-      pivot: {x: .485054493, y: .980480492}
+      pivot: {x: 0.4850545, y: 0.9804805}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.973251, y: 1.0150146}
+        - {x: -15.973251, y: 0.015014648}
+        - {x: -15.973251, y: -46.984985}
+        - {x: -14.973251, y: -50.984985}
+        - {x: 12.026749, y: -50.984985}
+        - {x: 17.026749, y: -46.984985}
+        - {x: 17.026749, y: -5.9849854}
+        - {x: 11.026749, y: 1.0150146}
+    outline: []
   spritePackingTag: Game
   userData: 
   assetBundleName: 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEngine.SceneManagement; //unity 5.3
+using UnityEngine.SceneManagement;
 
 public class LevelFlow : MonoBehaviour
 {
@@ -45,7 +45,6 @@ public class LevelFlow : MonoBehaviour
     IEnumerator RestartLevel()
     {
         yield return new WaitForSeconds(restartDelay);
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //unity 5.3
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
     }
 }

@@ -13,7 +13,7 @@ public class CurvePath : MonoBehaviour
     public List<Vector3> points = new List<Vector3>();
     public List<Curve> curves = new List<Curve>();
 
-    public Vector3 PointOnPath(float distance)
+    public Vector3 PointOnPathLocal(float distance)
     {
         float distanceToGo = distance;
         int index = 0;
@@ -35,6 +35,11 @@ public class CurvePath : MonoBehaviour
         --index;
 
         return curves[index].PointOnCurve(Mathf.Abs(distanceToGo));
+    }
+
+    public Vector3 PointOnPathWorld(float distance)
+    {
+        return transform.TransformPoint(PointOnPathLocal(distance));
     }
 
 #if UNITY_EDITOR

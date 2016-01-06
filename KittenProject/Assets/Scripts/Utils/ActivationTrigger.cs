@@ -12,7 +12,7 @@ public class ActivationTrigger : MonoBehaviour
     public bool disableOnStart = true;
     public GameObject target;
 
-    void Start()
+    void Awake()
     {
         if (disableOnStart)
         {
