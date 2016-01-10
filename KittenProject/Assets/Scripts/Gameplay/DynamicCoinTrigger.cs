@@ -4,6 +4,7 @@ using System.Collections;
 public class DynamicCoinTrigger : MonoBehaviour 
 {
     public float ActivationDelay = 1.0f;
+    public AudioSource pickUpSound;
     
     CoinMover coinMover;
     BoxCollider2D boxCollider;
@@ -31,6 +32,8 @@ public class DynamicCoinTrigger : MonoBehaviour
     {
         if (!collected && other.gameObject.layer == Layers.Player)
         {
+            pickUpSound.Play();
+            pickUpSound.transform.parent = null;
             collected = true;
             enabled = false;
             parentBody.isKinematic = true;

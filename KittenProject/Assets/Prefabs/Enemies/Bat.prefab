@@ -17,6 +17,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &126536
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 417728}
+  - 82: {fileID: 8261846}
+  m_Layer: 0
+  m_Name: WingFlapSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &139448
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,7 +168,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 150694}
-  m_LocalRotation: {x: 0, y: 0, z: .711713016, w: .702470362}
+  m_LocalRotation: {x: 0, y: 0, z: 0.711713, w: 0.70247036}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -173,14 +189,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 473172}
   m_RootOrder: 0
+--- !u!4 &417728
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126536}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -131}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 473172}
+  m_RootOrder: 2
 --- !u!4 &423980
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183074}
-  m_LocalRotation: {x: 0, y: 0, z: .711712956, w: -.702470422}
-  m_LocalPosition: {x: .342858642, y: .0213992894, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.71171296, w: -0.7024704}
+  m_LocalPosition: {x: 0.34285864, y: 0.02139929, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400002}
@@ -191,8 +219,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 148640}
-  m_LocalRotation: {x: 0, y: 0, z: .999984384, w: .00558619387}
-  m_LocalPosition: {x: -.139176518, y: .158756658, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9999844, w: 0.005586194}
+  m_LocalPosition: {x: -0.13917652, y: 0.15875666, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 475460}
@@ -203,8 +231,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198934}
-  m_LocalRotation: {x: 0, y: 0, z: .0302661043, w: -.999541879}
-  m_LocalPosition: {x: .0698367432, y: -.147516817, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.030266104, w: -0.9995419}
+  m_LocalPosition: {x: 0.06983674, y: -0.14751682, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 498566}
@@ -216,7 +244,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139448}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -27}
+  m_LocalPosition: {x: 0, y: 0, z: -29}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 400002}
@@ -229,11 +257,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1716.33728, y: 121.800003, z: 0}
+  m_LocalPosition: {x: 1716.3373, y: 121.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 416922}
   - {fileID: 460320}
+  - {fileID: 417728}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &475460
@@ -242,8 +271,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 196638}
-  m_LocalRotation: {x: 0, y: 0, z: .480503708, w: .876992702}
-  m_LocalPosition: {x: .241275892, y: 1.28267014, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.4805037, w: 0.8769927}
+  m_LocalPosition: {x: 0.24127589, y: 1.2826701, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452086}
@@ -255,8 +284,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 184488}
-  m_LocalRotation: {x: 0, y: 0, z: .482274562, w: -.876020133}
-  m_LocalPosition: {x: .149647087, y: -1.04286134, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.48227456, w: -0.87602013}
+  m_LocalPosition: {x: 0.14964709, y: -1.0428613, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 452922}
@@ -269,9 +298,10 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139448}
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: .0500000007
+  m_AngularDrag: 0.05
   m_GravityScale: 1
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -285,12 +315,13 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 139448}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: .25}
+  m_Offset: {x: 0, y: 0.25}
   serializedVersion: 2
-  m_Radius: 1.61000001
+  m_Radius: 1.61
 --- !u!58 &5874694
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -298,6 +329,7 @@ CircleCollider2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 121976}
   m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
@@ -319,45 +351,48 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 0, z: .482274562, w: -.876020133}
-        inSlope: {x: 0, y: 0, z: 2.5315702, w: 3.62689972}
-        outSlope: {x: 0, y: 0, z: 2.5315702, w: 3.62689972}
+        value: {x: 0, y: 0, z: 0.48227456, w: -0.87602013}
+        inSlope: {x: 0, y: 0, z: 2.5315702, w: 3.6268997}
+        outSlope: {x: 0, y: 0, z: 2.5315702, w: 3.6268997}
         tangentMode: 0
-      - time: .200000003
-        value: {x: 0, y: 0, z: .988588631, w: -.150640205}
+      - time: 0.2
+        value: {x: 0, y: 0, z: 0.98858863, w: -0.1506402}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
-      - time: .400000006
-        value: {x: 0, y: 0, z: .482274562, w: -.876020133}
-        inSlope: {x: 0, y: 0, z: -2.5315702, w: -3.62689972}
-        outSlope: {x: 0, y: 0, z: -2.5315702, w: -3.62689972}
+      - time: 0.4
+        value: {x: 0, y: 0, z: 0.48227456, w: -0.87602013}
+        inSlope: {x: 0, y: 0, z: -2.5315702, w: -3.6268997}
+        outSlope: {x: 0, y: 0, z: -2.5315702, w: -3.6268997}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: bone_body/bone_rightWing
   - curve:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: {x: 0, y: 0, z: .480503708, w: .876992702}
-        inSlope: {x: 0, y: 0, z: 2.57085443, w: -3.86963582}
-        outSlope: {x: 0, y: 0, z: 2.57085443, w: -3.86963582}
+        value: {x: 0, y: 0, z: 0.4805037, w: 0.8769927}
+        inSlope: {x: 0, y: 0, z: 2.5708544, w: -3.8696358}
+        outSlope: {x: 0, y: 0, z: 2.5708544, w: -3.8696358}
         tangentMode: 0
-      - time: .200000003
-        value: {x: 0, y: 0, z: .994674563, w: .103065565}
+      - time: 0.2
+        value: {x: 0, y: 0, z: 0.99467456, w: 0.103065565}
         inSlope: {x: 0, y: 0, z: 0, w: 0}
         outSlope: {x: 0, y: 0, z: 0, w: 0}
         tangentMode: 0
-      - time: .400000006
-        value: {x: 0, y: 0, z: .480503708, w: .876992702}
-        inSlope: {x: 0, y: 0, z: -2.57085443, w: 3.86963582}
-        outSlope: {x: 0, y: 0, z: -2.57085443, w: 3.86963582}
+      - time: 0.4
+        value: {x: 0, y: 0, z: 0.4805037, w: 0.8769927}
+        inSlope: {x: 0, y: 0, z: -2.5708544, w: 3.8696358}
+        outSlope: {x: 0, y: 0, z: -2.5708544, w: 3.8696358}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: bone_body/bone_leftWing_
   m_CompressedRotationCurves: []
+  m_EulerCurves: []
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -367,18 +402,19 @@ AnimationClip:
         inSlope: {x: 0, y: 5, z: 0}
         outSlope: {x: 0, y: 5, z: 0}
         tangentMode: 0
-      - time: .200000003
+      - time: 0.2
         value: {x: 0, y: 1, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
-      - time: .400000006
+      - time: 0.4
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: -5, z: 0}
         outSlope: {x: 0, y: -5, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
+      m_RotationOrder: 4
     path: bone_body
   m_ScaleCurves: []
   m_FloatCurves: []
@@ -411,11 +447,14 @@ AnimationClip:
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: .400000006
+    m_StopTime: 0.4
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
     m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
@@ -426,12 +465,519 @@ AnimationClip:
     m_KeepOriginalPositionXZ: 0
     m_HeightFromFeet: 0
     m_Mirror: 0
-  m_EditorCurves: []
-  m_EulerEditorCurves: []
+  m_EditorCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0.48227456
+        inSlope: 2.5315702
+        outSlope: 2.5315702
+        tangentMode: 0
+      - time: 0.2
+        value: 0.98858863
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0.48227456
+        inSlope: -2.5315702
+        outSlope: -2.5315702
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -0.87602013
+        inSlope: 3.6268997
+        outSlope: 3.6268997
+        tangentMode: 0
+      - time: 0.2
+        value: -0.1506402
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: -0.87602013
+        inSlope: -3.6268997
+        outSlope: -3.6268997
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.x
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.y
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0.4805037
+        inSlope: 2.5708544
+        outSlope: 2.5708544
+        tangentMode: 0
+      - time: 0.2
+        value: 0.99467456
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0.4805037
+        inSlope: -2.5708544
+        outSlope: -2.5708544
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.z
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0.8769927
+        inSlope: -3.8696358
+        outSlope: -3.8696358
+        tangentMode: 0
+      - time: 0.2
+        value: 0.103065565
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0.8769927
+        inSlope: 3.8696358
+        outSlope: 3.8696358
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalRotation.w
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: bone_body
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 5
+        outSlope: 5
+        tangentMode: 0
+      - time: 0.2
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: -5
+        outSlope: -5
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.y
+    path: bone_body
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: bone_body
+    classID: 4
+    script: {fileID: 0}
+  m_EulerEditorCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 302.33185
+        inSlope: -507.46948
+        outSlope: -507.46948
+        tangentMode: 0
+      - time: 0.2
+        value: 197.32806
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 302.33185
+        inSlope: 395.01984
+        outSlope: 395.01984
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: bone_body/bone_rightWing
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: -0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.x
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.2
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 0.4
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.y
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - time: 0
+        value: 57.4366
+        inSlope: 532.90625
+        outSlope: 532.90625
+        tangentMode: 0
+      - time: 0.2
+        value: 168.16853
+        inSlope: -0.00022888184
+        outSlope: -0.00022888184
+        tangentMode: 0
+      - time: 0.4
+        value: 57.4366
+        inSlope: -404.49234
+        outSlope: -404.49234
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAngles.z
+    path: bone_body/bone_leftWing_
+    classID: 4
+    script: {fileID: 0}
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: FlapWing
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+--- !u!82 &8261846
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126536}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24308090, guid: 272da6d08d078964f9f8f7f71e5333ad,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: af53c3fde4281df4ebc49a86ce923da4, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1.8
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 15
+  MaxDistance: 60
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9530992
 Animator:
   serializedVersion: 3
@@ -493,8 +1039,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushingForce: 35
-  pushingForceUpAmplification: .25
-  disableControlsDuration: .300000012
+  pushingForceUpAmplification: 0.25
+  disableControlsDuration: 0.3
   dealDamage: 1
 --- !u!114 &11486720
 MonoBehaviour:
@@ -512,6 +1058,7 @@ MonoBehaviour:
   maxChaseDistance: 60
   disableDistance: 75
   target: {fileID: 0}
+  wingFlapSound: {fileID: 8261846}
 --- !u!212 &21200252
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -530,14 +1077,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -342709879
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 391219efc6a6bab44ad586243224ee39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21212820
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -556,14 +1107,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -342709879
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3f948a7fe592afe44935f74d8f129d91, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!212 &21271964
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -582,14 +1137,18 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -342709879
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 391219efc6a6bab44ad586243224ee39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

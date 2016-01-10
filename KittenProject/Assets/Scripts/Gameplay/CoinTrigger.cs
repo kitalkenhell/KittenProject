@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CoinTrigger : MonoBehaviour 
 {
+    public AudioSource pickUpSound;
+
     CoinMover coinMover;
     bool collected;
 
@@ -20,6 +22,8 @@ public class CoinTrigger : MonoBehaviour
             collected = true;
             enabled = false;
             coinMover.enabled = true;
+            pickUpSound.Play();
+            pickUpSound.transform.parent = null;
         }
     }
 }

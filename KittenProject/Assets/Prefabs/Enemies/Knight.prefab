@@ -236,6 +236,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &180544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 429634}
+  - 82: {fileID: 8279764}
+  m_Layer: 0
+  m_Name: SwordSwingSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &186356
 GameObject:
   m_ObjectHideFlags: 1
@@ -330,6 +346,7 @@ GameObject:
   - 50: {fileID: 5053390}
   - 61: {fileID: 6167490}
   - 114: {fileID: 11413870}
+  - 114: {fileID: 11417898}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -344,7 +361,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140398}
   m_LocalRotation: {x: 0, y: 0, z: 0.71074206, w: -0.7034527}
-  m_LocalPosition: {x: 0.5541828, y: -0.15708232, z: 0}
+  m_LocalPosition: {x: 0.55418915, y: -0.15708238, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 474858}
@@ -356,7 +373,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 174696}
   m_LocalRotation: {x: 0, y: 0, z: 0.70286024, w: 0.71132797}
-  m_LocalPosition: {x: -0.1038244, y: -0.01384736, z: 0}
+  m_LocalPosition: {x: -0.10382041, y: -0.013949031, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 423338}
@@ -368,7 +385,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112394}
   m_LocalRotation: {x: 0, y: 0, z: 0.64781344, w: 0.7617991}
-  m_LocalPosition: {x: 0.003770254, y: 0.046978116, z: 0}
+  m_LocalPosition: {x: 0.0037499368, y: 0.046878245, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 475440}
@@ -406,7 +423,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199860}
   m_LocalRotation: {x: 0, y: 0, z: 0.6990259, w: -0.71509635}
-  m_LocalPosition: {x: 0.059281223, y: -0.04360235, z: 0}
+  m_LocalPosition: {x: 0.059381638, y: -0.043618605, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 494032}
@@ -418,11 +435,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 125326}
   m_LocalRotation: {x: 0, y: 0, z: 0.9336655, w: -0.35814625}
-  m_LocalPosition: {x: 0.05526381, y: -0.03332027, z: 0}
+  m_LocalPosition: {x: 0.0552683, y: -0.033325218, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 478034}
   m_RootOrder: 0
+--- !u!4 &429634
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180544}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -84.166664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 479720}
+  m_RootOrder: 2
 --- !u!4 &434084
 Transform:
   m_ObjectHideFlags: 1
@@ -443,7 +472,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 193770}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071069, w: 0.7071067}
-  m_LocalPosition: {x: -0.15567455, y: 0.013011781, z: 0}
+  m_LocalPosition: {x: -0.15567456, y: 0.0131135015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 434084}
@@ -455,7 +484,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 152520}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071069, w: 0.7071067}
-  m_LocalPosition: {x: -0.12344008, y: -0.156565, z: 0}
+  m_LocalPosition: {x: -0.12344009, y: -0.15646327, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 487488}
@@ -562,11 +591,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 146.3125, y: 22.89, z: -29}
+  m_LocalPosition: {x: 1551.3125, y: 108.89, z: -30}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 474858}
   - {fileID: 476162}
+  - {fileID: 429634}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &487488
@@ -3916,28 +3946,6 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: {x: 0, y: 0, z: 0.9999867, w: 0.005154424}
-        inSlope: {x: 0, y: 0, z: -0.0025445018, w: 0.10328497}
-        outSlope: {x: 0, y: 0, z: -0.0025445018, w: 0.10328497}
-        tangentMode: 0
-      - time: 0.377
-        value: {x: 0, y: 0, z: 0.99902743, w: 0.044092856}
-        inSlope: {x: 0, y: 0, z: 0.0008785946, w: -0.03566341}
-        outSlope: {x: 0, y: 0, z: 0.0008785946, w: -0.03566341}
-        tangentMode: 0
-      - time: 0.6
-        value: {x: 0, y: 0, z: 0.9999867, w: 0.005154424}
-        inSlope: {x: 0, y: 0, z: 0.004301691, w: -0.17461179}
-        outSlope: {x: 0, y: 0, z: 0.004301691, w: -0.17461179}
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: bone_body/bone_legLeft_001
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: {x: 0, y: 0, z: 0.9999867, w: 0.005154424}
         inSlope: {x: 0, y: 0, z: -0.00752979, w: 0.18651657}
         outSlope: {x: 0, y: 0, z: -0.00752979, w: 0.18651657}
         tangentMode: 0
@@ -4060,12 +4068,6 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - path: 1299514909
-      attribute: 2
-      script: {fileID: 0}
-      classID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - path: 2781774689
       attribute: 2
       script: {fileID: 0}
       classID: 4
@@ -4737,106 +4739,6 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_LocalRotation.w
     path: bone_body/bone_arm/bone_hand/bone_sword
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.377
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.6
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.x
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.377
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.6
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.y
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0.9999867
-        inSlope: -0.0025445018
-        outSlope: -0.0025445018
-        tangentMode: 0
-      - time: 0.377
-        value: 0.99902743
-        inSlope: 0.0008785946
-        outSlope: 0.0008785946
-        tangentMode: 0
-      - time: 0.6
-        value: 0.9999867
-        inSlope: 0.004301691
-        outSlope: 0.004301691
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.z
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0.005154424
-        inSlope: 0.10328497
-        outSlope: 0.10328497
-        tangentMode: 0
-      - time: 0.377
-        value: 0.044092856
-        inSlope: -0.03566341
-        outSlope: -0.03566341
-        tangentMode: 0
-      - time: 0.6
-        value: 0.005154424
-        inSlope: -0.17461179
-        outSlope: -0.17461179
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalRotation.w
-    path: bone_body/bone_legLeft_001
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -5607,81 +5509,6 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAngles.x
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.377
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.6
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.y
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 179.40933
-        inSlope: -11.839444
-        outSlope: -11.839444
-        tangentMode: 0
-      - time: 0.377
-        value: 174.94568
-        inSlope: 4.0875745
-        outSlope: 4.087439
-        tangentMode: 0
-      - time: 0.6
-        value: 179.40933
-        inSlope: 20.005297
-        outSlope: 20.005297
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.z
-    path: bone_body/bone_legLeft_001
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: -0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.377
-        value: -0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      - time: 0.6
-        value: -0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAngles.x
     path: bone_body/bone_legRight
     classID: 4
     script: {fileID: 0}
@@ -5753,6 +5580,81 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+--- !u!82 &8279764
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180544}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300001, guid: 272da6d08d078964f9f8f7f71e5333ad,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 4cc8ab71b20a1cf4c941215e67a35fef, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1.4
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9587274
 Animator:
   serializedVersion: 3
@@ -5861,7 +5763,7 @@ MonoBehaviour:
   obstacles:
     serializedVersion: 2
     m_Bits: 1536
-  maxSpeed: 10
+  maxSpeed: 11
   acceleration: 15
   waitTimeOnEdge:
     min: 2
@@ -5871,6 +5773,20 @@ MonoBehaviour:
   swordsTrail: {fileID: 193686}
   longColliderSword: {fileID: 162932}
   shortColliderSword: {fileID: 199860}
+  swordSwingSound: {fileID: 8279764}
+--- !u!114 &11417898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82b5e5909512ca94fa2f67e4a71af692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1080
+  mirrorRotations: 1
 --- !u!114 &11440044
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -15,6 +15,7 @@ public class Bat : MonoBehaviour
     public float maxChaseDistance;
     public float disableDistance;
     public Transform target;
+    public AudioSource wingFlapSound;
 
     Rigidbody2D body;
 
@@ -68,5 +69,10 @@ public class Bat : MonoBehaviour
             }
         }
 
+    }
+
+    void FlapWing()
+    {
+        wingFlapSound.Play();
     }
 }

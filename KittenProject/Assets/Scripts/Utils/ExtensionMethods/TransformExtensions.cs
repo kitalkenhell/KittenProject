@@ -95,4 +95,19 @@ public static class TransformExtensions
     {
         t.localScale = new Vector3(t.localScale.x, v.x, v.y);
     }
+
+    public static void SetRotationX(this Transform t, float x)
+    {
+        t.eulerAngles = new Vector3(x, t.eulerAngles.y, t.eulerAngles.z);
+    }
+
+    public static void SetRotationY(this Transform t, float y)
+    {
+        t.eulerAngles = new Vector3(t.eulerAngles.x, y, t.eulerAngles.z);
+    }
+
+    public static void SetRotationZ(this Transform t, float z)
+    {
+        t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, z);
+    }
 }

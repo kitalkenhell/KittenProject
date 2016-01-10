@@ -10,9 +10,6 @@ public class Knight : MonoBehaviour
         attack
     }
 
-    const int walkingLeft = -1;
-    const int walkingRight = 1;
-
     public Transform raycastDirection;
     public LayerMask obstacles;
     public float maxSpeed;
@@ -23,12 +20,13 @@ public class Knight : MonoBehaviour
     public GameObject swordsTrail;
     public GameObject longColliderSword;
     public GameObject shortColliderSword;
+    public AudioSource swordSwingSound;
 
     Animator animator;
+    SpriteTurner spriteTurner;
 
     int speedAnimHash;
     int attackAnimHash;
-    int walkingDirection;
     State state;
     float speed;
     bool isAttacking;
@@ -36,6 +34,7 @@ public class Knight : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+        spriteTurner = GetComponent<SpriteTurner>();
 
         speedAnimHash = Animator.StringToHash("Speed");
         attackAnimHash = Animator.StringToHash("Attack");
@@ -49,7 +48,6 @@ public class Knight : MonoBehaviour
         swordsTrail.SetActive(false);
         longColliderSword.SetActive(false);
         shortColliderSword.SetActive(true);
-        walkingDirection = walkingRight;
     }
 
     void OnDisable()
@@ -65,7 +63,7 @@ public class Knight : MonoBehaviour
         {
             speed = Mathf.MoveTowards(speed, 0, acceleration * Time.deltaTime);
         }
-        else if (state == State.walk)
+        else if (state == State.walk && !spriteTurner.Turning)
         {
             RaycastHit2D hit;
             Vector2 direction = raycastDirection.position - transform.position;
@@ -79,7 +77,6 @@ public class Knight : MonoBehaviour
                 if (Random.value < waitOnEdgeChance)
                 {
                     StartCoroutine(Idle(waitTimeOnEdge.Random()));
-                    return;
                 }
                 else
                 {
@@ -88,14 +85,13 @@ public class Knight : MonoBehaviour
             }
             else if (hit.distance < wallRayDistance)
             {
-                Debug.Log(hit.distance);
                 QuickTurn();
             }
 
             speed = Mathf.MoveTowards(speed, maxSpeed, acceleration * Time.deltaTime);
         }
 
-        transform.SetPositionXY(transform.position.XY() + transform.right.XY() * speed * walkingDirection * Time.deltaTime);
+        transform.SetPositionXY(transform.position.XY() + transform.right.XY() * speed * Time.deltaTime);
         animator.SetFloat(speedAnimHash, speed);
     }
 
@@ -112,10 +108,8 @@ public class Knight : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
-        state = State.walk;
-        walkingDirection *= -1;
-
-        transform.SetScaleX(transform.localScale.x * -1);
+        spriteTurner.InstantTurn();
+        state = State.walk; 
     }
 
     void Attack()
@@ -125,6 +119,7 @@ public class Knight : MonoBehaviour
             isAttacking = true;
             state = State.attack;
             animator.SetTrigger(attackAnimHash);
+            StopAllCoroutines();
         }
     }
 
@@ -147,15 +142,9 @@ public class Knight : MonoBehaviour
     {
         if (other.gameObject.layer == Layers.Player && !isAttacking)
         {
-            if (other.transform.position.x < transform.position.x)
+            if ( Mathf.Sign(transform.position.x - other.transform.position.x) == Mathf.Sign(transform.right.x))
             {
-                walkingDirection = walkingLeft;
-                transform.SetScaleX(-Mathf.Abs(transform.localScale.x));
-            }
-            else
-            {
-                walkingDirection = walkingRight;
-                transform.SetScaleX(Mathf.Abs(transform.localScale.x));
+                spriteTurner.Turn();
             }
 
             Attack();
@@ -167,5 +156,6 @@ public class Knight : MonoBehaviour
         swordsTrail.SetActive(true);
         longColliderSword.SetActive(true);
         shortColliderSword.SetActive(false);
+        swordSwingSound.Play();
     }
 }

@@ -60,7 +60,7 @@ public class Hellfire : MonoBehaviour
 
         transform.SetPositionY(transform.position.y + speed * Time.deltaTime);
 
-        //glow.SetPositionX(player.transform.position.x);
+        glow.SetPositionX(player.transform.position.x);
 
         if (player.transform.position.y < transform.position.y + killYOffset)
         {

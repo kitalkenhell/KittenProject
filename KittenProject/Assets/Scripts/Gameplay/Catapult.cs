@@ -11,6 +11,8 @@ public class Catapult : MonoBehaviour
     public Transform rockPlacement;
     public Transform rockForce;
     public GameObject RockPrefab;
+    public AudioSource instantiateRockSound;
+    public AudioSource fireSound;
 
     Animator animator;
 
@@ -19,6 +21,7 @@ public class Catapult : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+
         fireAnimHash = Animator.StringToHash("Fire");
     }
 
@@ -43,6 +46,11 @@ public class Catapult : MonoBehaviour
         {
             yield return new WaitForSeconds(interval);
             animator.SetTrigger(fireAnimHash);
+
+            if (fireSound != null)
+            {
+                fireSound.Play();
+            }
         }
     }
 
@@ -54,6 +62,11 @@ public class Catapult : MonoBehaviour
         rock.velocity = (rockForce.position - rockPlacement.position) * forceMultiplier * randomForceMultiplier.Random();
 
         rock.angularVelocity = rockAngularVelocity.Random() * Utils.RandomSign();
+
+        if (instantiateRockSound != null)
+        {
+            instantiateRockSound.Play(); 
+        }
     }
 
 }

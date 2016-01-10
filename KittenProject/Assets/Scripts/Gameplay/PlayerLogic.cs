@@ -129,10 +129,10 @@ public class PlayerLogic : MonoBehaviour
         gameObject.layer = Layers.Default;
         body.angularVelocity = angularSpeedOnDeath;
         animator.enabled = false;
+        StartCoroutine(ScaleDownParachute());
 
         if (useHellfireDeathAnimation)
         {
-            StartCoroutine(ScaleDownParachute());
             body.velocity = new Vector2(Mathf.Sign(controller.Velocity.x) * velocityOnHellfireDeath.x, velocityOnHellfireDeath.y);
         }
         else

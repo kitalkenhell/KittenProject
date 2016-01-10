@@ -16,6 +16,8 @@ public class SortSprites : MonoBehaviour
         const float baseOffset = 20.0f;
 
         Renderer[] sprites = FindObjectsOfType<Renderer>();
+        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        Camera camera = FindObjectOfType<Camera>();
         string[] layers = EditorUtils.GetSortingLayerNames();
         EntityRenderer[] entities = FindObjectsOfType<EntityRenderer>();
         SetSortingLayer[] objects = FindObjectsOfType<SetSortingLayer>();
@@ -39,6 +41,11 @@ public class SortSprites : MonoBehaviour
             {
                 sprite.transform.SetPositionZ(-offset * Array.IndexOf(layers, sprite.sortingLayerName) - baseOffset);
             }
+        }
+
+        foreach (var audioSource in audioSources)
+        {
+            audioSource.transform.SetPositionZ(camera.transform.position.z);
         }
     }
 }

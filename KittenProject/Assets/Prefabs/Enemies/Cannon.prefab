@@ -93,6 +93,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &141330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 413508}
+  - 82: {fileID: 8276102}
+  m_Layer: 0
+  m_Name: CannonBallSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &144870
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +230,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 477994}
   m_RootOrder: 0
+--- !u!4 &413508
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141330}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -87.333336}
+  m_LocalScale: {x: 0.8, y: 0.8000001, z: 0.8000001}
+  m_Children: []
+  m_Father: {fileID: 460252}
+  m_RootOrder: 0
 --- !u!4 &415464
 Transform:
   m_ObjectHideFlags: 1
@@ -291,7 +319,7 @@ Transform:
   m_Children:
   - {fileID: 420802}
   m_Father: {fileID: 460252}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &446326
 Transform:
   m_ObjectHideFlags: 1
@@ -328,6 +356,7 @@ Transform:
   m_LocalPosition: {x: 1526.77, y: 76.64, z: 0}
   m_LocalScale: {x: -1.5000001, y: 1.5000001, z: 1.5}
   m_Children:
+  - {fileID: 413508}
   - {fileID: 442108}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -357,7 +386,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 45
+  m_Radius: 43.0555
 --- !u!74 &7402250
 AnimationClip:
   m_ObjectHideFlags: 0
@@ -3456,6 +3485,81 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+--- !u!82 &8276102
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141330}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24308090, guid: 272da6d08d078964f9f8f7f71e5333ad,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 1e44cab1355548f43928a2e05088032a, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 40
+  MaxDistance: 100
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0.53333336
+      value: 1
+      inSlope: 0.007283635
+      outSlope: 0.007283635
+      tangentMode: 0
+    - time: 0.98567337
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9510808
 Animator:
   serializedVersion: 3
@@ -3484,7 +3588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1f526286c239a1488fc56e54666fa38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 5
+  interval: 2
   randomForceMultiplier:
     min: 0.85
     max: 0.95
@@ -3494,6 +3598,8 @@ MonoBehaviour:
   rockPlacement: {fileID: 446326}
   rockForce: {fileID: 415464}
   RockPrefab: {fileID: 169372, guid: 5349f9a47cbb604418513a90a9ff5f6c, type: 2}
+  instantiateRockSound: {fileID: 8276102}
+  fireSound: {fileID: 0}
 --- !u!114 &11456062
 MonoBehaviour:
   m_ObjectHideFlags: 1

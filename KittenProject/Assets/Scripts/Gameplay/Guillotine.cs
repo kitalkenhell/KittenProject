@@ -24,14 +24,4 @@ public class Guillotine : MonoBehaviour
         }
 
     }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.layer == Layers.Player)
-        {
-            PlayerController player = other.GetComponent<PlayerController>();
-
-            player.PushAndHit(Vector3.down * force);
-        }
-    }
 }
