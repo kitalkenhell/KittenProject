@@ -6,6 +6,7 @@ public class DestructiblePlatform : MonoBehaviour
     public MinMax angularSpeed;
     public MinMax verticalForce;
     public MinMax horizontalForce;
+    public float initialDelay;
     public float durability;
     public int chunksDetachedBeforeColapse;
 
@@ -16,29 +17,26 @@ public class DestructiblePlatform : MonoBehaviour
 
     int detachedChunks;
     float detachTimer;
-    float detachInterval;
 
     void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
-        detachInterval = (durability - (durability / chunksDetachedBeforeColapse) * 2) / chunksDetachedBeforeColapse;
-        detachTimer = detachInterval * 2;
+        detachTimer = initialDelay;
     }
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.layer == Layers.Player && other.GetComponent<PlayerController>().Velocity.y < Mathf.Epsilon)
+        if (other.gameObject.layer == Layers.Player && other.GetComponent<PlayerController>().Velocity.y <= 0)
         {
-            durability -= Time.fixedDeltaTime;
             detachTimer -= Time.fixedDeltaTime;
 
             if (detachTimer < 0)
             {
-                detachTimer += detachInterval;
+                detachTimer += durability;
                 DetachChunk(chunks[detachedChunks++]);
             }
 
-            if (durability < 0)
+            if (detachedChunks > chunksDetachedBeforeColapse)
             {
                 platform.SetActive(false);
 

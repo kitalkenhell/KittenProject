@@ -682,7 +682,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1410.65, y: 79.21, z: -31}
+  m_LocalPosition: {x: 1413.2, y: 80.1, z: -31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456410}
@@ -905,7 +905,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!61 &6172188
@@ -919,9 +919,9 @@ BoxCollider2D:
   m_Material: {fileID: 6200000, guid: fbe007dfdd6163742a9f4b568ebaf1b7, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: -0.5309372}
+  m_Offset: {x: 0, y: -0.46818542}
   serializedVersion: 2
-  m_Size: {x: 4.4, y: 3.401841}
+  m_Size: {x: 4.4, y: 3.2763467}
 --- !u!74 &7421886
 AnimationClip:
   m_ObjectHideFlags: 0
@@ -9808,15 +9808,19 @@ MonoBehaviour:
   coinFactory: {fileID: 0}
   emitTickInterval: 0.02
   coinsPerTick: 3
-  VerticalForce:
-    min: 50
-    max: 80
-  HorizontalForce:
-    min: 5
+  verticalForce:
+    min: 40
+    max: 70
+  horizontalForce:
+    min: 0
     max: 30
+  horizontalForceRandomSign: 1
+  verticalForceRandomSign: 0
   angularSpeed:
     min: 500
     max: 1000
+  emitterRadius: 0.5
+  gravityNegationFactor: 1
 --- !u!114 &11456422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9848,7 +9852,7 @@ MonoBehaviour:
   jumpSpeedMax: 40
   jumpDuration: 0.19
   doubleJumpSpeed: 45
-  doubleJumpSpeedThreshold: -30
+  doubleJumpSpeedThreshold: -50
   movablePlatformJumpSpeedInfluence: 0.5
   wallBounceVelocity: {x: 27, y: 45}
   wallBounceDuration: 0.3

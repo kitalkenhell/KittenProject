@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 483396}
   - 95: {fileID: 9584706}
   m_Layer: 11
-  m_Name: Explosion
+  m_Name: PickUpEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 119966}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -102}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 459556}
@@ -159,8 +159,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 106552}
-  m_LocalRotation: {x: 0, y: 0, z: 0.19509031, w: 0.98078537}
-  m_LocalPosition: {x: -0.00000032584137, y: 0, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 483396}
@@ -171,7 +171,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 103248}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.92387956, w: 0.38268343}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -370,7 +370,7 @@ MonoBehaviour:
   speed: 15
   shrinkingSpeed: 15
   sprite: {fileID: 431376}
-  explosion: {fileID: 9584706}
+  pickUpEffect: {fileID: 9584706}
   target: {fileID: 0}
   destroy: 1
 --- !u!114 &11496216
@@ -385,8 +385,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pitch:
-    min: 0.6
-    max: 1
+    min: 0.5
+    max: 0.8
 --- !u!212 &21215544
 SpriteRenderer:
   m_ObjectHideFlags: 1

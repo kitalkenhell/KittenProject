@@ -50,7 +50,6 @@ public static class TransformExtensions
         t.position = new Vector3(t.position.x, v.x, v.y);
     }
 
-
     public static void SetScaleX(this Transform t, float x)
     {
         t.localScale = new Vector3(x, t.localScale.y, t.localScale.z);
@@ -109,5 +108,20 @@ public static class TransformExtensions
     public static void SetRotationZ(this Transform t, float z)
     {
         t.eulerAngles = new Vector3(t.eulerAngles.x, t.eulerAngles.y, z);
+    }
+
+    public static void FlipX(this Transform t)
+    {
+        t.localScale = new Vector3(t.localScale.x * -1, t.localScale.y, t.localScale.z);
+    }
+
+    public static void FlipY(this Transform t)
+    {
+        t.localScale = new Vector3(t.localScale.x, t.localScale.y * -1, t.localScale.z);
+    }
+
+    public static void FlipZ(this Transform t)
+    {
+        t.localScale = new Vector3(t.localScale.x, t.localScale.y, t.localScale.z * -1);
     }
 }

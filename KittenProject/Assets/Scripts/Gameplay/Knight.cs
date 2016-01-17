@@ -23,7 +23,6 @@ public class Knight : MonoBehaviour
     public AudioSource swordSwingSound;
 
     Animator animator;
-    SpriteTurner spriteTurner;
 
     int speedAnimHash;
     int attackAnimHash;
@@ -34,7 +33,6 @@ public class Knight : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        spriteTurner = GetComponent<SpriteTurner>();
 
         speedAnimHash = Animator.StringToHash("Speed");
         attackAnimHash = Animator.StringToHash("Attack");
@@ -63,7 +61,7 @@ public class Knight : MonoBehaviour
         {
             speed = Mathf.MoveTowards(speed, 0, acceleration * Time.deltaTime);
         }
-        else if (state == State.walk && !spriteTurner.Turning)
+        else if (state == State.walk)
         {
             RaycastHit2D hit;
             Vector2 direction = raycastDirection.position - transform.position;
@@ -91,7 +89,7 @@ public class Knight : MonoBehaviour
             speed = Mathf.MoveTowards(speed, maxSpeed, acceleration * Time.deltaTime);
         }
 
-        transform.SetPositionXY(transform.position.XY() + transform.right.XY() * speed * Time.deltaTime);
+        transform.SetPositionXY(transform.position.XY() + transform.right.XY() * Mathf.Sign(transform.localScale.x) * speed * Time.deltaTime);
         animator.SetFloat(speedAnimHash, speed);
     }
 
@@ -108,7 +106,7 @@ public class Knight : MonoBehaviour
 
         yield return new WaitForSeconds(time);
 
-        spriteTurner.InstantTurn();
+        transform.FlipX();
         state = State.walk; 
     }
 
@@ -142,9 +140,9 @@ public class Knight : MonoBehaviour
     {
         if (other.gameObject.layer == Layers.Player && !isAttacking)
         {
-            if ( Mathf.Sign(transform.position.x - other.transform.position.x) == Mathf.Sign(transform.right.x))
+            if ( Mathf.Sign(transform.position.x - other.transform.position.x) == Mathf.Sign(transform.localScale.x))
             {
-                spriteTurner.Turn();
+                transform.FlipX();
             }
 
             Attack();

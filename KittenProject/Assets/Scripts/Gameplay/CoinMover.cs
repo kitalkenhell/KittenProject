@@ -6,14 +6,14 @@ public class CoinMover : MonoBehaviour
     public float speed;
     public float shrinkingSpeed;
     public Transform sprite;
-    public Animator explosion;
+    public Animator pickUpEffect;
     public Transform target;
     public bool destroy;
 
     void OnEnable()
     {
-        explosion.transform.parent = null;
-        explosion.enabled = true;
+        pickUpEffect.transform.parent = null;
+        pickUpEffect.enabled = true;
     }
 
 	void Update()

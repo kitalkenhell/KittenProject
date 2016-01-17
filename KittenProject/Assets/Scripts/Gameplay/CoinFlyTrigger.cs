@@ -4,6 +4,7 @@ using System.Collections;
 public class CoinFlyTrigger : MonoBehaviour 
 {
     public AudioSource pickUpSound;
+    public int amountOfCoins;
 
     CoinMover coinMover;
     MoveAlongCurve curveMover;
@@ -28,6 +29,8 @@ public class CoinFlyTrigger : MonoBehaviour
             pickUpSound.Play();
             pickUpSound.transform.parent = null;
             curveMover.enabled = false;
+
+            GetComponent<CoinEmitter>().BurstEmit(amountOfCoins);
         }
     }
 }

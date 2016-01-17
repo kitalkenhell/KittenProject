@@ -31,6 +31,7 @@ public class PlayerLogic : MonoBehaviour
         {
             return health > 0;
         }
+        
     }
 
     void Start()
@@ -83,6 +84,7 @@ public class PlayerLogic : MonoBehaviour
 
             health -= damage;
             coins -= drop;
+            PostOffice.PostCoinDropped(drop);
             coinEmitter.Emit(drop);
             isInvulnerable = true;
             StartCoroutine(InvulnerableCountdown());
