@@ -7,15 +7,16 @@ public class PlayGamesManager : MonoBehaviour
 
     void Start()
     {
-        GooglePlayGames.PlayGamesPlatform.Activate();
-        Social.localUser.Authenticate(OnSignedIn);
+        if (!Social.localUser.authenticated)
+        {
+            GooglePlayGames.PlayGamesPlatform.Activate();
+            Social.localUser.Authenticate(OnSignedIn); 
+        }
     }
 
 
     void OnSignedIn(bool result)
     {
-        PostOffice.PostDebugMessage(result.ToString());
-
         if (Social.localUser.authenticated)
         {
             Social.ShowAchievementsUI();

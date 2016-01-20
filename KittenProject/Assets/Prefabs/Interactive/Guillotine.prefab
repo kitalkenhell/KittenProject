@@ -25,7 +25,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 404550}
   - 95: {fileID: 9506788}
-  - 114: {fileID: 11455640}
   m_Layer: 0
   m_Name: Guillotine
   m_TagString: Untagged
@@ -136,7 +135,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117032}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071066, w: -0.70710695}
-  m_LocalPosition: {x: -17.044888, y: 4.111851, z: 0.11536006}
+  m_LocalPosition: {x: -17.04475, y: 4.111857, z: 0.11536006}
   m_LocalScale: {x: 1.04, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 482112}
@@ -943,19 +942,6 @@ MonoBehaviour:
   pushingForceUpAmplification: -0.2
   disableControlsDuration: 0.3
   dealDamage: 1
---- !u!114 &11455640
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e9dda14b6f34517a0d598d3320a902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sortingOrder: 0
-  applySpriterZOrder: 0
 --- !u!114 &11459902
 MonoBehaviour:
   m_ObjectHideFlags: 1

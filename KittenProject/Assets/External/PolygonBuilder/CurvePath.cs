@@ -9,6 +9,7 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class CurvePath : MonoBehaviour
 {
+    public bool loop = false;
     public float length;
     public List<Vector3> points = new List<Vector3>();
     public List<Curve> curves = new List<Curve>();
@@ -47,7 +48,6 @@ public class CurvePath : MonoBehaviour
 
     public int quality = 20;
     public bool fill = false;
-    public bool loop = false;
     public bool addCollider;
     public bool showPoints = true;
     public bool showTangents = true;

@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelFlow : MonoBehaviour
 {
+    public string mainMenuSceneName;
     public float fadeOutDelay;
     public float showHudDelay;
     public float showVictoryScreenDelay;
@@ -16,17 +17,20 @@ public class LevelFlow : MonoBehaviour
     int showHudAnimHash;
     int showVictoryScreenAnimHash;
 
+    bool switchingScenes;
+
     void Start()
     {
         PostOffice.playedDied += OnPlayerDied;
         PostOffice.victory += OnVictory;
-        PostOffice.restartLevel += OnRestartLevel;
 
         fadeAnimHash = Animator.StringToHash("Fade");
         showHudAnimHash = Animator.StringToHash("ShowHud");
         showVictoryScreenAnimHash = Animator.StringToHash("ShowVictoryScreen");
 
         loadingScreen.SetTrigger(fadeAnimHash);
+
+        switchingScenes = false;
 
         StartCoroutine(ShowHud());
     }
@@ -35,7 +39,13 @@ public class LevelFlow : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            if (!switchingScenes)
+            {
+                switchingScenes = true;
+                hud.SetBool(showHudAnimHash, false);
+                StartCoroutine(Exit());
+                StartCoroutine(FadeOut());
+            }
         }
     }
 
@@ -43,7 +53,6 @@ public class LevelFlow : MonoBehaviour
     {
         PostOffice.playedDied -= OnPlayerDied;
         PostOffice.victory -= OnVictory;
-        PostOffice.restartLevel -= OnRestartLevel;
     }
 
     void OnPlayerDied()
@@ -53,18 +62,37 @@ public class LevelFlow : MonoBehaviour
         StartCoroutine(FadeOut());
     }
 
-    void OnRestartLevel()
+    public void OnRestartLevel()
     {
-        //fadeOutDelay = 0;
-        victoryScreen.SetTrigger(showVictoryScreenAnimHash);
-        StartCoroutine(RestartLevel());
-        StartCoroutine(FadeOut());
+        if (!switchingScenes)
+        {
+            switchingScenes = true;
+            victoryScreen.SetTrigger(showVictoryScreenAnimHash);
+            StartCoroutine(RestartLevel());
+            StartCoroutine(FadeOut()); 
+        }
     }
 
     void OnVictory()
     {
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
+    }
+
+    public void PlayNextLevel()
+    {
+
+    }
+
+    public void GoToMainMenu()
+    {
+        if (!switchingScenes)
+        {
+            switchingScenes = true;
+            victoryScreen.SetTrigger(showVictoryScreenAnimHash);
+            StartCoroutine(Exit());
+            StartCoroutine(FadeOut()); 
+        }
     }
 
     IEnumerator ShowVictoryScreen()
@@ -90,4 +118,10 @@ public class LevelFlow : MonoBehaviour
         yield return new WaitForSeconds(fadeOutDelay + restartDelay);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-}
+
+    IEnumerator Exit()
+    {
+        yield return new WaitForSeconds(fadeOutDelay + restartDelay);
+        SceneManager.LoadScene(mainMenuSceneName);
+    }
+ }

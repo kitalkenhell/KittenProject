@@ -88,7 +88,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 474992}
   - 95: {fileID: 9563394}
-  - 114: {fileID: 11482776}
   - 114: {fileID: 11416128}
   m_Layer: 0
   m_Name: Catapult
@@ -1384,19 +1383,7 @@ MonoBehaviour:
   rockForce: {fileID: 460718}
   RockPrefab: {fileID: 169372, guid: 5349f9a47cbb604418513a90a9ff5f6c, type: 2}
   instantiateRockSound: {fileID: 0}
---- !u!114 &11482776
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e9dda14b6f34517a0d598d3320a902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sortingOrder: 0
-  applySpriterZOrder: 0
+  fireSound: {fileID: 0}
 --- !u!114 &11483486
 MonoBehaviour:
   m_ObjectHideFlags: 1

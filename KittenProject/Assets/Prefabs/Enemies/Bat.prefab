@@ -42,7 +42,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 460320}
   - 95: {fileID: 9530992}
-  - 114: {fileID: 11441554}
   - 50: {fileID: 5050816}
   - 58: {fileID: 5866806}
   - 114: {fileID: 11486720}
@@ -916,7 +915,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: af53c3fde4281df4ebc49a86ce923da4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.3
-  m_Pitch: 1.8
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1014,19 +1013,6 @@ MonoBehaviour:
   disableSelfOnExit: 0
   disableOnStart: 1
   target: {fileID: 139448}
---- !u!114 &11441554
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e9dda14b6f34517a0d598d3320a902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sortingOrder: 0
-  applySpriterZOrder: 0
 --- !u!114 &11482814
 MonoBehaviour:
   m_ObjectHideFlags: 1

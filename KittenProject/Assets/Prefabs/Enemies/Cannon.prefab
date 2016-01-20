@@ -118,7 +118,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 442108}
   - 95: {fileID: 9510808}
-  - 114: {fileID: 11456062}
   - 114: {fileID: 11444080}
   m_Layer: 0
   m_Name: Cannon
@@ -3497,7 +3496,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 1e44cab1355548f43928a2e05088032a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3542,7 +3541,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0.5
+      value: 0.25
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3600,19 +3599,6 @@ MonoBehaviour:
   RockPrefab: {fileID: 169372, guid: 5349f9a47cbb604418513a90a9ff5f6c, type: 2}
   instantiateRockSound: {fileID: 8276102}
   fireSound: {fileID: 0}
---- !u!114 &11456062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e9dda14b6f34517a0d598d3320a902, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sortingOrder: 0
-  applySpriterZOrder: 0
 --- !u!114 &11467168
 MonoBehaviour:
   m_ObjectHideFlags: 1

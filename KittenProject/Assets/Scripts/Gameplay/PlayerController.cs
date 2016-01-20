@@ -294,8 +294,9 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (!usingParachute && velocity.y < 0)
                 {
-                        usingParachute = true;
-                        ParachuteCountdown = parachuteDelay;
+                    doubleJump = true;
+                    usingParachute = true;
+                    ParachuteCountdown = parachuteDelay;
                 }
             }
 
