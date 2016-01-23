@@ -6,26 +6,38 @@ public class MenuManager : MonoBehaviour
     int playButtonPressedAnimHash;
     int backButtonPressedAnimHash;
 
-    Animator animator;
+    public Animator menuAnimator;
 
 	void Start () 
 	{
         playButtonPressedAnimHash = Animator.StringToHash("PlayButtonPressed");
         backButtonPressedAnimHash = Animator.StringToHash("BackButtonPressed");
 
-        animator = GetComponent<Animator>();
+        SocialManager.SignIn();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            animator.SetTrigger(backButtonPressedAnimHash);
+            menuAnimator.SetTrigger(backButtonPressedAnimHash);
         }
     }
 
     public void OnPlayButtonClicked()
     {
-        animator.SetTrigger(playButtonPressedAnimHash);
+        menuAnimator.SetTrigger(playButtonPressedAnimHash);
     }
+
+    public void OnAchievementsButtonClicked()
+    {
+        SocialManager.ShowAchievements();
+    }
+
+
+    public void OnLeaderboardsButtonClicked()
+    {
+        SocialManager.ShowLeaderboards();
+    }
+
 }

@@ -5,68 +5,73 @@ using GoogleMobileAds.Api;
 
 public class AdMobManager : MonoBehaviour
 {
+    public bool ShowDebugUi;
+
     private BannerView bannerView;
     private InterstitialAd interstitial;
 
     void OnGUI()
     {
-        const float buttonFontSize = 0.03f;
-        const float leftMargin = 0.82f;
-        const float rightMargin = 0.025f;
-        const float buttonWidth = 1 - leftMargin - rightMargin;
-        const float buttonHeight = 0.05f;
-        const float buttonSpacing = 0.075f;
-
-        float buttonY = 0.2f;
-
-        GUI.skin.button.fontSize = (int)(buttonFontSize * Screen.height);
-
-        Rect requestBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(requestBannerRect, "Request Banner"))
+        if (ShowDebugUi)
         {
-            RequestBanner();
-        }
+            const float buttonFontSize = 0.03f;
+            const float leftMargin = 0.82f;
+            const float rightMargin = 0.025f;
+            const float buttonWidth = 1 - leftMargin - rightMargin;
+            const float buttonHeight = 0.05f;
+            const float buttonSpacing = 0.075f;
 
-        buttonY += buttonSpacing;
-        Rect showBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(showBannerRect, "Show Banner"))
-        {
-            bannerView.Show();
-        }
+            float buttonY = 0.2f;
 
-        buttonY += buttonSpacing;
-        Rect hideBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(hideBannerRect, "Hide Banner"))
-        {
-            bannerView.Hide();
-        }
+            GUI.skin.button.fontSize = (int)(buttonFontSize * Screen.height);
 
-        buttonY += buttonSpacing;
-        Rect destroyBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(destroyBannerRect, "Destroy Banner"))
-        {
-            bannerView.Destroy();
-        }
+            Rect requestBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(requestBannerRect, "Request Banner"))
+            {
+                RequestBanner();
+            }
 
-        buttonY += buttonSpacing;
-        Rect requestInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(requestInterstitialRect, "Request Interstitial"))
-        {
-            RequestInterstitial();
-        }
+            buttonY += buttonSpacing;
+            Rect showBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(showBannerRect, "Show Banner"))
+            {
+                bannerView.Show();
+            }
 
-        buttonY += buttonSpacing;
-        Rect showInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(showInterstitialRect, "Show Interstitial"))
-        {
-            ShowInterstitial();
-        }
+            buttonY += buttonSpacing;
+            Rect hideBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(hideBannerRect, "Hide Banner"))
+            {
+                bannerView.Hide();
+            }
 
-        buttonY += buttonSpacing;
-        Rect destroyInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-        if (GUI.Button(destroyInterstitialRect, "Destroy Interstitial"))
-        {
-            interstitial.Destroy();
+            buttonY += buttonSpacing;
+            Rect destroyBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(destroyBannerRect, "Destroy Banner"))
+            {
+                bannerView.Destroy();
+            }
+
+            buttonY += buttonSpacing;
+            Rect requestInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(requestInterstitialRect, "Request Interstitial"))
+            {
+                RequestInterstitial();
+            }
+
+            buttonY += buttonSpacing;
+            Rect showInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(showInterstitialRect, "Show Interstitial"))
+            {
+                ShowInterstitial();
+            }
+
+            buttonY += buttonSpacing;
+            Rect destroyInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
+            if (GUI.Button(destroyInterstitialRect, "Destroy Interstitial"))
+            {
+                interstitial.Destroy();
+            } 
         }
     }
 

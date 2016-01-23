@@ -13,6 +13,8 @@ public class LevelFlow : MonoBehaviour
     public Animator victoryScreen;
     public Animator hud;
 
+    public string levelTimeLeaderboardId;
+
     int fadeAnimHash;
     int showHudAnimHash;
     int showVictoryScreenAnimHash;
@@ -75,8 +77,14 @@ public class LevelFlow : MonoBehaviour
 
     void OnVictory()
     {
+        SocialManager.PostLevelTimeToLeaderboard(levelTimeLeaderboardId, LevelStopwatch.Stopwatch);
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
+    }
+
+    public void ShowLeaderboards()
+    {
+        SocialManager.ShowLeaderboard(levelTimeLeaderboardId);
     }
 
     public void PlayNextLevel()

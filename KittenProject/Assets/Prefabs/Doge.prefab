@@ -9838,7 +9838,7 @@ MonoBehaviour:
   jumpSpeedMax: 40
   jumpDuration: 0.19
   doubleJumpSpeed: 45
-  doubleJumpSpeedThreshold: -50
+  doubleJumpSpeedThreshold: -300
   movablePlatformJumpSpeedInfluence: 0.5
   wallBounceVelocity: {x: 27, y: 45}
   wallBounceDuration: 0.3
@@ -10424,6 +10424,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ebec66c6e30447c4ba3b6a60b22537d4, type: 2}
+    - target: {fileID: 0}
+      propertyPath: doubleJumpSpeedThreshold
+      value: -300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 108058}
