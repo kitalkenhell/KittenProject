@@ -6,10 +6,10 @@ using System;
 using System.Reflection;
 using Spriter2UnityDX;
 
-public class SortSprites : MonoBehaviour 
+public class SortObjects : MonoBehaviour 
 {
 
-    [MenuItem("Ulility/Sort Sprites")]
+    [MenuItem("Ulility/Sort Objects")]
     static void Sort()
     {
         const float offset = 1.0f;

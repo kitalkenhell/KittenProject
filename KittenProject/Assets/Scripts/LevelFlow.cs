@@ -12,8 +12,8 @@ public class LevelFlow : MonoBehaviour
     public Animator loadingScreen;
     public Animator victoryScreen;
     public Animator hud;
+    public LevelProperties levelProperties;
 
-    public string levelTimeLeaderboardId;
 
     int fadeAnimHash;
     int showHudAnimHash;
@@ -60,7 +60,8 @@ public class LevelFlow : MonoBehaviour
     void OnPlayerDied()
     {
         hud.SetBool(showHudAnimHash, false);
-        StartCoroutine(RestartLevel());
+
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
         StartCoroutine(FadeOut());
     }
 
@@ -70,26 +71,37 @@ public class LevelFlow : MonoBehaviour
         {
             switchingScenes = true;
             victoryScreen.SetTrigger(showVictoryScreenAnimHash);
-            StartCoroutine(RestartLevel());
+            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
             StartCoroutine(FadeOut()); 
         }
     }
 
     void OnVictory()
     {
-        SocialManager.PostLevelTimeToLeaderboard(levelTimeLeaderboardId, LevelStopwatch.Stopwatch);
+        if (levelProperties.nextLevel != null)
+        {
+            levelProperties.nextLevel.IsLocked = false;
+        }
+
+        SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, LevelStopwatch.Stopwatch);
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
     }
 
     public void ShowLeaderboards()
     {
-        SocialManager.ShowLeaderboard(levelTimeLeaderboardId);
+        SocialManager.ShowLeaderboard(levelProperties.timeLeaderboardId);
     }
 
     public void PlayNextLevel()
     {
-
+        if (!switchingScenes && levelProperties.nextLevel != null)
+        {
+            switchingScenes = true;
+            victoryScreen.SetTrigger(showVictoryScreenAnimHash);
+            StartCoroutine(LoadLevel(levelProperties.nextLevel.sceneName));
+            StartCoroutine(FadeOut());
+        }
     }
 
     public void GoToMainMenu()
@@ -121,10 +133,10 @@ public class LevelFlow : MonoBehaviour
         loadingScreen.SetTrigger(fadeAnimHash);
     }
 
-    IEnumerator RestartLevel()
+    IEnumerator LoadLevel(string sceneName)
     {
         yield return new WaitForSeconds(fadeOutDelay + restartDelay);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(sceneName);
     }
 
     IEnumerator Exit()

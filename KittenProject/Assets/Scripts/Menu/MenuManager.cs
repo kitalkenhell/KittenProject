@@ -1,19 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour 
 {
+    public LevelProperties firstLevel;
+
+    [HideInInspector]
+    public string LevelToLoad;
+
     int playButtonPressedAnimHash;
     int backButtonPressedAnimHash;
+    int StartGameButtonPressedAnimHash;
 
-    public Animator menuAnimator;
+    Animator menuAnimator;
 
 	void Start () 
 	{
         playButtonPressedAnimHash = Animator.StringToHash("PlayButtonPressed");
         backButtonPressedAnimHash = Animator.StringToHash("BackButtonPressed");
+        StartGameButtonPressedAnimHash = Animator.StringToHash("StartGameButtonPressed");
+
+        menuAnimator = GetComponent<Animator>();
 
         SocialManager.SignIn();
+        firstLevel.IsLocked = false;
     }
 
     void Update()
@@ -40,4 +51,13 @@ public class MenuManager : MonoBehaviour
         SocialManager.ShowLeaderboards();
     }
 
+    public void OnStartGameButtonClicked()
+    {
+        menuAnimator.SetTrigger(StartGameButtonPressedAnimHash);
+    }
+
+    public void LoadLevel()
+    {
+        SceneManager.LoadScene(LevelToLoad);
+    }
 }

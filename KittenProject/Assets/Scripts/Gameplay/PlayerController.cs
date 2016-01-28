@@ -375,7 +375,6 @@ public class PlayerController : MonoBehaviour
     {
         pushingForce = force.x;
         usingParachute = false;
-        doubleJump = true;
 
         if (overrideVelocityX)
         {

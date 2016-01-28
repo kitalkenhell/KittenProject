@@ -14,7 +14,7 @@ public class AdMobManager : MonoBehaviour
     {
         if (ShowDebugUi)
         {
-            const float buttonFontSize = 0.03f;
+            const float buttonFontSize = 0.02f;
             const float leftMargin = 0.82f;
             const float rightMargin = 0.025f;
             const float buttonWidth = 1 - leftMargin - rightMargin;

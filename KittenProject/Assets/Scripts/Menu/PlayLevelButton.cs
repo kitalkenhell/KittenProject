@@ -1,13 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 public class PlayLevelButton : MonoBehaviour 
 {
-    public string sceneName;
+    public LevelProperties levelProperties;
+    public MenuManager menu;
 
-	public void OnClicked() 
-	{
-        SceneManager.LoadScene(sceneName);
+    Button button;
+
+    void Start()
+    {
+        button = GetComponent<Button>();
+
+        button.interactable = !levelProperties.IsLocked;
+    }
+
+	public void OnClicked()
+    {
+        menu.LevelToLoad = levelProperties.sceneName;
     }
 }

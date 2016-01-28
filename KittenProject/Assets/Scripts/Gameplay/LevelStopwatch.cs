@@ -26,7 +26,7 @@ public class LevelStopwatch : MonoBehaviour
     {
         if (start && stopped)
         {
-            startTime = startTime = Time.time;;
+            startTime = Time.time;
             stopped = false;
         }
         else if (!start && !stopped)

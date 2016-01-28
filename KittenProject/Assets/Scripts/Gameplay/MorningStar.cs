@@ -27,7 +27,7 @@ public class MorningStar : MonoBehaviour
             previousLink = link;
         }
 
-        //transform.position = link.transform.position + hingeJoint.anchor.Vec3();
+        transform.position = link.transform.position + hingeJoint.anchor.Vec3();
         hingeJoint.connectedBody = link.GetComponent<Rigidbody2D>();
     }
 

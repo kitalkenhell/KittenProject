@@ -6,17 +6,16 @@ public class MoveAlongCurve : MonoBehaviour
 {
     public CurvePath path;
     public float speed;
-
+    public float traveledDistance;
 
     Rigidbody2D body;
-    float traveledDistance;
+    
     bool moveForward;
 
     public void Start()
     {
         body = GetComponent<Rigidbody2D>();
 
-        traveledDistance = 0;
         moveForward = true;
     }
 
