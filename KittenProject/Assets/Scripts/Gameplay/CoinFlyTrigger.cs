@@ -6,26 +6,26 @@ public class CoinFlyTrigger : MonoBehaviour
     public AudioSource pickUpSound;
     public int amountOfCoins;
 
-    CoinMover coinMover;
+    Pickup pickupMover;
     MoveAlongCurve curveMover;
     bool collected;
 
     void Start()
     {
-        coinMover = GetComponent<CoinMover>();
+        pickupMover = GetComponent<Pickup>();
         curveMover = GetComponent<MoveAlongCurve>();
 
-        coinMover.enabled = false;
+        pickupMover.enabled = false;
         collected = false;
     }
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (!collected)
+        if (!collected && other.gameObject.layer == Layers.Player)
         {
             collected = true;
             enabled = false;
-            coinMover.enabled = true;
+            pickupMover.enabled = true;
             pickUpSound.Play();
             pickUpSound.transform.parent = null;
             curveMover.enabled = false;

@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 189960}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1476.6, y: 119.7, z: -4}
+  m_LocalPosition: {x: 1475.09, y: 119.7, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 410072}
@@ -114,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171662}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.46003413, y: -2.54, z: -26}
+  m_LocalPosition: {x: -0.460083, y: -2.5400014, z: -26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 444078}
@@ -144,7 +144,7 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 183968}
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 7
   m_LinearDrag: 1
   m_AngularDrag: 1
   m_GravityScale: 1
@@ -193,11 +193,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0199991620638b4a9de7aeedfc0e246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite: {fileID: 452486}
   chainRoot: {fileID: 5042598}
   chainLinkAPrefab: {fileID: 23349408, guid: 46a53e300173d5b408fea5da02b08723, type: 2}
   chainLinkBPrefab: {fileID: 23345894, guid: 57f7e9ba59a16124b91247e0d55d0538, type: 2}
-  chainLinksCount: 12
-  pushForce: 100000
+  chainLinksCount: 10
+  pushForce: 10000
 --- !u!212 &21252454
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -271,8 +272,8 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0.5, y: 1}
-  m_ConnectedAnchor: {x: 0, y: 0}
+  m_Anchor: {x: 0.5, y: 0}
+  m_ConnectedAnchor: {x: 0, y: -1.6}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

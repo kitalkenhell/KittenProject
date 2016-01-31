@@ -26,7 +26,7 @@ public class DestructiblePlatform : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.layer == Layers.Player && other.GetComponent<PlayerController>().Velocity.y <= 0)
+        if (other.gameObject.layer == Layers.Player && other.GetComponent<PlayerController>().IsGrounded)
         {
             detachTimer -= Time.fixedDeltaTime;
 

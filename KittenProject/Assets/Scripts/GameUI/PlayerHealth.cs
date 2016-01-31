@@ -43,7 +43,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            icons[oldHealth].Show();
+            icons[currentHealth].Show();
         }
     }
 }

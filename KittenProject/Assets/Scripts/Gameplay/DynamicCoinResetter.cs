@@ -5,21 +5,21 @@ public class DynamicCoinResetter : MonoBehaviour
 {
     Vector3 coinScale;
     Rigidbody2D body;
-    CoinMover mover;
+    Pickup mover;
     DynamicCoinTrigger trigger;
 
     public void Awake()
     {
         coinScale = transform.localScale;
-        mover = GetComponent<CoinMover>();
+        mover = GetComponent<Pickup>();
         body = GetComponent<Rigidbody2D>();
         trigger = GetComponentInChildren<DynamicCoinTrigger>();
     }
 
-	public void Reset(Vector3 position, Vector2 velocity, float angularSpeed, Transform target)
+	public void Reset(Vector3 position, Vector2 velocity, float angularSpeed, PlayerLogic player)
     {
         gameObject.SetActive(true);
-        mover.target = target;
+        mover.player = player;
         transform.position = position;
         transform.localScale = coinScale;
         body.velocity = velocity;

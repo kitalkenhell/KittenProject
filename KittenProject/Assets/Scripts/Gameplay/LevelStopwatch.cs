@@ -12,13 +12,13 @@ public class LevelStopwatch : MonoBehaviour
     {
         get
         {
-            return Time.time - startTime;
+            return Time.timeSinceLevelLoad - startTime;
         }
     }
 
     void Start()
     {
-        startTime = Time.time;
+        startTime = Time.timeSinceLevelLoad;
         stopped = true;
     }
 
@@ -26,7 +26,7 @@ public class LevelStopwatch : MonoBehaviour
     {
         if (start && stopped)
         {
-            startTime = Time.time;
+            startTime = Time.timeSinceLevelLoad;
             stopped = false;
         }
         else if (!start && !stopped)

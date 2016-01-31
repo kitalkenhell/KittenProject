@@ -1,14 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CoinMover : MonoBehaviour 
+public class Pickup : MonoBehaviour 
 {
+    public enum Type
+    {
+        coin,
+        heart
+    }
+
     public float speed;
     public float shrinkingSpeed;
     public Transform sprite;
     public Animator pickUpEffect;
-    public Transform target;
+    public PlayerLogic player;
     public bool destroy;
+    public Type type;
 
     void OnEnable()
     {
@@ -20,12 +27,19 @@ public class CoinMover : MonoBehaviour
     {
         const float scaleThreshold = 0.5f;
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
         sprite.localScale -= Vector3.one * shrinkingSpeed * Time.deltaTime;
 
         if (sprite.localScale.x < scaleThreshold)
         {
-            PostOffice.PostCoinCollected();
+            if (type == Type.coin)
+            {
+                PostOffice.PostCoinCollected();
+            }
+            else
+            {
+                PostOffice.PostHeartCollected();
+            }
 
             if (destroy)
             {

@@ -132,10 +132,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxAngle: 60
-  frequency: 0.3
-  forceMultiplier: {x: 15, y: 15}
+  maxAngle: 70
+  frequency: 0.25
+  forceMultiplier: {x: 10, y: 10}
   force: {x: 10, y: 20}
+  minPushForce: {x: 20, y: 30}
   disableControlsDuraton: 0.5
 --- !u!212 &21250510
 SpriteRenderer:

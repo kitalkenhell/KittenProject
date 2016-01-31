@@ -14,7 +14,7 @@ public class LevelProperties : ScriptableObject
     {
         get
         {
-            return Convert.ToBoolean(PlayerPrefs.GetInt(sceneName + "isLockedKey", 0));
+            return Convert.ToBoolean(PlayerPrefs.GetInt(sceneName + "isLockedKey", 1));
         }
 
         set

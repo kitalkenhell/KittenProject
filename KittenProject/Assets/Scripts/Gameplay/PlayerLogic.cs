@@ -21,15 +21,20 @@ public class PlayerLogic : MonoBehaviour
     
     int coins;
     bool isInvulnerable;
-    int health;
 
     int victoryAnimHash;
+
+    public int Health
+    {
+        get;
+        private set;
+    }
 
     public bool IsAlive
     {
         get
         {
-            return health > 0;
+            return Health > 0;
         }
         
     }
@@ -44,15 +49,17 @@ public class PlayerLogic : MonoBehaviour
         victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
         coins = 0;
-        health = GameSettings.maxPlayerHealth;
+        Health = GameSettings.maxPlayerHealth;
 
         PostOffice.coinCollected += OnCoinCollected;
+        PostOffice.heartCollected += OnHeartCollected;
         PostOffice.victory += OnVictory;
     }
 
     void OnDestroy()
     {
         PostOffice.coinCollected -= OnCoinCollected;
+        PostOffice.heartCollected -= OnHeartCollected;
         PostOffice.victory -= OnVictory;
     }
 
@@ -76,21 +83,39 @@ public class PlayerLogic : MonoBehaviour
         coins += amount;
     }
 
+    void OnHeartCollected()
+    {
+        if (Health < GameSettings.maxPlayerHealth)
+        {
+            PostOffice.PostPlayerHealthChanged(Health, ++Health);
+        }
+    }
+
+    void DropCoins()
+    {
+        int drop = Mathf.Min(coins, coinsDropRate);
+
+        coins -= drop;
+        coinEmitter.Emit(drop);
+
+        PostOffice.PostCoinDropped(drop);
+    }
+
     public void DealDamage(int damage)
     {
         if (!isInvulnerable && IsAlive)
         {
-            int drop = Mathf.Min(coins, coinsDropRate);
-
-            health -= damage;
-            coins -= drop;
-            PostOffice.PostCoinDropped(drop);
-            coinEmitter.Emit(drop);
+            Health -= damage;
+            
             isInvulnerable = true;
+
+            Handheld.Vibrate();
+            DropCoins();
             StartCoroutine(InvulnerableCountdown());
 
-            PostOffice.PostPlayerHealthChanged(health + damage, health);
-            if (health <= 0)
+            PostOffice.PostPlayerHealthChanged(Health + damage, Health);
+
+            if (Health <= 0)
             {
                 OnDeath(false);
             }
@@ -101,7 +126,9 @@ public class PlayerLogic : MonoBehaviour
     {
         if (IsAlive)
         {
-            health = 0;
+            DropCoins();
+            Handheld.Vibrate();
+            Health = 0;
             OnDeath(true); 
         }
     }

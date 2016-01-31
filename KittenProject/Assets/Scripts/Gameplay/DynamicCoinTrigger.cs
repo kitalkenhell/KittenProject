@@ -5,8 +5,8 @@ public class DynamicCoinTrigger : MonoBehaviour
 {
     public float ActivationDelay = 1.0f;
     public AudioSource pickUpSound;
-    
-    CoinMover coinMover;
+
+    Pickup pickupMover;
     BoxCollider2D boxCollider;
     bool collected;
     Rigidbody2D parentBody;
@@ -14,7 +14,7 @@ public class DynamicCoinTrigger : MonoBehaviour
 
     public void Awake()
     {
-        coinMover = GetComponentInParent<CoinMover>();
+        pickupMover = GetComponentInParent<Pickup>();
         boxCollider = GetComponent<BoxCollider2D>();
         parentBody = GetComponentInParent<Rigidbody2D>();
         parentCollider = GetComponentInParent<BoxCollider2D>();
@@ -23,7 +23,7 @@ public class DynamicCoinTrigger : MonoBehaviour
     public void Reset()
     {
         boxCollider.enabled = false;
-        coinMover.enabled = false;
+        pickupMover.enabled = false;
         collected = false;
         StartCoroutine(Activator());
     }
@@ -38,7 +38,7 @@ public class DynamicCoinTrigger : MonoBehaviour
             enabled = false;
             parentBody.isKinematic = true;
             parentCollider.enabled = false;
-            coinMover.enabled = true; 
+            pickupMover.enabled = true; 
         }
     }
 

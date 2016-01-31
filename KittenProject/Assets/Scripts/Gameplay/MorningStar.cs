@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MorningStar : MonoBehaviour
 {
+    public Transform sprite;
     public Rigidbody2D chainRoot;
     public HingeJoint2D chainLinkAPrefab;
     public HingeJoint2D chainLinkBPrefab;
@@ -19,15 +20,17 @@ public class MorningStar : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         link.connectedBody = chainRoot;
-
+        
         for (int i = 1; i < chainLinksCount; i++)
         {
-            link = (Instantiate((i % 2 == 0) ? chainLinkAPrefab : chainLinkBPrefab, previousLink.transform.position + Vector3.down * previousLink.anchor.y, Quaternion.identity) as HingeJoint2D);
+            link = (Instantiate((i % 2 == 0) ? chainLinkAPrefab : chainLinkBPrefab, previousLink.transform.position + Vector3.up * previousLink.connectedAnchor.y, Quaternion.identity) as HingeJoint2D);
             link.connectedBody = previousLink.GetComponent<Rigidbody2D>();
+            link.transform.SetPositionZ(sprite.position.z);
+            link.transform.parent = transform.parent;
             previousLink = link;
         }
 
-        transform.position = link.transform.position + hingeJoint.anchor.Vec3();
+        transform.position = link.transform.position - hingeJoint.connectedAnchor.Vec3();
         hingeJoint.connectedBody = link.GetComponent<Rigidbody2D>();
     }
 

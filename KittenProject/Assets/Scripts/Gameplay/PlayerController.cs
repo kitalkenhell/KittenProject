@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeedMax;
     public float jumpDuration;
     public float doubleJumpSpeed;
-    public float doubleJumpSpeedThreshold;
+    public float notGroundedDelay;
     public float movablePlatformJumpSpeedInfluence;
     public Vector2 wallBounceVelocity;
     public float wallBounceDuration;
@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     float jumpSpeed;
     float relativeJumpSpeed;
     float jumpingCountdown;
+    float notGroundedCountdown;
     bool isGrounded;
     bool doubleJump;
 
@@ -105,6 +106,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         isTouchingWall = false;
         doubleJump = false;
+        notGroundedCountdown = 0;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
         HorizontalMovmentDirection = Vector2.right * Mathf.Sign(velocity.x);
@@ -139,8 +141,8 @@ public class PlayerController : MonoBehaviour
 
         Movement();
         Jumping();
-        //WallSliding();
         Move();
+        //WallSliding();
         UpdateSprites();
         UpdateAnimation();
     }
@@ -234,9 +236,13 @@ public class PlayerController : MonoBehaviour
 
     void Jumping()
     {
-
         jumpingCountdown -= Time.deltaTime;
         ParachuteCountdown -= Time.deltaTime;
+
+        if (!IsGrounded)
+        {
+            notGroundedCountdown += Time.deltaTime;
+        }
 
         velocity.y += Physics2D.gravity.y * Time.deltaTime;
 
@@ -246,30 +252,41 @@ public class PlayerController : MonoBehaviour
             jumpingCountdown = Mathf.NegativeInfinity;
         }
 
-        if (inputManager.jumpButtonDown)
+        if (!inputManager.jumpButtonDown)
+        {
+            usingParachute = false;
+            jumpKeyReleased = true;
+            relativeJumpSpeed = jumpSpeed;
+            jumpingCountdown = Mathf.NegativeInfinity;
+        }
+        else
         {
             if (jumpingCountdown < 0) //stands on the ground and jumps 
             {
-                if (isGrounded && jumpKeyReleased)
+                if (jumpKeyReleased)
                 {
-                    jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
+                    if (isGrounded || notGroundedCountdown < notGroundedDelay && velocity.y < 0)
+                    {
+                        jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
 
-                    jumpKeyReleased = false;
-                    relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y * movablePlatformJumpSpeedInfluence;
-                    isGrounded = false;
-                    doubleJump = false;
-                    velocity.y = relativeJumpSpeed;
-                    jumpingCountdown = jumpDuration;
-                    animator.SetTrigger(jumpAnimHash);
+                        jumpKeyReleased = false;
+                        relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y * movablePlatformJumpSpeedInfluence;
+                        isGrounded = false;
+                        doubleJump = false;
+                        velocity.y = relativeJumpSpeed;
+                        jumpingCountdown = jumpDuration;
+                        animator.SetTrigger(jumpAnimHash);
+                        return; 
+                    }
                 }
             }
-
-            if (jumpingCountdown > 0 && !isTouchingWall) //Don't decrease velocity when jump button is pressed for some time after the jump 
+            else if (!isTouchingWall) //Don't decrease velocity when jump button is pressed for some time after the jump 
             {
                 velocity.y = relativeJumpSpeed;
+                return;
             }
 
-            else if (isTouchingWall && !isGrounded && jumpKeyReleased) //bouncing off the wall
+            if (isTouchingWall && !isGrounded && jumpKeyReleased) //bouncing off the wall
             {
                 jumpKeyReleased = false;
                 isTouchingWall = false;
@@ -279,12 +296,12 @@ public class PlayerController : MonoBehaviour
                 runningMotrSpeed = wallDirection * wallBounceVelocity.x;
                 velocity = new Vector2(runningMotrSpeed, wallBounceVelocity.y);
                 animator.SetTrigger(doubleJumpAnimHash);
+                return;
             }
 
-            //Parachute / double jump
-            if (!isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased)
+            if (!isGrounded && !isTouchingWall && jumpingCountdown < 0 && jumpKeyReleased) //Parachute / double jump
             {
-                if (!doubleJump && velocity.y > doubleJumpSpeedThreshold)
+                if (!doubleJump && velocity.y < doubleJumpSpeed)
                 {
                     jumpKeyReleased = false;
                     isGrounded = false;
@@ -297,10 +314,10 @@ public class PlayerController : MonoBehaviour
                     doubleJump = true;
                     usingParachute = true;
                     ParachuteCountdown = parachuteDelay;
+                    jumpKeyReleased = false;
                 }
             }
-
-            if (usingParachute && ParachuteCountdown < 0)
+            else if (usingParachute && ParachuteCountdown < 0)
             {
                 jumpKeyReleased = false;
 
@@ -323,15 +340,7 @@ public class PlayerController : MonoBehaviour
                         velocity.y = parachuteFallingSpeed;
                     }
                 }
-
             }
-        }
-        else
-        {
-            usingParachute = false;
-            jumpKeyReleased = true;
-            relativeJumpSpeed = jumpSpeed;
-            jumpingCountdown = Mathf.NegativeInfinity;
         }
     }
 
@@ -398,6 +407,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
         doubleJump = false;
         usingParachute = false;
+        notGroundedCountdown = 0;
     }
 
     public void Move()

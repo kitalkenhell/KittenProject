@@ -19,7 +19,7 @@ TextureImporter:
   bumpmap:
     convertToNormalMap: 0
     externalNormalMap: 0
-    heightScale: .25
+    heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
@@ -41,14 +41,14 @@ TextureImporter:
   compressionQuality: 50
   allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
-  spritePivot: {x: .5, y: .5}
+  spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 70
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
     sprites:
@@ -60,8 +60,9 @@ TextureImporter:
         width: 149
         height: 27
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     - name: sunglassesTrail
       rect:
         serializedVersion: 2
@@ -70,8 +71,26 @@ TextureImporter:
         width: 90
         height: 55
       alignment: 0
-      pivot: {x: .5, y: .5}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44, y: 27.5}
+        - {x: -44, y: -25.5}
+        - {x: -42, y: -27.5}
+        - {x: -37, y: -27.5}
+        - {x: -35, y: -25.5}
+        - {x: -35, y: 27.5}
+      - - {x: 36, y: 27.5}
+        - {x: 36, y: -23.5}
+        - {x: 38, y: -25.5}
+        - {x: 42, y: -25.5}
+        - {x: 44, y: -23.5}
+        - {x: 44, y: 27.5}
+      - - {x: -24, y: 23.5}
+        - {x: -24, y: -19.5}
+        - {x: -15, y: -19.5}
+        - {x: -15, y: 23.5}
+    outline: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

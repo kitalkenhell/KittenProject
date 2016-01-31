@@ -6,7 +6,7 @@ public class CoinFactory : MonoBehaviour
 {
     public int coinsCount;
     public GameObject coinPrefab;
-    public Transform player;
+    public PlayerLogic player;
 
     DynamicCoinResetter[] coins;
     int currentCoin;

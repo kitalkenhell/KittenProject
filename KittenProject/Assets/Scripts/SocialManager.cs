@@ -50,7 +50,6 @@ public class SocialManager
             Social.ReportScore((int) System.TimeSpan.FromSeconds(time).TotalMilliseconds, key, 
                 (bool success) =>
                 {
-                    Debug.Log("Success wow? " + time);
 
                 }
             );

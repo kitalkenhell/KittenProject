@@ -54,18 +54,8 @@
 				const float fadeSize = 0.2;
 				const float timeScale = 3.5;
 
-				float alphaFactor = 1.0f;
 				float time = _Time.y * timeScale + _TimeOffset;
 		
-				if (i.texcoord.x > 1 - fadeSize)
-				{
-					alphaFactor = (1 - i.texcoord.x) / fadeSize;
-				}
-				else if (i.texcoord.x < fadeSize)
-				{
-					alphaFactor = i.texcoord.x / fadeSize;
-				}
-
 				if (floor(time) % 2)
 				{
 					time = frac(time);
@@ -80,7 +70,7 @@
 				fixed4 col = tex2D(_MainTex, i.texcoord) * time;
 				col += tex2D(_MainTex, (half2(1, 1) - i.texcoord)) * (1 - time);
 
-				col.a *= alphaFactor * 0.12;
+				col.a *= 0.12;
 
 				return col;
 			}

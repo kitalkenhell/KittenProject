@@ -7,7 +7,7 @@ public class MoveAlongCurve : MonoBehaviour
     public CurvePath path;
     public float speed;
     public float traveledDistance;
-
+    
     Rigidbody2D body;
     
     bool moveForward;
@@ -54,6 +54,13 @@ public class MoveAlongCurve : MonoBehaviour
             }
         }
 
-        body.MovePosition(path.PointOnPathWorld(traveledDistance));
+        if (body != null)
+        {
+            body.MovePosition(path.PointOnPathWorld(traveledDistance));
+        }
+        else
+        {
+            transform.SetPositionXY(path.PointOnPathWorld(traveledDistance));
+        }
     }
 }

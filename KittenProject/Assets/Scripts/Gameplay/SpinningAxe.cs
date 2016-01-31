@@ -8,6 +8,7 @@ public class SpinningAxe : MonoBehaviour
     public float frequency = 1.0f;
     public Vector2 forceMultiplier;
     public Vector2 force;
+    public Vector2 minPushForce;
     public float disableControlsDuraton;
 
     Rigidbody2D body;
@@ -25,14 +26,18 @@ public class SpinningAxe : MonoBehaviour
 
         if (player != null)
         {
-            player.PushAndHit(new Vector2(forceMultiplier.x * speed + force.x * Mathf.Sign(speed), forceMultiplier.y * Mathf.Abs(speed) + force.y),
-                true, true, disableControlsDuraton);
+            Vector2 pushForce = new Vector2(forceMultiplier.x * speed + force.x * Mathf.Sign(speed), forceMultiplier.y * Mathf.Abs(speed) + force.y);
+
+            pushForce.x = Mathf.Max(pushForce.x, Mathf.Abs(minPushForce.x)) * Mathf.Sign(pushForce.x);
+            pushForce.y = Mathf.Max(pushForce.y, Mathf.Abs(minPushForce.y)) * Mathf.Sign(pushForce.y);
+
+            player.PushAndHit(pushForce, true, true, disableControlsDuraton);
         }
     }
 
     void Update()
     {
-        float time = Time.time * frequency;
+        float time = Time.timeSinceLevelLoad * frequency;
         float currentRotiation; 
 
         time = time - Mathf.Floor(time);
