@@ -8,6 +8,7 @@ public class LevelFlow : MonoBehaviour
     public float fadeOutDelay;
     public float showHudDelay;
     public float showVictoryScreenDelay;
+    public float showAdDelay;
     public float restartDelay;
     public Animator loadingScreen;
     public Animator victoryScreen;
@@ -59,6 +60,8 @@ public class LevelFlow : MonoBehaviour
 
     void OnPlayerDied()
     {
+        AdMobManager.Instance.IncrementEventCounter();
+
         hud.SetBool(showHudAnimHash, false);
 
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
@@ -86,6 +89,7 @@ public class LevelFlow : MonoBehaviour
         SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, LevelStopwatch.Stopwatch);
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
+        StartCoroutine(ShowAd());
     }
 
     public void ShowLeaderboards()
@@ -119,6 +123,12 @@ public class LevelFlow : MonoBehaviour
     {
         yield return new WaitForSeconds(showVictoryScreenDelay);
         victoryScreen.SetTrigger(showVictoryScreenAnimHash);
+    }
+
+    IEnumerator ShowAd()
+    {
+        yield return new WaitForSeconds(showAdDelay);
+        AdMobManager.Instance.IncrementEventCounter();
     }
 
     IEnumerator ShowHud()
