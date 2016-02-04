@@ -46,8 +46,11 @@ public class LevelFlow : MonoBehaviour
             {
                 switchingScenes = true;
                 hud.SetBool(showHudAnimHash, false);
+                
                 StartCoroutine(Exit());
                 StartCoroutine(FadeOut());
+
+                AnalyticsManager.OnLevelAbandoned(levelProperties.sceneName);
             }
         }
     }
@@ -86,7 +89,9 @@ public class LevelFlow : MonoBehaviour
             levelProperties.nextLevel.IsLocked = false;
         }
 
+        AnalyticsManager.OnLevelCompleted(levelProperties.sceneName, LevelStopwatch.Stopwatch);
         SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, LevelStopwatch.Stopwatch);
+
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
         StartCoroutine(ShowAd());

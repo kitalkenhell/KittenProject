@@ -13,8 +13,8 @@ public class AdMobManager : MonoBehaviour
 #elif UNITY_ANDROID
     const string bannerId = "ca-app-pub-2026328596529981/9822243153";
     const string interstitialId = "ca-app-pub-2026328596529981/1101444759";
-
 #endif
+
     const float retryRequestDelay = 15;
     const int eventsNeededToShowAd = 5;
     const int eventCounterStartingOffset = 2;
@@ -101,16 +101,6 @@ public class AdMobManager : MonoBehaviour
 
     AdRequest createAdRequest()
     {
-        //return new AdRequest.Builder()
-        //    .AddTestDevice(AdRequest.TestDeviceSimulator)
-        //    .AddTestDevice("0123456789ABCDEF0123456789ABCDEF")
-        //    .AddKeyword("game")
-        //    .SetGender(Gender.Male)
-        //    .SetBirthday(new DateTime(1985, 1, 1))
-        //    .TagForChildDirectedTreatment(false)
-        //    .AddExtra("color_bg", "9B30FF")
-        //    .Build();
-
         return new AdRequest.Builder().Build();
     }
 
@@ -124,7 +114,6 @@ public class AdMobManager : MonoBehaviour
     }
 
     //Banner callback handlers
-
     public void HandleBannerLoaded(object sender, EventArgs args)
     {
 
@@ -200,70 +189,5 @@ public class AdMobManager : MonoBehaviour
     {
         yield return new WaitForSeconds(retryRequestDelay);
         RequestBanner();
-    }
-
-    void OnGUI()
-    {
-        if (ShowDebugUi)
-        {
-            const float buttonFontSize = 0.02f;
-            const float leftMargin = 0.82f;
-            const float rightMargin = 0.025f;
-            const float buttonWidth = 1 - leftMargin - rightMargin;
-            const float buttonHeight = 0.05f;
-            const float buttonSpacing = 0.075f;
-
-            float buttonY = 0.2f;
-
-            GUI.skin.button.fontSize = (int)(buttonFontSize * Screen.height);
-
-            Rect requestBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(requestBannerRect, "Request Banner"))
-            {
-                RequestBanner();
-            }
-
-            buttonY += buttonSpacing;
-            Rect showBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(showBannerRect, "Show Banner"))
-            {
-                banner.Show();
-            }
-
-            buttonY += buttonSpacing;
-            Rect hideBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(hideBannerRect, "Hide Banner"))
-            {
-                banner.Hide();
-            }
-
-            buttonY += buttonSpacing;
-            Rect destroyBannerRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(destroyBannerRect, "Destroy Banner"))
-            {
-                banner.Destroy();
-            }
-
-            buttonY += buttonSpacing;
-            Rect requestInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(requestInterstitialRect, "Request Interstitial"))
-            {
-                RequestInterstitial();
-            }
-
-            buttonY += buttonSpacing;
-            Rect showInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(showInterstitialRect, "Show Interstitial"))
-            {
-                ShowInterstitial();
-            }
-
-            buttonY += buttonSpacing;
-            Rect destroyInterstitialRect = new Rect(leftMargin * Screen.width, buttonY * Screen.height, buttonWidth * Screen.width, buttonHeight * Screen.height);
-            if (GUI.Button(destroyInterstitialRect, "Destroy Interstitial"))
-            {
-                interstitial.Destroy();
-            }
-        }
     }
 }

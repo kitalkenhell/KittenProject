@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerLogic : MonoBehaviour
 {
@@ -160,8 +161,11 @@ public class PlayerLogic : MonoBehaviour
         animator.enabled = false;
         StartCoroutine(ScaleDownParachute());
 
+        AnalyticsManager.OnLevelFailed(SceneManager.GetActiveScene().name, LevelStopwatch.Stopwatch, transform.position, useHellfireDeathAnimation);
+
         if (useHellfireDeathAnimation)
         {
+            
             body.velocity = new Vector2(Mathf.Sign(controller.Velocity.x) * velocityOnHellfireDeath.x, velocityOnHellfireDeath.y);
         }
         else

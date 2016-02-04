@@ -36,7 +36,7 @@ PlayerSettings:
   allowedAutorotateToLandscapeLeft: 1
   useOSAutorotation: 1
   use32BitDisplayBuffer: 0
-  disableDepthAndStencilBuffers: 0
+  disableDepthAndStencilBuffers: 1
   defaultIsFullScreen: 1
   defaultIsNativeResolution: 1
   runInBackground: 1
@@ -97,7 +97,7 @@ PlayerSettings:
   xboxOneDisableKinectGpuReservation: 0
   virtualRealitySupported: 0
   productGUID: 2535503f83321fc4a94bdb5dff164fea
-  AndroidBundleVersionCode: 0
+  AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -160,7 +160,7 @@ PlayerSettings:
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: D:/KittenProject/KittenProject/key.keystore
   AndroidKeyaliasName: doge
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0
   m_AndroidBanners:
@@ -180,7 +180,7 @@ PlayerSettings:
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
     m_APIs: 08000000
-    m_Automatic: 0
+    m_Automatic: 1
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
   wiiUTitleID: 0005000011000000
@@ -450,13 +450,17 @@ PlayerSettings:
   WebGL::useEmbeddedResources: 0
   XboxOne::enus: 1
   stringPropertyNames:
+  - Build_ServiceEnabled::Build_ServiceEnabled
+  - UNet_ServiceEnabled::UNet_ServiceEnabled
   - WebGL::emscriptenArgs
   - WebGL::template
   - additionalIl2CppArgs::additionalIl2CppArgs
+  Build_ServiceEnabled::Build_ServiceEnabled: True
+  UNet_ServiceEnabled::UNet_ServiceEnabled: True
   WebGL::emscriptenArgs: 
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 433e7724-eb6c-4b29-8289-ede1d0834b43
+  projectName: Doge and the Lost kitten
+  organizationId: gotard
   cloudEnabled: 0
