@@ -16,8 +16,8 @@ public class AdMobManager : MonoBehaviour
 #endif
 
     const float retryRequestDelay = 15;
-    const int eventsNeededToShowAd = 5;
-    const int eventCounterStartingOffset = 2;
+    const int eventsNeededToShowAd = 4;
+    const int eventCounterStartingOffset = 1;
 
     public bool ShowDebugUi = false;
 

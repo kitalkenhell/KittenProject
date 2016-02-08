@@ -45,7 +45,6 @@
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex) * _Time.x;
 				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;
 			}
 
@@ -56,21 +55,13 @@
 
 				float time = _Time.y * timeScale + _TimeOffset;
 		
-				if (floor(time) % 2)
-				{
-					time = frac(time);
-				}
-				else
-				{
-					time = 1 - frac(time);
-				}
+				time = abs(floor(time) % 2 - frac(time));
 
 				i.texcoord.y -= _Time.y * 0.5 + _TimeOffset;
 
-				fixed4 col = tex2D(_MainTex, i.texcoord) * time;
-				col += tex2D(_MainTex, (half2(1, 1) - i.texcoord)) * (1 - time);
-
-				col.a *= 0.12;
+				fixed4 col = tex2D(_MainTex, i.texcoord);
+				//fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
+				col.a *= 0.1;
 
 				return col;
 			}

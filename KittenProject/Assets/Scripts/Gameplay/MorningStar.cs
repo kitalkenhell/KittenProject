@@ -20,7 +20,9 @@ public class MorningStar : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         link.connectedBody = chainRoot;
-        
+        link.transform.parent = transform.parent;
+        link.transform.SetPositionZ(sprite.position.z);
+
         for (int i = 1; i < chainLinksCount; i++)
         {
             link = (Instantiate((i % 2 == 0) ? chainLinkAPrefab : chainLinkBPrefab, previousLink.transform.position + Vector3.up * previousLink.connectedAnchor.y, Quaternion.identity) as HingeJoint2D);

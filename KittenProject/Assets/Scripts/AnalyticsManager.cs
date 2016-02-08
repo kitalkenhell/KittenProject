@@ -22,8 +22,8 @@ public static class AnalyticsManager
         {
             { "level", sceneName },
             { "gameTime", time },
-            { "position", position },
-            { "killedByHellfire", killedByHellfire },
+            { "position", position.ToString() },
+            { "killedByHellfire", killedByHellfire.ToString() },
         };
 
         Analytics.CustomEvent("LevelFailed", data);
