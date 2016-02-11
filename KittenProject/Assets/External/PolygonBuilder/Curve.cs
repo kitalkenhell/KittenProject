@@ -20,19 +20,16 @@ public class Curve
         path.Clear();
         additiveDistance.Clear();
 
-        path.Add(begin);
         lenght = 0;
-        
-        for (int i = 0; i < quality; i++)
+        path.Add(begin);
+        additiveDistance.Add(lenght);
+
+        for (int i = 1; i <= quality; i++)
         {
             path.Add(Evaluate((float)i / (float)quality));
-            lenght += Vector3.Distance(path[i], path[i + 1]);
+            lenght += Vector3.Distance(path[i], path[i - 1]);
             additiveDistance.Add(lenght);
         }
-
-        path.Add(end);
-        lenght += Vector3.Distance(path[path.Count - 1], path[path.Count - 2]);
-        additiveDistance.Add(lenght);
     }
 
     public void Reset()
@@ -43,9 +40,8 @@ public class Curve
         endTangent = Vector3.right;
     }
 
-    public Vector3 PointOnCurveSmooth(float distance)
+    public Vector3 PointOnCurve(float distance)
     {
-
         if (distance > lenght)
         {
             return end;
@@ -62,12 +58,12 @@ public class Curve
             index = ~index;
         }
 
-        float distanceToGo = additiveDistance[index] - distance;
+        float weight = (additiveDistance[index] - distance) / (additiveDistance[index] - additiveDistance[index - 1]);
 
-        return Evaluate(1 - (additiveDistance[index] / lenght - distanceToGo / lenght));
+        return path[index - 1] * weight + path[index] * (1 - weight);
     }
 
-    public Vector3 PointOnCurve(float distance)
+    public Vector3 PointOnCurveFast(float distance)
     {
         return Evaluate(1 - distance / lenght);
     }

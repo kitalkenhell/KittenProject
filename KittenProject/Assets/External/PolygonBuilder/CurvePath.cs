@@ -14,9 +14,8 @@ public class CurvePath : MonoBehaviour
     public List<Vector3> points = new List<Vector3>();
     public List<Curve> curves = new List<Curve>();
 
-    public Vector3 PointOnPathLocal(float distance)
+    public Vector3 PointOnPathLocal(float distance, bool useCurveFastApproximation = true)
     {
-        float distanceToGo = distance;
         int index = 0;
 
         if (distance >= length)
@@ -28,19 +27,26 @@ public class CurvePath : MonoBehaviour
             return points[index];
         }
 
-        while (distanceToGo > 0 && index < curves.Count)
+        while (distance > 0 && index < curves.Count)
         {
-            distanceToGo -= curves[index].lenght;
+            distance -= curves[index].lenght;
             ++index;
         }
         --index;
 
-        return curves[index].PointOnCurve(Mathf.Abs(distanceToGo));
+        if (useCurveFastApproximation)
+        {
+            return curves[index].PointOnCurveFast(Mathf.Abs(distance));
+        }
+        else
+        {
+            return curves[index].PointOnCurve(Mathf.Abs(distance));
+        }
     }
 
-    public Vector3 PointOnPathWorld(float distance)
+    public Vector3 PointOnPathWorld(float distance, bool useCurveFastApproximation = true)
     {
-        return transform.TransformPoint(PointOnPathLocal(distance));
+        return transform.TransformPoint(PointOnPathLocal(distance, useCurveFastApproximation));
     }
 
 #if UNITY_EDITOR
@@ -93,7 +99,7 @@ public class CurvePath : MonoBehaviour
         {
             for (int j = 0; j <= curves[i].quality - 1; ++j)
             {
-                vertices2d.Add(curves[i].PointOnCurve(curves[i].lenght - curves[i].lenght * ((float)j / quality)));
+                vertices2d.Add(curves[i].PointOnCurveFast(curves[i].lenght - curves[i].lenght * ((float)j / quality)));
             }
         }
 
