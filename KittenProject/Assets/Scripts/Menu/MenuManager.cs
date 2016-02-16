@@ -23,9 +23,10 @@ public class MenuManager : MonoBehaviour
 
         menuAnimator = GetComponent<Animator>();
 
+        firstLevel.IsLocked = false;
+
         AdManager.Instance.IncrementEventCounter();
         SocialManager.SignIn();
-        firstLevel.IsLocked = false;
     }
 
     void Update()

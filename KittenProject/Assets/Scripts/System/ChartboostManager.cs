@@ -101,7 +101,7 @@ public class ChartboostManager : MonoBehaviour
 
     void didInitialize(bool status)
     {
-
+        Debug.Log("Chartboost initialization: " + status);
     }
 
     void didFailToLoadInterstitial(CBLocation location, CBImpressionError error)
