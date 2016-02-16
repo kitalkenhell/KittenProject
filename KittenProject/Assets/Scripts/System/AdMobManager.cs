@@ -16,61 +16,16 @@ public class AdMobManager : MonoBehaviour
 #endif
 
     const float retryRequestDelay = 15;
-    const int eventsNeededToShowAd = 4;
-    const int eventCounterStartingOffset = 1;
-
-    public bool ShowDebugUi = false;
-
-    public static AdMobManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject gameObject = new GameObject();
-                gameObject.name = typeof(AdMobManager).ToString();
-
-                return gameObject.AddComponent<AdMobManager>();
-            }
-
-            return instance;
-        }
-    }
-
-    static AdMobManager instance;
 
     static BannerView banner;
     static InterstitialAd interstitial;
 
-    static int eventCounter;
-
-    void Awake()
+    public bool IsInterstitialLoaded()
     {
-        if (instance == null)
-        {
-            instance = this;
-            eventCounter = eventCounterStartingOffset;
-
-            DontDestroyOnLoad(gameObject);
-            RequestInterstitial();
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        return interstitial != null && interstitial.IsLoaded();
     }
 
-    public void IncrementEventCounter()
-    {
-        ++eventCounter;
-
-        if (eventCounter >= eventsNeededToShowAd)
-        {
-            ShowInterstitial();
-        }
-    }
-
-    void RequestBanner()
+    public void RequestBanner()
     {
 
         banner = new BannerView(bannerId, AdSize.SmartBanner, AdPosition.Top);
@@ -85,7 +40,7 @@ public class AdMobManager : MonoBehaviour
         banner.LoadAd(createAdRequest());
     }
 
-    void RequestInterstitial()
+    public void RequestInterstitial()
     {
         interstitial = new InterstitialAd(interstitialId);
 
@@ -104,11 +59,10 @@ public class AdMobManager : MonoBehaviour
         return new AdRequest.Builder().Build();
     }
 
-    void ShowInterstitial()
+    public void ShowInterstitial()
     {
         if (interstitial.IsLoaded())
         {
-            eventCounter = 0;
             interstitial.Show();
         }
     }

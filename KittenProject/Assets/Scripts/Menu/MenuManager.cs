@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviour
 
         menuAnimator = GetComponent<Animator>();
 
-        AdMobManager.Instance.IncrementEventCounter();
+        AdManager.Instance.IncrementEventCounter();
         SocialManager.SignIn();
         firstLevel.IsLocked = false;
     }

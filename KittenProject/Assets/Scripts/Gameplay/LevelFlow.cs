@@ -63,7 +63,7 @@ public class LevelFlow : MonoBehaviour
 
     void OnPlayerDied()
     {
-        AdMobManager.Instance.IncrementEventCounter();
+        AdManager.Instance.IncrementEventCounter();
 
         hud.SetBool(showHudAnimHash, false);
 
@@ -133,7 +133,7 @@ public class LevelFlow : MonoBehaviour
     IEnumerator ShowAd()
     {
         yield return new WaitForSeconds(showAdDelay);
-        AdMobManager.Instance.IncrementEventCounter();
+        AdManager.Instance.IncrementEventCounter();
     }
 
     IEnumerator ShowHud()
