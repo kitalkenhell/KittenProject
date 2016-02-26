@@ -45,6 +45,7 @@ public class AdManager : MonoBehaviour
 
             adMobManager.RequestInterstitial();
             chartboostManager.RequestInterstitial();
+            chartboostManager.RequestVideoAd();
         }
         else
         {

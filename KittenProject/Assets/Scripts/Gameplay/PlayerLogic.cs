@@ -20,10 +20,15 @@ public class PlayerLogic : MonoBehaviour
     Rigidbody2D body;
     Collider2D collder;
     
-    int coins;
     bool isInvulnerable;
 
     int victoryAnimHash;
+
+    public int Coins
+    {
+        get;
+        private set;
+    }
 
     public int Health
     {
@@ -40,6 +45,11 @@ public class PlayerLogic : MonoBehaviour
         
     }
 
+    void Awake()
+    {
+        CoreLevelObjects.player = this;
+    }
+
     void Start()
     {
         coinEmitter = GetComponent<CoinEmitter>();
@@ -49,7 +59,7 @@ public class PlayerLogic : MonoBehaviour
 
         victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
-        coins = 0;
+        Coins = 0;
         Health = GameSettings.maxPlayerHealth;
 
         PostOffice.coinCollected += OnCoinCollected;
@@ -81,7 +91,7 @@ public class PlayerLogic : MonoBehaviour
 
     void OnCoinCollected(int amount)
     {
-        coins += amount;
+        Coins += amount;
     }
 
     void OnHeartCollected()
@@ -94,9 +104,9 @@ public class PlayerLogic : MonoBehaviour
 
     void DropCoins()
     {
-        int drop = Mathf.Min(coins, coinsDropRate);
+        int drop = Mathf.Min(Coins, coinsDropRate);
 
-        coins -= drop;
+        Coins -= drop;
         coinEmitter.Emit(drop);
 
         PostOffice.PostCoinDropped(drop);

@@ -17,6 +17,17 @@ public class ChartboostManager : MonoBehaviour
         return Chartboost.hasInterstitial(CBLocation.Default);
     }
 
+    public bool IsVideoAdLoaded()
+    {
+        Debug.Log("IsVideoAdLoaded: " + Chartboost.hasRewardedVideo(CBLocation.Default));
+        return Chartboost.hasRewardedVideo(CBLocation.Default);
+    }
+
+    public void RequestVideoAd()
+    {
+        Chartboost.hasRewardedVideo(CBLocation.Default);
+    }
+
     public void RequestInterstitial()
     {
         Chartboost.cacheInterstitial(CBLocation.Default);
@@ -27,6 +38,14 @@ public class ChartboostManager : MonoBehaviour
         if (Chartboost.hasInterstitial(CBLocation.Default))
         {
             Chartboost.showInterstitial(CBLocation.Default);
+        }
+    }
+
+    public void ShowVideoAd()
+    {
+        if (Chartboost.hasRewardedVideo(CBLocation.Default))
+        {
+            Chartboost.showRewardedVideo(CBLocation.Default);
         }
     }
 

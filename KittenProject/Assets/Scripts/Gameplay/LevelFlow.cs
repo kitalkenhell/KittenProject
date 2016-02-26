@@ -15,7 +15,6 @@ public class LevelFlow : MonoBehaviour
     public Animator hud;
     public LevelProperties levelProperties;
 
-
     int fadeAnimHash;
     int showHudAnimHash;
     int showVictoryScreenAnimHash;
@@ -84,13 +83,18 @@ public class LevelFlow : MonoBehaviour
 
     void OnVictory()
     {
+        float time = LevelStopwatch.Stopwatch;
+
         if (levelProperties.nextLevel != null)
         {
             levelProperties.nextLevel.IsLocked = false;
         }
 
-        AnalyticsManager.OnLevelCompleted(levelProperties.sceneName, LevelStopwatch.Stopwatch);
-        SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, LevelStopwatch.Stopwatch);
+        AnalyticsManager.OnLevelCompleted(levelProperties.sceneName, time);
+        SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, time);
+
+        levelProperties.BestTimeScore = Mathf.Min(time, levelProperties.BestTimeScore);
+        levelProperties.BestCoinsScore = Mathf.Max(CoreLevelObjects.player.Coins, levelProperties.BestCoinsScore);
 
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());

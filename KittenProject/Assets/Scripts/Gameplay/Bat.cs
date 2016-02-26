@@ -14,17 +14,19 @@ public class Bat : MonoBehaviour
     public float startChaseDistance;
     public float maxChaseDistance;
     public float disableDistance;
-    public Transform target;
     public AudioSource wingFlapSound;
 
     Rigidbody2D body;
 
+    Transform target;
     Vector3 startingPosition;
     State state;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+
+        target = CoreLevelObjects.player.transform;
     }
 
     void OnEnable()

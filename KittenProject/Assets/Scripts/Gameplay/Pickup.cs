@@ -13,7 +13,6 @@ public class Pickup : MonoBehaviour
     public float shrinkingSpeed;
     public Transform sprite;
     public Animator pickUpEffect;
-    public PlayerLogic player;
     public bool destroy;
     public Type type;
 
@@ -27,7 +26,7 @@ public class Pickup : MonoBehaviour
     {
         const float scaleThreshold = 0.5f;
 
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, CoreLevelObjects.player.transform.position, speed * Time.deltaTime);
         sprite.localScale -= Vector3.one * shrinkingSpeed * Time.deltaTime;
 
         if (sprite.localScale.x < scaleThreshold)
