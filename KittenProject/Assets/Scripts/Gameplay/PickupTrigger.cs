@@ -17,7 +17,7 @@ public class PickupTrigger : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other) 
     {
-        if (!collected && !(pickupMover.type == Pickup.Type.heart && CoreLevelObjects.player.Health >= GameSettings.maxPlayerHealth))
+        if (!collected && !(pickupMover.type == Pickup.Type.heart && CoreLevelObjects.player.Health >= GameSettings.MaxPlayerHealth))
         {
             collected = true;
             enabled = false;

@@ -60,7 +60,7 @@ public class PlayerLogic : MonoBehaviour
         victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
         Coins = 0;
-        Health = GameSettings.maxPlayerHealth;
+        Health = GameSettings.MaxPlayerHealth;
 
         PostOffice.coinCollected += OnCoinCollected;
         PostOffice.heartCollected += OnHeartCollected;
@@ -96,7 +96,7 @@ public class PlayerLogic : MonoBehaviour
 
     void OnHeartCollected()
     {
-        if (Health < GameSettings.maxPlayerHealth)
+        if (Health < GameSettings.MaxPlayerHealth)
         {
             PostOffice.PostPlayerHealthChanged(Health, ++Health);
         }
@@ -120,7 +120,6 @@ public class PlayerLogic : MonoBehaviour
             
             isInvulnerable = true;
 
-            Handheld.Vibrate();
             DropCoins();
             StartCoroutine(InvulnerableCountdown());
 
@@ -138,7 +137,6 @@ public class PlayerLogic : MonoBehaviour
         if (IsAlive)
         {
             DropCoins();
-            Handheld.Vibrate();
             Health = 0;
             OnDeath(true); 
         }
