@@ -3,9 +3,7 @@ using System.Collections;
 
 public class PlayerSkinSetter : MonoBehaviour
 {
-    public PlayerBodySkin[] bodySkins;
-    public PlayerHatSkin[] hatSkins;
-    public PlayerParachuteSkin[] parachuteSkins;
+    public PlayerSkins skins;
 
     public Transform bodyPivot;
     public Transform earPivot;
@@ -22,9 +20,9 @@ public class PlayerSkinSetter : MonoBehaviour
 
     void Start()
     {
-        PlayerBodySkin bodySkin = bodySkins[GameSettings.PlayerBodySkinIndex];
-        PlayerHatSkin hatSkin = hatSkins[GameSettings.PlayerHatSkinIndex];
-        PlayerParachuteSkin parachuteSkin = parachuteSkins[GameSettings.PlayerParachuteSkinIndex];
+        PlayerBodySkin bodySkin = skins.bodySkins[GameSettings.PlayerBodySkinIndex];
+        PlayerHatSkin hatSkin = skins.hatSkins[GameSettings.PlayerHatSkinIndex];
+        PlayerParachuteSkin parachuteSkin = skins.parachuteSkins[GameSettings.PlayerParachuteSkinIndex];
 
         InstantiateSkinPart(bodySkin.body, bodyPivot);
         InstantiateSkinPart(bodySkin.ear, earPivot);
