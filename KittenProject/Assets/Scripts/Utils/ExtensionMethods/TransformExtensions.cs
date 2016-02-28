@@ -5,6 +5,20 @@ using System;
 
 public static class TransformExtensions
 {
+    public static void Reset(this Transform t)
+    {
+        t.position = Vector3.zero;
+        t.rotation = Quaternion.identity;
+        t.localScale = Vector3.one;
+    }
+
+    public static void ResetLocal(this Transform t)
+    {
+        t.localPosition = Vector3.zero;
+        t.localRotation = Quaternion.identity;
+        t.localScale = Vector3.one;
+    }
+
     public static void SetPositionX(this Transform t, float x)
     {
         t.position = new Vector3(x, t.position.y, t.position.z);

@@ -7,18 +7,18 @@ public class PlayerSkinSetter : MonoBehaviour
     public PlayerHatSkin[] hatSkins;
     public PlayerParachuteSkin[] parachuteSkins;
 
-    public SpriteRenderer body;
-    public SpriteRenderer ear;
-    public SpriteRenderer eyeBig;
-    public SpriteRenderer eyeSmall;
-    public SpriteRenderer legFront;
-    public SpriteRenderer legBack;
-    public SpriteRenderer mouth;
-    public SpriteRenderer tongue;
-    public SpriteRenderer nose;
-    public SpriteRenderer tail;
-    public SpriteRenderer hat;
-    public SpriteRenderer parachute;
+    public Transform bodyPivot;
+    public Transform earPivot;
+    public Transform eyeBigPivot;
+    public Transform eyeSmallPivot;
+    public Transform legFrontPivot;
+    public Transform legBackPivot;
+    public Transform mouthPivot;
+    public Transform tonguePivot;
+    public Transform nosePivot;
+    public Transform tailPivot;
+    public Transform hatPivot;
+    public Transform parachutePivot;
 
     void Start()
     {
@@ -26,18 +26,25 @@ public class PlayerSkinSetter : MonoBehaviour
         PlayerHatSkin hatSkin = hatSkins[GameSettings.PlayerHatSkinIndex];
         PlayerParachuteSkin parachuteSkin = parachuteSkins[GameSettings.PlayerParachuteSkinIndex];
 
-        body.sprite = Resources.Load(bodySkin.body, typeof(Sprite)) as Sprite;
-        ear.sprite = Resources.Load(bodySkin.ear, typeof(Sprite)) as Sprite;
-        eyeBig.sprite = Resources.Load(bodySkin.eyeBig, typeof(Sprite)) as Sprite;
-        eyeSmall.sprite = Resources.Load(bodySkin.eyeSmall, typeof(Sprite)) as Sprite;
-        legFront.sprite = Resources.Load(bodySkin.legBack, typeof(Sprite)) as Sprite;
-        legBack.sprite = Resources.Load(bodySkin.legBack, typeof(Sprite)) as Sprite;
-        mouth.sprite = Resources.Load(bodySkin.mouth, typeof(Sprite)) as Sprite;
-        tongue.sprite = Resources.Load(bodySkin.tongue, typeof(Sprite)) as Sprite;
-        nose.sprite = Resources.Load(bodySkin.nose, typeof(Sprite)) as Sprite;
-        tail.sprite = Resources.Load(bodySkin.tail, typeof(Sprite)) as Sprite;
+        InstantiateSkinPart(bodySkin.body, bodyPivot);
+        InstantiateSkinPart(bodySkin.ear, earPivot);
+        InstantiateSkinPart(bodySkin.eyeBig, eyeBigPivot);
+        InstantiateSkinPart(bodySkin.eyeSmall, eyeSmallPivot);
+        InstantiateSkinPart(bodySkin.legFront, legFrontPivot);
+        InstantiateSkinPart(bodySkin.legBack, legBackPivot);
+        InstantiateSkinPart(bodySkin.mouth, mouthPivot);
+        InstantiateSkinPart(bodySkin.tongue, tonguePivot);
+        InstantiateSkinPart(bodySkin.nose, nosePivot);
+        InstantiateSkinPart(bodySkin.tail, tailPivot);
+        InstantiateSkinPart(hatSkin.hat, hatPivot);
+        InstantiateSkinPart(parachuteSkin.parachute, parachutePivot);
+    }
 
-        hat.sprite = Resources.Load(hatSkin.hat, typeof(Sprite)) as Sprite;
-        parachute.sprite = Resources.Load(parachuteSkin.parachute, typeof(Sprite)) as Sprite;
+    void InstantiateSkinPart(string prefabName, Transform pivot)
+    {
+        GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
+        skinPart.transform.parent = pivot;
+        skinPart.transform.ResetLocal();
     }
 }
+
