@@ -32,9 +32,12 @@ public class PlayerCamera : MonoBehaviour
     {
         transform.position = target.position + offset;
 
-        if (transform.position.y - minDistanceFromHellfire < hellfire.position.y)
+        if (hellfire != null)
         {
-            transform.SetPositionY(hellfire.position.y + minDistanceFromHellfire);
+            if (transform.position.y - minDistanceFromHellfire < hellfire.position.y)
+            {
+                transform.SetPositionY(hellfire.position.y + minDistanceFromHellfire);
+            } 
         }
 	}
 }
