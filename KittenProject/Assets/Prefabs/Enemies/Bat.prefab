@@ -256,7 +256,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1716.3373, y: 121.8, z: 0}
+  m_LocalPosition: {x: 1596.6, y: -344.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 416922}
@@ -1028,6 +1028,8 @@ MonoBehaviour:
   pushingForceUpAmplification: 0.25
   disableControlsDuration: 0.3
   dealDamage: 1
+  swapXAxis: 0
+  swapYAxis: 0
 --- !u!114 &11486720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1039,11 +1041,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5401a6fde582e3c4e90568c890e0f14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 7
+  velocity: 10
   startChaseDistance: 30
   maxChaseDistance: 60
   disableDistance: 75
-  target: {fileID: 0}
   wingFlapSound: {fileID: 8261846}
 --- !u!212 &21200252
 SpriteRenderer:
