@@ -24,8 +24,8 @@ public class Spear : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(interval);
             animaton.Play();
+            yield return new WaitForSeconds(interval);
         }
 
     }
