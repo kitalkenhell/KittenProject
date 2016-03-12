@@ -6,10 +6,16 @@ public class JumpingPad : MonoBehaviour
     public Transform force;
     public float disableControlsDuration;
 
+    Animator animator;
+
+    int jumpAnimHash;
     bool active;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+
+        jumpAnimHash = Animator.StringToHash("Jump");
         active = true;
     }
 
@@ -22,6 +28,7 @@ public class JumpingPad : MonoBehaviour
         if (player != null && active)
         {
             active = false;
+            animator.SetTrigger(jumpAnimHash);
             player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
         }
 
