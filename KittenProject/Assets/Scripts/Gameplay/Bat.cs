@@ -27,12 +27,26 @@ public class Bat : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         target = CoreLevelObjects.player.transform;
+
+        PostOffice.playedDied += OnGameFinished;
+        PostOffice.victory += OnGameFinished;
     }
 
     void OnEnable()
     {
         startingPosition = transform.position;
         state = State.wait;
+    }
+
+    void OnDestroy()
+    {
+        PostOffice.playedDied -= OnGameFinished;
+        PostOffice.victory -= OnGameFinished;
+    }
+
+    void OnGameFinished()
+    {
+        state = State.flyBack;
     }
 
     void Update()
