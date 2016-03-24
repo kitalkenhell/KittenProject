@@ -51,14 +51,10 @@ public class MoveAlongWaypoints : MonoBehaviour
         }
 	}
 
-    public void Update()
+    public void Update() 
     {
         lastFrameDisplacement = transform.position.XY() - lastFramePosition;
         lastFramePosition = transform.position;
-    }
-
-    public void FixedUpdate() 
-    {
 
         Waypoint current = waypoints[currentWaypoint];
         float distance = Vector2.Distance(transform.position.XY(), current.transform.position.XY());
@@ -91,7 +87,7 @@ public class MoveAlongWaypoints : MonoBehaviour
         }
 
         velocity = (current.transform.position - transform.position).normalized * speed;
-        displacement = velocity * Time.fixedDeltaTime;
+        displacement = velocity * Time.deltaTime;
 
         if (displacement.magnitude > distance)
         {
@@ -99,7 +95,7 @@ public class MoveAlongWaypoints : MonoBehaviour
         }
 
         body.MovePosition(transform.position.XY() + displacement);
-	}
+    }
 
     public int SetNextWaypoint()
     {

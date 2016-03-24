@@ -165,14 +165,14 @@ public class PlayerController : MonoBehaviour
             sprite.transform.localScale = scale; 
         }
 
-        parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
+        parachuteScale += (usingParachute ? Time.deltaTime : -Time.deltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
         parachuteScale = Mathf.Clamp01(parachuteScale);
         parachute.localScale = Vector3.one * parachuteOpeningCurve.Evaluate(parachuteScale) * parachuteMaxScale;
 
         if (!usingParachute)
         {
             usingParachuteTimer = 0;
-            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.fixedDeltaTime);
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.deltaTime);
         }
         else
         {
@@ -185,14 +185,14 @@ public class PlayerController : MonoBehaviour
                 parachuteRandomRotationOffset = parachuteRandomRotationOffset * 2 - 1; //scale form 0 - 1 to -1 - 1
                 parachuteRandomRotationOffset *= parachuteRandomRotationAmplitude * Mathf.Clamp01(usingParachuteTimer);
 
-                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation + parachuteRandomRotationOffset, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation + parachuteRandomRotationOffset, parachuteOpenRotateSpeed * Time.deltaTime);
 
-                usingParachuteTimer += Time.fixedDeltaTime;
+                usingParachuteTimer += Time.deltaTime;
             }
             else
             {
                 usingParachuteTimer = 0;
-                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.deltaTime);
             }
 
         }
