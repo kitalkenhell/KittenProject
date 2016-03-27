@@ -5,6 +5,7 @@ public class FireballThrower : MonoBehaviour
 {
     const float forceMultiplier = 3.0f;
 
+    public float startDelay;
     public MinMax spawnInterval;
     public MinMax randomForceMultiplier;
     public GameObject fireballPrefab;
@@ -19,11 +20,13 @@ public class FireballThrower : MonoBehaviour
     {
         Rigidbody2D fireball;
 
+        yield return new WaitForSeconds(startDelay);
+
         while (true)
         {
-            yield return new WaitForSeconds(spawnInterval.Random());
             fireball = (Instantiate(fireballPrefab, transform.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
-            fireball.velocity = (fireballForce.position - transform.position) * forceMultiplier * randomForceMultiplier.Random(); 
+            fireball.velocity = (fireballForce.position - transform.position) * forceMultiplier * randomForceMultiplier.Random();
+            yield return new WaitForSeconds(spawnInterval.Random());
         }
     }
 }

@@ -86,7 +86,7 @@ public class MoveAlongWaypoints : MonoBehaviour
             }
         }
 
-        velocity = (current.transform.position - transform.position).normalized * speed;
+        velocity = (current.transform.position.XY() - transform.position.XY()).normalized * speed;
         displacement = velocity * Time.deltaTime;
 
         if (displacement.magnitude > distance)

@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
         windZoneMaxSpeed = 0;
     }
 
-    public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f)
+    public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, bool resetDoubleJump = true)
     {
         pushingForce = force.x;
         usingParachute = false;
@@ -391,14 +391,19 @@ public class PlayerController : MonoBehaviour
             runningMotrSpeed = 0;
         }
 
+        if (resetDoubleJump)
+        {
+            doubleJump = false;
+        }
+
         velocity.y = overrideVelocityY ? force.y : velocity.y + force.y;
 
         disableControlsCountdown = disableControlsDuration;
     }
 
-    public void PushAndHit(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, int damage = 1)
+    public void PushAndHit(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, bool resetDoubleJump = true, int damage = 1)
     {
-        Push(force, overrideVelocityX, overrideVelocityY, disableControlsDuration);
+        Push(force, overrideVelocityX, overrideVelocityY, disableControlsDuration, resetDoubleJump);
         playerLogic.DealDamage(damage);
     }
 
