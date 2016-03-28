@@ -78,15 +78,15 @@ public class LevelProperties : ScriptableObject
         }
     }
 
-    public bool HasSpecialStar
+    public bool HasGoldenKittenStar
     {
         get
         {
-            return Convert.ToBoolean(PlayerPrefs.GetInt(sceneName + "hasSpecialStar", 0));
+            return Convert.ToBoolean(PlayerPrefs.GetInt(sceneName + "hasGoldenKittenStar", 0));
         }
         set
         {
-            PlayerPrefs.SetInt(sceneName + "hasSpecialStar", Convert.ToInt32(value));
+            PlayerPrefs.SetInt(sceneName + "hasGoldenKittenStar", Convert.ToInt32(value));
             PlayerPrefs.Save();
         }
     }

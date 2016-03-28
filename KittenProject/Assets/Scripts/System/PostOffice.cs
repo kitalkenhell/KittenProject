@@ -14,6 +14,7 @@ public static class PostOffice
     public static event CoinEvent coinCollected;
     public static event CoinEvent coinDropped;
     public static event Action heartCollected;
+    public static event Action goldenKittenCollected;
     public static event Action playedDied;
     public static event PlayerHealthChangedEvent PlayerHealthChanged;
     public static event Action victory;
@@ -47,6 +48,14 @@ public static class PostOffice
         if (heartCollected != null)
         {
             heartCollected();
+        }
+    }
+
+    public static void PostGoldenKittenCollected(int amount = 1)
+    {
+        if (goldenKittenCollected != null)
+        {
+            goldenKittenCollected();
         }
     }
 
