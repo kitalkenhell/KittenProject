@@ -165,14 +165,14 @@ public class PlayerController : MonoBehaviour
             sprite.transform.localScale = scale; 
         }
 
-        parachuteScale += (usingParachute ? Time.fixedDeltaTime : -Time.fixedDeltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
+        parachuteScale += (usingParachute ? Time.deltaTime : -Time.deltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
         parachuteScale = Mathf.Clamp01(parachuteScale);
         parachute.localScale = Vector3.one * parachuteOpeningCurve.Evaluate(parachuteScale) * parachuteMaxScale;
 
         if (!usingParachute)
         {
             usingParachuteTimer = 0;
-            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.fixedDeltaTime);
+            parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, 0, parachuteClosedRotateSpeed * Time.deltaTime);
         }
         else
         {
@@ -185,14 +185,14 @@ public class PlayerController : MonoBehaviour
                 parachuteRandomRotationOffset = parachuteRandomRotationOffset * 2 - 1; //scale form 0 - 1 to -1 - 1
                 parachuteRandomRotationOffset *= parachuteRandomRotationAmplitude * Mathf.Clamp01(usingParachuteTimer);
 
-                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation + parachuteRandomRotationOffset, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation + parachuteRandomRotationOffset, parachuteOpenRotateSpeed * Time.deltaTime);
 
-                usingParachuteTimer += Time.fixedDeltaTime;
+                usingParachuteTimer += Time.deltaTime;
             }
             else
             {
                 usingParachuteTimer = 0;
-                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.fixedDeltaTime);
+                parachuteRotation = Mathf.MoveTowardsAngle(parachuteRotation, -input * parachuteMaxRotation, parachuteOpenRotateSpeed * Time.deltaTime);
             }
 
         }
@@ -381,7 +381,7 @@ public class PlayerController : MonoBehaviour
         windZoneMaxSpeed = 0;
     }
 
-    public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f)
+    public void Push(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, bool resetDoubleJump = true)
     {
         pushingForce = force.x;
         usingParachute = false;
@@ -391,14 +391,19 @@ public class PlayerController : MonoBehaviour
             runningMotrSpeed = 0;
         }
 
+        if (resetDoubleJump)
+        {
+            doubleJump = false;
+        }
+
         velocity.y = overrideVelocityY ? force.y : velocity.y + force.y;
 
         disableControlsCountdown = disableControlsDuration;
     }
 
-    public void PushAndHit(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, int damage = 1)
+    public void PushAndHit(Vector2 force, bool overrideVelocityX = false, bool overrideVelocityY = true, float disableControlsDuration = 0.0f, bool resetDoubleJump = true, int damage = 1)
     {
-        Push(force, overrideVelocityX, overrideVelocityY, disableControlsDuration);
+        Push(force, overrideVelocityX, overrideVelocityY, disableControlsDuration, resetDoubleJump);
         playerLogic.DealDamage(damage);
     }
 
@@ -417,8 +422,8 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        const float bias = 0.1f;
-        const float headBias = 0.3f;
+        const float bias = 0.2f;
+        const float headBias = 0.6f;
         const float minGravityRayLenght = 0.3f;
 
         //vertical box cast collider

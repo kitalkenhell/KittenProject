@@ -30,6 +30,12 @@ public class PlayerLogic : MonoBehaviour
         private set;
     }
 
+    public bool GoldenKittenCollected
+    {
+        get;
+        private set;
+    }
+
     public int Health
     {
         get;
@@ -64,6 +70,7 @@ public class PlayerLogic : MonoBehaviour
 
         PostOffice.coinCollected += OnCoinCollected;
         PostOffice.heartCollected += OnHeartCollected;
+        PostOffice.goldenKittenCollected += OnGoldenKittenCollected;
         PostOffice.victory += OnVictory;
     }
 
@@ -71,6 +78,7 @@ public class PlayerLogic : MonoBehaviour
     {
         PostOffice.coinCollected -= OnCoinCollected;
         PostOffice.heartCollected -= OnHeartCollected;
+        PostOffice.goldenKittenCollected -= OnGoldenKittenCollected;
         PostOffice.victory -= OnVictory;
     }
 
@@ -100,6 +108,11 @@ public class PlayerLogic : MonoBehaviour
         {
             PostOffice.PostPlayerHealthChanged(Health, ++Health);
         }
+    }
+
+    void OnGoldenKittenCollected()
+    {
+        GoldenKittenCollected = true;
     }
 
     void DropCoins()

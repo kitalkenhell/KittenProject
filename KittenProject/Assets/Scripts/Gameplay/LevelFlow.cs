@@ -93,6 +93,11 @@ public class LevelFlow : MonoBehaviour
         AnalyticsManager.OnLevelCompleted(levelProperties.sceneName, time);
         SocialManager.PostLevelTimeToLeaderboard(levelProperties.timeLeaderboardId, time);
 
+        if (CoreLevelObjects.player.GoldenKittenCollected)
+        {
+            levelProperties.HasGoldenKittenStar = true;
+        }
+
         levelProperties.BestTimeScore = Mathf.Min(time, levelProperties.BestTimeScore);
         levelProperties.BestCoinsScore = Mathf.Max(CoreLevelObjects.player.Coins, levelProperties.BestCoinsScore);
 

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class Hellfire : MonoBehaviour 
 {
+    const float speedAfterGameFinished = -20;
+
     public GameObject flame;
     public int flamesCount;
     public float flamesXOffset;
@@ -35,7 +37,14 @@ public class Hellfire : MonoBehaviour
 
             lastSwapPosition = player.transform.position.x;
         }
-	}
+
+        PostOffice.victory += OnGameFinished;
+    }
+
+    void OnDestroy()
+    {
+        PostOffice.victory -= OnGameFinished;
+    }
 	
 	void Update ()
     {
@@ -66,5 +75,10 @@ public class Hellfire : MonoBehaviour
         {
             player.DeathByHellfire();
         }
+    }
+
+    void OnGameFinished()
+    {
+        speed = speedAfterGameFinished;
     }
 }

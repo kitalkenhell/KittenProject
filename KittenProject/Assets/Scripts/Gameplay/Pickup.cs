@@ -6,7 +6,8 @@ public class Pickup : MonoBehaviour
     public enum Type
     {
         coin,
-        heart
+        heart,
+        goldenKitten
     }
 
     public float speed;
@@ -35,9 +36,13 @@ public class Pickup : MonoBehaviour
             {
                 PostOffice.PostCoinCollected();
             }
-            else
+            else if (type == Type.heart)
             {
                 PostOffice.PostHeartCollected();
+            }
+            else
+            {
+                PostOffice.PostGoldenKittenCollected();
             }
 
             if (destroy)
