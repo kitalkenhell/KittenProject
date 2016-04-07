@@ -426,13 +426,19 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        const float bias = 0.25f;
+        const float bias = 0.2f;
         const float headBias = 0.6f;
         const float minGravityRayLenght = 0.3f;
 
+        //vertical box cast collider
+        const float colliderHeight = 0.6f;
+        const float halfColliderHeight = colliderHeight / 2.0f;
+        Vector2 boxSize = new Vector2(boxCollider.size.x, colliderHeight);
+        Vector2 boxOrigin;
+
         Vector2 displacement = velocity * Time.deltaTime;
         RaycastHit2D hit;
-        
+
         isGrounded = false;
         isTouchingWall = false;
         movablePlatformVelocity = Vector2.zero;
@@ -456,7 +462,8 @@ public class PlayerController : MonoBehaviour
         {
             float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght) : minGravityRayLenght;
 
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + halfColliderHeight);
+            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
 
             if (hit.collider != null && hit.collider.gameObject.layer == Layers.MovablePlatform)
             {
@@ -466,7 +473,10 @@ public class PlayerController : MonoBehaviour
 
                 if (movablePlatformVelocity.y > velocity.y)
                 {
-                    hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Infinity, movablePlatformMask);
+                    Vector2 size = new Vector2(boxCollider.size.x, bias);
+                    boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - bias);
+
+                    hit = Physics2D.BoxCast(boxOrigin, size, 0, Vector2.down, Mathf.Infinity, movablePlatformMask);
 
                     OnGrounded();
                     displacement.y = 0;
@@ -489,11 +499,12 @@ public class PlayerController : MonoBehaviour
         //Vertical Movement
         if (velocity.y < Mathf.Epsilon && movablePlatform == null)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + halfColliderHeight);
+            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
 
             if (hit.collider != null)
             {
-                
+
                 displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
                 HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
 
@@ -502,8 +513,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (velocity.y > Mathf.Epsilon)
         {
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), headBias), obstaclesMask);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - halfColliderHeight);
 
+            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), headBias), obstaclesMask);
             if (hit.collider != null)
             {
                 displacement.y = hit.point.y - boxCollider.bounds.max.y - headBias;
