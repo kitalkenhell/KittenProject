@@ -7,18 +7,30 @@ public class LevelStopwatch : MonoBehaviour
 
     static bool stopped;
     static float startTime;
+    static float endTime;
 
     public static float Stopwatch
     {
         get
         {
-            return Time.timeSinceLevelLoad - startTime;
+            if (startTime == Mathf.Infinity)
+            {
+                return 0;
+            }
+            else if (endTime == Mathf.Infinity)
+            {
+                return Time.timeSinceLevelLoad - startTime;
+            }
+            else
+            {
+                return endTime - startTime;
+            }
         }
     }
 
     void Start()
     {
-        startTime = Time.timeSinceLevelLoad;
+        startTime = endTime = Mathf.Infinity;
         stopped = true;
     }
 
@@ -31,6 +43,7 @@ public class LevelStopwatch : MonoBehaviour
         }
         else if (!start && !stopped)
         {
+            endTime = Time.timeSinceLevelLoad;
             stopped = true;
         }
     }
