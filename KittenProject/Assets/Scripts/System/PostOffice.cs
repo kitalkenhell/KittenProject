@@ -18,6 +18,7 @@ public static class PostOffice
     public static event Action playedDied;
     public static event PlayerHealthChangedEvent PlayerHealthChanged;
     public static event Action victory;
+    public static event Action levelQuit;
 
     public static void PostDebugMessage(object message)
     {
@@ -80,6 +81,14 @@ public static class PostOffice
         if (victory != null)
         {
             victory();
+        }
+    }
+
+    public static void PostLevelQuit()
+    {
+        if (levelQuit != null)
+        {
+            levelQuit();
         }
     }
 }

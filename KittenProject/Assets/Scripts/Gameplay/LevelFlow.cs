@@ -13,6 +13,7 @@ public class LevelFlow : MonoBehaviour
     public Animator loadingScreen;
     public Animator victoryScreen;
     public Animator hud;
+    public PauseMenu pauseMenu;
     public LevelProperties levelProperties;
 
     int fadeAnimHash;
@@ -25,6 +26,7 @@ public class LevelFlow : MonoBehaviour
     {
         PostOffice.playedDied += OnPlayerDied;
         PostOffice.victory += OnVictory;
+        PostOffice.levelQuit += OnLevelQuit;
 
         fadeAnimHash = Animator.StringToHash("Fade");
         showHudAnimHash = Animator.StringToHash("ShowHud");
@@ -41,15 +43,9 @@ public class LevelFlow : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!switchingScenes)
+            if (!pauseMenu.gameObject.activeInHierarchy)
             {
-                switchingScenes = true;
-                hud.SetBool(showHudAnimHash, false);
-                
-                StartCoroutine(Exit());
-                StartCoroutine(FadeOut());
-
-                AnalyticsManager.OnLevelAbandoned(levelProperties.sceneName);
+                pauseMenu.gameObject.SetActive(true); 
             }
         }
     }
@@ -58,6 +54,21 @@ public class LevelFlow : MonoBehaviour
     {
         PostOffice.playedDied -= OnPlayerDied;
         PostOffice.victory -= OnVictory;
+        PostOffice.levelQuit -= OnLevelQuit;
+    }
+
+    void OnLevelQuit()
+    {
+        if (!switchingScenes)
+        {
+            switchingScenes = true;
+            hud.SetBool(showHudAnimHash, false);
+
+            StartCoroutine(Exit());
+            StartCoroutine(FadeOut());
+
+            AnalyticsManager.OnLevelAbandoned(levelProperties.sceneName);
+        }
     }
 
     void OnPlayerDied()

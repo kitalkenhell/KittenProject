@@ -426,7 +426,7 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        const float bias = 0.2f;
+        const float bias = 0.25f;
         const float headBias = 0.6f;
         const float minGravityRayLenght = 0.3f;
 

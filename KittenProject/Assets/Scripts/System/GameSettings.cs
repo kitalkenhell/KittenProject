@@ -58,4 +58,17 @@ public static class GameSettings
             PlayerPrefs.Save();
         }
     }
+
+    public static float UiScale
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("GameSettingsUiScale", 1);
+        }
+
+        set
+        {
+            PlayerPrefs.SetFloat("GameSettingsUiScale", value);
+        }
+    }
 }
