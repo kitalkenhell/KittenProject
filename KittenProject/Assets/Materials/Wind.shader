@@ -50,19 +50,18 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				const float fadeSize = 0.2;
+				const float fadeSize = 0.5;
 				const float timeScale = 3.5;
 
 				float time = _Time.y * timeScale + _TimeOffset;
-		
-				time = abs(floor(time) % 2 - frac(time));
 
+				time = abs(floor(time) % 2 - frac(time));
+				float alphaFade = 1 - max(i.texcoord.y - (1 - fadeSize), 0) / fadeSize;
 				i.texcoord.y -= _Time.y * 0.5 + _TimeOffset;
 
-				fixed4 col = tex2D(_MainTex, i.texcoord);
-				//fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
-				col.a *= 0.1;
-
+				//fixed4 col = tex2D(_MainTex, i.texcoord);
+				fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
+				col.a *= 0.2 * alphaFade;
 				return col;
 			}
 
