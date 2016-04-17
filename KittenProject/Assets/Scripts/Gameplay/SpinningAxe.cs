@@ -6,6 +6,8 @@ public class SpinningAxe : MonoBehaviour
     public AnimationCurve positionCurve;
     public float maxAngle = 45.0f;
     public float frequency = 1.0f;
+    public float rotationOffset = 0;
+    public float timeOffset = 0;
     public Vector2 forceMultiplier;
     public Vector2 force;
     public Vector2 minPushForce;
@@ -37,7 +39,7 @@ public class SpinningAxe : MonoBehaviour
 
     void Update()
     {
-        float time = Time.timeSinceLevelLoad * frequency;
+        float time = (Time.timeSinceLevelLoad + timeOffset) * frequency;
         float currentRotiation; 
 
         time = time - Mathf.Floor(time);
@@ -45,6 +47,6 @@ public class SpinningAxe : MonoBehaviour
         speed = currentRotiation - lastRotation;
         lastRotation = currentRotiation;
 
-        body.MoveRotation(currentRotiation);
+        body.MoveRotation(currentRotiation + rotationOffset);
     }
 }
