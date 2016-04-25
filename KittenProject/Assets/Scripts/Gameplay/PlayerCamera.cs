@@ -5,6 +5,8 @@ public class PlayerCamera : MonoBehaviour
 {
     public Transform target;
     public Vector3 offset;
+    public Vector3 offsetAfterVictory;
+    public float changingCameraOffsetSpeed;
 
     public Transform hellfire;
     public float minDistanceFromHellfire;
@@ -26,6 +28,7 @@ public class PlayerCamera : MonoBehaviour
     void OnVictory()
     {
         animator.enabled = true;
+        StartCoroutine(ChangeOffset(offsetAfterVictory));
     }
 
     void LateUpdate()
@@ -40,4 +43,13 @@ public class PlayerCamera : MonoBehaviour
             } 
         }
 	}
+
+    IEnumerator ChangeOffset(Vector3 targetOffset)
+    {
+        while (Vector3.SqrMagnitude(offset - offsetAfterVictory) > Mathf.Epsilon)
+        {
+            offset = Vector3.MoveTowards(offset, targetOffset, changingCameraOffsetSpeed * Time.deltaTime);
+            yield return null;
+        }
+    }
 }
