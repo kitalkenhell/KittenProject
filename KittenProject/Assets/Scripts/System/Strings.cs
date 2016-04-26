@@ -3,5 +3,14 @@ using System.Collections;
 
 public static class Strings
 {
-    public const string PauseMenuUiScale = "UI Scale: ";
+    public static class PauseMenu
+    {
+        public const string uiScale = "UI Scale: ";
+    }
+
+    public static class VictoryScreen
+    {
+        public const string getGems = "Get {0} Gems";
+        public const string finishLevel = "Finish in {0}\"";
+    }
 }

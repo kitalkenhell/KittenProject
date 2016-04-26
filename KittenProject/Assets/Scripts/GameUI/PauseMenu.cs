@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     void OnEnable()
     {
         uiScaleSlider.value = GameSettings.UiScale;
-        uiScaleText.text = Strings.PauseMenuUiScale + String.Format("{0:0.0}", uiScaleSlider.value);
+        uiScaleText.text = Strings.PauseMenu.uiScale + String.Format("{0:0.0}", uiScaleSlider.value);
         Time.timeScale = 0;
     }
 
@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour
     public void OnUiScaleSlider(float scale)
     {
         GameSettings.UiScale = scale;
-        uiScaleText.text = Strings.PauseMenuUiScale + String.Format("{0:0.0}", scale);
+        uiScaleText.text = Strings.PauseMenu.uiScale + String.Format("{0:0.0}", scale);
         buttonScaler.RefreshButtons();
     }
 
@@ -40,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     public void OnMenuButtonClicked()
     {
         PostOffice.PostLevelQuit();
+        ResumeGame();
     }
 
     void ResumeGame()

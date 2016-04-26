@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class VictoryScreen : MonoBehaviour
 {
@@ -11,15 +12,17 @@ public class VictoryScreen : MonoBehaviour
     public Animator hud;
     public Image kittenGreyedOut;
     public Image kitten;
-    public GameObject kittenChunks;
     public Image gemGreyedOut;
     public Image gem;
-    public GameObject gemChunks;
     public Image hourglassGreyedOut;
     public Image hourglass;
-    public GameObject hourglassChunks;
+    public Text getGemsLabel;
+    public Text finishLevelLabel;
 
     Animator animator;
+    Animator kittenAnimator;
+    Animator gemAnimator;
+    Animator hourglassAnimator;
 
     int showButtonsAnimHash;
     int showCoinsAndTimerAnimHash;
@@ -41,12 +44,19 @@ public class VictoryScreen : MonoBehaviour
 
         kittenGreyedOut.enabled = !kittenFound;
         kitten.enabled = kittenFound;
+        kittenAnimator = kittenGreyedOut.GetComponent<Animator>();
 
         gemGreyedOut.enabled = !gemsCollected;
         gem.enabled = gemsCollected;
+        gemAnimator = gemGreyedOut.GetComponent<Animator>();
 
         hourglassGreyedOut.enabled = !timeTrialCompleted;
         hourglass.enabled = timeTrialCompleted;
+        hourglassAnimator = hourglassGreyedOut.GetComponent<Animator>();
+
+        getGemsLabel.text = String.Format(Strings.VictoryScreen.getGems, levelFlow.levelProperties.coinsToGetStar);
+        finishLevelLabel.text = String.Format(Strings.VictoryScreen.finishLevel, levelFlow.levelProperties.timeToGetStar);
+
     }
 
     public void ShowCoinsAndTimer()
@@ -60,9 +70,7 @@ public class VictoryScreen : MonoBehaviour
 
         if (!gemsCollected && levelFlow.levelProperties.HasCoinStar)
         {
-            gem.enabled = true;
-            gemGreyedOut.enabled = false;
-            gemChunks.SetActive(true);
+            gemAnimator.enabled = true;
             wait = true;
         }
 
@@ -73,9 +81,7 @@ public class VictoryScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealNextAwardDelay);
             }
 
-            kitten.enabled = true;
-            kittenGreyedOut.enabled = false;
-            kittenChunks.SetActive(true);
+            kittenAnimator.enabled = true;
             wait = true;
         }
 
@@ -86,9 +92,7 @@ public class VictoryScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealNextAwardDelay);
             }
 
-            hourglass.enabled = true;
-            hourglassGreyedOut.enabled = false;
-            hourglassChunks.SetActive(true);
+            hourglassAnimator.enabled = true;
         }
 
         yield return new WaitForSeconds(showButtonsDelay);
