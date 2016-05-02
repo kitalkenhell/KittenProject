@@ -15,7 +15,7 @@ public class RandomScaleTween : MonoBehaviour
         time = randomOffset ? Random.value : 0;
     }
 
-    void OnWillRenderObject()
+    void Update()
     {
         time += Time.deltaTime * speedRange.Random();
 
