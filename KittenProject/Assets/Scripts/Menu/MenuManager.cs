@@ -6,16 +6,13 @@ public class MenuManager : MonoBehaviour
 {
     public LevelProperties firstLevel;
 
-    [HideInInspector]
-    public string LevelToLoad;
-
     int playButtonPressedAnimHash;
     int backButtonPressedAnimHash;
     int StartGameButtonPressedAnimHash;
 
     Animator menuAnimator;
 
-	void Start () 
+	void Start() 
 	{
         playButtonPressedAnimHash = Animator.StringToHash("PlayButtonPressed");
         backButtonPressedAnimHash = Animator.StringToHash("BackButtonPressed");
@@ -58,8 +55,8 @@ public class MenuManager : MonoBehaviour
         menuAnimator.SetTrigger(StartGameButtonPressedAnimHash);
     }
 
-    public void LoadLevel()
+    public void LoadLevel(string levelToLoad)
     {
-        SceneManager.LoadScene(LevelToLoad);
+        SceneManager.LoadScene(levelToLoad);
     }
 }
