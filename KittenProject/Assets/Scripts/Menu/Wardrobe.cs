@@ -227,7 +227,7 @@ public class Wardrobe : MonoBehaviour
             if (BuySkin(lastOutfitSkinSelected))
             {
                 PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.skinName, true);
-                RefreshButton(false, false);
+                RefreshButton(true, false);
             }
         }
         else if (lastParachuteSkinSelected != null)
@@ -235,7 +235,7 @@ public class Wardrobe : MonoBehaviour
             if (BuySkin(lastParachuteSkinSelected))
             {
                 PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.skinName, true);
-                RefreshButton(false, false); 
+                RefreshButton(true, false); 
             }
         }
         else if (lastHatSkinSelected != null)
@@ -243,7 +243,7 @@ public class Wardrobe : MonoBehaviour
             if (BuySkin(lastHatSkinSelected))
             {
                 PersistentData.IsHavingHatSkin(lastHatSkinSelected.skinName, true);
-                RefreshButton(false, false); 
+                RefreshButton(true, false); 
             }
         }
     }
