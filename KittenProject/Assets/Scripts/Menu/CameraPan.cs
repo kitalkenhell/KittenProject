@@ -8,10 +8,22 @@ public class CameraPan : MonoBehaviour
     public float minDeacceleration;
     public float sensitivity;
     public float bounciness;
-    public MinMax position;
+    public MinMax positionBounds;
 
     float lastMousePosition;
     float speed;
+
+    public float Postion
+    {
+        get
+        {
+            return transform.position.x;
+        }
+        set
+        {
+            transform.SetPositionX(Mathf.Clamp(value, positionBounds.min, positionBounds.max));
+        }
+    }
 
     void Update()
     {
@@ -35,15 +47,15 @@ public class CameraPan : MonoBehaviour
 
         transform.Translate(-speed * Time.deltaTime, 0, 0);
 
-        if (transform.position.x < position.min)
+        if (transform.position.x < positionBounds.min)
         {
-            transform.SetPositionX(position.min);
+            transform.SetPositionX(positionBounds.min);
             speed = -speed * bounciness;
         }
 
-        if (transform.position.x > position.max)
+        if (transform.position.x > positionBounds.max)
         {
-            transform.SetPositionX(position.max);
+            transform.SetPositionX(positionBounds.max);
             speed = -speed * bounciness;
         }
     }

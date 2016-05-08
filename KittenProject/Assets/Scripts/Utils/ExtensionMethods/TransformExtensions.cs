@@ -19,6 +19,14 @@ public static class TransformExtensions
         t.localScale = Vector3.one;
     }
 
+    public static void DestroyAllChildren(this Transform t)
+    {
+        foreach (Transform child in t)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
     public static void SetPositionX(this Transform t, float x)
     {
         t.position = new Vector3(x, t.position.y, t.position.z);

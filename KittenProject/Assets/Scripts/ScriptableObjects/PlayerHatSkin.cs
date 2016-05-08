@@ -2,8 +2,7 @@
 using System.Collections;
 using System;
 
-public class PlayerHatSkin : ScriptableObject
+public class PlayerHatSkin : PlayerSkin
 {
-    public string skinName;
     public string hat;
 }

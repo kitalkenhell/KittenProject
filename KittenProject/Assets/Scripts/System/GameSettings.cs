@@ -17,44 +17,44 @@ public static class GameSettings
         }
     }
 
-    public static int PlayerBodySkinIndex
+    public static string PlayerBodySkin
     {
         get
         {
-            return PlayerPrefs.GetInt("GameSettingsPlayerBodySkinIndex", 0);
+            return PlayerPrefs.GetString("GameSettingsPlayerBodySkin", "");
         }
 
         set
         {
-            PlayerPrefs.SetInt("GameSettingsPlayerBodySkinIndex", value);
+            PlayerPrefs.SetString("GameSettingsPlayerBodySkin", value);
             PlayerPrefs.Save();
         }
     }
 
-    public static int PlayerHatSkinIndex
+    public static string PlayerHatSkin
     {
         get
         {
-            return PlayerPrefs.GetInt("GameSettingsPlayerHatSkinIndex", 0);
+            return PlayerPrefs.GetString("GameSettingsPlayerHatSkin", "");
         }
 
         set
         {
-            PlayerPrefs.SetInt("GameSettingsPlayerHatSkinIndex", value);
+            PlayerPrefs.SetString("GameSettingsPlayerHatSkin", value);
             PlayerPrefs.Save();
         }
     }
 
-    public static int PlayerParachuteSkinIndex
+    public static string PlayerParachuteSkin
     {
         get
         {
-            return PlayerPrefs.GetInt("GameSettingsPlayerParachuteSkinIndex", 0);
+            return PlayerPrefs.GetString("GameSettingsPlayerParachuteSkin", "");
         }
 
         set
         {
-            PlayerPrefs.SetInt("GameSettingsPlayerParachuteSkinIndex", value);
+            PlayerPrefs.SetString("GameSettingsPlayerParachuteSkin", value);
             PlayerPrefs.Save();
         }
     }

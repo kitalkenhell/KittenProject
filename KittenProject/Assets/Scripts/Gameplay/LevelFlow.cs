@@ -112,6 +112,8 @@ public class LevelFlow : MonoBehaviour
         levelProperties.BestTimeScore = Mathf.Min(time, levelProperties.BestTimeScore);
         levelProperties.BestCoinsScore = Mathf.Max(CoreLevelObjects.player.Coins, levelProperties.BestCoinsScore);
 
+        PersistentData.Coins += CoreLevelObjects.player.Coins;
+
         hud.SetBool(showHudAnimHash, false);
         StartCoroutine(ShowVictoryScreen());
         StartCoroutine(ShowAd());

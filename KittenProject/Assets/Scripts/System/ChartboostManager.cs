@@ -19,7 +19,6 @@ public class ChartboostManager : MonoBehaviour
 
     public bool IsVideoAdLoaded()
     {
-        Debug.Log("IsVideoAdLoaded: " + Chartboost.hasRewardedVideo(CBLocation.Default));
         return Chartboost.hasRewardedVideo(CBLocation.Default);
     }
 
@@ -231,6 +230,8 @@ public class ChartboostManager : MonoBehaviour
 
     void didCompleteRewardedVideo(CBLocation location, int reward)
     {
+        AdManager.LastTimeVideoAdWatched = DateTime.Now;
+        PostOffice.PostVideoAdWatched();
     }
 
     void didDisplayRewardedVideo(CBLocation location)

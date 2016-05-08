@@ -2,10 +2,8 @@
 using System.Collections;
 using System;
 
-public class PlayerBodySkin : ScriptableObject
+public class PlayerBodySkin : PlayerSkin
 {
-    public string skinName;
-
     public string body;
     public string ear;
     public string eyeBig;

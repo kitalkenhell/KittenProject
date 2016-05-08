@@ -1,9 +1,14 @@
 fileFormatVersion: 2
 guid: 605e737000d0c8449bac06bda0e9bf2f
-timeCreated: 1462390718
+timeCreated: 1462616124
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: HappyDogPainting
+    21300002: HappyDogSunHandLeft
+    21300004: HappyDogSunbeam
+    21300006: HappyDogSun
+    21300008: HappyDogSunHandRight
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,7 +35,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -38,20 +43,75 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMode: 2
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 25
   alphaIsTransparency: 1
-  textureType: 8
+  textureType: 5
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: HappyDogPainting
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 472
+        height: 723
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: HappyDogSunHandLeft
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 537
+        width: 133
+        height: 86
+      alignment: 9
+      pivot: {x: 0.9606209, y: 0.06610959}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: HappyDogSunbeam
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 497
+        width: 23
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: HappyDogSun
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 312
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: HappyDogSunHandRight
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 251
+        width: 93
+        height: 27
+      alignment: 9
+      pivot: {x: 0.96436596, y: 0.922387}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Menu
   userData: 
   assetBundleName: 
   assetBundleVariant: 

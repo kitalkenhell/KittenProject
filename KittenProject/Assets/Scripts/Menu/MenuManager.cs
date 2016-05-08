@@ -5,10 +5,20 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour 
 {
     public LevelProperties firstLevel;
+    public PlayerBodySkin firstBodySkin;
+    public PlayerHatSkin firstHatSkin;
+    public PlayerParachuteSkin firstParachuteSkin;
+
+    public string LevelToLoad
+    {
+        get;
+        set;
+    }
 
     int playButtonPressedAnimHash;
     int backButtonPressedAnimHash;
-    int StartGameButtonPressedAnimHash;
+    int startGameButtonPressedAnimHash;
+    int wardrobeButtonPressedAnimHash;
 
     Animator menuAnimator;
 
@@ -16,11 +26,16 @@ public class MenuManager : MonoBehaviour
 	{
         playButtonPressedAnimHash = Animator.StringToHash("PlayButtonPressed");
         backButtonPressedAnimHash = Animator.StringToHash("BackButtonPressed");
-        StartGameButtonPressedAnimHash = Animator.StringToHash("StartGameButtonPressed");
+        startGameButtonPressedAnimHash = Animator.StringToHash("StartGameButtonPressed");
+        wardrobeButtonPressedAnimHash = Animator.StringToHash("WardrobeButtonPressed");
 
         menuAnimator = GetComponent<Animator>();
 
         firstLevel.IsLocked = false;
+
+        PersistentData.IsHavingBodySkin(firstBodySkin.skinName, true);
+        PersistentData.IsHavingHatSkin(firstHatSkin.skinName, true);
+        PersistentData.IsHavingParachuteSkin(firstParachuteSkin.skinName, true);
 
         AdManager.Instance.IncrementEventCounter();
         SocialManager.SignIn();
@@ -44,6 +59,10 @@ public class MenuManager : MonoBehaviour
         SocialManager.ShowAchievements();
     }
 
+    public void OnWardrobeButtonClicked()
+    {
+        menuAnimator.SetTrigger(wardrobeButtonPressedAnimHash);
+    }
 
     public void OnLeaderboardsButtonClicked()
     {
@@ -52,11 +71,11 @@ public class MenuManager : MonoBehaviour
 
     public void OnStartGameButtonClicked()
     {
-        menuAnimator.SetTrigger(StartGameButtonPressedAnimHash);
+        menuAnimator.SetTrigger(startGameButtonPressedAnimHash);
     }
 
-    public void LoadLevel(string levelToLoad)
+    public void LoadLevel()
     {
-        SceneManager.LoadScene(levelToLoad);
+        SceneManager.LoadScene(LevelToLoad);
     }
 }

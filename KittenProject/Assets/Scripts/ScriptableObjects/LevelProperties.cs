@@ -6,6 +6,7 @@ public class LevelProperties : ScriptableObject
 {
     const string isLockedKey = "IsLocked";
 
+    public string levelName;
     public string sceneName;
     public LevelProperties nextLevel;
     public string timeLeaderboardId;

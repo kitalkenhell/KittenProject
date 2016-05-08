@@ -20,9 +20,9 @@ public class PlayerSkinSetter : MonoBehaviour
 
     void Start()
     {
-        PlayerBodySkin bodySkin = skins.bodySkins[GameSettings.PlayerBodySkinIndex];
-        PlayerHatSkin hatSkin = skins.hatSkins[GameSettings.PlayerHatSkinIndex];
-        PlayerParachuteSkin parachuteSkin = skins.parachuteSkins[GameSettings.PlayerParachuteSkinIndex];
+        PlayerBodySkin bodySkin = skins.GetEquipedBodySkin();
+        PlayerHatSkin hatSkin = skins.GetEquipedHatSkin();
+        PlayerParachuteSkin parachuteSkin = skins.GetEquipedParachuteSkin();
 
         InstantiateSkinPart(bodySkin.body, bodyPivot);
         InstantiateSkinPart(bodySkin.ear, earPivot);

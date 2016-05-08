@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.Reflection;
+using UnityEngine.UI;
 
 public class Utils
 {
@@ -13,6 +14,20 @@ public class Utils
     public static Vector2 PerpendicularVector2(Vector2 v)
     {
         return new Vector2(-v.y, v.x);
+    }
+
+    public static void ReplaceSpritesWithUiImages(GameObject gameobject)
+    {
+        SpriteRenderer[] renderers;
+
+        renderers = gameobject.GetComponentsInChildren<SpriteRenderer>();
+
+        foreach (var renderer in renderers)
+        {
+            Image image = renderer.gameObject.AddComponent<Image>();
+            image.sprite = renderer.sprite;
+            GameObject.Destroy(renderer);
+        }
     }
 }
 

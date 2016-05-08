@@ -1,15 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class AdManager : MonoBehaviour
 {
+    const string dateFormat = "yyyy-MM-dd HH:mm:ss";
     const int eventsNeededToShowAd = 4;
     const int eventCounterStartingOffset = 1;
+    const int videoAdReward = 150;
+    const int FirstTimeVideoAdWatchedOffset = -11;
 
     static int eventCounter;
 
     AdMobManager adMobManager;
     ChartboostManager chartboostManager;
+
+    public static DateTime LastTimeVideoAdWatched
+    {
+        get
+        {
+            if (PlayerPrefs.HasKey("LastTimeVideoAdWatched"))
+            {
+                return DateTime.ParseExact(PlayerPrefs.GetString("LastTimeVideoAdWatched"), dateFormat, System.Globalization.CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                PlayerPrefs.SetString("LastTimeVideoAdWatched", DateTime.Now.Add(new TimeSpan(FirstTimeVideoAdWatchedOffset, 0, 0)).ToString(dateFormat));
+                return DateTime.Now;
+            }
+        }
+
+        set
+        {
+            PlayerPrefs.SetString("LastTimeVideoAdWatched", value.ToString(dateFormat));
+        }
+    }
 
     public static AdManager Instance
     {
@@ -70,6 +95,24 @@ public class AdManager : MonoBehaviour
                 adMobManager.ShowInterstitial(); 
             }
         }
+    }
+
+    public bool IsVideoAdAvailable
+    {
+        get
+        {
+            return chartboostManager.IsVideoAdLoaded();
+        }
+    }
+
+    public void ShowVideoAd()
+    {
+        chartboostManager.ShowVideoAd();
+
+#if UNITY_EDITOR
+        AdManager.LastTimeVideoAdWatched = DateTime.Now;
+        PostOffice.PostVideoAdWatched();
+#endif
     }
 
 }
