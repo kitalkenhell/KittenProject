@@ -28,7 +28,7 @@ public class OutfitSkinSelectionButton : MonoBehaviour
     public void Refresh(PlayerBodySkin skin)
     {
         this.skin = skin;
-        skinName.text = skin.skinName;
+        skinName.text = skin.itemName;
 
         InstantiateSkinPart(skin.legFront, legFrontPivot);
         InstantiateSkinPart(skin.legBack, legBackPivot);

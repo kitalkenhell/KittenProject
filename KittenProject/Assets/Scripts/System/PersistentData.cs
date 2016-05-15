@@ -14,6 +14,8 @@ public static class PersistentData
         {
             PlayerPrefs.SetInt("Coins", value);
             PlayerPrefs.Save();
+
+            PostOffice.PostAmountOfCoinsChanged();
         }
     }
 
@@ -65,6 +67,23 @@ public static class PersistentData
         else
         {
             PlayerPrefs.DeleteKey("IsHavingHatSkin" + name);
+        }
+    }
+
+    public static bool IsHavingUpgrade(string name)
+    {
+        return PlayerPrefs.HasKey("IsHavingUpgrade" + name);
+    }
+
+    public static void IsHavingUpgrade(string name, bool newValue)
+    {
+        if (newValue == true)
+        {
+            PlayerPrefs.SetInt("IsHavingUpgrade" + name, 0);
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey("IsHavingUpgrade" + name);
         }
     }
 }

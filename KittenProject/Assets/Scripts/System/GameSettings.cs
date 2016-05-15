@@ -63,7 +63,7 @@ public static class GameSettings
     {
         get
         {
-            return PlayerPrefs.GetFloat("GameSettingsUiScale", 1);
+            return PlayerPrefs.GetFloat("GameSettingsUiScale", 1.2f);
         }
 
         set

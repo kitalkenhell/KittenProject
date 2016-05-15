@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Wardrobe : MonoBehaviour
@@ -11,7 +12,7 @@ public class Wardrobe : MonoBehaviour
         upgrades
     }
 
-    public PlayerSkins skins;
+    public PlayerItems items;
 
     public GameObject parachutesContent;
     public GameObject outfitsContent;
@@ -20,6 +21,7 @@ public class Wardrobe : MonoBehaviour
 
     public GameObject equipButton;
     public GameObject buyButton;
+    public Text priceLabel;
 
     public Animator parachutesPanel;
     public Animator outfitsPanel;
@@ -39,12 +41,18 @@ public class Wardrobe : MonoBehaviour
     PlayerBodySkin lastOutfitSkinSelected = null;
     PlayerParachuteSkin lastParachuteSkinSelected = null;
     PlayerHatSkin lastHatSkinSelected = null;
+    PlayerUpgrade lastUpgradeSelected = null;
 
     void Awake()
     {
         showAnimHash = Animator.StringToHash("Show");
 
-        foreach (var skin in skins.parachuteSkins)
+        StartCoroutine(LoadData());
+    }
+
+    IEnumerator LoadData()
+    {
+        foreach (var skin in items.parachuteSkins)
         {
             ParachuteSkinSelectionButton button = (Instantiate(parachuteButtonPrefab) as GameObject).GetComponent<ParachuteSkinSelectionButton>();
 
@@ -52,9 +60,10 @@ public class Wardrobe : MonoBehaviour
             button.transform.SetParent(parachutesContent.transform);
             button.transform.localScale = Vector3.one;
             button.onButtonPressed = OnParachuteSelected;
+            yield return null;
         }
 
-        foreach (var skin in skins.hatSkins)
+        foreach (var skin in items.hatSkins)
         {
             HatSkinSelectionButton button = (Instantiate(hatButtonPrefab) as GameObject).GetComponent<HatSkinSelectionButton>();
 
@@ -62,9 +71,10 @@ public class Wardrobe : MonoBehaviour
             button.transform.SetParent(hatsContent.transform);
             button.transform.localScale = Vector3.one;
             button.onButtonPressed = OnHatSelected;
+            yield return null;
         }
 
-        foreach (var skin in skins.bodySkins)
+        foreach (var skin in items.bodySkins)
         {
             OutfitSkinSelectionButton button = (Instantiate(outfitButtonPrefab) as GameObject).GetComponent<OutfitSkinSelectionButton>();
 
@@ -72,6 +82,18 @@ public class Wardrobe : MonoBehaviour
             button.transform.SetParent(outfitsContent.transform);
             button.transform.localScale = Vector3.one;
             button.onButtonPressed = OnOutfitSelected;
+            yield return null;
+        }
+
+        foreach (var upgrade in items.upgrades)
+        {
+            UpgradeSelectionButton button = (Instantiate(upgradesButtonPrefab) as GameObject).GetComponent<UpgradeSelectionButton>();
+
+            button.Refresh(upgrade);
+            button.transform.SetParent(upgradesContent.transform);
+            button.transform.localScale = Vector3.one;
+            button.onButtonPressed = OnUpgradeSelected;
+            yield return null;
         }
     }
 
@@ -93,6 +115,7 @@ public class Wardrobe : MonoBehaviour
         currentView = newView;
         SetAnimationOfCurrentView(true);
         ResetSelection();
+        dogePreview.ResetSkin();
     }
 
     void ResetSelection()
@@ -100,6 +123,7 @@ public class Wardrobe : MonoBehaviour
         lastOutfitSkinSelected = null;
         lastParachuteSkinSelected = null;
         lastHatSkinSelected = null;
+        lastUpgradeSelected = null;
 
         buyButton.SetActive(false);
         equipButton.SetActive(false);
@@ -125,7 +149,7 @@ public class Wardrobe : MonoBehaviour
         }
     }
 
-    bool BuySkin(PlayerSkin skin)
+    bool BuyItem(PlayerItem skin)
     {
         if (PersistentData.Coins > skin.price)
         {
@@ -140,13 +164,13 @@ public class Wardrobe : MonoBehaviour
     {
         buyButton.SetActive(!hasItem);
 
-        if (hasItem)
+        if (currentView == Views.upgrades || !hasItem)
         {
-            equipButton.SetActive(!isEquiped);
+            equipButton.SetActive(false);
         }
         else
         {
-            equipButton.SetActive(false);
+            equipButton.SetActive(!isEquiped);
         }
     }
 
@@ -155,8 +179,10 @@ public class Wardrobe : MonoBehaviour
         lastOutfitSkinSelected = null;
         lastParachuteSkinSelected = skin;
         lastHatSkinSelected = null;
+        lastUpgradeSelected = null;
+        priceLabel.text = skin.price.ToString();
 
-        RefreshButton(PersistentData.IsHavingParachuteSkin(skin.skinName), GameSettings.PlayerParachuteSkin == skin.skinName);
+        RefreshButton(PersistentData.IsHavingParachuteSkin(skin.itemName), GameSettings.PlayerParachuteSkin == skin.itemName);
         dogePreview.SetSkin(skin);
     }
 
@@ -165,9 +191,10 @@ public class Wardrobe : MonoBehaviour
         lastOutfitSkinSelected = skin;
         lastParachuteSkinSelected = null;
         lastHatSkinSelected = null;
+        lastUpgradeSelected = null;
+        priceLabel.text = skin.price.ToString();
 
-
-        RefreshButton(PersistentData.IsHavingBodySkin(skin.skinName), GameSettings.PlayerBodySkin == skin.skinName);
+        RefreshButton(PersistentData.IsHavingBodySkin(skin.itemName), GameSettings.PlayerBodySkin == skin.itemName);
         dogePreview.SetSkin(skin);
     }
 
@@ -176,75 +203,94 @@ public class Wardrobe : MonoBehaviour
         lastOutfitSkinSelected = null;
         lastParachuteSkinSelected = null;
         lastHatSkinSelected = skin;
+        lastUpgradeSelected = null;
+        priceLabel.text = skin.price.ToString();
 
-        RefreshButton(PersistentData.IsHavingHatSkin(skin.skinName), GameSettings.PlayerHatSkin == skin.skinName);
+        RefreshButton(PersistentData.IsHavingHatSkin(skin.itemName), GameSettings.PlayerHatSkin == skin.itemName);
         dogePreview.SetSkin(skin);
+    }
+
+    void OnUpgradeSelected(PlayerUpgrade upgrade)
+    {
+        lastOutfitSkinSelected = null;
+        lastParachuteSkinSelected = null;
+        lastHatSkinSelected = null;
+        lastUpgradeSelected = upgrade;
+        priceLabel.text = upgrade.price.ToString();
+
+        RefreshButton(PersistentData.IsHavingUpgrade(upgrade.itemName), false);
     }
 
     public void OnParachutesButtonPressed()
     {
-        RefreshView(Views.parachutes);
+        if (currentView != Views.parachutes)
+        {
+            RefreshView(Views.parachutes); 
+        }
     }
 
     public void OnOutfitsButtonPressed()
     {
-        RefreshView(Views.outfits);
+        if (currentView != Views.outfits)
+        {
+            RefreshView(Views.outfits); 
+        }
     }
 
     public void OnHatsButtonPressed()
     {
-        RefreshView(Views.hats);
+        if (currentView != Views.hats)
+        {
+            RefreshView(Views.hats); 
+        }
     }
 
     public void OnUpgradesButtonPressed()
     {
-        RefreshView(Views.upgrades);
+        if (currentView != Views.upgrades)
+        {
+            RefreshView(Views.upgrades); 
+        }
     }
 
     public void OnEquipButtonPressed()
     {
         if (lastOutfitSkinSelected != null)
         {
-            GameSettings.PlayerBodySkin = lastOutfitSkinSelected.skinName;
+            GameSettings.PlayerBodySkin = lastOutfitSkinSelected.itemName;
             RefreshButton(true, true);
         }
         else if (lastParachuteSkinSelected != null)
         {
-            GameSettings.PlayerParachuteSkin = lastParachuteSkinSelected.skinName;
+            GameSettings.PlayerParachuteSkin = lastParachuteSkinSelected.itemName;
             RefreshButton(true, true);
         }
         else if (lastHatSkinSelected != null)
         {
-            GameSettings.PlayerHatSkin = lastHatSkinSelected.skinName;
+            GameSettings.PlayerHatSkin = lastHatSkinSelected.itemName;
             RefreshButton(true, true);
         }
     }
 
     public void OnBuyButtonPressed()
     {
-        if (lastOutfitSkinSelected != null)
+        if (lastOutfitSkinSelected != null && BuyItem(lastOutfitSkinSelected))
         {
-            if (BuySkin(lastOutfitSkinSelected))
-            {
-                PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.skinName, true);
-                RefreshButton(true, false);
-            }
+            PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.itemName, true);
         }
-        else if (lastParachuteSkinSelected != null)
+        else if (lastParachuteSkinSelected != null && BuyItem(lastParachuteSkinSelected))
         {
-            if (BuySkin(lastParachuteSkinSelected))
-            {
-                PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.skinName, true);
-                RefreshButton(true, false); 
-            }
+            PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.itemName, true);
         }
-        else if (lastHatSkinSelected != null)
+        else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
-            if (BuySkin(lastHatSkinSelected))
-            {
-                PersistentData.IsHavingHatSkin(lastHatSkinSelected.skinName, true);
-                RefreshButton(true, false); 
-            }
+            PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
         }
+        else if (lastUpgradeSelected != null && BuyItem(lastUpgradeSelected))
+        {
+            PersistentData.IsHavingUpgrade(lastUpgradeSelected.itemName, true);
+        }
+
+        RefreshButton(true, false);
     }
 }

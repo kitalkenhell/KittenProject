@@ -16,7 +16,7 @@ public class HatSkinSelectionButton : MonoBehaviour
     {
         GameObject hat = Instantiate(Resources.Load(skin.hat, typeof(GameObject)) as GameObject);
         this.skin = skin;
-        skinName.text = skin.skinName;
+        skinName.text = skin.itemName;
         
         hat.transform.parent = spritePivot;
         hat.transform.ResetLocal();

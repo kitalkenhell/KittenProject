@@ -15,7 +15,7 @@ public class ParachuteSkinSelectionButton : MonoBehaviour
     {
         GameObject parachute = Instantiate(Resources.Load(skin.parachute, typeof(GameObject)) as GameObject);
         this.skin = skin;
-        skinName.text = skin.skinName;
+        skinName.text = skin.itemName;
         
         parachute.transform.parent = spritePivot;
         parachute.transform.ResetLocal();
