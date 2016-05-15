@@ -230,8 +230,7 @@ public class ChartboostManager : MonoBehaviour
 
     void didCompleteRewardedVideo(CBLocation location, int reward)
     {
-        AdManager.LastTimeVideoAdWatched = DateTime.Now;
-        PostOffice.PostVideoAdWatched();
+        AdManager.Instance.OnVideoAdWatched();
     }
 
     void didDisplayRewardedVideo(CBLocation location)

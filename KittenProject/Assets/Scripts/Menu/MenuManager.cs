@@ -33,9 +33,9 @@ public class MenuManager : MonoBehaviour
 
         firstLevel.IsLocked = false;
 
-        PersistentData.IsHavingBodySkin(firstBodySkin.skinName, true);
-        PersistentData.IsHavingHatSkin(firstHatSkin.skinName, true);
-        PersistentData.IsHavingParachuteSkin(firstParachuteSkin.skinName, true);
+        PersistentData.IsHavingBodySkin(firstBodySkin.itemName, true);
+        PersistentData.IsHavingHatSkin(firstHatSkin.itemName, true);
+        PersistentData.IsHavingParachuteSkin(firstParachuteSkin.itemName, true);
 
         AdManager.Instance.IncrementEventCounter();
         SocialManager.SignIn();

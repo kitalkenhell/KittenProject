@@ -20,6 +20,7 @@ public static class PostOffice
     public static event Action victory;
     public static event Action levelQuit;
     public static event Action videoAdWatched;
+    public static event Action amountOfCoinsChanged;
 
     public static void PostDebugMessage(object message)
     {
@@ -98,6 +99,14 @@ public static class PostOffice
         if (videoAdWatched != null)
         {
             videoAdWatched();
+        }
+    }
+
+    public static void PostAmountOfCoinsChanged()
+    {
+        if (amountOfCoinsChanged != null)
+        {
+            amountOfCoinsChanged();
         }
     }
 }

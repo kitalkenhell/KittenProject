@@ -115,4 +115,11 @@ public class AdManager : MonoBehaviour
 #endif
     }
 
+    public void OnVideoAdWatched()
+    {
+        AdManager.LastTimeVideoAdWatched = DateTime.Now;
+        PostOffice.PostVideoAdWatched();
+        PersistentData.Coins += videoAdReward;
+    }
+
 }

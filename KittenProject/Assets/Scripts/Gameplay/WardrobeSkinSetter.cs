@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WardrobeSkinSetter : MonoBehaviour
 {
-    public PlayerSkins skins;
+    public PlayerItems skins;
 
     public Transform bodyPivot;
     public Transform earPivot;
