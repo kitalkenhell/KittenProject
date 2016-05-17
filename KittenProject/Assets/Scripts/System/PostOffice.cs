@@ -9,6 +9,10 @@ public static class PostOffice
     public delegate void DebugMessage(string message);
     public delegate void CoinEvent(int amount);
     public delegate void PlayerHealthChangedEvent(int oldAmount,int currentAmount);
+    public delegate void PlayerUpgradeBought(PlayerUpgrade upgrade);
+    public delegate void PlayerHatSkinEvent(PlayerHatSkin skin);
+    public delegate void PlayerBodySkinEvent(PlayerBodySkin skin);
+    public delegate void PlayerParachuteSkinEvent(PlayerParachuteSkin skin);
 
     public static event DebugMessage debugMessage;
     public static event CoinEvent coinCollected;
@@ -21,6 +25,13 @@ public static class PostOffice
     public static event Action levelQuit;
     public static event Action videoAdWatched;
     public static event Action amountOfCoinsChanged;
+    public static event PlayerUpgradeBought playerUpgradeBought;
+    public static event PlayerHatSkinEvent playerHatSkinBought;
+    public static event PlayerHatSkinEvent playerHatSkinEquipped;
+    public static event PlayerBodySkinEvent playerBodySkinBought;
+    public static event PlayerBodySkinEvent playerBodySkinEquipped;
+    public static event PlayerParachuteSkinEvent playerParachuteSkinBought;
+    public static event PlayerParachuteSkinEvent playerParachuteSkinEquipped;
 
     public static void PostDebugMessage(object message)
     {
@@ -107,6 +118,62 @@ public static class PostOffice
         if (amountOfCoinsChanged != null)
         {
             amountOfCoinsChanged();
+        }
+    }
+
+    public static void PostPlayerUpgradeBought(PlayerUpgrade upgrade)
+    {
+        if (playerUpgradeBought != null)
+        {
+            playerUpgradeBought(upgrade);
+        }
+    }
+
+    public static void PostPlayerHatSkinBought(PlayerHatSkin skin)
+    {
+        if (playerHatSkinBought != null)
+        {
+            playerHatSkinBought(skin);
+        }
+    }
+
+    public static void PostPlayerHatSkinEquipped(PlayerHatSkin skin)
+    {
+        if (playerHatSkinEquipped!= null)
+        {
+            playerHatSkinEquipped(skin);
+        }
+    }
+
+    public static void PostPlayerBodySkinBought(PlayerBodySkin skin)
+    {
+        if (playerBodySkinBought != null)
+        {
+            playerBodySkinBought(skin);
+        }
+    }
+
+    public static void PostPlayerBodySkinEquipped(PlayerBodySkin skin)
+    {
+        if (playerBodySkinEquipped != null)
+        {
+            playerBodySkinEquipped(skin);
+        }
+    }
+
+    public static void PostPlayerParachuteSkinBought(PlayerParachuteSkin skin)
+    {
+        if (playerParachuteSkinBought != null)
+        {
+            playerParachuteSkinBought(skin);
+        }
+    }
+
+    public static void PostPlayerParachuteSkinEquipped(PlayerParachuteSkin skin)
+    {
+        if (playerParachuteSkinEquipped != null)
+        {
+            playerParachuteSkinEquipped(skin);
         }
     }
 }

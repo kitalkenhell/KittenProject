@@ -23,7 +23,36 @@ public class OutfitSkinSelectionButton : MonoBehaviour
 
     public Action<PlayerBodySkin> onButtonPressed;
 
+    public GameObject lockedIcon;
+    public GameObject equippedIcon;
+
     PlayerBodySkin skin;
+
+    void Awake()
+    {
+        PostOffice.playerBodySkinBought += OnSkinBought;
+        PostOffice.playerBodySkinEquipped += OnSkinEquipped;
+    }
+
+    void OnDestroy()
+    {
+        PostOffice.playerBodySkinBought -= OnSkinBought;
+        PostOffice.playerBodySkinEquipped -= OnSkinEquipped;
+    }
+
+    void OnSkinBought(PlayerBodySkin skin)
+    {
+        if (this.skin.itemName == skin.itemName)
+        {
+            lockedIcon.SetActive(false);
+        }
+    }
+
+    void OnSkinEquipped(PlayerBodySkin skin)
+    {
+        equippedIcon.SetActive(this.skin.itemName == skin.itemName);
+    }
+
 
     public void Refresh(PlayerBodySkin skin)
     {
@@ -43,6 +72,22 @@ public class OutfitSkinSelectionButton : MonoBehaviour
         InstantiateSkinPart(hatSkin.hat, hatPivot);
 
         Utils.ReplaceSpritesWithUiImages(gameObject);
+
+        if (GameSettings.PlayerBodySkin == skin.itemName)
+        {
+            lockedIcon.SetActive(false);
+            equippedIcon.SetActive(true);
+        }
+        else if (!PersistentData.IsHavingBodySkin(skin.itemName))
+        {
+            lockedIcon.SetActive(true);
+            equippedIcon.SetActive(false);
+        }
+        else
+        {
+            lockedIcon.SetActive(false);
+            equippedIcon.SetActive(false);
+        }
     }
 
     public void OnButtonPressed()

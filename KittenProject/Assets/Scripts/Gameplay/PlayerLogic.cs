@@ -66,7 +66,7 @@ public class PlayerLogic : MonoBehaviour
         victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
         Coins = 0;
-        Health = GameSettings.MaxPlayerHealth;
+        Health = PersistentData.MaxPlayerHealth;
 
         PostOffice.coinCollected += OnCoinCollected;
         PostOffice.heartCollected += OnHeartCollected;
@@ -104,7 +104,7 @@ public class PlayerLogic : MonoBehaviour
 
     void OnHeartCollected()
     {
-        if (Health < GameSettings.MaxPlayerHealth)
+        if (Health < PersistentData.MaxPlayerHealth)
         {
             PostOffice.PostPlayerHealthChanged(Health, ++Health);
         }

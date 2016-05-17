@@ -7,7 +7,7 @@ public static class PersistentData
     {
         get
         {
-            return PlayerPrefs.GetInt("Coins", 100);
+            return PlayerPrefs.GetInt("Coins", 500);
         }
 
         set
@@ -16,6 +16,20 @@ public static class PersistentData
             PlayerPrefs.Save();
 
             PostOffice.PostAmountOfCoinsChanged();
+        }
+    }
+
+    public static int MaxPlayerHealth
+    {
+        get
+        {
+            return PlayerPrefs.GetInt("GameSettingsMaxPlayerHealth", 3);
+        }
+
+        set
+        {
+            PlayerPrefs.SetInt("GameSettingsMaxPlayerHealth", value);
+            PlayerPrefs.Save();
         }
     }
 

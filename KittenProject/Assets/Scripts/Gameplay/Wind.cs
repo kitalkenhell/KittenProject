@@ -5,7 +5,6 @@ public class Wind : MonoBehaviour
 {
     public float speed;
     public float acceleration;
-    public Color gizmoColor;
 
     BoxCollider2D boxCollider;
 
@@ -37,18 +36,6 @@ public class Wind : MonoBehaviour
         if (player != null)
         {
             player.ExitWindZone();
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
-
-        if (boxCollider != null)
-        {
-            Gizmos.color = gizmoColor;
-            Gizmos.DrawCube(transform.position + boxCollider.offset.Vec3() , 
-                new Vector3(boxCollider.size.x * transform.lossyScale.x, boxCollider.size.y * transform.lossyScale.y, 1.0f));
         }
     }
 }

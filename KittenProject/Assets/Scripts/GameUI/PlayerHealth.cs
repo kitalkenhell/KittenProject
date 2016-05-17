@@ -12,9 +12,9 @@ public class PlayerHealth : MonoBehaviour
 
     void Start () 
 	{
-        icons = new HeartIcon[GameSettings.MaxPlayerHealth];
+        icons = new HeartIcon[PersistentData.MaxPlayerHealth];
 
-        for (int i = 0; i < GameSettings.MaxPlayerHealth; i++)
+        for (int i = 0; i < PersistentData.MaxPlayerHealth; i++)
         {
             RectTransform icon = Instantiate(HearthIcon) as RectTransform;
             icon.SetParent(transform);

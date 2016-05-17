@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e844b3ea1368f142870826741dd819e, type: 3}
+  m_Script: {fileID: 11500000, guid: 36aac4f0b1d86cf40a59c0ddb1bab308, type: 3}
   m_Name: MaxHealthI
   m_EditorClassIdentifier: 
   itemName: Max Health I
@@ -17,3 +17,5 @@ MonoBehaviour:
   wardrobePivotOffset: {x: 0, y: 12, z: 0}
   icon: PlayerItems/Upgrades/MaxHealthIIcon
   description: Increases max health from 3 to 4
+  baseUpgrade: {fileID: 0}
+  health: 4

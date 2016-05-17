@@ -3,25 +3,11 @@ using System.Collections;
 
 public static class GameSettings 
 {
-    public static int MaxPlayerHealth
-    {
-        get
-        {
-            return PlayerPrefs.GetInt("GameSettingsMaxPlayerHealth", 3);
-        }
-
-        set
-        {
-            PlayerPrefs.SetInt("GameSettingsMaxPlayerHealth", value);
-            PlayerPrefs.Save();
-        }
-    }
-
     public static string PlayerBodySkin
     {
         get
         {
-            return PlayerPrefs.GetString("GameSettingsPlayerBodySkin", "");
+            return PlayerPrefs.GetString("GameSettingsPlayerBodySkin", "Classic");
         }
 
         set
@@ -35,7 +21,7 @@ public static class GameSettings
     {
         get
         {
-            return PlayerPrefs.GetString("GameSettingsPlayerHatSkin", "");
+            return PlayerPrefs.GetString("GameSettingsPlayerHatSkin", "Classic");
         }
 
         set
@@ -49,7 +35,7 @@ public static class GameSettings
     {
         get
         {
-            return PlayerPrefs.GetString("GameSettingsPlayerParachuteSkin", "");
+            return PlayerPrefs.GetString("GameSettingsPlayerParachuteSkin", "Classic");
         }
 
         set

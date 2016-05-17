@@ -8,12 +8,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e844b3ea1368f142870826741dd819e, type: 3}
+  m_Script: {fileID: 11500000, guid: 36aac4f0b1d86cf40a59c0ddb1bab308, type: 3}
   m_Name: MaxHealthII
   m_EditorClassIdentifier: 
   itemName: Max Health II
-  price: 1000
+  price: 2500
   wardrobeScale: 1
   wardrobePivotOffset: {x: 0, y: 12, z: 0}
   icon: PlayerItems/Upgrades/MaxHealthIIcon
   description: Increases max health from 4 to 5
+  baseUpgrade: {fileID: 11400000, guid: c6e3da033264f5f49a6ec1aea1c34438, type: 2}
+  health: 5

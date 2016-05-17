@@ -259,16 +259,19 @@ public class Wardrobe : MonoBehaviour
         {
             GameSettings.PlayerBodySkin = lastOutfitSkinSelected.itemName;
             RefreshButton(true, true);
+            PostOffice.PostPlayerBodySkinEquipped(lastOutfitSkinSelected);
         }
         else if (lastParachuteSkinSelected != null)
         {
             GameSettings.PlayerParachuteSkin = lastParachuteSkinSelected.itemName;
             RefreshButton(true, true);
+            PostOffice.PostPlayerParachuteSkinEquipped(lastParachuteSkinSelected);
         }
         else if (lastHatSkinSelected != null)
         {
             GameSettings.PlayerHatSkin = lastHatSkinSelected.itemName;
             RefreshButton(true, true);
+            PostOffice.PostPlayerHatSkinEquipped(lastHatSkinSelected);
         }
     }
 
@@ -277,18 +280,24 @@ public class Wardrobe : MonoBehaviour
         if (lastOutfitSkinSelected != null && BuyItem(lastOutfitSkinSelected))
         {
             PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.itemName, true);
+            PostOffice.PostPlayerBodySkinBought(lastOutfitSkinSelected);
         }
         else if (lastParachuteSkinSelected != null && BuyItem(lastParachuteSkinSelected))
         {
             PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.itemName, true);
+            PostOffice.PostPlayerParachuteSkinBought(lastParachuteSkinSelected);
         }
         else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
             PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
+            PostOffice.PostPlayerHatSkinBought(lastHatSkinSelected);
         }
         else if (lastUpgradeSelected != null && BuyItem(lastUpgradeSelected))
         {
             PersistentData.IsHavingUpgrade(lastUpgradeSelected.itemName, true);
+            lastUpgradeSelected.OnBought();
+            PostOffice.PostPlayerUpgradeBought(lastUpgradeSelected);
+            lastUpgradeSelected = null;
         }
 
         RefreshButton(true, false);
