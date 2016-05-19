@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class ResetPrefs : MonoBehaviour 
+public class ResetPrefs : MonoBehaviour
 {
-    [MenuItem("Ulility/Reset PlayerPrefs")]
-    static void Sort()
+    [MenuItem("Utility/Reset PlayerPrefs")]
+    static void Reset()
     {
         PlayerPrefs.DeleteAll();
     }

@@ -9,7 +9,7 @@ using Spriter2UnityDX;
 public class SortObjects : MonoBehaviour 
 {
 
-    [MenuItem("Ulility/Sort Objects")]
+    [MenuItem("Utility/Sort Objects")]
     static void Sort()
     {
         const float offset = 1.0f;
