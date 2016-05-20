@@ -281,16 +281,19 @@ public class Wardrobe : MonoBehaviour
         {
             PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.itemName, true);
             PostOffice.PostPlayerBodySkinBought(lastOutfitSkinSelected);
+            RefreshButton(true, false);
         }
         else if (lastParachuteSkinSelected != null && BuyItem(lastParachuteSkinSelected))
         {
             PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.itemName, true);
             PostOffice.PostPlayerParachuteSkinBought(lastParachuteSkinSelected);
+            RefreshButton(true, false);
         }
         else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
             PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
             PostOffice.PostPlayerHatSkinBought(lastHatSkinSelected);
+            RefreshButton(true, false);
         }
         else if (lastUpgradeSelected != null && BuyItem(lastUpgradeSelected))
         {
@@ -298,8 +301,7 @@ public class Wardrobe : MonoBehaviour
             lastUpgradeSelected.OnBought();
             PostOffice.PostPlayerUpgradeBought(lastUpgradeSelected);
             lastUpgradeSelected = null;
+            RefreshButton(true, false);
         }
-
-        RefreshButton(true, false);
     }
 }
