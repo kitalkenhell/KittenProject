@@ -24,8 +24,43 @@ public class CurvePathEditor : Editor
         path.showPoints = EditorGUILayout.Toggle("Show Points", path.showPoints);
         path.showTangents = EditorGUILayout.Toggle("Show Tangents", path.showTangents);
         path.useTansformTool = EditorGUILayout.Toggle("Use transform handle", path.useTansformTool);
-        path.handleScale = EditorGUILayout.FloatField("Handle Scale", path.handleScale);
-        path.fill = EditorGUILayout.Toggle("Fill", path.fill);
+
+        if (!path.useTansformTool)
+        {
+            path.handleScale = EditorGUILayout.FloatField("Handle Scale", path.handleScale); 
+        }
+
+        EditorGUILayout.Space();
+
+        if (!path.extrude)
+        {
+            path.fill = EditorGUILayout.Toggle("Fill", path.fill);
+
+            if (path.fill)
+            {
+                path.createOutline = EditorGUILayout.Toggle("Create Outline", path.createOutline);
+
+                if (path.createOutline)
+                {
+                    path.extrudeScale = EditorGUILayout.FloatField("Outline scale", path.extrudeScale);
+                    path.worldSpaceUvs = EditorGUILayout.Toggle("Outline World space UVs", path.worldSpaceUvs);
+                    path.outlineOffset = EditorGUILayout.FloatField("Outline Z Offset", path.outlineOffset);
+                }
+            }
+        }
+
+        if (!path.fill)
+        {
+            path.extrude = EditorGUILayout.Toggle("Extrude", path.extrude);
+            if (path.extrude)
+            {
+                path.extrudeScale = EditorGUILayout.FloatField("Extrude scale", path.extrudeScale);
+                path.worldSpaceUvs = EditorGUILayout.Toggle("World space UVs", path.worldSpaceUvs);
+            }
+        }
+
+        EditorGUILayout.Space();
+
         path.loop = EditorGUILayout.Toggle("Loop", path.loop);
         if (path.fill)
         {
@@ -131,7 +166,7 @@ public class CurvePathEditor : Editor
                 }
             }
 
-            curve.Refresh();
+            curve.Refresh(); 
         }
 
         path.Refresh();

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class CurvePath : MonoBehaviour
 {
+    const float eps = 0.01f;
+
     public bool loop = false;
     public float length;
     public List<Vector3> points = new List<Vector3>();
@@ -54,15 +56,22 @@ public class CurvePath : MonoBehaviour
 
     public int quality = 20;
     public bool fill = false;
+    public bool createOutline = false;
+    public float outlineOffset = 0.001f;
+    public bool extrude = false;
+    public float extrudeScale = 1;
+    public bool worldSpaceUvs = false;
     public bool addCollider;
     public bool showPoints = true;
     public bool showTangents = true;
     public bool useTansformTool = false;
     public float handleScale = 1;
 
+    public CurvePath outlineChild;
+
     public List<Vector2> vertices2d = new List<Vector2>();
 
-    void Awake()
+    void Start()
     {
         MeshFilter meshFilter = GetComponent<MeshFilter>();
 
@@ -78,6 +87,11 @@ public class CurvePath : MonoBehaviour
     {
         length = 0;
 
+        if (curves.Count == 0)
+        {
+            return;
+        }
+
         if (curves.Count < minVertexCountToFill)
         {
             fill = loop = false;
@@ -85,7 +99,14 @@ public class CurvePath : MonoBehaviour
 
         if (loop)
         {
-            curves[curves.Count - 1].end = curves[0].begin;
+            if (fill || extrude)
+            {
+                curves[curves.Count - 1].end = curves[0].begin + (curves[0].begin - curves[0].path[1]) * eps;
+            }
+            else
+            {
+                curves[curves.Count - 1].end = curves[0].begin;
+            }
         }
 
         foreach (Curve curve in curves)
@@ -109,12 +130,24 @@ public class CurvePath : MonoBehaviour
         if (fill)
         {
             Fill();
+            extrude = false;
 
             if (addCollider)
             {
                 BuildCollider();
             }
 
+        }
+        else if (extrude)
+        {
+            Extrude();
+            fill = false;
+            createOutline = false;
+
+            if (addCollider)
+            {
+                BuildCollider();
+            }
         }
         else
         {
@@ -124,7 +157,11 @@ public class CurvePath : MonoBehaviour
             {
                 meshRenderer.enabled = false;
             }
+
+            createOutline = false;
         }
+
+        Outline();
     }
 
     public void Reset()
@@ -154,20 +191,189 @@ public class CurvePath : MonoBehaviour
         
         Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
 
-        triangles = new Triangulator(vertices2d.GetRange(0, vertices2d.Count - 1).ToArray()).Triangulate();
+        triangles = new Triangulator(vertices2d.GetRange(0, loop ? vertices2d.Count - 1 : vertices2d.Count).ToArray()).Triangulate();
 
         for (int i = 0; i < vertices.Length; i++)
         {
             vertices[i] = new Vector3(vertices2d[i].x, vertices2d[i].y, 0);
         }
 
+        mesh.Clear();
+
         mesh.vertices = vertices;
-        mesh.triangles = triangles;
         mesh.uv = uvs;
+        mesh.triangles = triangles;
         mesh.RecalculateNormals();
         mesh.RecalculateBounds();
 
         GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    public void Extrude()
+    {
+        CheckRenderer();
+
+        int[] triangles;
+        List<int> trianglesList = new List<int>();
+        Vector3[] vertices;
+        Vector2[] uvs;
+        Vector2 normal;
+        List<Vector2> path = new List<Vector2>(); 
+
+        Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
+
+        for (int i = 0; i < vertices2d.Count; ++i)
+        {
+            path.Add(vertices2d[i]);
+        }
+
+        normal = Utils.PerpendicularVector2(vertices2d[vertices2d.Count - 1] - vertices2d[vertices2d.Count - 2]).normalized * extrudeScale;
+
+        path.Add(vertices2d[vertices2d.Count - 1] + normal);
+
+        for (int i = vertices2d.Count - 2; i > 0 ; --i)
+        {
+            normal = Utils.PerpendicularVector2((vertices2d[i] - vertices2d[i - 1] + vertices2d[i+1] - vertices2d[i]) / 2.0f).normalized * extrudeScale;
+            path.Add(vertices2d[i] + normal);
+        }
+
+        normal = Utils.PerpendicularVector2(vertices2d[1] - vertices2d[0]).normalized * extrudeScale;
+        path.Add(vertices2d[0] + normal);
+
+        int n = path.Count - 1;
+
+
+        if (extrudeScale > 0) //different vertex index order 
+        {
+            for (int i = 0; i < vertices2d.Count - 1; ++i)
+            {
+                trianglesList.Add(n - i);
+                trianglesList.Add(i + 1);
+                trianglesList.Add(i);
+
+                trianglesList.Add(n - i - 1);
+                trianglesList.Add(i + 1);
+                trianglesList.Add(n - i);
+            }
+
+            if (loop)
+            {
+                trianglesList.Add(vertices2d.Count);
+                trianglesList.Add(path.Count - 1);
+                trianglesList.Add(0);
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < vertices2d.Count - 1; ++i)
+            {
+                trianglesList.Add(i);
+                trianglesList.Add(i + 1);
+                trianglesList.Add(n - i);
+
+                trianglesList.Add(n - i);
+                trianglesList.Add(i + 1);
+                trianglesList.Add(n - i - 1);
+            }
+
+            if (loop)
+            {
+                trianglesList.Add(path.Count - 1);
+                trianglesList.Add(0);
+                trianglesList.Add(vertices2d.Count);
+            }
+        }
+
+        triangles = trianglesList.ToArray();
+
+        vertices = new Vector3[path.Count];
+        uvs = new Vector2[path.Count];
+
+        for (int i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] = new Vector3(path[i].x, path[i].y, 0);
+        }
+
+        if (worldSpaceUvs)
+        {
+            for (int i = 0; i < uvs.Length; i++)
+            {
+                uvs[i] = new Vector3(path[i].x, path[i].y, 0);
+            }
+        }
+        else
+        {
+            float uBias = 0.1f;
+            float v = 0;
+
+            uvs[0] = Vector2.zero;
+
+            for (int i = 1; i < vertices2d.Count; ++i)
+            {
+                v += Vector2.Distance(path[i], path[i - 1]) / extrudeScale;
+                uvs[i] = new Vector2(uBias, v);
+            }
+
+            uvs[vertices2d.Count] = new Vector2(1, v);
+
+            int j = 1;
+            for (int i = vertices2d.Count + 1; i < path.Count; ++i)
+            {
+                v -= Vector2.Distance(path[j], path[j - 1]) / extrudeScale;
+                uvs[i] = new Vector2(1f - uBias, v);
+                ++j;
+            } 
+        }
+
+        mesh.Clear();
+
+        mesh.vertices = vertices;
+        mesh.uv = uvs;
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+
+        GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    public void Outline()
+    {
+        if (createOutline)
+        {
+            if (outlineChild == null)
+            {
+                outlineChild = (Instantiate(gameObject) as GameObject).GetComponent<CurvePath>();
+                
+                //Destroy all components but transform, curve path, mesh renderer, mesh filter
+            }
+
+            outlineChild.transform.parent = transform;
+            outlineChild.transform.localPosition = Vector3.forward * outlineOffset;
+            outlineChild.transform.localScale = Vector3.one;
+            outlineChild.transform.localRotation = Quaternion.identity;
+            outlineChild.name = gameObject.name + "Outline";
+
+            outlineChild.createOutline = false;
+            outlineChild.fill = false;
+            outlineChild.extrude = true;
+            outlineChild.worldSpaceUvs = worldSpaceUvs;
+            outlineChild.extrudeScale = extrudeScale;
+            outlineChild.loop = loop;
+            outlineChild.quality = quality;
+            outlineChild.points = points;
+            outlineChild.curves = curves;
+            outlineChild.showPoints = false;
+            outlineChild.showTangents = false;
+            outlineChild.useTansformTool = false;
+
+            outlineChild.Refresh();
+        }
+        else if (outlineChild != null)
+        {
+            DestroyImmediate(outlineChild.gameObject);
+            outlineChild = null;
+        }
     }
 
     public void BuildCollider()
