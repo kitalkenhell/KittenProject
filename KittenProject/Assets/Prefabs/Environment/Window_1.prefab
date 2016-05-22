@@ -82,7 +82,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1511.1464, y: 188.70593, z: -25}
+  m_LocalPosition: {x: 1804.7025, y: 152.70749, z: -25}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 424712}
@@ -140,13 +140,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 112276}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f53535b2200f124458fc58f0e0e95572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   loop: 1
-  length: 19.20101
+  length: 19.20307
   points:
   - {x: 0.80529785, y: -4.103302, z: 0.0000038146973}
   - {x: 1.1696167, y: 3.1865997, z: 0.0000038146973}
@@ -204,31 +204,37 @@ MonoBehaviour:
     - 0
     - 7.2203794
   - begin: {x: -0.8891907, y: -4.007187, z: 0.0000038146973}
-    end: {x: 0.80529785, y: -4.103302, z: 0.0000038146973}
+    end: {x: 0.80165464, y: -4.176201, z: 0.0000038146973}
     beginTangent: {x: 0, y: 0, z: 0}
     endTangent: {x: -0, y: -0, z: -0}
     quality: 1
-    lenght: 1.6972122
+    lenght: 1.6992714
     path:
     - {x: -0.8891907, y: -4.007187, z: 0.0000038146973}
-    - {x: 0.80529785, y: -4.103302, z: 0.0000038146973}
+    - {x: 0.80165464, y: -4.176201, z: 0.0000038146973}
     additiveDistance:
     - 0
-    - 1.6972122
+    - 1.6992714
   quality: 1
   fill: 1
+  createOutline: 0
+  outlineOffset: 0.001
+  extrude: 0
+  extrudeScale: 1
+  worldSpaceUvs: 0
   addCollider: 0
   showPoints: 1
   showTangents: 0
   useTansformTool: 0
   handleScale: 1
+  outlineChild: {fileID: 0}
   vertices2d:
   - {x: 0.80529785, y: -4.103302}
   - {x: 1.1696167, y: 3.1865997}
   - {x: 0.010345459, y: 4.1253853}
   - {x: -1.1670532, y: 3.2078438}
   - {x: -0.8891907, y: -4.007187}
-  - {x: 0.80529785, y: -4.103302}
+  - {x: 0.80165464, y: -4.176201}
 --- !u!212 &21212568
 SpriteRenderer:
   m_ObjectHideFlags: 1
