@@ -4,10 +4,23 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour 
 {
+    enum Views
+    {
+        mainScreen,
+        levelSelection,
+        wardrobe
+    }
+
     public LevelProperties firstLevel;
     public PlayerBodySkin firstBodySkin;
     public PlayerHatSkin firstHatSkin;
     public PlayerParachuteSkin firstParachuteSkin;
+
+    public CanvasGroup mainScreen;
+    public CanvasGroup levelSelection;
+    public CanvasGroup wardrobe;
+
+    public float viewTransitionDuration;
 
     public string LevelToLoad
     {
@@ -15,23 +28,18 @@ public class MenuManager : MonoBehaviour
         set;
     }
 
-    int playButtonPressedAnimHash;
-    int backButtonPressedAnimHash;
-    int startGameButtonPressedAnimHash;
-    int wardrobeButtonPressedAnimHash;
+    Animator animator;
 
-    Animator menuAnimator;
-
-	void Start() 
+    static Views currentView = Views.mainScreen;
+    CanvasGroup currentViewCanvas;
+    bool isTransitioning;
+    
+    void Start() 
 	{
-        playButtonPressedAnimHash = Animator.StringToHash("PlayButtonPressed");
-        backButtonPressedAnimHash = Animator.StringToHash("BackButtonPressed");
-        startGameButtonPressedAnimHash = Animator.StringToHash("StartGameButtonPressed");
-        wardrobeButtonPressedAnimHash = Animator.StringToHash("WardrobeButtonPressed");
-
-        menuAnimator = GetComponent<Animator>();
-
         firstLevel.IsLocked = false;
+        isTransitioning = false;
+
+        animator = GetComponent<Animator>();
 
         PersistentData.IsHavingBodySkin(firstBodySkin.itemName, true);
         PersistentData.IsHavingHatSkin(firstHatSkin.itemName, true);
@@ -39,19 +47,79 @@ public class MenuManager : MonoBehaviour
 
         AdManager.Instance.IncrementEventCounter();
         SocialManager.SignIn();
+
+        mainScreen.gameObject.SetActive(false);
+        levelSelection.gameObject.SetActive(false);
+        wardrobe.gameObject.SetActive(false);
+
+        mainScreen.alpha = levelSelection.alpha = wardrobe.alpha = 0;
+
+        if (currentView == Views.mainScreen)
+        {
+            currentViewCanvas = mainScreen;
+        }
+        else if (currentView == Views.wardrobe)
+        {
+            currentViewCanvas = wardrobe;
+        }
+        else
+        {
+            currentViewCanvas = levelSelection;
+        }
+
+        currentViewCanvas.alpha = 1;
+        currentViewCanvas.gameObject.SetActive(true);
+    }
+
+    IEnumerator ViewTransition(CanvasGroup nextViewCanvas, Views nextView)
+    {
+        if (!isTransitioning)
+        {
+            isTransitioning = true;
+
+            nextViewCanvas.gameObject.SetActive(true);
+            currentViewCanvas.alpha = 1;
+            nextViewCanvas.alpha = 0;
+
+            while (currentViewCanvas.alpha > 0)
+            {
+                currentViewCanvas.alpha = Mathf.MoveTowards(currentViewCanvas.alpha, 0, Time.deltaTime / viewTransitionDuration);
+                nextViewCanvas.alpha = 1.0f - currentViewCanvas.alpha;
+                yield return null;
+            }
+
+            currentViewCanvas.gameObject.SetActive(false);
+            currentViewCanvas.alpha = 0;
+            nextViewCanvas.alpha = 1;
+
+            currentView = nextView;
+            currentViewCanvas = nextViewCanvas;
+            isTransitioning = false; 
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isTransitioning)
         {
-            menuAnimator.SetTrigger(backButtonPressedAnimHash);
+            if (currentView == Views.mainScreen)
+            {
+                Application.Quit();
+            }
+            else if (currentView == Views.wardrobe)
+            {
+                StartCoroutine(ViewTransition(levelSelection, Views.levelSelection));
+            }
+            else
+            {
+                StartCoroutine(ViewTransition(mainScreen, Views.mainScreen));
+            }
         }
     }
 
     public void OnPlayButtonClicked()
     {
-        menuAnimator.SetTrigger(playButtonPressedAnimHash);
+        StartCoroutine(ViewTransition(levelSelection, Views.levelSelection));
     }
 
     public void OnAchievementsButtonClicked()
@@ -61,7 +129,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnWardrobeButtonClicked()
     {
-        menuAnimator.SetTrigger(wardrobeButtonPressedAnimHash);
+        StartCoroutine(ViewTransition(wardrobe, Views.wardrobe));
     }
 
     public void OnLeaderboardsButtonClicked()
@@ -71,7 +139,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnStartGameButtonClicked()
     {
-        menuAnimator.SetTrigger(startGameButtonPressedAnimHash);
+        animator.enabled = true;
     }
 
     public void LoadLevel()

@@ -6,6 +6,7 @@ public class Catapult : MonoBehaviour
     const float forceMultiplier = 5.0f;
 
     public float interval = 5.0f;
+    public float delay;
     public MinMax randomForceMultiplier;
     public MinMax rockAngularVelocity;
     public Transform rockPlacement;
@@ -30,11 +31,6 @@ public class Catapult : MonoBehaviour
         StartCoroutine(Fire());
     }
 
-    void Start()
-    {
-        animator.SetTrigger(fireAnimHash);
-    }
-
     void OnDisable()
     {
         StopAllCoroutines();
@@ -42,15 +38,18 @@ public class Catapult : MonoBehaviour
 
     IEnumerator Fire()
     {
+        yield return new WaitForSeconds(delay);
+
         while (true)
         {
-            yield return new WaitForSeconds(interval);
             animator.SetTrigger(fireAnimHash);
 
             if (fireSound != null)
             {
                 fireSound.Play();
             }
+
+            yield return new WaitForSeconds(interval);
         }
     }
 

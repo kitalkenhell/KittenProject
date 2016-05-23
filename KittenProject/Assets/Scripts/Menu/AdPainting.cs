@@ -16,7 +16,7 @@ public class AdPainting : MonoBehaviour
     {
         DateTime nextDogIsSad = AdManager.LastTimeVideoAdWatched.AddHours(sadDogIntervalHours);
 
-        if (nextDogIsSad < DateTime.Now && AdManager.Instance.IsVideoAdAvailable)
+        if (nextDogIsSad < DateTime.Now)
         {
             sadPainting.SetActive(true);
             happyPainting.SetActive(false);

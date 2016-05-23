@@ -84,7 +84,12 @@ public class AdManager : MonoBehaviour
 
         if (eventCounter >= eventsNeededToShowAd)
         {
-            if (chartboostManager.IsInterstitialLoaded())
+            if (UnityAdManager.IsInterstitialLoaded())
+            {
+                eventCounter = 0;
+                UnityAdManager.ShowInterstitial();
+            }
+            else if (chartboostManager.IsInterstitialLoaded())
             {
                 eventCounter = 0;
                 chartboostManager.ShowInterstitial();
@@ -101,13 +106,20 @@ public class AdManager : MonoBehaviour
     {
         get
         {
-            return chartboostManager.IsVideoAdLoaded();
+            return UnityAdManager.IsVideoAdLoaded() || chartboostManager.IsVideoAdLoaded();
         }
     }
 
     public void ShowVideoAd()
     {
-        chartboostManager.ShowVideoAd();
+        if (UnityAdManager.IsVideoAdLoaded())
+        {
+            UnityAdManager.ShowVideoAd();
+        }
+        else
+        {
+            chartboostManager.ShowVideoAd();
+        }
 
 #if UNITY_EDITOR
         AdManager.LastTimeVideoAdWatched = DateTime.Now;
