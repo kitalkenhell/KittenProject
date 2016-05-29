@@ -12,7 +12,7 @@
 		LOD 100
 
 		ZWrite Off
-		Blend SrcAlpha OneMinusSrcAlpha
+		Blend SrcAlpha dstAlpha
 
 		Pass
 		{
@@ -50,7 +50,7 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				const float fadeSize = 0.5;
+				const float fadeSize = 0.2;
 				const float timeScale = 3.5;
 
 				float time = _Time.y * timeScale + _TimeOffset;
@@ -61,7 +61,7 @@
 
 				//fixed4 col = tex2D(_MainTex, i.texcoord);
 				fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
-				col.a *= 0.2 * alphaFade;
+				col.a *= 0.25 * alphaFade;
 				return col;
 			}
 

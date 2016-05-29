@@ -73,14 +73,17 @@ public class CurvePath : MonoBehaviour
 
     void Start()
     {
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
-
-        if (meshFilter != null)
+        if (!Application.isPlaying)
         {
-            meshFilter.sharedMesh = new Mesh();
-        }
+            MeshFilter meshFilter = GetComponent<MeshFilter>();
 
-        Refresh();
+            if (meshFilter != null)
+            {
+                meshFilter.sharedMesh = new Mesh();
+            }
+
+            Refresh(); 
+        }
     }
 
     public void Refresh()

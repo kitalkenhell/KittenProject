@@ -7,12 +7,6 @@ public class AutoDestroy : MonoBehaviour
 
 	void Start ()
     {
-        StartCoroutine(DestroyObject());
+        Destroy(gameObject, delay);
 	}
-
-    IEnumerator DestroyObject()
-    {
-        yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
-    }
 }
