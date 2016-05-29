@@ -293,12 +293,15 @@ public class PlayerController : MonoBehaviour
 
             if (isTouchingWall && !isGrounded && jumpKeyReleased) //bouncing off the wall
             {
+                float wallJumpBias = 0.3f;
+
                 jumpKeyReleased = false;
                 isTouchingWall = false;
                 doubleJump = false;
                 disableControlsCountdown = wallBounceDuration;
                 jumpingCountdown = Mathf.NegativeInfinity;
                 runningMotrSpeed = wallDirection * wallBounceVelocity.x;
+                transform.SetPositionX(transform.position.x + wallDirection * wallJumpBias);
                 velocity = new Vector2(runningMotrSpeed, wallBounceVelocity.y);
                 animator.SetTrigger(doubleJumpAnimHash);
                 return;

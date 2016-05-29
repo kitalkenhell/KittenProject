@@ -55,7 +55,7 @@ public class Knight : MonoBehaviour
 
     void Update()
     {
-        const float wallRayDistance = 2.0f;
+        const float wallRayDistance = 6.0f;
 
         if (state == State.idle || state == State.attack)
         {

@@ -675,7 +675,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2175.1, y: 245.7, z: -32}
+  m_LocalPosition: {x: 1878.9, y: 228.7, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 456410}
@@ -9916,7 +9916,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   parachuteRandomRotationAmplitude: 5
-  parachuteRandomRotationFrequency: 1.5
+  parachuteRandomRotationFrequency: 1
   parachuteRandomRotationCurve:
     serializedVersion: 2
     m_Curve:
@@ -9925,19 +9925,14 @@ MonoBehaviour:
       inSlope: 0
       outSlope: 0
       tangentMode: 0
-    - time: 0.49902222
-      value: 0.4985333
-      inSlope: 2.0218613
-      outSlope: 2.0218613
-      tangentMode: 0
-    - time: 1
+    - time: 0.9977528
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 0.0000006111222
+      outSlope: 0.0000006111222
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   onewayMask:
     serializedVersion: 2
     m_Bits: 8704

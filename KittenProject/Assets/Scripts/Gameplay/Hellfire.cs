@@ -12,7 +12,6 @@ public class Hellfire : MonoBehaviour
     public float flamesXOffset;
     public float killYOffset;
     public float speed;
-    public PlayerLogic player;
     public Transform glow;
 
     LinkedList<GameObject> flames;
@@ -25,7 +24,7 @@ public class Hellfire : MonoBehaviour
             flames = new LinkedList<GameObject>();
 
             flames.AddFirst(flame);
-            flame.transform.SetPositionX(player.transform.position.x - flamesXOffset * flamesCount / 2.0f);
+            flame.transform.SetPositionX(CoreLevelObjects.player.transform.position.x - flamesXOffset * flamesCount / 2.0f);
 
             for (int i = 1; i < flamesCount; i++)
             {
@@ -35,7 +34,7 @@ public class Hellfire : MonoBehaviour
                 flames.AddLast(newFlame);
             }
 
-            lastSwapPosition = player.transform.position.x;
+            lastSwapPosition = CoreLevelObjects.player.transform.position.x;
         }
 
         PostOffice.victory += OnGameFinished;
@@ -48,7 +47,7 @@ public class Hellfire : MonoBehaviour
 	
 	void Update ()
     {
-	    if (lastSwapPosition + flamesXOffset < player.transform.position.x)
+	    if (lastSwapPosition + flamesXOffset < CoreLevelObjects.player.transform.position.x)
         {
             lastSwapPosition += flamesXOffset;
 
@@ -57,7 +56,7 @@ public class Hellfire : MonoBehaviour
             flames.RemoveFirst();
             flames.AddLast(flame);
         }
-        else if (lastSwapPosition - flamesXOffset > player.transform.position.x)
+        else if (lastSwapPosition - flamesXOffset > CoreLevelObjects.player.transform.position.x)
         {
             lastSwapPosition -= flamesXOffset;
 
@@ -69,11 +68,11 @@ public class Hellfire : MonoBehaviour
 
         transform.SetPositionY(transform.position.y + speed * Time.deltaTime);
 
-        glow.SetPositionX(player.transform.position.x);
+        glow.SetPositionX(CoreLevelObjects.player.transform.position.x);
 
-        if (player.transform.position.y < transform.position.y + killYOffset)
+        if (CoreLevelObjects.player.transform.position.y < transform.position.y + killYOffset)
         {
-            player.DeathByHellfire();
+            CoreLevelObjects.player.DeathByHellfire();
         }
     }
 
