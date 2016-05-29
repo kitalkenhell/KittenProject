@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
     bool isTouchingWall;
     float wallDirection;
 
+    bool onSlope;
+
     bool usingParachute;
     bool inWindZone;
     float windZoneAcceleration;
@@ -109,6 +111,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         isTouchingWall = false;
         doubleJump = false;
+        onSlope = false;
         notGroundedCountdown = 0;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
@@ -206,15 +209,19 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        if (disableControlsCountdown < 0)
+        if (disableControlsCountdown < 0 && !onSlope)
         {
             input = inputManager.horizontalAxis;
 
-            runningMotrSpeed += input * acceleration;
+            if (Mathf.Abs(runningMotrSpeed) < movementSpeed)
+            {
+                runningMotrSpeed += input * acceleration;
+                runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
+            }
 
             float sign = Mathf.Sign(runningMotrSpeed);
 
-            if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon)
+            if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon || Mathf.Abs(runningMotrSpeed) > movementSpeed)
             {
                 runningMotrSpeed -= friction * sign;
                 if (Mathf.Sign(runningMotrSpeed) != sign)
@@ -222,7 +229,6 @@ public class PlayerController : MonoBehaviour
                     runningMotrSpeed = 0;
                 }
             }
-            runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
         }
 
         if (Mathf.Abs(pushingForce) > Mathf.Epsilon && disableControlsCountdown < 0)
@@ -241,6 +247,8 @@ public class PlayerController : MonoBehaviour
 
     void Jumping()
     {
+        float gravity = Physics2D.gravity.y * Time.deltaTime;
+
         jumpingCountdown -= Time.deltaTime;
         ParachuteCountdown -= Time.deltaTime;
 
@@ -249,7 +257,15 @@ public class PlayerController : MonoBehaviour
             notGroundedCountdown += Time.deltaTime;
         }
 
-        velocity.y += Physics2D.gravity.y * Time.deltaTime;
+        if (!onSlope)
+        {
+            velocity.y += gravity;
+        }
+        else
+        {
+            runningMotrSpeed += gravity * HorizontalMovmentDirection.x;
+            velocity.y += gravity * HorizontalMovmentDirection.y;
+        }
 
         if (velocity.y > relativeJumpSpeed)
         {
@@ -443,6 +459,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit;
 
         isGrounded = false;
+        onSlope = false;
         isTouchingWall = false;
         movablePlatformVelocity = Vector2.zero;
         HorizontalMovmentDirection = Vector2.right;
@@ -507,11 +524,11 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
-
                 displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
                 HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
+                onSlope = Mathf.Abs(HorizontalMovmentDirection.y) > slopeLimit;
 
-                OnGrounded(Mathf.Abs(HorizontalMovmentDirection.y) < slopeLimit);
+                OnGrounded(!onSlope);
             }
         }
         else if (velocity.y > Mathf.Epsilon)
@@ -531,15 +548,7 @@ public class PlayerController : MonoBehaviour
         //HorizontalMovement
         if (HorizontalMovmentDirection.x > 0)
         {
-            if (Mathf.Abs(HorizontalMovmentDirection.y) < slopeLimit)
-            {
-                displacement = HorizontalMovmentDirection * Mathf.Sign(velocity.x) * Mathf.Abs(displacement.x);
-            }
-            else
-            {
-                HorizontalMovmentDirection *= Mathf.Sign(HorizontalMovmentDirection.y);
-                displacement = HorizontalMovmentDirection * velocity.y * Time.deltaTime;
-            }
+            displacement = HorizontalMovmentDirection * Mathf.Sign(velocity.x) * Mathf.Abs(displacement.x);
 
             hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, displacement, displacement.magnitude, obstaclesMask);
 
