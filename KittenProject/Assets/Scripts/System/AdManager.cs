@@ -5,7 +5,7 @@ using System;
 public class AdManager : MonoBehaviour
 {
     const string dateFormat = "yyyy-MM-dd HH:mm:ss";
-    const int eventsNeededToShowAd = 4;
+    const int eventsNeededToShowAd = 6;
     const int eventCounterStartingOffset = 1;
     const int videoAdReward = 150;
     const int FirstTimeVideoAdWatchedOffset = -11;
