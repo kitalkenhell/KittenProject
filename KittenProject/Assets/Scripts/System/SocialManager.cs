@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using UnityEngine.SocialPlatforms;
 
 public class SocialManager
 {
-
     static bool IsLoggedIn
     {
         get
@@ -27,7 +27,7 @@ public class SocialManager
     {
         if (result)
         {
-
+            PostMissingScores();
         }
     }
 
@@ -47,12 +47,19 @@ public class SocialManager
     {
         if (IsLoggedIn)
         {
-            Social.ReportScore((int) System.TimeSpan.FromSeconds(time).TotalMilliseconds, key, 
+            Social.ReportScore((int)System.TimeSpan.FromSeconds(time).TotalMilliseconds, key,
                 (bool success) =>
                 {
-
+                    if (!success)
+                    {
+                        PersistentData.LeaderboardScoresToPost = PersistentData.LeaderboardScoresToPost + ";" + key + "=" + time;
+                    }
                 }
             );
+        }
+        else
+        {
+            PersistentData.LeaderboardScoresToPost = PersistentData.LeaderboardScoresToPost + ";" + key + "=" + time;
         }
     }
 
@@ -77,6 +84,29 @@ public class SocialManager
         else
         {
             SignIn();
+        }
+    }
+
+    static void PostMissingScores()
+    {
+        string[] allScores = PersistentData.LeaderboardScoresToPost.Split(new Char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        PersistentData.LeaderboardScoresToPost = "";
+
+        foreach (var score in allScores)
+        {
+            try
+            {
+                int keyIndex = 0;
+                int timeIndex = 1;
+
+                string[] keyAndValue = score.Split(new Char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
+
+                PostLevelTimeToLeaderboard(keyAndValue[keyIndex], float.Parse(keyAndValue[timeIndex]));
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
         }
     }
 }

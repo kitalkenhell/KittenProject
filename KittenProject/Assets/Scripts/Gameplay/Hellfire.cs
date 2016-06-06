@@ -16,6 +16,7 @@ public class Hellfire : MonoBehaviour
 
     LinkedList<GameObject> flames;
     float lastSwapPosition;
+    bool levelStarted = false;
 
 	void Start () 
     {
@@ -38,11 +39,13 @@ public class Hellfire : MonoBehaviour
         }
 
         PostOffice.victory += OnGameFinished;
+        PostOffice.levelStopwatchStarted += OnLevelStarted;
     }
 
     void OnDestroy()
     {
         PostOffice.victory -= OnGameFinished;
+        PostOffice.levelStopwatchStarted -= OnLevelStarted;
     }
 	
 	void Update ()
@@ -66,7 +69,10 @@ public class Hellfire : MonoBehaviour
             flames.AddFirst(flame);
         }
 
-        transform.SetPositionY(transform.position.y + speed * Time.deltaTime);
+        if (levelStarted)
+        {
+            transform.SetPositionY(transform.position.y + speed * Time.deltaTime); 
+        }
 
         glow.SetPositionX(CoreLevelObjects.player.transform.position.x);
 
@@ -79,5 +85,10 @@ public class Hellfire : MonoBehaviour
     void OnGameFinished()
     {
         speed = speedAfterGameFinished;
+    }
+
+    void OnLevelStarted()
+    {
+        levelStarted = true;
     }
 }

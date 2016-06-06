@@ -21,6 +21,7 @@ public static class PostOffice
     public static event Action goldenKittenCollected;
     public static event Action playedDied;
     public static event PlayerHealthChangedEvent PlayerHealthChanged;
+    public static event Action levelStopwatchStarted;
     public static event Action victory;
     public static event Action levelQuit;
     public static event Action videoAdWatched;
@@ -86,6 +87,14 @@ public static class PostOffice
         if (playedDied != null)
         {
             playedDied();
+        }
+    }
+
+    public static void PostLevelStopwatchStarted()
+    {
+        if (levelStopwatchStarted != null)
+        {
+            levelStopwatchStarted();
         }
     }
 

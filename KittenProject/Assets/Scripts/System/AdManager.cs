@@ -116,9 +116,13 @@ public class AdManager : MonoBehaviour
         {
             UnityAdManager.ShowVideoAd();
         }
-        else
+        else if (chartboostManager.IsVideoAdLoaded())
         {
             chartboostManager.ShowVideoAd();
+        }
+        else
+        {
+            Android.ShowToast(Strings.Ad.noAd);
         }
 
 #if UNITY_EDITOR

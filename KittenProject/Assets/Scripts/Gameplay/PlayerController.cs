@@ -263,8 +263,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            runningMotrSpeed += gravity * HorizontalMovmentDirection.x;
-            velocity.y += gravity * HorizontalMovmentDirection.y;
+            runningMotrSpeed += gravity * HorizontalMovmentDirection.y;
+            velocity.y += gravity * Mathf.Abs(HorizontalMovmentDirection.x);
         }
 
         if (velocity.y > relativeJumpSpeed)
@@ -434,7 +434,7 @@ public class PlayerController : MonoBehaviour
     {
         if (resetVelocityY)
         {
-            velocity.y = 0; 
+            velocity.y = 0;
         }
 
         isGrounded = true;
@@ -454,6 +454,7 @@ public class PlayerController : MonoBehaviour
         const float halfColliderHeight = colliderHeight / 2.0f;
         Vector2 boxSize = new Vector2(boxCollider.size.x, colliderHeight);
         Vector2 boxOrigin;
+        bool wasGrounded = isGrounded;
 
         Vector2 displacement = velocity * Time.deltaTime;
         RaycastHit2D hit;
@@ -563,6 +564,12 @@ public class PlayerController : MonoBehaviour
             {
                 transform.SetPositionXY(transform.position.x + displacement.x, transform.position.y + displacement.y);
             }
+        }
+
+        if (onSlope && isGrounded && !wasGrounded) //push player when falling on a steep slope 
+        {
+            runningMotrSpeed += velocity.y * HorizontalMovmentDirection.y;
+            velocity.y *= Mathf.Abs(HorizontalMovmentDirection.x);
         }
     }
 

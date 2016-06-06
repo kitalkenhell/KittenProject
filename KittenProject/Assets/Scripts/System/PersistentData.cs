@@ -33,6 +33,18 @@ public static class PersistentData
         }
     }
 
+    public static string LeaderboardScoresToPost
+    {
+        get
+        {
+            return PlayerPrefs.GetString("LeaderboardScoresToPost", "");
+        }
+        set
+        {
+            PlayerPrefs.SetString("LeaderboardScoresToPost", value);
+        }
+    }
+
     public static bool IsHavingBodySkin(string name)
     {
         return PlayerPrefs.HasKey("IsHavingBodySkin" + name);

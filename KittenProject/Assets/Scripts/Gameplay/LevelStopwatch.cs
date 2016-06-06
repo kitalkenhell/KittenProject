@@ -39,6 +39,7 @@ public class LevelStopwatch : MonoBehaviour
         if (start && stopped)
         {
             startTime = Time.timeSinceLevelLoad;
+            PostOffice.PostLevelStopwatchStarted();
             stopped = false;
         }
         else if (!start && !stopped)

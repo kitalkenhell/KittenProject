@@ -18,6 +18,11 @@ public class PlayerCamera : MonoBehaviour
         animator = GetComponent<Animator>();
 
         PostOffice.victory += OnVictory;
+
+#if UNITY_EDITOR
+        Camera camera = GetComponent<Camera>();
+        camera.clearFlags = CameraClearFlags.Color;
+#endif
     }
 
     void OnDestroy()

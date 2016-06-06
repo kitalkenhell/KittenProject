@@ -36,7 +36,8 @@ public class MenuManager : MonoBehaviour
     
     void Start() 
 	{
-        firstLevel.IsLocked = false;
+        LevelProperties level = firstLevel;
+
         isTransitioning = false;
 
         animator = GetComponent<Animator>();
@@ -69,6 +70,18 @@ public class MenuManager : MonoBehaviour
 
         currentViewCanvas.alpha = 1;
         currentViewCanvas.gameObject.SetActive(true);
+
+        firstLevel.IsLocked = false;
+
+        while (level.nextLevel != null && level.nextLevel != firstLevel && level != level.nextLevel)
+        {
+            if (level.IsCompleted)
+            {
+                level.nextLevel.IsLocked = false;
+            }
+
+            level = level.nextLevel;
+        }
     }
 
     IEnumerator ViewTransition(CanvasGroup nextViewCanvas, Views nextView)
