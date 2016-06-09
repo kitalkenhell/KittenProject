@@ -525,8 +525,11 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
+                float minHorizontalDirectionX = 0.1f;
+
                 displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
                 HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
+                HorizontalMovmentDirection.x = Mathf.Max(Mathf.Abs(HorizontalMovmentDirection.x), minHorizontalDirectionX) * Mathf.Sign(HorizontalMovmentDirection.x);
                 onSlope = Mathf.Abs(HorizontalMovmentDirection.y) > slopeLimit;
 
                 OnGrounded(!onSlope);
@@ -546,7 +549,6 @@ public class PlayerController : MonoBehaviour
 
         transform.SetPositionY(transform.position.y + displacement.y);
 
-        //HorizontalMovement
         if (HorizontalMovmentDirection.x > 0)
         {
             displacement = HorizontalMovmentDirection * Mathf.Sign(velocity.x) * Mathf.Abs(displacement.x);
@@ -557,7 +559,7 @@ public class PlayerController : MonoBehaviour
             {
                 wallDirection = -Mathf.Sign(velocity.x);
                 isTouchingWall = true;
-                velocity.x = 0;
+                velocity.x = runningMotrSpeed = 0;
                 transform.SetPositionXY(transform.position.XY() + displacement.normalized * (hit.distance - bias));
             }
             else
