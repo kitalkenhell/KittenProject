@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     public float acceleration;
     public float friction;
-    public float slopeLimit;
+    public MinMax slopeLimit;
     public float jumpSpeedMin;
     public float jumpSpeedMax;
     public float jumpDuration;
@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     bool doubleJump;
 
     bool isTouchingWall;
+    Vector2 wallNormal;
     float wallDirection;
 
     bool onSlope;
@@ -164,7 +165,6 @@ public class PlayerController : MonoBehaviour
 
     void UpdateSprites()
     {
-
         if (Mathf.Abs(velocity.x) > Mathf.Epsilon)
         {
             Vector3 scale = transform.localScale;
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
         {
             input = inputManager.horizontalAxis;
 
-            if (Mathf.Abs(runningMotrSpeed) < movementSpeed)
+            if (Mathf.Abs(runningMotrSpeed) < movementSpeed && !onSlope)
             {
                 runningMotrSpeed += input * acceleration;
                 runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
@@ -247,6 +247,8 @@ public class PlayerController : MonoBehaviour
 
     void Jumping()
     {
+        const float maxWallNormal = 0.25f;
+
         float gravity = Physics2D.gravity.y * Time.deltaTime;
 
         jumpingCountdown -= Time.deltaTime;
@@ -307,9 +309,9 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-            if (isTouchingWall && !isGrounded && jumpKeyReleased) //bouncing off the wall
+            if (isTouchingWall && !isGrounded && jumpKeyReleased && Mathf.Abs(wallNormal.y) < maxWallNormal) //bouncing off the wall
             {
-                float wallJumpBias = 0.3f;
+                const float wallJumpBias = 0.3f;
 
                 jumpKeyReleased = false;
                 isTouchingWall = false;
@@ -333,7 +335,7 @@ public class PlayerController : MonoBehaviour
                     doubleJump = true;
                     animator.SetTrigger(doubleJumpAnimHash);
                 }
-                else if (!usingParachute && velocity.y < 0)
+                else if (!onSlope && !usingParachute && velocity.y < 0)
                 {
                     doubleJump = true;
                     usingParachute = true;
@@ -445,16 +447,14 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-        const float bias = 0.25f;
-        const float headBias = 0.6f;
+        const float bias = 0.2f;
         const float minGravityRayLenght = 0.3f;
 
         //vertical box cast collider
-        const float colliderHeight = 0.6f;
-        const float halfColliderHeight = colliderHeight / 2.0f;
-        Vector2 boxSize = new Vector2(boxCollider.size.x, colliderHeight);
+        Vector2 verticalCastBoxSize = new Vector2(boxCollider.size.x, bias);
         Vector2 boxOrigin;
-        bool wasGrounded = isGrounded;
+
+        bool wasOnSlope = onSlope;
 
         Vector2 displacement = velocity * Time.deltaTime;
         RaycastHit2D hit;
@@ -483,8 +483,8 @@ public class PlayerController : MonoBehaviour
         {
             float rayLength = (velocity.y < 0) ? Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght) : minGravityRayLenght;
 
-            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + halfColliderHeight);
-            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + bias / 2.0f);
+            hit = Physics2D.BoxCast(boxOrigin, verticalCastBoxSize, 0, Vector2.down, rayLength, obstaclesMask | onewayMask);
 
             if (hit.collider != null && hit.collider.gameObject.layer == Layers.MovablePlatform)
             {
@@ -520,58 +520,83 @@ public class PlayerController : MonoBehaviour
         //Vertical Movement
         if (velocity.y < Mathf.Epsilon && movablePlatform == null)
         {
-            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + halfColliderHeight);
-            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.min.y + bias / 2.0f);
+            hit = Physics2D.BoxCast(boxOrigin, verticalCastBoxSize, 0, Vector2.down, Mathf.Max(Mathf.Abs(displacement.y), minGravityRayLenght), obstaclesMask | onewayMask);
 
             if (hit.collider != null)
             {
-                float minHorizontalDirectionX = 0.1f;
+                const float minHorizontalDirectionX = 0.3f;
 
-                displacement.y = hit.point.y - boxCollider.bounds.min.y + bias;
+                displacement.y = -(hit.distance - bias);
                 HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
                 HorizontalMovmentDirection.x = Mathf.Max(Mathf.Abs(HorizontalMovmentDirection.x), minHorizontalDirectionX) * Mathf.Sign(HorizontalMovmentDirection.x);
-                onSlope = Mathf.Abs(HorizontalMovmentDirection.y) > slopeLimit;
+                onSlope = Mathf.Abs(HorizontalMovmentDirection.y) > slopeLimit.min;
 
-                OnGrounded(!onSlope);
+                if (Mathf.Abs(HorizontalMovmentDirection.y) < slopeLimit.max)
+                {
+                    OnGrounded(!onSlope); 
+                }
             }
         }
         else if (velocity.y > Mathf.Epsilon)
         {
-            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - halfColliderHeight);
+            boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - bias / 2.0f);
 
-            hit = Physics2D.BoxCast(boxOrigin, boxSize, 0, Vector2.up, Mathf.Max(Mathf.Abs(displacement.y), headBias), obstaclesMask);
+            hit = Physics2D.BoxCast(boxOrigin, verticalCastBoxSize, 0, Vector2.up, Mathf.Abs(displacement.y), obstaclesMask);
             if (hit.collider != null)
             {
-                displacement.y = hit.point.y - boxCollider.bounds.max.y - headBias;
+                displacement.y = (hit.distance - bias);
                 velocity.y = 0;
             }
         }
 
         transform.SetPositionY(transform.position.y + displacement.y);
 
+        //Horizontal movement
         if (HorizontalMovmentDirection.x > 0)
         {
             displacement = HorizontalMovmentDirection * Mathf.Sign(velocity.x) * Mathf.Abs(displacement.x);
+            Vector2 direction = displacement.normalized;
 
-            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, displacement, displacement.magnitude, obstaclesMask);
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.size, 0, direction, displacement.magnitude, obstaclesMask);
 
             if (hit.collider != null)
             {
-                wallDirection = -Mathf.Sign(velocity.x);
-                isTouchingWall = true;
-                velocity.x = runningMotrSpeed = 0;
-                transform.SetPositionXY(transform.position.XY() + displacement.normalized * (hit.distance - bias));
+                if (Mathf.Sign(hit.normal.x) != Mathf.Sign(displacement.x) && Mathf.Abs(hit.normal.x) > slopeLimit.min)
+                {
+                    wallNormal = hit.normal;
+                    wallDirection = -Mathf.Sign(velocity.x);
+                    velocity.x = runningMotrSpeed = 0; 
+                }
+
+                transform.SetPositionXY(transform.position.XY() + direction * (hit.distance - bias));
             }
             else
             {
-                transform.SetPositionXY(transform.position.x + displacement.x, transform.position.y + displacement.y);
+                transform.SetPositionXY(transform.position.XY() + displacement);
             }
         }
 
-        if (onSlope && isGrounded && !wasGrounded) //push player when falling on a steep slope 
+        //Check if player is touching the wall
+        if (!isGrounded && !usingParachute)
         {
-            runningMotrSpeed += velocity.y * HorizontalMovmentDirection.y;
-            velocity.y *= Mathf.Abs(HorizontalMovmentDirection.x);
+            const float colliderIncreaseFactor = 1.2f;
+
+            Vector2 boxSize = new Vector2(boxCollider.size.x * colliderIncreaseFactor, boxCollider.size.y);
+
+            hit = Physics2D.BoxCast(boxCollider.bounds.center, boxSize, 0, Vector2.right, 0, obstaclesMask);
+
+            if (hit.collider != null)
+            {
+                isTouchingWall = true;
+            }
+        }
+
+        //push player when falling on a steep slope 
+        if (onSlope && !wasOnSlope) 
+        {
+            runningMotrSpeed += Mathf.Abs(velocity.y * HorizontalMovmentDirection.x) * -Mathf.Sign(HorizontalMovmentDirection.y);
+            velocity.y *= Mathf.Abs(HorizontalMovmentDirection.y);
         }
     }
 
@@ -585,7 +610,7 @@ public class PlayerController : MonoBehaviour
         if (hit.collider != null)
         {
             transform.SetPositionXY(preUpdatePosition);
-            Push(Vector2.left * wallDirection * pushingForce, true, false, disableControlsDuration, false); 
+            Push(Vector2.left * wallDirection * pushingForce, true, false, disableControlsDuration, false);
         }
     }
 }
