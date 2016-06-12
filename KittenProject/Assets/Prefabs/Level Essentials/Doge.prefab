@@ -159,6 +159,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &131162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 409982}
+  m_Layer: 0
+  m_Name: SpeechBalloonPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &131278
 GameObject:
   m_ObjectHideFlags: 1
@@ -588,6 +603,19 @@ Transform:
   - {fileID: 478062}
   m_Father: {fileID: 418806}
   m_RootOrder: 0
+--- !u!4 &409982
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131162}
+  m_LocalRotation: {x: 0, y: 0, z: -0.005847752, w: 0.99998295}
+  m_LocalPosition: {x: 1.5, y: 3, z: 32}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.6701}
+  m_Children: []
+  m_Father: {fileID: 430878}
+  m_RootOrder: 2
 --- !u!4 &413884
 Transform:
   m_ObjectHideFlags: 1
@@ -688,12 +716,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 108058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1775, y: 174, z: -32}
+  m_LocalPosition: {x: 1644.9, y: 106, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 456410}
   - {fileID: 481406}
+  - {fileID: 409982}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &432742

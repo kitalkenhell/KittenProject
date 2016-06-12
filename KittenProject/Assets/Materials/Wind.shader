@@ -61,7 +61,7 @@
 
 				//fixed4 col = tex2D(_MainTex, i.texcoord);
 				fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
-				col.a *= 0.25 * alphaFade;
+				col.a *= 0.2 * alphaFade;
 				return col;
 			}
 
