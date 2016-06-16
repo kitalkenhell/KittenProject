@@ -82,8 +82,7 @@ Shader "Custom/BlackAndWhiteSprite"
 				c.rgb *= c.a;
 				float luminance = c.b = (c.r + c.g + c.b) / 3.0f;
 
-
-				c.r = c.g = c.b = luminance * 0.8f;
+				c.r = c.g = c.b = luminance;
 				return c;
 			}
 		ENDCG
