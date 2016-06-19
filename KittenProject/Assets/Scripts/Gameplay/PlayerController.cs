@@ -62,7 +62,6 @@ public class PlayerController : MonoBehaviour
     Vector2 HorizontalMovmentDirection;
     float runningMotrSpeed;
 
-    Vector2 movablePlatformVelocity;
     MoveAlongWaypoints movablePlatform;
     Collider2D movablePlatformCollider;
 
@@ -245,19 +244,9 @@ public class PlayerController : MonoBehaviour
         velocity.x = runningMotrSpeed + pushingForce;
     }
 
-    void Jumping()
+    void ApplyGravity()
     {
-        const float maxWallNormal = 0.25f;
-
         float gravity = Physics2D.gravity.y * Time.deltaTime;
-
-        jumpingCountdown -= Time.deltaTime;
-        ParachuteCountdown -= Time.deltaTime;
-
-        if (!IsGrounded)
-        {
-            notGroundedCountdown += Time.deltaTime;
-        }
 
         if (!onSlope)
         {
@@ -268,6 +257,21 @@ public class PlayerController : MonoBehaviour
             runningMotrSpeed += gravity * HorizontalMovmentDirection.y;
             velocity.y += gravity * Mathf.Abs(HorizontalMovmentDirection.x);
         }
+    }
+
+    void Jumping()
+    {
+        const float maxWallNormal = 0.25f;
+
+        jumpingCountdown -= Time.deltaTime;
+        ParachuteCountdown -= Time.deltaTime;
+
+        if (!IsGrounded)
+        {
+            notGroundedCountdown += Time.deltaTime;
+        }
+
+        ApplyGravity();
 
         if (velocity.y > relativeJumpSpeed)
         {
@@ -291,9 +295,16 @@ public class PlayerController : MonoBehaviour
                     if (isGrounded || notGroundedCountdown < notGroundedDelay && velocity.y < 0)
                     {
                         jumpSpeed = jumpSpeedMin + Mathf.Clamp01(Mathf.Abs(velocity.x) / movementSpeed) * (jumpSpeedMax - jumpSpeedMin);
+                        relativeJumpSpeed = jumpSpeed;
 
                         jumpKeyReleased = false;
-                        relativeJumpSpeed = jumpSpeed + movablePlatformVelocity.y * movablePlatformJumpSpeedInfluence;
+
+                        if (movablePlatform != null)
+                        {
+                            relativeJumpSpeed = jumpSpeed + movablePlatform.Velocity.y * movablePlatformJumpSpeedInfluence;
+                            //Debug.Log(relativeJumpSpeed + " = " + jumpSpeed + "  +  " + movablePlatform.Velocity.y + "   *   " + movablePlatformJumpSpeedInfluence);
+                        }
+
                         isGrounded = false;
                         doubleJump = false;
                         velocity.y = relativeJumpSpeed;
@@ -462,7 +473,6 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         onSlope = false;
         isTouchingWall = false;
-        movablePlatformVelocity = Vector2.zero;
         HorizontalMovmentDirection = Vector2.right;
 
         //Movable Platform
@@ -477,7 +487,6 @@ public class PlayerController : MonoBehaviour
             OnGrounded();
             displacement.y = 0;
             transform.SetPositionXY(transform.position.x + movablePlatform.LastFrameDisplacement.x, transform.position.y + movablePlatform.LastFrameDisplacement.y);
-            movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
         }
         else
         {
@@ -489,22 +498,26 @@ public class PlayerController : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject.layer == Layers.MovablePlatform)
             {
                 movablePlatform = hit.collider.GetComponent<MoveAlongWaypoints>();
-                movablePlatformVelocity = movablePlatform.LastFrameDisplacement / Time.deltaTime;
                 movablePlatformCollider = hit.collider.GetComponent<Collider2D>();
 
-                if (movablePlatformVelocity.y > velocity.y)
+                if (movablePlatform.Velocity.y > velocity.y)
                 {
                     Vector2 size = new Vector2(boxCollider.size.x, bias);
                     boxOrigin = new Vector2(boxCollider.bounds.center.x, boxCollider.bounds.max.y - bias);
 
+                    displacement.y = 0;
+
                     hit = Physics2D.BoxCast(boxOrigin, size, 0, Vector2.down, Mathf.Infinity, movablePlatformMask);
 
-                    OnGrounded();
-                    displacement.y = 0;
-                    HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
+                    if (hit.collider != null)
+                    {
+                        OnGrounded();
 
-                    transform.SetPositionX(transform.position.x + movablePlatform.LastFrameDisplacement.x);
-                    transform.SetPositionY(transform.position.y + hit.point.y - boxCollider.bounds.min.y + bias);
+                        HorizontalMovmentDirection = Vector3.Cross(hit.normal, Vector3.forward).normalized;
+
+                        transform.SetPositionX(transform.position.x + movablePlatform.LastFrameDisplacement.x);
+                        transform.SetPositionY(transform.position.y + hit.point.y - boxCollider.bounds.min.y + bias); 
+                    }
                 }
                 else
                 {

@@ -5,12 +5,29 @@ public class CutsceneChatting : MonoBehaviour
 {
     public SpeechBalloon[] speechBalloons;
 
-    bool inProgress;
+    public bool InProgress
+    {
+        private set;
+        get;
+    }
+
+    public bool HasEnded
+    {
+        private set;
+        get;
+    }
+
+    void Awake()
+    {
+        InProgress = HasEnded = false;
+    }
 
     public void Chat()
     {
-        if (!inProgress)
+        if (!InProgress)
         {
+            HasEnded = false;
+            InProgress = true;
             StartCoroutine(Chatting());
         }
     }
@@ -42,6 +59,8 @@ public class CutsceneChatting : MonoBehaviour
                 yield return null; 
             }
         }
+
+        HasEnded = true;
     }
 
     bool Clicked()

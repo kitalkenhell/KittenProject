@@ -14,24 +14,27 @@ public class MoveAlongWaypoints : MonoBehaviour
     public Waypoint[] waypoints;
     public bool looping;
 
+    public Vector2 Velocity
+    {
+        private set;
+        get;
+    }
+
+    public Vector2 LastFrameDisplacement
+    {
+        private set;
+        get;
+    }
+
     Rigidbody2D body;
 
     int currentWaypoint;
     bool moveForward;
     float speed;
-    Vector2 velocity;
+
     States state;
     Vector2 lastFramePosition;
     Vector2 displacement;
-    Vector2 lastFrameDisplacement;
-
-    public Vector2 LastFrameDisplacement
-    {
-        get
-        {
-            return lastFrameDisplacement;
-        }
-    }
 
 	public void Start () 
     {
@@ -42,7 +45,7 @@ public class MoveAlongWaypoints : MonoBehaviour
         lastFramePosition = transform.position;
         moveForward = true;
         speed = 0;
-        velocity = Vector2.zero;
+        Velocity = Vector2.zero;
         state = States.move;
 
         if (waypoints[currentWaypoint].waitTime > 0)
@@ -53,7 +56,7 @@ public class MoveAlongWaypoints : MonoBehaviour
 
     public void Update() 
     {
-        lastFrameDisplacement = transform.position.XY() - lastFramePosition;
+        LastFrameDisplacement = transform.position.XY() - lastFramePosition;
         lastFramePosition = transform.position;
 
         Waypoint current = waypoints[currentWaypoint];
@@ -86,8 +89,8 @@ public class MoveAlongWaypoints : MonoBehaviour
             }
         }
 
-        velocity = (current.transform.position.XY() - transform.position.XY()).normalized * speed;
-        displacement = velocity * Time.deltaTime;
+        Velocity = (current.transform.position.XY() - transform.position.XY()).normalized * speed;
+        displacement = Velocity * Time.deltaTime;
 
         if (displacement.magnitude > distance)
         {
@@ -141,6 +144,7 @@ public class MoveAlongWaypoints : MonoBehaviour
     public IEnumerator Wait(float time)
     {
         displacement = Vector3.zero;
+        Velocity = Vector2.zero;
         body.velocity = Vector2.zero;
         speed = 0;
         state = States.wait;
