@@ -4,7 +4,7 @@ using System.Collections;
 public class ControlsButtonsScale : MonoBehaviour
 {
     const float minScale = 0.5f;
-    const float maxScale = 1.5f;
+    const float maxScale = 2.0f;
 
     public RectTransform moveLeftButton;
     public RectTransform moveLeftButtonImage;
@@ -14,6 +14,7 @@ public class ControlsButtonsScale : MonoBehaviour
     public RectTransform jumpButtonImage;
 
     float baseMoveLeftButtonWidth;
+    float baseMoveRightButtonWidth;
     float baseMoveRightButtonImagePositionX;
     float baseCommonButtonHeight;
     float baseCommonImageHeight;
@@ -24,6 +25,7 @@ public class ControlsButtonsScale : MonoBehaviour
     {
         baseCommonButtonHeight = moveLeftButton.rect.height;
         baseMoveLeftButtonWidth = moveLeftButton.rect.width;
+        baseMoveRightButtonWidth = moveRightButton.rect.width;
         baseCommonImageHeight = moveLeftButtonImage.rect.height;
         baseCommonImageWidth = moveLeftButtonImage.rect.width;
         baseCommonImagePositionY = moveLeftButtonImage.anchoredPosition.y;
@@ -40,7 +42,7 @@ public class ControlsButtonsScale : MonoBehaviour
         moveLeftButton.SetWidth(baseMoveLeftButtonWidth * scale);
         moveLeftButton.SetHeight(baseCommonButtonHeight * scale);
 
-        moveRightButton.SetWidth(moveLeftButton.rect.width);
+        moveRightButton.SetWidth(baseMoveRightButtonWidth * scale);
         moveRightButton.SetHeight(moveLeftButton.rect.height);
 
         moveLeftButtonImage.SetWidth(baseCommonImageWidth * scale);

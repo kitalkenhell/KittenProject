@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Wind
+  m_Name: WindFaded
   m_Shader: {fileID: 4800000, guid: 89f64d79372c90a4395321af80f65523, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -20,7 +20,7 @@ Material:
           name: _MainTex
         second:
           m_Texture: {fileID: 2800000, guid: 8048423ce647ce0448c2ecd04e9fa073, type: 3}
-          m_Scale: {x: 1, y: 1}
+          m_Scale: {x: 1, y: 1.2}
           m_Offset: {x: 0, y: 0}
       data:
         first:
@@ -142,11 +142,15 @@ Material:
       data:
         first:
           name: _TimeScale
-        second: 0.6
+        second: 0.5
       data:
         first:
           name: _Alpha
-        second: 0.2
+        second: 0.14
+      data:
+        first:
+          name: _FadeSize
+        second: 0.5
     m_Colors:
       data:
         first:

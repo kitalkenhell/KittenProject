@@ -4,6 +4,9 @@
 	{
 		_MainTex("Base (RGB) Trans (A)", 2D) = "white" {}
 		_TimeOffset("Time Offset", Float) = 0
+		_TimeScale("Time Scale", Float) = 0.5
+	    _Alpha("Alpha", Float) = 0.2
+		_FadeSize("FadeSize", Float) = 0.2
 	}
 
 	SubShader
@@ -37,8 +40,11 @@
 			};
 
 			sampler2D _MainTex;
-			float _TimeOffset;
 			float4 _MainTex_ST;
+			float _TimeOffset;
+			float _TimeScale;
+			float _Alpha;
+			float _FadeSize;
 
 			v2f vert(appdata_t v)
 			{
@@ -50,18 +56,15 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				const float fadeSize = 0.2;
-				const float timeScale = 3.5;
-
-				float time = _Time.y * timeScale + _TimeOffset;
+				const float fadeSize = _FadeSize;
+				float time = _Time.y * _TimeScale + _TimeOffset;
 
 				time = abs(floor(time) % 2 - frac(time));
 				float alphaFade = 1 - max(i.texcoord.y - (1 - fadeSize), 0) / fadeSize;
-				i.texcoord.y -= _Time.y * 0.5 + _TimeOffset;
+				i.texcoord.y -= _Time.y * _TimeScale + _TimeOffset;
 
-				//fixed4 col = tex2D(_MainTex, i.texcoord);
 				fixed4 col = lerp( tex2D(_MainTex, i.texcoord), tex2D(_MainTex, (half2(1, 1) - i.texcoord)), time);
-				col.a *= 0.2 * alphaFade;
+				col.a *= _Alpha * alphaFade;
 				return col;
 			}
 
