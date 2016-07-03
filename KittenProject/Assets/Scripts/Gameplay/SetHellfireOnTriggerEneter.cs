@@ -6,6 +6,7 @@ public class SetHellfireOnTriggerEneter : MonoBehaviour
     public Hellfire hellfire;
     public bool setSpeed;
     public bool setPosition;
+    public bool allowToMoveBack;
     public float speed;
     public float position;
 
@@ -17,7 +18,7 @@ public class SetHellfireOnTriggerEneter : MonoBehaviour
             {
                 hellfire.speed = speed;
             }
-            if (setPosition && hellfire.transform.position.y < position)
+            if (setPosition && (allowToMoveBack ||hellfire.transform.position.y < position))
             {
                 hellfire.transform.SetPositionY(position);
             }
