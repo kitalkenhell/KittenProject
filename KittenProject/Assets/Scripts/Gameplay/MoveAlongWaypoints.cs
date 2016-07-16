@@ -102,7 +102,10 @@ public class MoveAlongWaypoints : MonoBehaviour
 
     public int SetNextWaypoint()
     {
-        speed = 0;
+        if (!Mathf.Approximately(waypoints[currentWaypoint].stoppingDistance, 0))
+        {
+            speed = 0; 
+        }
         displacement = Vector3.zero;
 
         if (waypoints[currentWaypoint].waitTime > 0)
