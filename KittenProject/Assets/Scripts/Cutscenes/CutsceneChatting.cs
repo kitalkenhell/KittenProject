@@ -5,6 +5,8 @@ public class CutsceneChatting : MonoBehaviour
 {
     public SpeechBalloon[] speechBalloons;
 
+    bool skip = false;
+
     public bool InProgress
     {
         private set;
@@ -32,6 +34,11 @@ public class CutsceneChatting : MonoBehaviour
         }
     }
 
+    public void Skip()
+    {
+        skip = true;
+    }
+
     IEnumerator Chatting()
     {
         if (speechBalloons.Length > 0)
@@ -54,6 +61,13 @@ public class CutsceneChatting : MonoBehaviour
 
                     yield return null;
                     break;
+                }
+                else if (skip)
+                {
+                    speechBalloons[i].Show(false);
+                    HasEnded = true;
+                    StopAllCoroutines();
+                    yield return null;
                 }
 
                 yield return null; 

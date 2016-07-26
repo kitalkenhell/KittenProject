@@ -16,14 +16,12 @@ public class ControlsButtonsScale : MonoBehaviour
     float baseMoveLeftButtonWidth;
     float baseMoveRightButtonWidth;
     float baseMoveRightButtonImagePositionX;
-    float baseCommonButtonHeight;
     float baseCommonImageHeight;
     float baseCommonImageWidth;
     float baseCommonImagePositionY;
 
     void Start()
     {
-        baseCommonButtonHeight = moveLeftButton.rect.height;
         baseMoveLeftButtonWidth = moveLeftButton.rect.width;
         baseMoveRightButtonWidth = moveRightButton.rect.width;
         baseCommonImageHeight = moveLeftButtonImage.rect.height;
@@ -40,10 +38,8 @@ public class ControlsButtonsScale : MonoBehaviour
         float scale = Mathf.Clamp(GameSettings.UiScale, minScale, maxScale);
 
         moveLeftButton.SetWidth(baseMoveLeftButtonWidth * scale);
-        moveLeftButton.SetHeight(baseCommonButtonHeight * scale);
 
         moveRightButton.SetWidth(baseMoveRightButtonWidth * scale);
-        moveRightButton.SetHeight(moveLeftButton.rect.height);
 
         moveLeftButtonImage.SetWidth(baseCommonImageWidth * scale);
         moveLeftButtonImage.SetHeight(baseCommonImageHeight * scale);

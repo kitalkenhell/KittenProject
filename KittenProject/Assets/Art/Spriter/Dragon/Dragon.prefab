@@ -78,6 +78,7 @@ GameObject:
   - 114: {fileID: 11493988}
   - 114: {fileID: 11431898}
   - 114: {fileID: 11453638}
+  - 114: {fileID: 11433940}
   m_Layer: 14
   m_Name: Dragon
   m_TagString: Untagged
@@ -241,7 +242,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &153792
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -497,13 +498,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 153792}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.8, y: 9, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9729942, w: 0.23082964}
+  m_LocalPosition: {x: -30.378296, y: 4.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 153.3082}
   m_Children: []
-  m_Father: {fileID: 481182}
-  m_RootOrder: 9
+  m_Father: {fileID: 465688}
+  m_RootOrder: 2
 --- !u!4 &426742
 Transform:
   m_ObjectHideFlags: 1
@@ -645,12 +646,13 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 111328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1757.1, y: 122.2, z: -31}
+  m_LocalPosition: {x: 1540.5, y: 132.4, z: -31}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 481182}
   - {fileID: 411384}
+  - {fileID: 426412}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &474926
@@ -686,7 +688,6 @@ Transform:
   - {fileID: 421776}
   - {fileID: 483954}
   - {fileID: 462704}
-  - {fileID: 426412}
   m_Father: {fileID: 465688}
   m_RootOrder: 0
 --- !u!4 &483954
@@ -9326,6 +9327,18 @@ MonoBehaviour:
   dealDamage: 1
   swapXAxis: 0
   swapYAxis: 0
+--- !u!114 &11433940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64554b7a50b32b3409f279c626a8b493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistanceFromPlayer: 20
 --- !u!114 &11447428
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9394,15 +9407,16 @@ MonoBehaviour:
   hp: 10
   coinDropOnHit: 7
   bonusCoinDropOnDeath: 10
-  attackCooldown: 3
-  randomAttackCooldown: 8
+  facePlayerWhenNotMoving: 1
+  attackCooldown: 1
+  randomAttackCooldown: 5
   maxAttackAngle: 45
   maxAttackDistance: 40
   obstacles:
     serializedVersion: 2
     m_Bits: 9728
   fireballSource: {fileID: 462704}
-  fireballForce: {fileID: 426412}
+  randomAttackfireballForce: {fileID: 426412}
   fireballForceOffset:
     min: -4
     max: 4
@@ -9413,6 +9427,7 @@ MonoBehaviour:
   - 0.1
   - 0.1
   - 0.1
+  attackPlayerForceMagnitude: 70
 --- !u!212 &21222254
 SpriteRenderer:
   m_ObjectHideFlags: 1

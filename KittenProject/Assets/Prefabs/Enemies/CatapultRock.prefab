@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 423256}
-  - 114: {fileID: 11468142}
+  - 114: {fileID: 11488802}
   m_Layer: 0
   m_Name: CatapultRock
   m_TagString: Untagged
@@ -108,6 +108,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 473690}
   m_Father: {fileID: 423256}
@@ -119,8 +120,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169372}
   m_LocalRotation: {x: 0, y: 0, z: 0.000000059604645, w: 1}
-  m_LocalPosition: {x: 1895.55, y: 227.72302, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 446922}
   - {fileID: 406396}
@@ -135,6 +137,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 473690}
   m_RootOrder: 1
@@ -147,6 +150,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 423256}
   m_RootOrder: 0
@@ -159,6 +163,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.000000059604645, w: 1}
   m_LocalPosition: {x: -0.00000003933892, y: -0.3299988, z: 0}
   m_LocalScale: {x: 0.2246445, y: 0.22464453, z: 0.2246445}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 473690}
   m_RootOrder: 0
@@ -171,6 +176,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 468930}
   - {fileID: 445488}
@@ -271,18 +277,6 @@ TrailRenderer:
       rgba: 42237
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
---- !u!114 &11468142
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 169372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 518a844d550bf02478f8ca0da87c030c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 10
 --- !u!114 &11474514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,6 +307,22 @@ MonoBehaviour:
   dealDamage: 1
   swapXAxis: 0
   swapYAxis: 0
+--- !u!114 &11488802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 169372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ecd65a8d5f037642a86f775a7a8fa15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeOutSpeed: 2
+  delay: 8
+  sprites:
+  - {fileID: 21206162}
+  - {fileID: 21223374}
 --- !u!212 &21206162
 SpriteRenderer:
   m_ObjectHideFlags: 1

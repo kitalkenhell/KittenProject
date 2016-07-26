@@ -6,7 +6,8 @@ public class MoveAlongWaypoints : MonoBehaviour
     enum States
     {
         wait,
-        move
+        move,
+        pause
     }
 
     const float nextWaypintThreshold = 0.4f;
@@ -69,7 +70,10 @@ public class MoveAlongWaypoints : MonoBehaviour
 
         if (distance < nextWaypintThreshold)
         {
-            SetNextWaypoint();
+            if (state != States.pause)
+            {
+                SetNextWaypoint(); 
+            }
             return;
         }
 
@@ -77,16 +81,13 @@ public class MoveAlongWaypoints : MonoBehaviour
         {
             speed = current.speed * distance / current.stoppingDistance;
         }
+        else if (state == States.pause)
+        {
+            speed = Mathf.Max(speed - current.acceleration, 0);
+        }
         else
         {
-            if (speed < current.speed)
-            {
-                speed += current.acceleration;
-            }
-            if (speed > current.speed)
-            {
-                speed = current.speed;
-            }
+            speed = Mathf.Min(speed + current.acceleration, current.speed);
         }
 
         Velocity = (current.transform.position.XY() - transform.position.XY()).normalized * speed;
@@ -98,6 +99,18 @@ public class MoveAlongWaypoints : MonoBehaviour
         }
 
         body.MovePosition(transform.position.XY() + displacement);
+    }
+
+    public void Pause(bool pause)
+    {
+        if (pause && state != States.pause)
+        {
+            state = States.pause;
+        }
+        else if (!pause && state == States.pause)
+        {
+            state = States.move;
+        }
     }
 
     public int SetNextWaypoint()
@@ -152,6 +165,10 @@ public class MoveAlongWaypoints : MonoBehaviour
         speed = 0;
         state = States.wait;
         yield return new WaitForSeconds(time);
-        state = States.move;
+
+        if (state != States.pause)
+        {
+            state = States.move; 
+        }
     }
 }

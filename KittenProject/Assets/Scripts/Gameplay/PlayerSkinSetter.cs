@@ -25,24 +25,30 @@ public class PlayerSkinSetter : MonoBehaviour
         PlayerParachuteSkin parachuteSkin = skins.GetEquipedParachuteSkin();
 
         InstantiateSkinPart(bodySkin.body, bodyPivot);
-        InstantiateSkinPart(bodySkin.ear, earPivot);
+        InstantiateSkinPart(bodySkin.ear, earPivot, !hatSkin.disableEar);
         InstantiateSkinPart(bodySkin.eyeBig, eyeBigPivot);
         InstantiateSkinPart(bodySkin.eyeSmall, eyeSmallPivot);
         InstantiateSkinPart(bodySkin.legFront, legFrontPivot);
         InstantiateSkinPart(bodySkin.legBack, legBackPivot);
         InstantiateSkinPart(bodySkin.mouth, mouthPivot);
-        InstantiateSkinPart(bodySkin.tongue, tonguePivot);
-        InstantiateSkinPart(bodySkin.nose, nosePivot);
+        InstantiateSkinPart(bodySkin.tongue, tonguePivot, !hatSkin.disableTongue);
+        InstantiateSkinPart(bodySkin.nose, nosePivot, !hatSkin.disableNose);
         InstantiateSkinPart(bodySkin.tail, tailPivot);
         InstantiateSkinPart(hatSkin.hat, hatPivot);
         InstantiateSkinPart(parachuteSkin.parachute, parachutePivot);
+
+            
+
     }
 
-    void InstantiateSkinPart(string prefabName, Transform pivot)
+    void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)
     {
-        GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
-        skinPart.transform.parent = pivot;
-        skinPart.transform.ResetLocal();
+        if (isActive)
+        {
+            GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
+            skinPart.transform.parent = pivot;
+            skinPart.transform.ResetLocal();
+        }
     }
 }
 

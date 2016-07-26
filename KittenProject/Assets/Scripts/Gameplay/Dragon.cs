@@ -15,16 +15,18 @@ public class Dragon : MonoBehaviour
     public int hp;
     public int coinDropOnHit;
     public int bonusCoinDropOnDeath;
+    public bool facePlayerWhenNotMoving;
     public float attackCooldown;
     public float randomAttackCooldown;
     public float maxAttackAngle;
     public float maxAttackDistance;
     public LayerMask obstacles;
     public Transform fireballSource;
-    public Transform fireballForce;
+    public Transform randomAttackfireballForce;
     public MinMax fireballForceOffset;
     public GameObject fireballPrefab;
     public float[] fireballSpawnDelays;
+    public float attackPlayerForceMagnitude;
 
     Animator animator;
     new Collider2D collider;
@@ -34,8 +36,8 @@ public class Dragon : MonoBehaviour
     int deadAnimHash = Animator.StringToHash("Dead");
     int attackAnimHash = Animator.StringToHash("Attack");
 
-    bool canAttack;
-    bool canRandomAttack;
+    bool attackIsOnCooldown;
+    bool randomAttackIsOnCooldown;
     float headAnimatonLayerWeight;
 
     void Awake()
@@ -44,8 +46,8 @@ public class Dragon : MonoBehaviour
         collider = GetComponentInChildren<Collider2D>();
         body = GetComponent<Rigidbody2D>();
 
-        canAttack = true;
-        canRandomAttack = false;
+        attackIsOnCooldown = true;
+        randomAttackIsOnCooldown = false;
         headAnimatonLayerWeight = 0;
 
         StartCoroutine(RandomAttackCooldown());
@@ -59,39 +61,47 @@ public class Dragon : MonoBehaviour
         {
             transform.SetScaleX(Mathf.Abs(transform.localScale.x) * -Mathf.Sign(velocity.x));
         }
+        else if (facePlayerWhenNotMoving)
+        {
+            transform.SetScaleX(Mathf.Abs(transform.localScale.x) * Mathf.Sign(transform.position.x - CoreLevelObjects.player.transform.position.x));
+        }
 
         animator.SetFloat(speedAnimHash, velocity.sqrMagnitude);
 
-        if (canAttack && transform.position.y > CoreLevelObjects.player.transform.position.y)
+        if (attackIsOnCooldown && transform.position.y > CoreLevelObjects.player.transform.position.y)
         {
-            float angle = Vector3.Angle(fireballForce.position - fireballSource.position, CoreLevelObjects.player.transform.position - fireballSource.position);
+            float angle = Vector3.Angle(randomAttackfireballForce.position - fireballSource.position, CoreLevelObjects.player.transform.position - fireballSource.position);
 
-            if (canRandomAttack || angle < maxAttackAngle && Vector3.Distance(transform.position, CoreLevelObjects.player.transform.position) < maxAttackDistance)
+            if (angle < maxAttackAngle && Vector3.Distance(transform.position, CoreLevelObjects.player.transform.position) < maxAttackDistance)
             {
-                Attack();
+                Attack(true);
+            }
+            else if (randomAttackIsOnCooldown)
+            {
+                Attack(false);
             }
         }
     }
 
-    void Attack()
+    void Attack(bool aimPlayer)
     {
         StopAllCoroutines();
         StartCoroutine(AttackCooldown());
         StartCoroutine(RandomAttackCooldown());
-        StartCoroutine(SpawnFireballs());
+        StartCoroutine(SpawnFireballs(aimPlayer));
         animator.SetTrigger(attackAnimHash);
-        canAttack = false;
+        attackIsOnCooldown = false;
 
         headAnimatonLayerWeight = minWeightValue;
         StartCoroutine(SetHeadAnimationLayerWeight(maxWeightValue));
     }
 
-    IEnumerator SpawnFireballs()
+    IEnumerator SpawnFireballs(bool aimPlayer)
     {
         foreach (var delay in fireballSpawnDelays)
         {
             yield return new WaitForSeconds(delay);
-            SpawnFireball();
+            SpawnFireball(aimPlayer);
         }
 
         yield return new WaitForSeconds(disableHeadLayerDelay);
@@ -103,14 +113,14 @@ public class Dragon : MonoBehaviour
     IEnumerator AttackCooldown()
     {
         yield return new WaitForSeconds(attackCooldown);
-        canAttack = true;
+        attackIsOnCooldown = true;
     }
 
     IEnumerator RandomAttackCooldown()
     {
-        canRandomAttack = false;
+        randomAttackIsOnCooldown = false;
         yield return new WaitForSeconds(randomAttackCooldown);
-        canRandomAttack = true;
+        randomAttackIsOnCooldown = true;
     }
 
     IEnumerator SetHeadAnimationLayerWeight(float targetWeight)
@@ -124,10 +134,18 @@ public class Dragon : MonoBehaviour
         }
     }
 
-    void SpawnFireball()
+    void SpawnFireball(bool aimPlayer)
     {
         Rigidbody2D fireball = (Instantiate(fireballPrefab, fireballSource.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
-        fireball.velocity = fireballForce.position - fireballSource.position + Vector3.up * fireballForceOffset.Random();
+
+        if (aimPlayer)
+        {
+            fireball.velocity = (CoreLevelObjects.player.transform.position - fireballSource.position).normalized * attackPlayerForceMagnitude + Vector3.up * fireballForceOffset.Random();
+        }
+        else
+        {
+            fireball.velocity = randomAttackfireballForce.position - fireballSource.position + Vector3.up * fireballForceOffset.Random();
+        }
     }
 
     void Die()

@@ -13,7 +13,7 @@ public class LevelFlow : MonoBehaviour
     public float adDelayAfterVictory;
     public Animator loadingScreen;
     public Animator victoryScreen;
-    public Animator hud;
+    public HudController hud;
     public PauseMenu pauseMenu;
     public LevelProperties levelProperties;
 
@@ -30,7 +30,6 @@ public class LevelFlow : MonoBehaviour
         PostOffice.levelQuit += OnLevelQuit;
 
         fadeAnimHash = Animator.StringToHash("Fade");
-        showHudAnimHash = Animator.StringToHash("ShowHud");
         showVictoryScreenAnimHash = Animator.StringToHash("ShowVictoryScreen");
 
         loadingScreen.SetTrigger(fadeAnimHash);
@@ -63,7 +62,7 @@ public class LevelFlow : MonoBehaviour
         if (!switchingScenes)
         {
             switchingScenes = true;
-            hud.SetBool(showHudAnimHash, false);
+            hud.Hide();
 
             StartCoroutine(Exit());
             StartCoroutine(FadeOut());
@@ -76,7 +75,7 @@ public class LevelFlow : MonoBehaviour
     {
         StartCoroutine(ShowAd(adDelayAfterDeath));
 
-        hud.SetBool(showHudAnimHash, false);
+        hud.Hide();
 
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
         StartCoroutine(FadeOut());
@@ -115,7 +114,7 @@ public class LevelFlow : MonoBehaviour
 
         PersistentData.Coins += CoreLevelObjects.player.Coins;
 
-        hud.SetBool(showHudAnimHash, false);
+        hud.Hide();
         StartCoroutine(ShowVictoryScreen());
         StartCoroutine(ShowAd(adDelayAfterVictory));
     }
@@ -162,7 +161,7 @@ public class LevelFlow : MonoBehaviour
     IEnumerator ShowHud()
     {
         yield return new WaitForSeconds(showHudDelay);
-        hud.SetBool(showHudAnimHash, true);
+        hud.Show();
     }
 
     IEnumerator FadeOut()
