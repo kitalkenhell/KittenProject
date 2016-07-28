@@ -28,6 +28,7 @@ public class CutsceneChatting : MonoBehaviour
     {
         if (!InProgress)
         {
+            skip = false;
             HasEnded = false;
             InProgress = true;
             StartCoroutine(Chatting());

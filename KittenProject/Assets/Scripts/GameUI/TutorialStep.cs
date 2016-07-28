@@ -7,7 +7,6 @@ public class TutorialStep : MonoBehaviour
 
     int stepAnimHash = Animator.StringToHash("Step");
     
-
     void OnTriggerEnter2D(Collider2D other)
     {
         tutorialUi.SetTrigger(stepAnimHash);

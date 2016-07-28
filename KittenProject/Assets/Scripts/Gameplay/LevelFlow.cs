@@ -23,6 +23,11 @@ public class LevelFlow : MonoBehaviour
 
     bool switchingScenes;
 
+    void Awake()
+    {
+        CoreLevelObjects.levelProperties = levelProperties;
+    }
+
     void Start()
     {
         PostOffice.playedDied += OnPlayerDied;
