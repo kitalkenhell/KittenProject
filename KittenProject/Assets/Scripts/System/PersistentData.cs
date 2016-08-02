@@ -45,6 +45,26 @@ public static class PersistentData
         }
     }
 
+
+    public static bool HashWatchedIntroCutscene
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("HashWatchedIntroCutscene");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("HashWatchedIntroCutscene", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("HashWatchedIntroCutscene");
+            }
+        }
+    }
+
     public static bool IsHavingBodySkin(string name)
     {
         return PlayerPrefs.HasKey("IsHavingBodySkin" + name);
@@ -52,7 +72,7 @@ public static class PersistentData
 
     public static void IsHavingBodySkin(string name, bool newValue)
     {
-        if (newValue == true)
+        if (newValue)
         {
             PlayerPrefs.SetInt("IsHavingBodySkin" + name, 0);
         }
@@ -69,7 +89,7 @@ public static class PersistentData
 
     public static void IsHavingParachuteSkin(string name, bool newValue)
     {
-        if (newValue == true)
+        if (newValue)
         {
             PlayerPrefs.SetInt("IsHavingParachuteSkin" + name, 0);
         }
@@ -86,7 +106,7 @@ public static class PersistentData
 
     public static void IsHavingHatSkin(string name, bool newValue)
     {
-        if (newValue == true)
+        if (newValue)
         {
             PlayerPrefs.SetInt("IsHavingHatSkin" + name, 0);
         }
@@ -103,7 +123,7 @@ public static class PersistentData
 
     public static void IsHavingUpgrade(string name, bool newValue)
     {
-        if (newValue == true)
+        if (newValue)
         {
             PlayerPrefs.SetInt("IsHavingUpgrade" + name, 0);
         }

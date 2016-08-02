@@ -47,7 +47,11 @@ public class IntroCutscene : MonoBehaviour
         playerController.enabled = false;
         dogCutsceneController.enabled = true;
 
-        skipButton.Show();
+        if (PersistentData.HashWatchedIntroCutscene)
+        {
+            skipButton.Show(); 
+        }
+
         king.MoveToNextPoint();
         yield return new WaitUntil(() => { return king.HasReachedCurrentPoint; });
 
@@ -114,6 +118,8 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForSeconds(startTutorialDelay);
 
         tutorial.SetTrigger(stepAnimHash);
+
+        PersistentData.HashWatchedIntroCutscene = true;
     }
 
     IEnumerator SkipAnimation()
