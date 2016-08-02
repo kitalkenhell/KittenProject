@@ -130,6 +130,7 @@ public class IntroCutscene : MonoBehaviour
         chihuahua.gameObject.SetActive(false);
         sleepingDoge.gameObject.SetActive(false);
         kitten.gameObject.SetActive(false);
+        playerController.gameObject.SetActive(true);
 
         cutsceneCamera.Skip();
         skipButton.Hide();
