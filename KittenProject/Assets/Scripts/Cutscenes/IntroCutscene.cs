@@ -47,7 +47,7 @@ public class IntroCutscene : MonoBehaviour
         playerController.enabled = false;
         dogCutsceneController.enabled = true;
 
-        if (PersistentData.HashWatchedIntroCutscene)
+        if (PersistentData.HasWatchedIntroCutscene)
         {
             skipButton.Show(); 
         }
@@ -119,7 +119,7 @@ public class IntroCutscene : MonoBehaviour
 
         tutorial.SetTrigger(stepAnimHash);
 
-        PersistentData.HashWatchedIntroCutscene = true;
+        PersistentData.HasWatchedIntroCutscene = true;
     }
 
     IEnumerator SkipAnimation()

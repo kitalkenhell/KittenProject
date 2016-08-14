@@ -46,21 +46,40 @@ public static class PersistentData
     }
 
 
-    public static bool HashWatchedIntroCutscene
+    public static bool HasWatchedIntroCutscene
     {
         get
         {
-            return PlayerPrefs.HasKey("HashWatchedIntroCutscene");
+            return PlayerPrefs.HasKey("HasWatchedIntroCutscene");
         }
         set
         {
             if (value)
             {
-                PlayerPrefs.SetInt("HashWatchedIntroCutscene", 0);
+                PlayerPrefs.SetInt("HasWatchedIntroCutscene", 0);
             }
             else
             {
-                PlayerPrefs.DeleteKey("HashWatchedIntroCutscene");
+                PlayerPrefs.DeleteKey("HasWatchedIntroCutscene");
+            }
+        }
+    }
+
+    public static bool HasWatchedPlotTwistCutscene
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("HasWatchedPlotTwistCutscene");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("HasWatchedPlotTwistCutscene", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("HasWatchedPlotTwistCutscene");
             }
         }
     }
