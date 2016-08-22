@@ -10,6 +10,8 @@ public class VictoryScreen : MonoBehaviour
 
     public LevelFlow levelFlow;
     public Animator hud;
+    public Animator adButton;
+    public RaffleButton raffleButton;
     public Image kittenGreyedOut;
     public Image kitten;
     public Image gemGreyedOut;
@@ -26,6 +28,7 @@ public class VictoryScreen : MonoBehaviour
 
     int showButtonsAnimHash;
     int showCoinsAndTimerAnimHash;
+    int hideAnimHash;
 
     bool kittenFound;
     bool gemsCollected;
@@ -37,6 +40,7 @@ public class VictoryScreen : MonoBehaviour
 
         showButtonsAnimHash = Animator.StringToHash("ShowButtons");
         showCoinsAndTimerAnimHash = Animator.StringToHash("ShowCoinsAndTimer");
+        hideAnimHash = Animator.StringToHash("Hide");
 
         kittenFound = levelFlow.levelProperties.HasGoldenKittenStar;
         gemsCollected = levelFlow.levelProperties.HasCoinStar;
@@ -95,8 +99,25 @@ public class VictoryScreen : MonoBehaviour
             hourglassAnimator.enabled = true;
         }
 
-        yield return new WaitForSeconds(showButtonsDelay);
+        if (AdManager.Instance.IsVideoAdAvailable)
+        {
+            yield return new WaitForSeconds(showButtonsDelay);
+            adButton.gameObject.SetActive(true);
+        }
 
+        if (raffleButton.CanEnter())
+        {
+            yield return new WaitForSeconds(showButtonsDelay);
+            raffleButton.gameObject.SetActive(true); 
+        }
+
+        yield return new WaitForSeconds(showButtonsDelay);
         animator.SetTrigger(showButtonsAnimHash);
+    }
+
+    public void OnPlayVideoAd()
+    {
+        AdManager.Instance.ShowVideoAd(CoreLevelObjects.player.Coins * AdManager.coinsMultiplier);
+        adButton.SetTrigger(hideAnimHash);
     }
 }

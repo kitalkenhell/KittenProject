@@ -4,16 +4,20 @@ using System;
 
 public class AdManager : MonoBehaviour
 {
+    public const int defaultVideoAdReward = 200;
+    public const int coinsMultiplier = 2;
+
     const string dateFormat = "yyyy-MM-dd HH:mm:ss";
     const int eventsNeededToShowAd = 6;
     const int eventCounterStartingOffset = 1;
-    const int videoAdReward = 150;
     const int FirstTimeVideoAdWatchedOffset = -11;
 
     static int eventCounter;
 
     AdMobManager adMobManager;
     ChartboostManager chartboostManager;
+
+    int currentAdReward = defaultVideoAdReward;
 
     public static DateTime LastTimeVideoAdWatched
     {
@@ -110,8 +114,10 @@ public class AdManager : MonoBehaviour
         }
     }
 
-    public void ShowVideoAd()
+    public void ShowVideoAd(int reward = defaultVideoAdReward)
     {
+        currentAdReward = reward;
+
         if (UnityAdManager.IsVideoAdLoaded())
         {
             UnityAdManager.ShowVideoAd();
@@ -135,7 +141,7 @@ public class AdManager : MonoBehaviour
     {
         AdManager.LastTimeVideoAdWatched = DateTime.Now;
         PostOffice.PostVideoAdWatched();
-        PersistentData.Coins += videoAdReward;
+        PersistentData.Coins += currentAdReward;
     }
 
 }

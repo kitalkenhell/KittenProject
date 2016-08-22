@@ -18,10 +18,10 @@ public class LevelFlow : MonoBehaviour
     public LevelProperties levelProperties;
 
     int fadeAnimHash;
-    int showHudAnimHash;
     int showVictoryScreenAnimHash;
 
     bool switchingScenes;
+    bool showingVictoryScreen;
 
     void Awake()
     {
@@ -40,6 +40,7 @@ public class LevelFlow : MonoBehaviour
         loadingScreen.SetTrigger(fadeAnimHash);
 
         switchingScenes = false;
+        showingVictoryScreen = false;
 
         StartCoroutine(ShowHud());
     }
@@ -82,8 +83,8 @@ public class LevelFlow : MonoBehaviour
 
         hud.Hide();
 
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
-        StartCoroutine(FadeOut());
+        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name, fadeOutDelay));
+        StartCoroutine(FadeOut(fadeOutDelay));
     }
 
     public void OnRestartLevel()
@@ -91,9 +92,18 @@ public class LevelFlow : MonoBehaviour
         if (!switchingScenes)
         {
             switchingScenes = true;
-            victoryScreen.SetTrigger(showVictoryScreenAnimHash);
-            StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
-            StartCoroutine(FadeOut()); 
+
+            if (showingVictoryScreen)
+            {
+                victoryScreen.SetTrigger(showVictoryScreenAnimHash);
+                StartCoroutine(FadeOut(fadeOutDelay));
+                StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name, fadeOutDelay));
+            }
+            else
+            {
+                StartCoroutine(FadeOut());
+                StartCoroutine(LoadLevel(SceneManager.GetActiveScene().name));
+            }
         }
     }
 
@@ -135,8 +145,8 @@ public class LevelFlow : MonoBehaviour
         {
             switchingScenes = true;
             victoryScreen.SetTrigger(showVictoryScreenAnimHash);
-            StartCoroutine(LoadLevel(levelProperties.nextLevel.sceneName));
-            StartCoroutine(FadeOut());
+            StartCoroutine(LoadLevel(levelProperties.nextLevel.sceneName, fadeOutDelay));
+            StartCoroutine(FadeOut(fadeOutDelay));
         }
     }
 
@@ -146,8 +156,8 @@ public class LevelFlow : MonoBehaviour
         {
             switchingScenes = true;
             victoryScreen.SetTrigger(showVictoryScreenAnimHash);
-            StartCoroutine(Exit());
-            StartCoroutine(FadeOut()); 
+            StartCoroutine(Exit(fadeOutDelay));
+            StartCoroutine(FadeOut(fadeOutDelay)); 
         }
     }
 
@@ -160,6 +170,7 @@ public class LevelFlow : MonoBehaviour
     IEnumerator ShowVictoryScreen()
     {
         yield return new WaitForSeconds(showVictoryScreenDelay);
+        showingVictoryScreen = true;
         victoryScreen.SetTrigger(showVictoryScreenAnimHash);
     }
 
@@ -169,21 +180,21 @@ public class LevelFlow : MonoBehaviour
         hud.Show();
     }
 
-    IEnumerator FadeOut()
+    IEnumerator FadeOut(float delay = 0)
     {
-        yield return new WaitForSeconds(fadeOutDelay);
+        yield return new WaitForSeconds(delay);
         loadingScreen.SetTrigger(fadeAnimHash);
     }
 
-    IEnumerator LoadLevel(string sceneName)
+    IEnumerator LoadLevel(string sceneName, float delay = 0)
     {
-        yield return new WaitForSeconds(fadeOutDelay + restartDelay);
+        yield return new WaitForSeconds(delay + restartDelay);
         SceneManager.LoadScene(sceneName);
     }
 
-    IEnumerator Exit()
+    IEnumerator Exit(float delay = 0)
     {
-        yield return new WaitForSeconds(fadeOutDelay + restartDelay);
+        yield return new WaitForSeconds(delay + restartDelay);
         SceneManager.LoadScene(mainMenuSceneName);
     }
  }
