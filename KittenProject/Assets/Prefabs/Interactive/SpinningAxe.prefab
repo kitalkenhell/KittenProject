@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438166}
   - 212: {fileID: 21250510}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,6 +43,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: -30}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 470978}
   m_RootOrder: 0
@@ -53,8 +54,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 147242}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1833.4, y: 169.8, z: 0}
+  m_LocalPosition: {x: 1772.9384, y: 179.55865, z: 0}
   m_LocalScale: {x: 2.4, y: -2.4, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 438166}
   m_Father: {fileID: 0}
@@ -134,6 +136,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   maxAngle: 70
   frequency: 0.25
+  rotationOffset: 0
+  timeOffset: 0
   forceMultiplier: {x: 10, y: 10}
   force: {x: 10, y: 20}
   minPushForce: {x: 20, y: 30}

@@ -85,7 +85,7 @@ public class PlayerItems : ScriptableObject
     {
         foreach (var skin in hatSkins)
         {
-            if (!PersistentData.IsHavingBodySkin(skin.itemName))
+            if (!PersistentData.IsHavingHatSkin(skin.itemName))
             {
                 return false;
             }
@@ -98,7 +98,7 @@ public class PlayerItems : ScriptableObject
     {
         foreach (var skin in parachuteSkins)
         {
-            if (!PersistentData.IsHavingBodySkin(skin.itemName))
+            if (!PersistentData.IsHavingParachuteSkin(skin.itemName))
             {
                 return false;
             }

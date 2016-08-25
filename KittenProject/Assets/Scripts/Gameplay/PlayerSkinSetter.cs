@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSkinSetter : MonoBehaviour
 {
@@ -18,7 +19,37 @@ public class PlayerSkinSetter : MonoBehaviour
     public Transform hatPivot;
     public Transform parachutePivot;
 
+    List<GameObject> allSkinParts;
+
     void Start()
+    {
+        allSkinParts = new List<GameObject>();
+        SetSkin();
+    }
+
+    void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)
+    {
+        if (isActive)
+        {
+            GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
+            allSkinParts.Add(skinPart);
+            skinPart.transform.parent = pivot;
+            skinPart.transform.ResetLocal();
+        }
+    }
+
+    public void ResetSkin()
+    {
+        foreach (var part in allSkinParts)
+        {
+            Destroy(part);
+        }
+
+        allSkinParts.Clear();
+        SetSkin();
+    }
+
+    void SetSkin()
     {
         PlayerBodySkin bodySkin = skins.GetEquipedBodySkin();
         PlayerHatSkin hatSkin = skins.GetEquipedHatSkin();
@@ -36,19 +67,6 @@ public class PlayerSkinSetter : MonoBehaviour
         InstantiateSkinPart(bodySkin.tail, tailPivot);
         InstantiateSkinPart(hatSkin.hat, hatPivot);
         InstantiateSkinPart(parachuteSkin.parachute, parachutePivot);
-
-            
-
-    }
-
-    void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)
-    {
-        if (isActive)
-        {
-            GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
-            skinPart.transform.parent = pivot;
-            skinPart.transform.ResetLocal();
-        }
     }
 }
 

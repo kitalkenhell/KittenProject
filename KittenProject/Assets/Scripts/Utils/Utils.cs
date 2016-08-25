@@ -29,5 +29,13 @@ public class Utils
             GameObject.Destroy(renderer);
         }
     }
+
+    public static void DestroyChildren(Transform t)
+    {
+        foreach (Transform child in t)
+        {
+            GameObject.Destroy(child);
+        }
+    }
 }
 

@@ -12,6 +12,12 @@ public struct MinMax
     {
         return UnityEngine.Random.Range(min, max);
     }
+
+    public MinMax(float min, float max)
+    {
+        this.min = min;
+        this.max = max;
+    }
 }
 
 [System.Serializable]

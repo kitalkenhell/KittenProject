@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MoveAlongWaypoints : MonoBehaviour 
 {
+    public delegate void WaypointReached(int index);
+
     enum States
     {
         wait,
@@ -14,6 +16,11 @@ public class MoveAlongWaypoints : MonoBehaviour
 
     public Waypoint[] waypoints;
     public bool looping;
+    public bool customWaypointControl;
+    public int currentWaypoint;
+    public bool setPositionOnSpawn = true;
+
+    public event WaypointReached OnWaypointReached;
 
     public Vector2 Velocity
     {
@@ -29,7 +36,6 @@ public class MoveAlongWaypoints : MonoBehaviour
 
     Rigidbody2D body;
 
-    int currentWaypoint;
     bool moveForward;
     float speed;
 
@@ -42,12 +48,16 @@ public class MoveAlongWaypoints : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
 
         currentWaypoint = 0;
-        transform.SetPositionXY(waypoints[currentWaypoint].transform.position);
-        lastFramePosition = transform.position;
         moveForward = true;
         speed = 0;
         Velocity = Vector2.zero;
         state = States.move;
+
+        if (setPositionOnSpawn)
+        {
+            transform.SetPositionXY(waypoints[currentWaypoint].transform.position);
+        }
+        lastFramePosition = transform.position;
 
         if (waypoints[currentWaypoint].waitTime > 0)
         {
@@ -70,10 +80,17 @@ public class MoveAlongWaypoints : MonoBehaviour
 
         if (distance < nextWaypintThreshold)
         {
-            if (state != States.pause)
+            if (OnWaypointReached != null)
             {
-                SetNextWaypoint(); 
+                OnWaypointReached(currentWaypoint);
             }
+
+            if (state != States.pause && !customWaypointControl)
+            {
+                SetNextWaypoint();
+            }
+
+            Velocity = Vector2.zero;
             return;
         }
 
@@ -97,6 +114,8 @@ public class MoveAlongWaypoints : MonoBehaviour
         {
             displacement = current.transform.position - transform.position;
         }
+
+        Velocity = displacement / Time.deltaTime;
 
         body.MovePosition(transform.position.XY() + displacement);
     }

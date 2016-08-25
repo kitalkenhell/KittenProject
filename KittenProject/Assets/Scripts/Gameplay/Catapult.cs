@@ -9,11 +9,13 @@ public class Catapult : MonoBehaviour
     public float delay;
     public MinMax randomForceMultiplier;
     public MinMax rockAngularVelocity;
+    public MinMax rockInitialSpeedRange = new MinMax(0, Mathf.Infinity);
     public Transform rockPlacement;
     public Transform rockForce;
     public GameObject RockPrefab;
     public AudioSource instantiateRockSound;
     public AudioSource fireSound;
+    public bool canShoot = true;
 
     Animator animator;
 
@@ -42,6 +44,11 @@ public class Catapult : MonoBehaviour
 
         while (true)
         {
+            if (!canShoot)
+            {
+                yield return new WaitUntil(() => { return canShoot;  });
+            }
+
             animator.SetTrigger(fireAnimHash);
 
             if (fireSound != null)
@@ -56,9 +63,21 @@ public class Catapult : MonoBehaviour
     void InstantiateRock()
     {
         Rigidbody2D rock;
+        float magnitude;
 
         rock = (Instantiate(RockPrefab, rockPlacement.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
         rock.velocity = (rockForce.position - rockPlacement.position) * forceMultiplier * randomForceMultiplier.Random();
+
+        magnitude = rock.velocity.magnitude;
+
+        if (magnitude > rockInitialSpeedRange.max)
+        {
+            rock.velocity = rock.velocity.normalized * rockInitialSpeedRange.max;
+        }
+        else if (magnitude < rockInitialSpeedRange.min)
+        {
+            rock.velocity = rock.velocity.normalized * rockInitialSpeedRange.min;
+        }
 
         rock.angularVelocity = rockAngularVelocity.Random() * Utils.RandomSign();
 

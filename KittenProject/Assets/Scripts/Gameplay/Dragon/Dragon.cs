@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Dragon : MonoBehaviour
 {
@@ -27,14 +28,17 @@ public class Dragon : MonoBehaviour
     public GameObject fireballPrefab;
     public float[] fireballSpawnDelays;
     public float attackPlayerForceMagnitude;
+    public UnityEvent onKilled;
 
     Animator animator;
     new Collider2D collider;
     Rigidbody2D body;
+    MoveAlongWaypoints mover;
 
     int speedAnimHash = Animator.StringToHash("Speed");
     int deadAnimHash = Animator.StringToHash("Dead");
     int attackAnimHash = Animator.StringToHash("Attack");
+    int hitAnimHash = Animator.StringToHash("Hit");
 
     bool attackIsOnCooldown;
     bool randomAttackIsOnCooldown;
@@ -45,6 +49,7 @@ public class Dragon : MonoBehaviour
         animator = GetComponent<Animator>();
         collider = GetComponentInChildren<Collider2D>();
         body = GetComponent<Rigidbody2D>();
+        mover = GetComponent<MoveAlongWaypoints>();
 
         attackIsOnCooldown = true;
         randomAttackIsOnCooldown = false;
@@ -55,7 +60,7 @@ public class Dragon : MonoBehaviour
 
     void Update()
     {
-        Vector2 velocity = GetComponent<MoveAlongWaypoints>().Velocity;
+        Vector2 velocity = mover.Velocity;
 
         if (Mathf.Abs(velocity.x) > Mathf.Epsilon)
         {
@@ -151,12 +156,17 @@ public class Dragon : MonoBehaviour
     void Die()
     {
         animator.SetTrigger(deadAnimHash);
-        GetComponent<MoveAlongWaypoints>().enabled = false;
+        mover.enabled = false;
 
         body.isKinematic = false;
         collider.enabled = false;
         body.isKinematic = false;
         body.velocity = new Vector2(deathForce.x * transform.localScale.x, deathForce.y);
+
+        if (onKilled != null)
+        {
+            onKilled.Invoke();
+        }
 
         Destroy(gameObject, destroyDelay);
     }
@@ -176,6 +186,10 @@ public class Dragon : MonoBehaviour
             {
                 coinEmitter.Emit(bonusCoinDropOnDeath);
                 Die();
+            }
+            else
+            {
+                animator.SetTrigger(hitAnimHash);
             }
         }
     }

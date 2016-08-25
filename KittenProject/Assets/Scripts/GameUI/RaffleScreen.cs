@@ -40,6 +40,7 @@ public class RaffleScreen : MonoBehaviour
         if (onEquip != null)
         {
             onEquip();
+            CoreLevelObjects.player.GetComponent<PlayerSkinSetter>().ResetSkin();
         }
     }
 

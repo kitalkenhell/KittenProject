@@ -24,7 +24,6 @@ public class PlotTwistCutscene : MonoBehaviour
     public GameObject flames;
     public Hellfire hellfire;
     public Transform hellfirePositionAfterCutscene;
-    public float hellfireSpeed;
 
     public CutsceneChatting introChatting;
     public CutsceneChatting guardIntroChatting;
@@ -82,7 +81,6 @@ public class PlotTwistCutscene : MonoBehaviour
         movieBars.Hide();
         playerController.enabled = true;
         dogCutsceneController.enabled = false;
-        hellfire.speed = hellfireSpeed;
 
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();
@@ -103,11 +101,9 @@ public class PlotTwistCutscene : MonoBehaviour
         knight.GetComponent<Knight>().enabled = true;
         knight.transform.position = knight.waypoints.Last().position;
         knight.enabled = false;
-        playerController.gameObject.SetActive(true);
         fireballThrowers.SetActive(false);
         flames.SetActive(true);
         hellfire.transform.SetPositionY(hellfirePositionAfterCutscene.position.y);
-        hellfire.speed = hellfireSpeed;
 
         cutsceneCamera.Skip();
         skipButton.Hide();
