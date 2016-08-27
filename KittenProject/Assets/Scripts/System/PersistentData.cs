@@ -103,6 +103,25 @@ public static class PersistentData
         }
     }
 
+    public static bool HasWatchedEndingCutscene
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("HasWatchedEndingCutscene");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("HasWatchedEndingCutscene", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("HasWatchedEndingCutscene");
+            }
+        }
+    }
+
     public static bool IsHavingBodySkin(string name)
     {
         return PlayerPrefs.HasKey("IsHavingBodySkin" + name);

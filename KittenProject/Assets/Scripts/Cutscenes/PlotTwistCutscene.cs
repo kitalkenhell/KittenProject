@@ -84,6 +84,7 @@ public class PlotTwistCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();
+        cutsceneCamera.enabled = false;
 
         PersistentData.HasWatchedPlotTwistCutscene = true;
     }

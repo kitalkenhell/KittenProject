@@ -28,6 +28,25 @@ public class LevelStopwatch : MonoBehaviour
         }
     }
 
+    public static void StartTimer()
+    {
+        if (stopped)
+        {
+            startTime = Time.timeSinceLevelLoad;
+            PostOffice.PostLevelStopwatchStarted();
+            stopped = false;
+        }
+    }
+
+    public static void StopTimer()
+    {
+        if (!stopped)
+        {
+            endTime = Time.timeSinceLevelLoad;
+            stopped = true;
+        }
+    }
+
     void Start()
     {
         startTime = endTime = Mathf.Infinity;

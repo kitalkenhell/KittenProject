@@ -9365,6 +9365,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   looping: 0
+  customWaypointControl: 0
+  currentWaypoint: 0
+  setPositionOnSpawn: 1
 --- !u!114 &11453638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9428,6 +9431,11 @@ MonoBehaviour:
   - 0.1
   - 0.1
   attackPlayerForceMagnitude: 70
+  onKilled:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!212 &21222254
 SpriteRenderer:
   m_ObjectHideFlags: 1

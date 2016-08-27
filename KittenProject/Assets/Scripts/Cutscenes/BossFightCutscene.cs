@@ -33,9 +33,9 @@ public class BossFightCutscene : MonoBehaviour
         dogCutsceneController.enabled = true;
         chihuahua.MoveToNextPoint();
 
-        if (PersistentData.HasWatchedBossFightCutscene)
+        if (PersistentData.HasWatchedEndingCutscene)
         {
-            skipButton.Show(); 
+            skipButton.Show();
         }
 
         yield return new WaitForSeconds(startChattingDelay);
@@ -62,7 +62,7 @@ public class BossFightCutscene : MonoBehaviour
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();
 
-        PersistentData.HasWatchedBossFightCutscene = true;
+        PersistentData.HasWatchedEndingCutscene = true;
     }
 
     IEnumerator SkipAnimation()
@@ -70,6 +70,7 @@ public class BossFightCutscene : MonoBehaviour
         const float fadeoutDuration = 1.0f;
         const float fadedDuration = 0.6f;
 
+        canSkip = false;
         moveFade.Show();
         yield return new WaitForSeconds(fadeoutDuration);
 
@@ -99,7 +100,7 @@ public class BossFightCutscene : MonoBehaviour
         if (canSkip)
         {
             StopAllCoroutines();
-            StartCoroutine(SkipAnimation()); 
+            StartCoroutine(SkipAnimation());
         }
     }
 }

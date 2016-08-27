@@ -114,9 +114,10 @@ public class IntroCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();
-
+       
         yield return new WaitForSeconds(startTutorialDelay);
 
+        cutsceneCamera.enabled = false;
         tutorial.SetTrigger(stepAnimHash);
 
         PersistentData.HasWatchedIntroCutscene = true;

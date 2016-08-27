@@ -8,12 +8,22 @@ public class CutsceneCamera : MonoBehaviour
     int nextShotAnimHash;
     int skipAnimHash;
 
-    void Start()
+    void Awake()
     {
         animator = GetComponent<Animator>();
 
         nextShotAnimHash = Animator.StringToHash("NextShot");
         skipAnimHash = Animator.StringToHash("Skip");
+    }
+
+    void OnEnable()
+    {
+        animator.enabled = true;
+    }
+
+    void OnDisable()
+    {
+        animator.enabled = false;
     }
 
     public void NextShot()

@@ -52,6 +52,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool ControlsEnabled
+    {
+        get;
+        set;
+    }
+
     BoxCollider2D boxCollider;
     Animator animator;
     PlayerLogic playerLogic;
@@ -112,6 +118,7 @@ public class PlayerController : MonoBehaviour
         isTouchingWall = false;
         doubleJump = false;
         onSlope = false;
+        ControlsEnabled = true;
         notGroundedCountdown = 0;
         runningMotrSpeed = 0;
         relativeJumpSpeed = jumpSpeed;
@@ -208,26 +215,25 @@ public class PlayerController : MonoBehaviour
 
     void Movement()
     {
-        if (disableControlsCountdown < 0 && !onSlope)
+        if (ControlsEnabled)
         {
-            input = inputManager.horizontalAxis;
-
-            if (Mathf.Abs(runningMotrSpeed) < movementSpeed && !onSlope)
+            if (disableControlsCountdown < 0 && !onSlope)
             {
-                runningMotrSpeed += input * acceleration;
-                runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
-            }
+                input = inputManager.horizontalAxis;
 
-            float sign = Mathf.Sign(runningMotrSpeed);
-
-            if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon || Mathf.Abs(runningMotrSpeed) > movementSpeed)
-            {
-                runningMotrSpeed -= friction * sign;
-                if (Mathf.Sign(runningMotrSpeed) != sign)
+                if (Mathf.Abs(runningMotrSpeed) < movementSpeed && !onSlope)
                 {
-                    runningMotrSpeed = 0;
+                    runningMotrSpeed += input * acceleration;
+                    runningMotrSpeed = Mathf.Clamp(runningMotrSpeed, -movementSpeed, movementSpeed);
                 }
+
+                ApplyFriction(); 
             }
+        }
+        else
+        {
+            input = 0;
+            ApplyFriction();
         }
 
         if (Mathf.Abs(pushingForce) > Mathf.Epsilon && disableControlsCountdown < 0)
@@ -242,6 +248,20 @@ public class PlayerController : MonoBehaviour
         }
 
         velocity.x = runningMotrSpeed + pushingForce;
+    }
+
+    void ApplyFriction()
+    {
+        float sign = Mathf.Sign(runningMotrSpeed);
+
+        if (Mathf.Sign(input) != Mathf.Sign(sign) || Mathf.Abs(input) < Mathf.Epsilon || Mathf.Abs(runningMotrSpeed) > movementSpeed)
+        {
+            runningMotrSpeed -= friction * sign;
+            if (Mathf.Sign(runningMotrSpeed) != sign)
+            {
+                runningMotrSpeed = 0;
+            }
+        }
     }
 
     void ApplyGravity()
