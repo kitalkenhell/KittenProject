@@ -5,6 +5,8 @@ public class Spear : MonoBehaviour
 {
     public float interval;
     public float offset;
+    public float soundDelay;
+    public AudioSource audioSource;
 
     Animation animaton;
 
@@ -25,6 +27,7 @@ public class Spear : MonoBehaviour
         while (true)
         {
             animaton.Play();
+            audioSource.PlayDelayed(soundDelay);
             yield return new WaitForSeconds(interval);
         }
 

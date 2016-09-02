@@ -4,7 +4,7 @@ using System.Collections;
 public class LevelSelection : MonoBehaviour
 {
     public LevelPainting[] levels;
-    public new CameraPan camera;
+    public CameraPan mainCamera;
 
     void Start()
     {
@@ -24,11 +24,11 @@ public class LevelSelection : MonoBehaviour
 
         if (levelToShow.nearestAdPainting != null && levelToShow.nearestAdPainting.SetDogIsSad())
         {
-            camera.Postion = levelToShow.nearestAdPainting.transform.position.x;
+            mainCamera.Postion = levelToShow.nearestAdPainting.transform.position.x;
         }
         else
         {
-            camera.Postion = levelToShow.transform.position.x;
+            mainCamera.Postion = levelToShow.transform.position.x;
         }
     }
 }

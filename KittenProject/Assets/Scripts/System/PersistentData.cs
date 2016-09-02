@@ -7,7 +7,7 @@ public static class PersistentData
     {
         get
         {
-            return PlayerPrefs.GetInt("Coins", 500);
+            return PlayerPrefs.GetInt("Coins", 0);
         }
 
         set

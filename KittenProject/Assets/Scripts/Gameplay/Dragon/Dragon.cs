@@ -11,6 +11,7 @@ public class Dragon : MonoBehaviour
     const float disableHeadLayerDelay = 0.5f;
 
     public CoinEmitter coinEmitter;
+    public AudioSource breathFireSound;
     public Vector2 deathForce;
     public float destroyDelay;
     public int hp;
@@ -28,10 +29,11 @@ public class Dragon : MonoBehaviour
     public GameObject fireballPrefab;
     public float[] fireballSpawnDelays;
     public float attackPlayerForceMagnitude;
+    public float breathFireSoundDelay;
     public UnityEvent onKilled;
 
     Animator animator;
-    new Collider2D collider;
+    Collider2D dragonCollider;
     Rigidbody2D body;
     MoveAlongWaypoints mover;
 
@@ -47,7 +49,7 @@ public class Dragon : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        collider = GetComponentInChildren<Collider2D>();
+        dragonCollider = GetComponentInChildren<Collider2D>();
         body = GetComponent<Rigidbody2D>();
         mover = GetComponent<MoveAlongWaypoints>();
 
@@ -103,6 +105,8 @@ public class Dragon : MonoBehaviour
 
     IEnumerator SpawnFireballs(bool aimPlayer)
     {
+        breathFireSound.PlayDelayed(breathFireSoundDelay);
+
         foreach (var delay in fireballSpawnDelays)
         {
             yield return new WaitForSeconds(delay);
@@ -159,7 +163,7 @@ public class Dragon : MonoBehaviour
         mover.enabled = false;
 
         body.isKinematic = false;
-        collider.enabled = false;
+        dragonCollider.enabled = false;
         body.isKinematic = false;
         body.velocity = new Vector2(deathForce.x * transform.localScale.x, deathForce.y);
 

@@ -70,8 +70,6 @@ public class EndingCutscene : MonoBehaviour
             skipButton.Show();
         }
 
-        //yield return new WaitForSeconds(endDelay);
-
         canSkip = false;
         skipButton.Hide();
         cutsceneCamera.NextShot();
@@ -81,7 +79,6 @@ public class EndingCutscene : MonoBehaviour
         credits.onFinished -= OnCreditsFinished;
 
         yield return new WaitForSeconds(showHudDelay);
-        hud.Show();
 
         cutsceneCamera.enabled = false;
         PostOffice.PostVictory();
@@ -111,7 +108,6 @@ public class EndingCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(showHudDelay);
         hud.gameObject.SetActive(true);
-        hud.Show();
     }
 
     void OnCreditsFinished()

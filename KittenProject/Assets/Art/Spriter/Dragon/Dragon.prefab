@@ -395,6 +395,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &192156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 462990}
+  - 82: {fileID: 8207496}
+  m_Layer: 0
+  m_Name: BreathFireSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &403932
 Transform:
   m_ObjectHideFlags: 1
@@ -639,6 +655,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 481182}
   m_RootOrder: 8
+--- !u!4 &462990
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192156}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -50.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 465688}
+  m_RootOrder: 3
 --- !u!4 &465688
 Transform:
   m_ObjectHideFlags: 1
@@ -653,6 +682,7 @@ Transform:
   - {fileID: 481182}
   - {fileID: 411384}
   - {fileID: 426412}
+  - {fileID: 462990}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &474926
@@ -9266,6 +9296,81 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events: []
+--- !u!82 &8207496
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 192156}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24308090, guid: 272da6d08d078964f9f8f7f71e5333ad,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 1849e6a78e28f504189886738c260b31, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 60
+  MaxDistance: 150
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &9536770
 Animator:
   serializedVersion: 3
@@ -9405,13 +9510,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coinEmitter: {fileID: 11429872}
+  breathFireSound: {fileID: 8207496}
   deathForce: {x: 10, y: 25}
   destroyDelay: 5
   hp: 10
   coinDropOnHit: 7
   bonusCoinDropOnDeath: 10
   facePlayerWhenNotMoving: 1
-  attackCooldown: 1
+  attackCooldown: 2.7
   randomAttackCooldown: 5
   maxAttackAngle: 45
   maxAttackDistance: 40
@@ -9431,6 +9537,7 @@ MonoBehaviour:
   - 0.1
   - 0.1
   attackPlayerForceMagnitude: 70
+  breathFireSoundDelay: 0.2
   onKilled:
     m_PersistentCalls:
       m_Calls: []

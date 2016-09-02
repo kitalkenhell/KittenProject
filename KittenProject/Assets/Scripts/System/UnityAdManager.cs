@@ -7,7 +7,7 @@ public class UnityAdManager : MonoBehaviour
 
     public static bool IsInterstitialLoaded()
     {
-        return Advertisement.IsReady();
+        return Advertisement.isInitialized && Advertisement.IsReady();
     }
 
     public static void ShowInterstitial()
@@ -20,7 +20,7 @@ public class UnityAdManager : MonoBehaviour
 
     public static bool IsVideoAdLoaded()
     {
-        return Advertisement.IsReady(videoAdZone);
+        return Advertisement.isInitialized && Advertisement.IsReady(videoAdZone);
     }
 
     public static void ShowVideoAd()
@@ -28,7 +28,7 @@ public class UnityAdManager : MonoBehaviour
         if (IsVideoAdLoaded())
         {
             ShowOptions options = new ShowOptions { resultCallback = HandleShowResult };
-            Advertisement.Show("rewardedVideoZone", options);
+            Advertisement.Show(videoAdZone, options);
         }
     }
 

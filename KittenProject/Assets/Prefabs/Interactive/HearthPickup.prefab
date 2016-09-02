@@ -124,6 +124,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 438290}
   m_RootOrder: 1
@@ -136,6 +137,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0, z: -0.6666667}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 438992}
   m_RootOrder: 0
@@ -148,6 +150,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 453678}
   - {fileID: 415572}
@@ -162,6 +165,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.8314696, w: 0.55557024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 112.5}
   m_Children:
   - {fileID: 434052}
   m_Father: {fileID: 462788}
@@ -175,6 +179,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -102}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 462788}
   m_RootOrder: 1
@@ -187,6 +192,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 438290}
   m_RootOrder: 0
@@ -197,8 +203,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1546.3, y: 141.2, z: -29}
+  m_LocalPosition: {x: 1543.3561, y: 49.45941, z: -29}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 438992}
   - {fileID: 443050}
@@ -229,10 +236,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24308090, guid: 272da6d08d078964f9f8f7f71e5333ad,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: fab4c4b194e7eb146bac45d749674386, type: 3}
+  m_audioClip: {fileID: 8300000, guid: fc389ee57e8f25541ae3fb1bc86ee3f4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
-  m_Pitch: 0.42
+  m_Volume: 0.4
+  m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -353,7 +360,6 @@ MonoBehaviour:
   shrinkingSpeed: 15
   sprite: {fileID: 453678}
   pickUpEffect: {fileID: 9596726}
-  player: {fileID: 0}
   destroy: 1
   type: 1
 --- !u!114 &11489920

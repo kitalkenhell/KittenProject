@@ -5,6 +5,7 @@ public class CatapultLever : MonoBehaviour
 {
     public Catapult catapult;
     public Animator animator;
+    public AudioSource audioSource;
 
     int toggleAnimHash = Animator.StringToHash("Toggle");
 
@@ -12,6 +13,7 @@ public class CatapultLever : MonoBehaviour
     {
         catapult.canShoot = true;
         animator.SetBool(toggleAnimHash, true);
+        audioSource.Play();
     }
 
     public void OnTriggerExit2D(Collider2D collider)

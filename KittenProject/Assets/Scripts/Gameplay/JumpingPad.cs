@@ -5,6 +5,7 @@ public class JumpingPad : MonoBehaviour
 {
     public Transform force;
     public float disableControlsDuration;
+    public AudioSource audioSource;
 
     Animator animator;
 
@@ -30,6 +31,7 @@ public class JumpingPad : MonoBehaviour
             active = false;
             animator.SetTrigger(jumpAnimHash);
             player.Push((force.position - transform.position).XY() * amplification, true, true, disableControlsDuration);
+            audioSource.Play();
         }
 
     }

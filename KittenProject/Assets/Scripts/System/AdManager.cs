@@ -11,6 +11,7 @@ public class AdManager : MonoBehaviour
     const int eventsNeededToShowAd = 6;
     const int eventCounterStartingOffset = 1;
     const int FirstTimeVideoAdWatchedOffset = -11;
+    const string toastText = "{0} Gems earned!";
 
     static int eventCounter;
 
@@ -142,6 +143,7 @@ public class AdManager : MonoBehaviour
         AdManager.LastTimeVideoAdWatched = DateTime.Now;
         PostOffice.PostVideoAdWatched();
         PersistentData.Coins += currentAdReward;
+        Android.ShowToast(toastText);
     }
 
 }

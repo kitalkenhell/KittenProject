@@ -6,6 +6,8 @@ public class Guillotine : MonoBehaviour
     public float interval;
     public float force;
     public Animator animator;
+    public AudioSource audioSource;
+    public float soundDelay;
 
     int cutAnimHash;
 
@@ -21,7 +23,13 @@ public class Guillotine : MonoBehaviour
         {
             yield return new WaitForSeconds(interval);
             animator.SetTrigger(cutAnimHash);
+            audioSource.PlayDelayed(soundDelay);
         }
 
+    }
+
+    public void PlaySound()
+    {
+        audioSource.Play();
     }
 }
