@@ -131,19 +131,17 @@ public class AdManager : MonoBehaviour
         {
             Android.ShowToast(Strings.Ad.noAd);
         }
-
-#if UNITY_EDITOR
-        AdManager.LastTimeVideoAdWatched = DateTime.Now;
-        PostOffice.PostVideoAdWatched();
-#endif
     }
 
     public void OnVideoAdWatched()
     {
         AdManager.LastTimeVideoAdWatched = DateTime.Now;
-        PostOffice.PostVideoAdWatched();
         PersistentData.Coins += currentAdReward;
-        Android.ShowToast(toastText);
+        PostOffice.PostVideoAdWatched();
+        
+#if !UNITY_EDITOR && UNITY_ANDROID
+        Android.ShowToast(string.Format(toastText, currentAdReward)); 
+#endif
     }
 
 }

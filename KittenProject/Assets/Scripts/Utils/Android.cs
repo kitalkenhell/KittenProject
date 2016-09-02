@@ -8,7 +8,7 @@ public static class Android
     static AndroidJavaObject activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
     public static void ShowToast(string message)
-    {        
+    {
         plugin.CallStatic("ShowToast", activity, message);
     }
 }

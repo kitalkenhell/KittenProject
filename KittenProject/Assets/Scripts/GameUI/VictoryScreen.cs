@@ -60,7 +60,11 @@ public class VictoryScreen : MonoBehaviour
 
         getGemsLabel.text = String.Format(Strings.VictoryScreen.getGems, levelFlow.levelProperties.coinsToGetStar);
         finishLevelLabel.text = String.Format(Strings.VictoryScreen.finishLevel, levelFlow.levelProperties.timeToGetStar);
+    }
 
+    void OnDestroy()
+    {
+        PostOffice.videoAdWatched += OnVideoAdWatched;
     }
 
     public void ShowCoinsAndTimer()
@@ -119,5 +123,14 @@ public class VictoryScreen : MonoBehaviour
     {
         AdManager.Instance.ShowVideoAd(CoreLevelObjects.player.Coins * AdManager.coinsMultiplier);
         adButton.SetTrigger(hideAnimHash);
+        PostOffice.videoAdWatched += OnVideoAdWatched;
+    }
+
+    public void OnVideoAdWatched()
+    {
+        if (!raffleButton.AlreadyOpenedGift && !raffleButton.gameObject.activeInHierarchy && raffleButton.CanEnter())
+        {
+            raffleButton.gameObject.SetActive(true);
+        }
     }
 }

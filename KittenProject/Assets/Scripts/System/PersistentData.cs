@@ -122,6 +122,25 @@ public static class PersistentData
         }
     }
 
+    public static bool HasOpenedFreeGift
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("HasOpenedFreeGift");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("HasOpenedFreeGift", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("HasOpenedFreeGift");
+            }
+        }
+    }
+
     public static bool IsHavingBodySkin(string name)
     {
         return PlayerPrefs.HasKey("IsHavingBodySkin" + name);

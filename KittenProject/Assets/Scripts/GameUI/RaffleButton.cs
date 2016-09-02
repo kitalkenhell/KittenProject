@@ -7,6 +7,15 @@ public class RaffleButton : MonoBehaviour
 
     public PlayerItems items;
     public GameObject raffleScreen;
+    public GameObject freePanel;
+    public GameObject paidPanel;
+    public LevelProperties raffleUnlockLevel;
+
+    public bool AlreadyOpenedGift
+    {
+        get;
+        private set;
+    }   
 
     int hideAnimHash;
 
@@ -17,17 +26,30 @@ public class RaffleButton : MonoBehaviour
         animator = GetComponent<Animator>();
 
         hideAnimHash = Animator.StringToHash("Hide");
+
+        paidPanel.SetActive(PersistentData.HasOpenedFreeGift);
+        freePanel.SetActive(!PersistentData.HasOpenedFreeGift);
+        AlreadyOpenedGift = false;
     }
 
     public void OnEnterRaffleButtonClicked()
     {
-        PersistentData.Coins -= coinsToEnter;
+        if (PersistentData.HasOpenedFreeGift)
+        {
+            PersistentData.Coins -= coinsToEnter;
+        }
+        else
+        {
+            PersistentData.HasOpenedFreeGift = true;
+        }
+
+        AlreadyOpenedGift = true;
         animator.SetTrigger(hideAnimHash);
         raffleScreen.SetActive(true);
     }
 
     public bool CanEnter()
     {
-        return PersistentData.Coins >= coinsToEnter && !items.HasAllSkins();
+        return !items.HasAllSkins() && ((raffleUnlockLevel.IsCompleted && !PersistentData.HasOpenedFreeGift) || PersistentData.Coins >= coinsToEnter);
     }
 }
