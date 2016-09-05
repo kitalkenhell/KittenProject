@@ -16,7 +16,7 @@ public class Utils
         return new Vector2(-v.y, v.x);
     }
 
-    public static void ReplaceSpritesWithUiImages(GameObject gameobject)
+    public static void ReplaceSpritesWithUiImages(GameObject gameobject, bool addCanvas)
     {
         SpriteRenderer[] renderers;
 
@@ -24,8 +24,20 @@ public class Utils
 
         foreach (var renderer in renderers)
         {
+            int depth = renderer.sortingOrder;
+
             Image image = renderer.gameObject.AddComponent<Image>();
             image.sprite = renderer.sprite;
+
+            if (addCanvas)
+            {
+                const int sortingOrderOffset = 100;
+
+                Canvas canvas = image.gameObject.AddComponent<Canvas>();
+                canvas.overrideSorting = true;
+                canvas.sortingOrder = depth + sortingOrderOffset;
+            }
+
             GameObject.Destroy(renderer);
         }
     }

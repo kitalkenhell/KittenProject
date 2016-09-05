@@ -48,7 +48,7 @@ public class HatSkinSelectionButton : MonoBehaviour
         hat.transform.parent = spritePivot;
         hat.transform.ResetLocal();
 
-        Utils.ReplaceSpritesWithUiImages(gameObject);
+        Utils.ReplaceSpritesWithUiImages(gameObject, false);
 
         spritePivot.transform.localScale = Vector3.one * skin.wardrobeScale;
         spritePivot.transform.Translate(skin.wardrobePivotOffset);

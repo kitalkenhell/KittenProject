@@ -10,6 +10,7 @@ public class FireballThrower : MonoBehaviour
     public MinMax randomForceMultiplier;
     public GameObject fireballPrefab;
     public Transform fireballForce;
+    public AudioSource audioSource;
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class FireballThrower : MonoBehaviour
         {
             fireball = (Instantiate(fireballPrefab, transform.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
             fireball.velocity = (fireballForce.position - transform.position) * forceMultiplier * randomForceMultiplier.Random();
+            audioSource.Play();
             yield return new WaitForSeconds(spawnInterval.Random());
         }
     }

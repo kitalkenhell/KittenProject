@@ -71,7 +71,7 @@ public class OutfitSkinSelectionButton : MonoBehaviour
         InstantiateSkinPart(skin.tongue, tonguePivot);
         InstantiateSkinPart(hatSkin.hat, hatPivot);
 
-        Utils.ReplaceSpritesWithUiImages(gameObject);
+        Utils.ReplaceSpritesWithUiImages(gameObject, false);
 
         if (GameSettings.PlayerBodySkin == skin.itemName)
         {

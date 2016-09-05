@@ -64,7 +64,7 @@ public class WardrobeSkinSetter : MonoBehaviour
         SetHatSkin(currentHatSkin);
         SetParachuteSkin(currentParachuteSkin);
 
-        Utils.ReplaceSpritesWithUiImages(gameObject);
+        Utils.ReplaceSpritesWithUiImages(gameObject, true);
     }
 
     void SetBodySkin(PlayerBodySkin skin, PlayerHatSkin hatSkin)
@@ -121,7 +121,7 @@ public class WardrobeSkinSetter : MonoBehaviour
         {
             GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
             skinPart.transform.parent = pivot;
-            skinPart.transform.ResetLocal(); 
+            skinPart.transform.ResetLocal();
         }
     }
 }

@@ -23,7 +23,6 @@ public class EndingCutscene : MonoBehaviour
 
     int stepAnimHash = Animator.StringToHash("Step");
 
-    DogCutsceneController dogCutsceneController;
     bool canSkip = false;
     bool started = false;
     bool creditsFinished = false;
@@ -61,14 +60,13 @@ public class EndingCutscene : MonoBehaviour
         credits.gameObject.SetActive(true);
         credits.onFinished += OnCreditsFinished;
 
-        yield return new WaitUntil(() => { return creditsFinished; });
-
-
         if (!PersistentData.HasWatchedBossFightCutscene)
         {
             PersistentData.HasWatchedBossFightCutscene = true;
             skipButton.Show();
         }
+
+        yield return new WaitUntil(() => { return creditsFinished; });
 
         canSkip = false;
         skipButton.Hide();

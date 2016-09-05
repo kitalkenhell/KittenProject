@@ -43,7 +43,7 @@ public class UpgradeSelectionButton : MonoBehaviour
         icon.transform.SetParent(spritePivot);
         icon.transform.ResetLocal();
 
-        Utils.ReplaceSpritesWithUiImages(gameObject);
+        Utils.ReplaceSpritesWithUiImages(gameObject, false);
 
         spritePivot.transform.localScale = Vector3.one * upgrade.wardrobeScale;
         spritePivot.transform.Translate(upgrade.wardrobePivotOffset);
