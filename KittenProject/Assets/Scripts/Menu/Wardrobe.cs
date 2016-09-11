@@ -279,24 +279,28 @@ public class Wardrobe : MonoBehaviour
     {
         if (lastOutfitSkinSelected != null && BuyItem(lastOutfitSkinSelected))
         {
+            AnalyticsManager.OnOutfitSkinBought(lastOutfitSkinSelected.itemName);
             PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.itemName, true);
             PostOffice.PostPlayerBodySkinBought(lastOutfitSkinSelected);
             RefreshButton(true, false);
         }
         else if (lastParachuteSkinSelected != null && BuyItem(lastParachuteSkinSelected))
         {
+            AnalyticsManager.OnParachuteSkinBought(lastParachuteSkinSelected.itemName);
             PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.itemName, true);
             PostOffice.PostPlayerParachuteSkinBought(lastParachuteSkinSelected);
             RefreshButton(true, false);
         }
         else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
+            AnalyticsManager.OnHatSkinBought(lastHatSkinSelected.itemName);
             PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
             PostOffice.PostPlayerHatSkinBought(lastHatSkinSelected);
             RefreshButton(true, false);
         }
         else if (lastUpgradeSelected != null && BuyItem(lastUpgradeSelected))
         {
+            AnalyticsManager.OnUpgradeBought(lastUpgradeSelected.itemName);
             PersistentData.IsHavingUpgrade(lastUpgradeSelected.itemName, true);
             lastUpgradeSelected.OnBought();
             PostOffice.PostPlayerUpgradeBought(lastUpgradeSelected);

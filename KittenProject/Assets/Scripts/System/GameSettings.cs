@@ -12,6 +12,7 @@ public static class GameSettings
 
         set
         {
+            AnalyticsManager.OnOutfitSkinSelected(value);
             PlayerPrefs.SetString("GameSettingsPlayerBodySkin", value);
             PlayerPrefs.Save();
         }
@@ -26,6 +27,7 @@ public static class GameSettings
 
         set
         {
+            AnalyticsManager.OnHatSkinSelected(value);
             PlayerPrefs.SetString("GameSettingsPlayerHatSkin", value);
             PlayerPrefs.Save();
         }
@@ -40,6 +42,7 @@ public static class GameSettings
 
         set
         {
+            AnalyticsManager.OnParachuteSkinSelected(value);
             PlayerPrefs.SetString("GameSettingsPlayerParachuteSkin", value);
             PlayerPrefs.Save();
         }

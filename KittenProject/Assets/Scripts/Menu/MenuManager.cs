@@ -47,7 +47,7 @@ public class MenuManager : MonoBehaviour
         PersistentData.IsHavingParachuteSkin(firstParachuteSkin.itemName, true);
 
         AdManager.Instance.IncrementEventCounter();
-        SocialManager.SignIn();
+        SocialManager.AutoSignIn();
 
         mainScreen.gameObject.SetActive(false);
         levelSelection.gameObject.SetActive(false);

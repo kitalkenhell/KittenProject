@@ -33,6 +33,44 @@ public static class PersistentData
         }
     }
 
+    public static bool TriedToSignInToSocialPlatform
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("TriedToSignInToSocialPlatform");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("TriedToSignInToSocialPlatform", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("TriedToSignInToSocialPlatform");
+            }
+        }
+    }
+
+    public static bool UseSocialPlatform
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("UseSocialPlatform");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("UseSocialPlatform", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("UseSocialPlatform");
+            }
+        }
+    }
+
     public static string LeaderboardScoresToPost
     {
         get
@@ -45,6 +83,39 @@ public static class PersistentData
         }
     }
 
+    public static string AchievementsToUnlock
+    {
+        get
+        {
+            return PlayerPrefs.GetString("AchievementsToUnlock", "");
+        }
+        set
+        {
+            PlayerPrefs.SetString("AchievementsToUnlock", value);
+        }
+    }
+
+    public static string AchievementsToIncrement
+    {
+        get
+        {
+            return PlayerPrefs.GetString("AchievementsToIncrement", "");
+        }
+        set
+        {
+            PlayerPrefs.SetString("AchievementsToIncrement", value);
+        }
+    }
+
+    public static int GetAchievementProgress(string id)
+    {
+        return PlayerPrefs.GetInt("AchievementProgress" + id, 0);
+    }
+
+    public static void IncrementAchievementProgress(string id, int increment = 1)
+    {
+        PlayerPrefs.SetInt("AchievementProgress" + id, GetAchievementProgress(id) + increment);
+    }
 
     public static bool HasWatchedIntroCutscene
     {

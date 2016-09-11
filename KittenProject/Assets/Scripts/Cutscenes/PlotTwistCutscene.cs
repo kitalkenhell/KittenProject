@@ -81,6 +81,7 @@ public class PlotTwistCutscene : MonoBehaviour
         movieBars.Hide();
         playerController.enabled = true;
         dogCutsceneController.enabled = false;
+        SocialManager.UnlockAchievement(SocialManager.Achievements.kidnappedKitten);
 
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();

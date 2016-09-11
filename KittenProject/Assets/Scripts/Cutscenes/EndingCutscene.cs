@@ -57,6 +57,8 @@ public class EndingCutscene : MonoBehaviour
         theEndChatting.Chat();
         yield return new WaitUntil(() => { return theEndChatting.HasEnded; });
 
+        SocialManager.UnlockAchievement(SocialManager.Achievements.kittenSaved);
+
         credits.gameObject.SetActive(true);
         credits.onFinished += OnCreditsFinished;
 
@@ -95,6 +97,7 @@ public class EndingCutscene : MonoBehaviour
         cutsceneCamera.Skip();
         skipButton.Hide();
         endingChatting.Skip();
+        theEndChatting.Skip();
         credits.gameObject.SetActive(false);
         credits.onFinished -= OnCreditsFinished;
 

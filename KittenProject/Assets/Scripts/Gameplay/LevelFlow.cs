@@ -34,6 +34,8 @@ public class LevelFlow : MonoBehaviour
         PostOffice.victory += OnVictory;
         PostOffice.levelQuit += OnLevelQuit;
 
+        AnalyticsManager.OnLevelStarted(levelProperties.sceneName);
+
         fadeAnimHash = Animator.StringToHash("Fade");
         showVictoryScreenAnimHash = Animator.StringToHash("ShowVictoryScreen");
 
