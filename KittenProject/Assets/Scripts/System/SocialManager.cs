@@ -10,16 +10,18 @@ public class SocialManager
 
     public class Achievements
     {
-        public const string finishTutorial = "CgkIgs_k3o0ZEAIQAw"; //
+        public const string finishTutorial = "CgkIgs_k3o0ZEAIQAw"; 
         public const string jumps = "CgkIgs_k3o0ZEAIQAQ";
-        public const string kidnappedKitten = "CgkIgs_k3o0ZEAIQBQ"; //
-        public const string kittenSaved = "CgkIgs_k3o0ZEAIQMA"; //
-        public const string coinsCollected = "CgkIgs_k3o0ZEAIQAg";
-        public const string hatsUnlocked = "CgkIgs_k3o0ZEAIQDA";
-        public const string coinFliesCollected = "CgkIgs_k3o0ZEAIQNA";
-        public const string goldenHourglasses = "	CgkIgs_k3o0ZEAIQMQ";
-        public const string goldenGems = "CgkIgs_k3o0ZEAIQMg";
-        public const string goldenKittens = "CgkIgs_k3o0ZEAIQMw";
+        public const string kidnappedKitten = "CgkIgs_k3o0ZEAIQBQ"; 
+        public const string kittenSaved = "CgkIgs_k3o0ZEAIQMA"; 
+        public const string gemsCollected = "CgkIgs_k3o0ZEAIQNg"; 
+        public const string hatsUnlocked = "CgkIgs_k3o0ZEAIQNQ"; 
+        public const string coinFliesCollected = "CgkIgs_k3o0ZEAIQNA"; 
+        public const string goldenHourglasses = "CgkIgs_k3o0ZEAIQMQ"; 
+        public const string goldenGems = "CgkIgs_k3o0ZEAIQMg"; 
+        public const string goldenKittens = "CgkIgs_k3o0ZEAIQMw"; 
+        public const string giftBought = "CgkIgs_k3o0ZEAIQDA";
+        public const string runAwayFromDragon = "CgkIgs_k3o0ZEAIQAg";
     }
 
     static bool IsLoggedIn

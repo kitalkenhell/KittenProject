@@ -294,6 +294,7 @@ public class Wardrobe : MonoBehaviour
         else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
             AnalyticsManager.OnHatSkinBought(lastHatSkinSelected.itemName);
+            SocialManager.IncrementAchievement(SocialManager.Achievements.hatsUnlocked);
             PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
             PostOffice.PostPlayerHatSkinBought(lastHatSkinSelected);
             RefreshButton(true, false);

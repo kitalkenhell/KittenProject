@@ -130,6 +130,7 @@ public class LevelFlow : MonoBehaviour
         levelProperties.BestCoinsScore = Mathf.Max(CoreLevelObjects.player.Coins, levelProperties.BestCoinsScore);
 
         PersistentData.Coins += CoreLevelObjects.player.Coins;
+        SocialManager.IncrementAchievement(SocialManager.Achievements.gemsCollected, CoreLevelObjects.player.Coins);
 
         hud.Hide();
         StartCoroutine(ShowVictoryScreen());

@@ -169,6 +169,7 @@ public class RaffleScreen : MonoBehaviour
         skinNameLabel.text = skin.itemName;
         parachute.SetActive(false);
         PersistentData.IsHavingHatSkin(skin.itemName, true);
+        SocialManager.IncrementAchievement(SocialManager.Achievements.hatsUnlocked);
 
         onEquip = () =>
         {

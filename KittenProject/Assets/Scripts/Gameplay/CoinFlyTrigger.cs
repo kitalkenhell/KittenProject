@@ -30,6 +30,8 @@ public class CoinFlyTrigger : MonoBehaviour
             pickUpSound.transform.parent = null;
             curveMover.enabled = false;
 
+            SocialManager.IncrementAchievement(SocialManager.Achievements.coinFliesCollected);
+
             GetComponent<CoinEmitter>().BurstEmit(amountOfCoins);
         }
     }

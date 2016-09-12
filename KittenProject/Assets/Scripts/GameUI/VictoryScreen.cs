@@ -78,6 +78,8 @@ public class VictoryScreen : MonoBehaviour
 
         if (!gemsCollected && levelFlow.levelProperties.HasCoinStar)
         {
+
+            SocialManager.IncrementAchievement(SocialManager.Achievements.goldenGems);
             gemAnimator.enabled = true;
             wait = true;
         }
@@ -89,6 +91,7 @@ public class VictoryScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealNextAwardDelay);
             }
 
+            SocialManager.IncrementAchievement(SocialManager.Achievements.goldenKittens);
             kittenAnimator.enabled = true;
             wait = true;
         }
@@ -100,6 +103,7 @@ public class VictoryScreen : MonoBehaviour
                 yield return new WaitForSeconds(revealNextAwardDelay);
             }
 
+            SocialManager.IncrementAchievement(SocialManager.Achievements.goldenHourglasses);
             hourglassAnimator.enabled = true;
         }
 

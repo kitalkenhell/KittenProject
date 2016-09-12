@@ -37,6 +37,7 @@ public class RaffleButton : MonoBehaviour
         if (PersistentData.HasOpenedFreeGift)
         {
             PersistentData.Coins -= coinsToEnter;
+            SocialManager.UnlockAchievement(SocialManager.Achievements.giftBought);
         }
         else
         {

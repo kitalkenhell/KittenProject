@@ -322,7 +322,6 @@ public class PlayerController : MonoBehaviour
                         if (movablePlatform != null)
                         {
                             relativeJumpSpeed = jumpSpeed + movablePlatform.Velocity.y * movablePlatformJumpSpeedInfluence;
-                            //Debug.Log(relativeJumpSpeed + " = " + jumpSpeed + "  +  " + movablePlatform.Velocity.y + "   *   " + movablePlatformJumpSpeedInfluence);
                         }
 
                         isGrounded = false;
@@ -330,6 +329,7 @@ public class PlayerController : MonoBehaviour
                         velocity.y = relativeJumpSpeed;
                         jumpingCountdown = jumpDuration;
                         animator.SetTrigger(jumpAnimHash);
+                        SocialManager.IncrementAchievement(SocialManager.Achievements.jumps);
                         return; 
                     }
                 }
