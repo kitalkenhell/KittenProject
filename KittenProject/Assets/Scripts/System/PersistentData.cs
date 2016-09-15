@@ -155,6 +155,25 @@ public static class PersistentData
         }
     }
 
+    public static bool HasWatchedDragonCutscene
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("HasWatchedDragonCutscene");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("HasWatchedDragonCutscene", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("HasWatchedDragonCutscene");
+            }
+        }
+    }
+
     public static bool HasWatchedBossFightCutscene
     {
         get

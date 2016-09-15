@@ -27,7 +27,10 @@ public class FireballThrower : MonoBehaviour
         {
             fireball = (Instantiate(fireballPrefab, transform.position, Quaternion.identity) as GameObject).GetComponentInChildren<Rigidbody2D>();
             fireball.velocity = (fireballForce.position - transform.position) * forceMultiplier * randomForceMultiplier.Random();
-            audioSource.Play();
+            if (audioSource != null)
+            {
+                audioSource.Play(); 
+            }
             yield return new WaitForSeconds(spawnInterval.Random());
         }
     }
