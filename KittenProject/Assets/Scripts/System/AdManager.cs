@@ -59,7 +59,7 @@ public class AdManager : MonoBehaviour
 
     static AdManager instance;
 
-    void Awake()
+    void Start()
     {
         if (instance == null)
         {
