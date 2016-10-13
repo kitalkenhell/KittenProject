@@ -120,8 +120,18 @@ public class WardrobeSkinSetter : MonoBehaviour
         if (isActive)
         {
             GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
+            PlayerSkinPartDisabler partDisabler = skinPart.GetComponent<PlayerSkinPartDisabler>();
+
             skinPart.transform.parent = pivot;
             skinPart.transform.ResetLocal();
+
+            if (partDisabler != null && partDisabler.enableOnlyInGame != null)
+            {
+                for (int i = 0; i < partDisabler.enableOnlyInGame.Length; i++)
+                {
+                    partDisabler.enableOnlyInGame[i].SetActive(false);
+                }
+            }
         }
     }
 }

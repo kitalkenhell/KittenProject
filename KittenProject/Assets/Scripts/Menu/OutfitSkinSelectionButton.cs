@@ -73,6 +73,9 @@ public class OutfitSkinSelectionButton : MonoBehaviour
 
         Utils.ReplaceSpritesWithUiImages(gameObject, false);
 
+        bodyPivot.parent.localScale = Vector3.one * skin.wardrobeScale;
+        bodyPivot.parent.Translate(skin.wardrobePivotOffset);
+
         if (GameSettings.PlayerBodySkin == skin.itemName)
         {
             lockedIcon.SetActive(false);

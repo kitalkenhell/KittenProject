@@ -880,7 +880,7 @@ namespace ChartboostSDK {
 
 #if UNITY_ANDROID
 		private Rect windowRect;
-		Texture2D transparentTexture = new Texture2D(1,1);
+		Texture2D transparentTexture;
 		GUIStyle transparent = new GUIStyle();
 
 		void OnGUI() {

@@ -27,17 +27,6 @@ public class PlayerSkinSetter : MonoBehaviour
         SetSkin();
     }
 
-    void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)
-    {
-        if (isActive)
-        {
-            GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
-            allSkinParts.Add(skinPart);
-            skinPart.transform.parent = pivot;
-            skinPart.transform.ResetLocal();
-        }
-    }
-
     public void ResetSkin()
     {
         foreach (var part in allSkinParts)
@@ -67,6 +56,27 @@ public class PlayerSkinSetter : MonoBehaviour
         InstantiateSkinPart(bodySkin.tail, tailPivot);
         InstantiateSkinPart(hatSkin.hat, hatPivot);
         InstantiateSkinPart(parachuteSkin.parachute, parachutePivot);
+    }
+
+    void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)
+    {
+        if (isActive)
+        {
+            GameObject skinPart = Instantiate(Resources.Load(prefabName, typeof(GameObject)) as GameObject);
+            PlayerSkinPartDisabler partDisabler = skinPart.GetComponent<PlayerSkinPartDisabler>();
+
+            allSkinParts.Add(skinPart);
+            skinPart.transform.parent = pivot;
+            skinPart.transform.ResetLocal();
+
+            if (partDisabler != null && partDisabler.enableOnlyInGame != null)
+            {
+                for (int i = 0; i < partDisabler.enableOnlyInGame.Length; i++)
+                {
+                    partDisabler.enableOnlyInGame[i].SetActive(true);
+                }
+            }
+        }
     }
 }
 

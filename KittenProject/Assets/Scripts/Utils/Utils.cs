@@ -28,6 +28,14 @@ public class Utils
 
             Image image = renderer.gameObject.AddComponent<Image>();
             image.sprite = renderer.sprite;
+            image.color = renderer.color;
+
+            //Vector2 pivot = renderer.sprite.pivot;
+            //pivot.x /= renderer.sprite.rect.width;
+            //pivot.y /= renderer.sprite.rect.height;
+
+            //image.rectTransform.SetAnchoredPositionX(image.transform.parent.localPosition.x);
+            //image.rectTransform.SetAnchoredPositionY(image.transform.parent.localPosition.y);
 
             if (addCanvas)
             {
