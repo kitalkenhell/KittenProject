@@ -24,6 +24,18 @@
      id="defs4">
     <linearGradient
        inkscape:collect="always"
+       id="linearGradient7413">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop7415" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop7417" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
        id="linearGradient5869">
       <stop
          style="stop-color:#99182b;stop-opacity:1"
@@ -1158,6 +1170,35 @@
        fx="-9292.7969"
        fy="44921.867"
        r="386.32886" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7413"
+       id="linearGradient7419"
+       x1="-5356.25"
+       y1="48571.113"
+       x2="-5343.75"
+       y2="47152.363"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-162.5,-87.5)" />
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Blur"
+       id="filter7441">
+      <feGaussianBlur
+         stdDeviation="65.37 64.5869"
+         result="fbSourceGraphic"
+         id="feGaussianBlur7443" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix7445" />
+      <feGaussianBlur
+         id="feGaussianBlur7447"
+         stdDeviation="65.37 64.59"
+         result="blur"
+         in="fbSourceGraphic" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1166,9 +1207,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.056568542"
-     inkscape:cx="-5578.6594"
-     inkscape:cy="-48342.691"
+     inkscape:zoom="0.16"
+     inkscape:cx="-4460.7076"
+     inkscape:cy="-47130.9"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -7721,8 +7762,8 @@ UkoppZQaN/8/v49devDCEwoAAAAASUVORK5CYII=
        x="-6222.5396"
        y="46925.914" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m -6123.3833,47061.574 1479.3787,-5.485 -735.0253,2027.877 z"
+       style="fill:url(#linearGradient7419);fill-opacity:1;stroke:none;stroke-width:5;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter7441)"
+       d="m -6268.2056,46974.074 1479.3787,-5.485 -735.0253,2027.877 z"
        id="rect7387-5"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />

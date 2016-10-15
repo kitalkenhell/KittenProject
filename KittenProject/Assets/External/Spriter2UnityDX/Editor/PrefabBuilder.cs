@@ -169,7 +169,7 @@ namespace Spriter2UnityDX.Prefabs {
 					if (success) success = false; //If the texture type isn't Sprite, or the pivot isn't set properly, 
 					var settings = new TextureImporterSettings (); //set the texture type and pivot
 					importer.ReadTextureSettings (settings);	//and make success false so the process can abort
-					settings.ApplyTextureType (TextureImporterType.Sprite, true); //after all the textures have been processed
+					settings.ApplyTextureType (TextureImporterType.Sprite); //after all the textures have been processed
 					settings.spriteAlignment = (int)SpriteAlignment.Custom;
 					settings.spritePivot = new Vector2 (file.pivot_x, file.pivot_y);
 					importer.SetTextureSettings (settings);
