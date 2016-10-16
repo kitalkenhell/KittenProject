@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class EndingCutscene : MonoBehaviour
 {
-    const float startChattingDelay = 1.0f;
+    const float startChattingDelay = 1.5f;
     const float theEndChattingDelay = 2.0f;
     const float showHudDelay = 1.0f;
 
@@ -17,6 +17,8 @@ public class EndingCutscene : MonoBehaviour
     public RuntimeAnimatorController cameraRuntimeAnimatorController;
     public Animator ChihuahuaMover;
     public Credits credits;
+    public DefeatedDragon defeatedDragon;
+    public Vector2 minDragonPosition;
 
     public CutsceneChatting endingChatting;
     public CutsceneChatting theEndChatting;
@@ -38,6 +40,9 @@ public class EndingCutscene : MonoBehaviour
         cutsceneCamera.gameObject.SetActive(false); //reset amimator
         cutsceneCamera.gameObject.SetActive(true);
         cutsceneCamera.enabled = true;
+        defeatedDragon.transform.SetPositionX(Mathf.Max(minDragonPosition.x, defeatedDragon.transform.position.x));
+        defeatedDragon.transform.SetPositionY(Mathf.Max(minDragonPosition.y, defeatedDragon.transform.position.y));
+        defeatedDragon.GoToFinalWaypoint();
         LevelStopwatch.StopTimer();
 
         if (PersistentData.HasWatchedBossFightCutscene)
