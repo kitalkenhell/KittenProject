@@ -64,7 +64,6 @@ public class FreefallCutscene : MonoBehaviour
             skipButton.Show();
         }
 
-        playerController.ControlsEnabled = true;
         skipButton.Hide();
         cutsceneCamera.NextShot();
         hud.Show();
@@ -72,6 +71,7 @@ public class FreefallCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(showHudDelay);
 
+        playerController.ControlsEnabled = true;
         cutsceneCamera.enabled = false;
     }
 
@@ -121,11 +121,12 @@ public class FreefallCutscene : MonoBehaviour
         moveFade.Hide();
 
         cutsceneCamera.enabled = false;
-        playerController.ControlsEnabled = true;
 
         yield return new WaitForSeconds(showHudDelay);
         hud.gameObject.SetActive(true);
         hud.Show();
+
+        playerController.ControlsEnabled = true;
     }
 
     public void Skip()

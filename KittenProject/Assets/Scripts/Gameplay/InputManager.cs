@@ -15,10 +15,16 @@ public class InputManager : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
 	void Update ()
     {
-        horizontalAxis = Input.GetAxis("Horizontal");
-        jumpButtonDown = Input.GetButton("Jump") ? true : false;
-	}
+        //horizontalAxis = Input.GetAxis("Horizontal");
+        //jumpButtonDown = Input.GetButton("Jump") ? true : false;
+    }
 #endif
+
+    public void Reset()
+    {
+        horizontalAxis = 0;
+        jumpButtonDown = false;
+    }
 
     public void LeftArrowDown()
     {

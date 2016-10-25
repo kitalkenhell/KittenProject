@@ -3,6 +3,8 @@ using System.Collections;
 
 public class HudController : MonoBehaviour
 {
+    public InputManager inputManager;
+
     Animator animator;
 
     int showHudAnimHash;
@@ -14,11 +16,17 @@ public class HudController : MonoBehaviour
         showHudAnimHash = Animator.StringToHash("ShowHud");
     }
 
+    public void OnEnable()
+    {
+        inputManager.Reset();
+    }
+
     public void Show()
     {
         if (gameObject.activeInHierarchy)
         {
-            animator.SetBool(showHudAnimHash, true); 
+            animator.SetBool(showHudAnimHash, true);
+            inputManager.Reset();
         }
     }
 
