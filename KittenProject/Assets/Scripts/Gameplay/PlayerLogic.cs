@@ -51,18 +51,26 @@ public class PlayerLogic : MonoBehaviour
         
     }
 
-    void Awake()
+    public PlayerController Controller
     {
-        CoreLevelObjects.player = this;
+        get
+        {
+            return controller;
+        }
     }
 
-    void Start()
+    void Awake()
     {
         coinEmitter = GetComponent<CoinEmitter>();
         controller = GetComponent<PlayerController>();
         body = GetComponent<Rigidbody2D>();
         collder = GetComponent<Collider2D>();
 
+        CoreLevelObjects.player = this;
+    }
+
+    void Start()
+    {
         victoryAnimHash = Animator.StringToHash("Victory");
         isInvulnerable = false;
         Coins = 0;

@@ -5,4 +5,5 @@ using System;
 public class PlayerParachuteSkin : PlayerItem
 {
     public string parachute;
+    public bool flipScaleWithPlayer;
 }

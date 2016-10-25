@@ -56,6 +56,8 @@ public class PlayerSkinSetter : MonoBehaviour
         InstantiateSkinPart(bodySkin.tail, tailPivot);
         InstantiateSkinPart(hatSkin.hat, hatPivot);
         InstantiateSkinPart(parachuteSkin.parachute, parachutePivot);
+
+        CoreLevelObjects.player.Controller.FlipParachute = parachuteSkin.flipScaleWithPlayer;
     }
 
     void InstantiateSkinPart(string prefabName, Transform pivot, bool isActive = true)

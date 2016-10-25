@@ -58,6 +58,12 @@ public class PlayerController : MonoBehaviour
         set;
     }
 
+    public bool FlipParachute
+    {
+        get;
+        set;
+    }
+
     BoxCollider2D boxCollider;
     Animator animator;
     PlayerLogic playerLogic;
@@ -181,6 +187,11 @@ public class PlayerController : MonoBehaviour
         parachuteScale += (usingParachute ? Time.deltaTime : -Time.deltaTime * parachuteClosingSpeedFactor) / parachuteDelay;
         parachuteScale = Mathf.Clamp01(parachuteScale);
         parachute.localScale = Vector3.one * parachuteOpeningCurve.Evaluate(parachuteScale) * parachuteMaxScale;
+
+        if (FlipParachute)
+        {
+            parachute.SetScaleX(Mathf.Abs(parachute.localScale.x) * Mathf.Sign(sprite.transform.localScale.x));
+        }
 
         if (!usingParachute)
         {
