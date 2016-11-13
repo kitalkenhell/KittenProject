@@ -217,6 +217,11 @@ namespace GooglePlayGames
             return null;
         }
 
+        public void Authenticate(Action<bool, string> callback)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Gets the display image of the user.
         /// </summary>
