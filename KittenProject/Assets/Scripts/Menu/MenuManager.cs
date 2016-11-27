@@ -49,6 +49,8 @@ public class MenuManager : MonoBehaviour
         AdManager.Instance.IncrementEventCounter();
         SocialManager.AutoSignIn();
 
+        PostOffice.backButtonClicked += OnBackButtonClicked;
+
         mainScreen.gameObject.SetActive(false);
         levelSelection.gameObject.SetActive(false);
         wardrobe.gameObject.SetActive(false);
@@ -84,6 +86,11 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        PostOffice.backButtonClicked -= OnBackButtonClicked;
+    }
+
     IEnumerator ViewTransition(CanvasGroup nextViewCanvas, Views nextView)
     {
         if (!isTransitioning)
@@ -115,18 +122,7 @@ public class MenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !isTransitioning)
         {
-            if (currentView == Views.mainScreen)
-            {
-                Application.Quit();
-            }
-            else if (currentView == Views.wardrobe)
-            {
-                StartCoroutine(ViewTransition(levelSelection, Views.levelSelection));
-            }
-            else
-            {
-                StartCoroutine(ViewTransition(mainScreen, Views.mainScreen));
-            }
+            OnBackButtonClicked();
         }
     }
 
@@ -158,5 +154,21 @@ public class MenuManager : MonoBehaviour
     public void LoadLevel()
     {
         SceneManager.LoadScene(LevelToLoad);
+    }
+
+    public void OnBackButtonClicked()
+    {
+        if (currentView == Views.mainScreen)
+        {
+            Application.Quit();
+        }
+        else if (currentView == Views.wardrobe)
+        {
+            StartCoroutine(ViewTransition(levelSelection, Views.levelSelection));
+        }
+        else
+        {
+            StartCoroutine(ViewTransition(mainScreen, Views.mainScreen));
+        }
     }
 }

@@ -50,17 +50,17 @@ public class PlayerItems : ScriptableObject
 
     public PlayerBodySkin GetEquipedBodySkin()
     {
-        return GetBodySkin(GameSettings.PlayerBodySkin);
+        return GetBodySkin(PersistentData.PlayerBodySkin);
     }
 
     public PlayerHatSkin GetEquipedHatSkin()
     {
-        return GetHatSkin(GameSettings.PlayerHatSkin);
+        return GetHatSkin(PersistentData.PlayerHatSkin);
     }
 
     public PlayerParachuteSkin GetEquipedParachuteSkin()
     {
-        return GetParachuteSkin(GameSettings.PlayerParachuteSkin);
+        return GetParachuteSkin(PersistentData.PlayerParachuteSkin);
     }
 
     public bool HasAllSkins()

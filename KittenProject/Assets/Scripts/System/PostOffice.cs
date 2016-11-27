@@ -13,6 +13,7 @@ public static class PostOffice
     public delegate void PlayerHatSkinEvent(PlayerHatSkin skin);
     public delegate void PlayerBodySkinEvent(PlayerBodySkin skin);
     public delegate void PlayerParachuteSkinEvent(PlayerParachuteSkin skin);
+    public delegate void AudioToggledEvent(bool isEnabled);
 
     public static event DebugMessage debugMessage;
     public static event CoinEvent coinCollected;
@@ -33,6 +34,9 @@ public static class PostOffice
     public static event PlayerBodySkinEvent playerBodySkinEquipped;
     public static event PlayerParachuteSkinEvent playerParachuteSkinBought;
     public static event PlayerParachuteSkinEvent playerParachuteSkinEquipped;
+    public static event Action backButtonClicked;
+    public static event AudioToggledEvent musicToggled;
+    public static event AudioToggledEvent sfxToggled;
 
     public static void PostDebugMessage(object message)
     {
@@ -183,6 +187,30 @@ public static class PostOffice
         if (playerParachuteSkinEquipped != null)
         {
             playerParachuteSkinEquipped(skin);
+        }
+    }
+
+    public static void PostBackButtonClicked()
+    {
+        if (backButtonClicked != null)
+        {
+            backButtonClicked();
+        }
+    }
+
+    public static void PostMusicToggled(bool isEnabled)
+    {
+        if (musicToggled != null)
+        {
+            musicToggled(isEnabled);
+        }
+    }
+
+    public static void PostSfxToggled(bool isEnabled)
+    {
+        if (sfxToggled != null)
+        {
+            sfxToggled(isEnabled);
         }
     }
 }

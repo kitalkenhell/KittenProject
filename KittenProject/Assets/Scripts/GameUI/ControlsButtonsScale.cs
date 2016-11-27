@@ -35,7 +35,7 @@ public class ControlsButtonsScale : MonoBehaviour
     [ContextMenu("Refresh Buttons")]
     public void RefreshButtons()
     {
-        float scale = Mathf.Clamp(GameSettings.UiScale, minScale, maxScale);
+        float scale = Mathf.Clamp(PersistentData.UiScale, minScale, maxScale);
 
         moveLeftButton.SetWidth(baseMoveLeftButtonWidth * scale);
 

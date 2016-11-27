@@ -49,7 +49,7 @@ public class CoinsWidget : MonoBehaviour
     {
         changingSpeed = 0;
 
-        while ((int) currentAmount != PersistentData.Coins)
+        while ((int) currentAmount < PersistentData.Coins - 1)
         {
             currentAmount = Mathf.SmoothDamp(currentAmount, PersistentData.Coins, ref changingSpeed, changingSmoothTime);
             amountLabel.text = ((int)currentAmount).ToString();

@@ -159,7 +159,7 @@ public class RaffleScreen : MonoBehaviour
 
         onEquip = () =>
         {
-            GameSettings.PlayerBodySkin = skin.itemName;
+            PersistentData.PlayerBodySkin = skin.itemName;
         };
     }
 
@@ -173,7 +173,7 @@ public class RaffleScreen : MonoBehaviour
 
         onEquip = () =>
         {
-            GameSettings.PlayerHatSkin = skin.itemName;
+            PersistentData.PlayerHatSkin = skin.itemName;
         };
     }
 
@@ -186,7 +186,7 @@ public class RaffleScreen : MonoBehaviour
 
         onEquip = () =>
         {
-            GameSettings.PlayerParachuteSkin = skin.itemName;
+            PersistentData.PlayerParachuteSkin = skin.itemName;
         };
     }
 }

@@ -33,6 +33,44 @@ public static class PersistentData
         }
     }
 
+    public static bool SfxDisabled
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("SfxDisabled");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("SfxDisabled", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("SfxDisabled");
+            }
+        }
+    }
+
+    public static bool MusicDisabled
+    {
+        get
+        {
+            return PlayerPrefs.HasKey("MusicDisabled");
+        }
+        set
+        {
+            if (value)
+            {
+                PlayerPrefs.SetInt("MusicDisabled", 0);
+            }
+            else
+            {
+                PlayerPrefs.DeleteKey("MusicDisabled");
+            }
+        }
+    }
+
     public static bool TriedToSignInToSocialPlatform
     {
         get
@@ -334,6 +372,64 @@ public static class PersistentData
         else
         {
             PlayerPrefs.DeleteKey("IsHavingUpgrade" + name);
+        }
+    }
+
+    public static string PlayerBodySkin
+    {
+        get
+        {
+            return PlayerPrefs.GetString("GameSettingsPlayerBodySkin", "Classic");
+        }
+
+        set
+        {
+            AnalyticsManager.OnOutfitSkinSelected(value);
+            PlayerPrefs.SetString("GameSettingsPlayerBodySkin", value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public static string PlayerHatSkin
+    {
+        get
+        {
+            return PlayerPrefs.GetString("GameSettingsPlayerHatSkin", "Classic");
+        }
+
+        set
+        {
+            AnalyticsManager.OnHatSkinSelected(value);
+            PlayerPrefs.SetString("GameSettingsPlayerHatSkin", value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public static string PlayerParachuteSkin
+    {
+        get
+        {
+            return PlayerPrefs.GetString("GameSettingsPlayerParachuteSkin", "Classic");
+        }
+
+        set
+        {
+            AnalyticsManager.OnParachuteSkinSelected(value);
+            PlayerPrefs.SetString("GameSettingsPlayerParachuteSkin", value);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public static float UiScale
+    {
+        get
+        {
+            return PlayerPrefs.GetFloat("GameSettingsUiScale", 1.2f);
+        }
+
+        set
+        {
+            PlayerPrefs.SetFloat("GameSettingsUiScale", value);
         }
     }
 }

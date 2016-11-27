@@ -53,7 +53,7 @@ public class ParachuteSkinSelectionButton : MonoBehaviour
         spritePivot.transform.Translate(skin.wardrobePivotOffset);
 
 
-        if (GameSettings.PlayerParachuteSkin == skin.itemName)
+        if (PersistentData.PlayerParachuteSkin == skin.itemName)
         {
             lockedIcon.SetActive(false);
             equippedIcon.SetActive(true);

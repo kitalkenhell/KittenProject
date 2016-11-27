@@ -18,4 +18,15 @@ public static class Strings
     {
         public const string noAd = "No ad available";
     }
+
+    public static class Wardrobe
+    {
+        public const string skinUnlocked = "Skin Unlocked!";
+        public const string upgradeUnlocked = "Upgrade Unlocked!";
+    }
+
+    public static class Toasts
+    {
+        public const string needMoreGems = "You need more gems!";
+    }
 }

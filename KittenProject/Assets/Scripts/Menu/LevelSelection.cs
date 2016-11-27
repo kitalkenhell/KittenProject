@@ -5,6 +5,7 @@ public class LevelSelection : MonoBehaviour
 {
     public LevelPainting[] levels;
     public CameraPan mainCamera;
+    public GameObject tutorialArrow;
 
     void Start()
     {
@@ -30,5 +31,7 @@ public class LevelSelection : MonoBehaviour
         {
             mainCamera.Postion = levelToShow.transform.position.x;
         }
+
+        tutorialArrow.SetActive(!levels.First().levelProperties.IsCompleted);
     }
 }

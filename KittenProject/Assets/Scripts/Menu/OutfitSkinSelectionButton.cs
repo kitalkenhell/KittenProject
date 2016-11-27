@@ -76,7 +76,7 @@ public class OutfitSkinSelectionButton : MonoBehaviour
         bodyPivot.parent.localScale = Vector3.one * skin.wardrobeScale;
         bodyPivot.parent.Translate(skin.wardrobePivotOffset);
 
-        if (GameSettings.PlayerBodySkin == skin.itemName)
+        if (PersistentData.PlayerBodySkin == skin.itemName)
         {
             lockedIcon.SetActive(false);
             equippedIcon.SetActive(true);

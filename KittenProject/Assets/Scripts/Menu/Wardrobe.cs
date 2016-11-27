@@ -27,15 +27,18 @@ public class Wardrobe : MonoBehaviour
     public Animator outfitsPanel;
     public Animator hatsPanel;
     public Animator upgradesPanel;
+    public Animator buyEffect;
 
     public GameObject parachuteButtonPrefab;
     public GameObject outfitButtonPrefab;
     public GameObject hatButtonPrefab;
     public GameObject upgradesButtonPrefab;
 
+    public Text unlockLabel;
     public WardrobeSkinSetter dogePreview;
 
     int showAnimHash;
+    int buyAnimHash;
 
     Views currentView;
     PlayerBodySkin lastOutfitSkinSelected = null;
@@ -46,6 +49,7 @@ public class Wardrobe : MonoBehaviour
     void Awake()
     {
         showAnimHash = Animator.StringToHash("Show");
+        buyAnimHash = Animator.StringToHash("Buy");
 
         StartCoroutine(LoadData());
     }
@@ -151,7 +155,7 @@ public class Wardrobe : MonoBehaviour
 
     bool BuyItem(PlayerItem skin)
     {
-        if (PersistentData.Coins > skin.price)
+        if (PersistentData.Coins >= skin.price)
         {
             PersistentData.Coins -= skin.price;
             return true;
@@ -182,7 +186,7 @@ public class Wardrobe : MonoBehaviour
         lastUpgradeSelected = null;
         priceLabel.text = skin.price.ToString();
 
-        RefreshButton(PersistentData.IsHavingParachuteSkin(skin.itemName), GameSettings.PlayerParachuteSkin == skin.itemName);
+        RefreshButton(PersistentData.IsHavingParachuteSkin(skin.itemName), PersistentData.PlayerParachuteSkin == skin.itemName);
         dogePreview.SetSkin(skin);
     }
 
@@ -194,7 +198,7 @@ public class Wardrobe : MonoBehaviour
         lastUpgradeSelected = null;
         priceLabel.text = skin.price.ToString();
 
-        RefreshButton(PersistentData.IsHavingBodySkin(skin.itemName), GameSettings.PlayerBodySkin == skin.itemName);
+        RefreshButton(PersistentData.IsHavingBodySkin(skin.itemName), PersistentData.PlayerBodySkin == skin.itemName);
         dogePreview.SetSkin(skin);
     }
 
@@ -206,7 +210,7 @@ public class Wardrobe : MonoBehaviour
         lastUpgradeSelected = null;
         priceLabel.text = skin.price.ToString();
 
-        RefreshButton(PersistentData.IsHavingHatSkin(skin.itemName), GameSettings.PlayerHatSkin == skin.itemName);
+        RefreshButton(PersistentData.IsHavingHatSkin(skin.itemName), PersistentData.PlayerHatSkin == skin.itemName);
         dogePreview.SetSkin(skin);
     }
 
@@ -257,19 +261,19 @@ public class Wardrobe : MonoBehaviour
     {
         if (lastOutfitSkinSelected != null)
         {
-            GameSettings.PlayerBodySkin = lastOutfitSkinSelected.itemName;
+            PersistentData.PlayerBodySkin = lastOutfitSkinSelected.itemName;
             RefreshButton(true, true);
             PostOffice.PostPlayerBodySkinEquipped(lastOutfitSkinSelected);
         }
         else if (lastParachuteSkinSelected != null)
         {
-            GameSettings.PlayerParachuteSkin = lastParachuteSkinSelected.itemName;
+            PersistentData.PlayerParachuteSkin = lastParachuteSkinSelected.itemName;
             RefreshButton(true, true);
             PostOffice.PostPlayerParachuteSkinEquipped(lastParachuteSkinSelected);
         }
         else if (lastHatSkinSelected != null)
         {
-            GameSettings.PlayerHatSkin = lastHatSkinSelected.itemName;
+            PersistentData.PlayerHatSkin = lastHatSkinSelected.itemName;
             RefreshButton(true, true);
             PostOffice.PostPlayerHatSkinEquipped(lastHatSkinSelected);
         }
@@ -277,19 +281,23 @@ public class Wardrobe : MonoBehaviour
 
     public void OnBuyButtonPressed()
     {
+        bool bought = false;
+
         if (lastOutfitSkinSelected != null && BuyItem(lastOutfitSkinSelected))
         {
             AnalyticsManager.OnOutfitSkinBought(lastOutfitSkinSelected.itemName);
             PersistentData.IsHavingBodySkin(lastOutfitSkinSelected.itemName, true);
             PostOffice.PostPlayerBodySkinBought(lastOutfitSkinSelected);
-            RefreshButton(true, false);
+            unlockLabel.text = Strings.Wardrobe.skinUnlocked;
+            bought = true;
         }
         else if (lastParachuteSkinSelected != null && BuyItem(lastParachuteSkinSelected))
         {
             AnalyticsManager.OnParachuteSkinBought(lastParachuteSkinSelected.itemName);
             PersistentData.IsHavingParachuteSkin(lastParachuteSkinSelected.itemName, true);
             PostOffice.PostPlayerParachuteSkinBought(lastParachuteSkinSelected);
-            RefreshButton(true, false);
+            unlockLabel.text = Strings.Wardrobe.skinUnlocked;
+            bought = true;
         }
         else if (lastHatSkinSelected != null && BuyItem(lastHatSkinSelected))
         {
@@ -297,7 +305,8 @@ public class Wardrobe : MonoBehaviour
             SocialManager.IncrementAchievement(SocialManager.Achievements.hatsUnlocked);
             PersistentData.IsHavingHatSkin(lastHatSkinSelected.itemName, true);
             PostOffice.PostPlayerHatSkinBought(lastHatSkinSelected);
-            RefreshButton(true, false);
+            unlockLabel.text = Strings.Wardrobe.skinUnlocked;
+            bought = true;
         }
         else if (lastUpgradeSelected != null && BuyItem(lastUpgradeSelected))
         {
@@ -306,7 +315,21 @@ public class Wardrobe : MonoBehaviour
             lastUpgradeSelected.OnBought();
             PostOffice.PostPlayerUpgradeBought(lastUpgradeSelected);
             lastUpgradeSelected = null;
+            unlockLabel.text = Strings.Wardrobe.upgradeUnlocked;
+            bought = true;
+        }
+
+        if (bought)
+        {
             RefreshButton(true, false);
+            OnEquipButtonPressed();
+            buyEffect.SetTrigger(buyAnimHash);
+        }
+        else
+        {
+#if !UNITY_EDITOR && UNITY_ANDROID
+            Android.ShowToast(Strings.Toasts.needMoreGems); 
+#endif
         }
     }
 }

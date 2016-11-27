@@ -9,6 +9,7 @@ public class CameraPan : MonoBehaviour
     public float sensitivity;
     public float bounciness;
     public MinMax positionBounds;
+    public GameObject levelSelectionScreen;
 
     float lastMousePosition;
     float speed;
@@ -27,22 +28,26 @@ public class CameraPan : MonoBehaviour
 
     void Update()
     {
+
         int touchIndex = 0;
         int leftButton = 0;
 
-        if (Input.touchCount > touchIndex && Input.GetTouch(touchIndex).phase == TouchPhase.Moved)
+        if (levelSelectionScreen.activeInHierarchy)
         {
-            speed = Mathf.MoveTowards(speed, Input.GetTouch(touchIndex).deltaPosition.x * sensitivity, acceleration * Time.deltaTime);
-        }
-        else if (Input.GetMouseButton(leftButton))
-        {
-            speed = Mathf.MoveTowards(speed, (Input.mousePosition.x - lastMousePosition) * sensitivity, acceleration * Time.deltaTime);
-            lastMousePosition = Input.mousePosition.x;
-        }
-        else
-        {
-            lastMousePosition = Input.mousePosition.x;
-            speed = Mathf.MoveTowards(speed, 0, Mathf.Max(Mathf.Abs(speed * deaccelerationSpeedFactor * Time.deltaTime), minDeacceleration));
+            if (Input.touchCount > touchIndex && Input.GetTouch(touchIndex).phase == TouchPhase.Moved)
+            {
+                speed = Mathf.MoveTowards(speed, Input.GetTouch(touchIndex).deltaPosition.x * sensitivity, acceleration * Time.deltaTime);
+            }
+            else if (Input.GetMouseButton(leftButton))
+            {
+                speed = Mathf.MoveTowards(speed, (Input.mousePosition.x - lastMousePosition) * sensitivity, acceleration * Time.deltaTime);
+                lastMousePosition = Input.mousePosition.x;
+            }
+            else
+            {
+                lastMousePosition = Input.mousePosition.x;
+                speed = Mathf.MoveTowards(speed, 0, Mathf.Max(Mathf.Abs(speed * deaccelerationSpeedFactor * Time.deltaTime), minDeacceleration));
+            } 
         }
 
         transform.Translate(-speed * Time.deltaTime, 0, 0);

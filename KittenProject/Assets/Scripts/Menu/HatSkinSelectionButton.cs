@@ -53,7 +53,7 @@ public class HatSkinSelectionButton : MonoBehaviour
         spritePivot.transform.localScale = Vector3.one * skin.wardrobeScale;
         spritePivot.transform.Translate(skin.wardrobePivotOffset);
 
-        if (GameSettings.PlayerHatSkin == skin.itemName)
+        if (PersistentData.PlayerHatSkin == skin.itemName)
         {
             lockedIcon.SetActive(false);
             equippedIcon.SetActive(true);

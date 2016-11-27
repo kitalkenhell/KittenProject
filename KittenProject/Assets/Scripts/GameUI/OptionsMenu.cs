@@ -10,6 +10,8 @@ public class OptionsMenu : MonoBehaviour
     public Slider uiScaleSlider;
     public Text uiScaleText;
     public ControlsButtonsScale buttonScaler;
+    public Toggle musicToggle;
+    public Toggle sfxToggle;
     public PauseMenu pauseMenu;
 
     Animator animator;
@@ -25,7 +27,7 @@ public class OptionsMenu : MonoBehaviour
 
     void OnEnable()
     {
-        uiScaleSlider.value = GameSettings.UiScale;
+        uiScaleSlider.value = PersistentData.UiScale;
         uiScaleText.text = Strings.PauseMenu.uiScale + String.Format("{0:0.0}", uiScaleSlider.value);
 
         animator.SetTrigger(toggleAnimHash);
@@ -40,7 +42,7 @@ public class OptionsMenu : MonoBehaviour
     }
     public void OnUiScaleSlider(float scale)
     {
-        GameSettings.UiScale = uiScaleSlider.value;
+        PersistentData.UiScale = uiScaleSlider.value;
         uiScaleText.text = Strings.PauseMenu.uiScale + String.Format("{0:0.0}", uiScaleSlider.value);
         buttonScaler.RefreshButtons();
     }
@@ -48,6 +50,18 @@ public class OptionsMenu : MonoBehaviour
     public void OnBackButtonClicked()
     {
         GoBack();
+    }
+
+    public void OnSfxToggled()
+    {
+        PersistentData.MusicDisabled = !sfxToggle.isOn;
+        PostOffice.PostSfxToggled(sfxToggle.isOn);
+    }
+
+    public void OnMusicToggled()
+    {
+        PersistentData.SfxDisabled = !musicToggle.isOn;
+        PostOffice.PostMusicToggled(musicToggle.isOn);
     }
 
     void GoBack()
