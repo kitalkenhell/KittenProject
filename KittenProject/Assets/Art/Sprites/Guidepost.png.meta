@@ -6,12 +6,12 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: GuidepostStand
     21300002: GuidepostArrow
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -23,10 +23,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -37,22 +35,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 50
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: GuidepostStand
+    - serializedVersion: 2
+      name: GuidepostStand
       rect:
         serializedVersion: 2
         x: 0
@@ -62,16 +90,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 23.5, y: 201}
-        - {x: 20.5, y: 203}
-        - {x: -26.5, y: 203}
-        - {x: -28.5, y: 202}
-        - {x: -28.5, y: -203}
-        - {x: 28.5, y: -203}
-        - {x: 28.5, y: -98}
-        - {x: 25.5, y: 62}
-    - name: GuidepostArrow
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: GuidepostArrow
       rect:
         serializedVersion: 2
         x: 87
@@ -81,21 +103,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 84.5, y: 77}
-        - {x: -24.5, y: 78}
-        - {x: -53.5, y: 79}
-        - {x: -165.5, y: 79}
-        - {x: -165.5, y: 40}
-        - {x: -168.5, y: 23}
-        - {x: -168.5, y: -74}
-        - {x: -167.5, y: -75}
-        - {x: -156.5, y: -76}
-        - {x: 16.5, y: -79}
-        - {x: 96.5, y: -79}
-        - {x: 94.5, y: -77}
-        - {x: 168.5, y: -3}
-        - {x: 168.5, y: 5}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Game
   userData: 

@@ -6,12 +6,12 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: sunglasses
     21300002: sunglassesTrail
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -23,10 +23,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -37,22 +35,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 70
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: sunglasses
+    - serializedVersion: 2
+      name: sunglasses
       rect:
         serializedVersion: 2
         x: 0
@@ -63,7 +91,9 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: sunglassesTrail
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: sunglassesTrail
       rect:
         serializedVersion: 2
         x: 35
@@ -73,23 +103,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -44, y: 27.5}
-        - {x: -44, y: -25.5}
-        - {x: -42, y: -27.5}
-        - {x: -37, y: -27.5}
-        - {x: -35, y: -25.5}
-        - {x: -35, y: 27.5}
-      - - {x: 36, y: 27.5}
-        - {x: 36, y: -23.5}
-        - {x: 38, y: -25.5}
-        - {x: 42, y: -25.5}
-        - {x: 44, y: -23.5}
-        - {x: 44, y: 27.5}
-      - - {x: -24, y: 23.5}
-        - {x: -24, y: -19.5}
-        - {x: -15, y: -19.5}
-        - {x: -15, y: 23.5}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Common
   userData: 

@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22466498}
-  - 222: {fileID: 22282670}
-  - 114: {fileID: 11492814}
+  - component: {fileID: 22466498}
+  - component: {fileID: 22282670}
+  - component: {fileID: 11492814}
   m_Layer: 5
   m_Name: Amount
   m_TagString: Untagged
@@ -22,13 +22,13 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22452350}
-  - 222: {fileID: 22200176}
-  - 114: {fileID: 11464760}
-  - 114: {fileID: 11415628}
-  - 114: {fileID: 11406616}
+  - component: {fileID: 22452350}
+  - component: {fileID: 22200176}
+  - component: {fileID: 11464760}
+  - component: {fileID: 11415628}
+  - component: {fileID: 11406616}
   m_Layer: 5
   m_Name: CoinCounter
   m_TagString: Untagged
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amountLabel: {fileID: 11492814}
+  changingSmoothTime: 0
 --- !u!114 &11415628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -146,10 +147,11 @@ RectTransform:
   - {fileID: 22466498}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 92, y: -21}
-  m_SizeDelta: {x: 61.5, y: 50.15734}
+  m_SizeDelta: {x: 61.5, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &22466498
 RectTransform:
@@ -163,6 +165,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22452350}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 10, y: -0.00005722046}

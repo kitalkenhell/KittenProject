@@ -8,12 +8,12 @@ TextureImporter:
     21300002: Windows_1
     21300004: Windows_2
     21300006: Windows_3
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -25,10 +25,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 1024
@@ -39,22 +37,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Windows_0
+    - serializedVersion: 2
+      name: Windows_0
       rect:
         serializedVersion: 2
         x: 0
@@ -64,49 +92,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 114.5, y: 158.1597}
-        - {x: 112.5, y: 163.1597}
-        - {x: 107.5, y: 173.1597}
-        - {x: 97.5, y: 189.1597}
-        - {x: 92.5, y: 196.1597}
-        - {x: 86.5, y: 204.1597}
-        - {x: 79.5, y: 211.1597}
-        - {x: 72.5, y: 219.1597}
-        - {x: 59.5, y: 232.1597}
-        - {x: 47.5, y: 242.1597}
-        - {x: 40.5, y: 248.1597}
-        - {x: 33.5, y: 253.1597}
-        - {x: 27.5, y: 257.1597}
-        - {x: 17.5, y: 263.1597}
-        - {x: 14.5, y: 265.1597}
-        - {x: 4.5, y: 270.1597}
-        - {x: -5.5, y: 270.1597}
-        - {x: -7.5, y: 269.1597}
-        - {x: -12.5, y: 266.1597}
-        - {x: -22.5, y: 261.1597}
-        - {x: -26.5, y: 258.1597}
-        - {x: -36.5, y: 252.1597}
-        - {x: -41.5, y: 248.1597}
-        - {x: -47.5, y: 243.1597}
-        - {x: -52.5, y: 239.1597}
-        - {x: -60.5, y: 232.1597}
-        - {x: -75.5, y: 217.1597}
-        - {x: -80.5, y: 211.1597}
-        - {x: -83.5, y: 207.1597}
-        - {x: -89.5, y: 200.1597}
-        - {x: -92.5, y: 194.1597}
-        - {x: -97.5, y: 187.1597}
-        - {x: -102.5, y: 178.1597}
-        - {x: -110.5, y: 163.1597}
-        - {x: -116.5, y: 152.1597}
-        - {x: -118.5, y: 147.1597}
-        - {x: -121.5, y: 142.1597}
-        - {x: -121.5, y: -269.8403}
-        - {x: 121.5, y: -269.8403}
-        - {x: 121.5, y: 142.1597}
-        - {x: 119.5, y: 147.1597}
-    - name: Windows_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Windows_1
       rect:
         serializedVersion: 2
         x: 373
@@ -116,58 +105,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 87.819, y: -214.45209}
-        - {x: 89.819, y: -181.45209}
-        - {x: 90.819, y: -149.45209}
-        - {x: 92.819, y: -117.45209}
-        - {x: 95.819, y: -64.45209}
-        - {x: 96.819, y: -36.452087}
-        - {x: 100.819, y: 30.547913}
-        - {x: 101.819, y: 60.547913}
-        - {x: 104.819, y: 109.54791}
-        - {x: 105.819, y: 126.54791}
-        - {x: 107.819, y: 189.54791}
-        - {x: 108.819, y: 190.54791}
-        - {x: 110.819, y: 223.54791}
-        - {x: 110.819, y: 280.5479}
-        - {x: 109.819, y: 282.5479}
-        - {x: 92.819, y: 296.5479}
-        - {x: 29.819, y: 344.5479}
-        - {x: 17.819, y: 353.5479}
-        - {x: 11.819, y: 358.5479}
-        - {x: -0.18099976, y: 358.5479}
-        - {x: -34.181, y: 334.5479}
-        - {x: -107.181, y: 282.5479}
-        - {x: -109.181, y: 279.5479}
-        - {x: -109.181, y: 226.54791}
-        - {x: -108.181, y: 203.54791}
-        - {x: -107.181, y: 182.54791}
-        - {x: -106.181, y: 140.54791}
-        - {x: -105.181, y: 117.54791}
-        - {x: -103.181, y: 73.54791}
-        - {x: -102.181, y: 52.547913}
-        - {x: -101.181, y: 10.547913}
-        - {x: -100.181, y: -12.452087}
-        - {x: -98.181, y: -56.452087}
-        - {x: -96.181, y: -99.45209}
-        - {x: -95.181, y: -142.45209}
-        - {x: -92.181, y: -208.45209}
-        - {x: -91.181, y: -229.45209}
-        - {x: -90.181, y: -272.4521}
-        - {x: -89.181, y: -294.4521}
-        - {x: -87.181, y: -350.4521}
-        - {x: -82.181, y: -353.4521}
-        - {x: -61.181, y: -353.4521}
-        - {x: -42.181, y: -354.4521}
-        - {x: -22.181, y: -355.4521}
-        - {x: 1.8190002, y: -356.4521}
-        - {x: 35.819, y: -357.4521}
-        - {x: 79.819, y: -357.4521}
-        - {x: 80.819, y: -343.4521}
-        - {x: 84.819, y: -278.4521}
-        - {x: 86.819, y: -214.45209}
-    - name: Windows_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Windows_2
       rect:
         serializedVersion: 2
         x: 726
@@ -177,20 +118,10 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -41.63513, y: 178.38657}
-        - {x: -64.63513, y: 133.38657}
-        - {x: -64.63513, y: -177.61343}
-        - {x: 66.36487, y: -177.61343}
-        - {x: 66.36487, y: 159.38657}
-        - {x: 26.364868, y: 178.38657}
-      - - {x: -28.635132, y: -101.613434}
-        - {x: -39.63513, y: 98.386566}
-        - {x: 0.36486816, y: 147.38657}
-        - {x: 40.36487, y: 106.386566}
-        - {x: 29.364868, y: -120.613434}
-        - {x: -26.635132, y: -144.61343}
-    - name: Windows_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Windows_3
       rect:
         serializedVersion: 2
         x: 966
@@ -200,36 +131,8 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 107.14252, y: 71}
-        - {x: 107.14252, y: 100}
-        - {x: 102.14252, y: 107}
-        - {x: 96.14252, y: 113}
-        - {x: 87.14252, y: 117}
-        - {x: 96.14252, y: 145}
-        - {x: 84.14252, y: 174}
-        - {x: 66.14252, y: 192}
-        - {x: 45.142517, y: 207}
-        - {x: 18.142517, y: 220}
-        - {x: 12.142517, y: 222}
-        - {x: -11.857483, y: 222}
-        - {x: -43.857483, y: 205}
-        - {x: -65.85748, y: 189}
-        - {x: -77.85748, y: 178}
-        - {x: -95.85748, y: 156}
-        - {x: -94.85748, y: 122}
-        - {x: -106.85748, y: 102}
-        - {x: -106.85748, y: 71}
-        - {x: -89.85748, y: -48}
-        - {x: -71.85748, y: -163}
-        - {x: -65.85748, y: -191}
-        - {x: -83.85748, y: -191}
-        - {x: -85.85748, y: -193}
-        - {x: -85.85748, y: -222}
-        - {x: 87.14252, y: -222}
-        - {x: 90.14252, y: -192}
-        - {x: 64.14252, y: -188}
-        - {x: 83.14252, y: -71}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Game
   userData: 

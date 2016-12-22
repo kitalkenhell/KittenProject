@@ -20,12 +20,12 @@ TextureImporter:
     21300026: Flames_5
     21300028: Flames_6
     21300030: Flames_7
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -37,10 +37,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -51,22 +49,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Flames_0
+    - serializedVersion: 2
+      name: Flames_0
       rect:
         serializedVersion: 2
         x: 0
@@ -76,25 +104,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 28.5, y: 335.71024}
-        - {x: 19.5, y: 335.71024}
-        - {x: 2.5, y: 325.71024}
-        - {x: -16.5, y: 306.71024}
-        - {x: -21.5, y: 245.71024}
-        - {x: -56.5, y: 223.71024}
-        - {x: -78.5, y: 205.71024}
-        - {x: -99.5, y: 165.71024}
-        - {x: -99.5, y: 91.710236}
-        - {x: -90.5, y: 71.710236}
-        - {x: -63.5, y: 35.710236}
-        - {x: -11.5, y: -0.2897644}
-        - {x: 15.5, y: -0.2897644}
-        - {x: 40.5, y: 11.710236}
-        - {x: 72.5, y: 39.710236}
-        - {x: 99.5, y: 101.710236}
-        - {x: 99.5, y: 177.71024}
-    - name: Flames_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_1
       rect:
         serializedVersion: 2
         x: 283
@@ -104,26 +117,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 103.68268, y: 110.91496}
-        - {x: 105.68268, y: 124.91496}
-        - {x: 105.68268, y: 196.91496}
-        - {x: 43.68268, y: 293.91498}
-        - {x: 47.68268, y: 387.91498}
-        - {x: 34.68268, y: 387.91498}
-        - {x: -1.3173218, y: 347.91498}
-        - {x: -61.31732, y: 254.91496}
-        - {x: -94.31732, y: 200.91496}
-        - {x: -105.31732, y: 172.91496}
-        - {x: -105.31732, y: 128.91496}
-        - {x: -78.31732, y: 69.91496}
-        - {x: -48.31732, y: 29.914963}
-        - {x: -5.317322, y: -0.08503723}
-        - {x: 22.682678, y: -0.08503723}
-        - {x: 53.68268, y: 16.914963}
-        - {x: 67.68268, y: 33.914963}
-        - {x: 90.68268, y: 70.91496}
-    - name: Flames_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_2
       rect:
         serializedVersion: 2
         x: 581
@@ -133,32 +130,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 121.95984, y: 179.9622}
-        - {x: 121.95984, y: 224.9622}
-        - {x: 119.95984, y: 232.9622}
-        - {x: 51.95984, y: 280.96222}
-        - {x: 26.959839, y: 335.96222}
-        - {x: 30.959839, y: 399.96222}
-        - {x: 7.959839, y: 399.96222}
-        - {x: -25.040161, y: 383.96222}
-        - {x: -33.04016, y: 373.96222}
-        - {x: -44.04016, y: 358.96222}
-        - {x: -63.04016, y: 305.96222}
-        - {x: -69.04016, y: 316.96222}
-        - {x: -82.04016, y: 309.96222}
-        - {x: -105.04016, y: 262.96222}
-        - {x: -121.04016, y: 221.9622}
-        - {x: -121.04016, y: 150.9622}
-        - {x: -111.04016, y: 119.962204}
-        - {x: -85.04016, y: 67.962204}
-        - {x: -41.04016, y: 22.962204}
-        - {x: -4.040161, y: -0.03779602}
-        - {x: 13.959839, y: -0.03779602}
-        - {x: 48.95984, y: 24.962204}
-        - {x: 79.95984, y: 64.962204}
-        - {x: 104.95984, y: 119.962204}
-    - name: Flames_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_3
       rect:
         serializedVersion: 2
         x: 918
@@ -168,34 +143,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 121.18268, y: 139.92126}
-        - {x: 121.18268, y: 229.92126}
-        - {x: 116.18268, y: 253.92126}
-        - {x: 78.18268, y: 237.92126}
-        - {x: 90.18268, y: 291.92126}
-        - {x: 98.18268, y: 324.92126}
-        - {x: 71.18268, y: 315.92126}
-        - {x: 33.18268, y: 288.92126}
-        - {x: 15.182678, y: 339.92126}
-        - {x: 16.182678, y: 466.92126}
-        - {x: 18.182678, y: 491.92126}
-        - {x: 1.1826782, y: 491.92126}
-        - {x: -19.817322, y: 476.92126}
-        - {x: -43.81732, y: 424.92126}
-        - {x: -70.81732, y: 328.92126}
-        - {x: -82.81732, y: 317.92126}
-        - {x: -102.81732, y: 337.92126}
-        - {x: -120.81732, y: 216.92126}
-        - {x: -120.81732, y: 157.92126}
-        - {x: -111.81732, y: 120.921265}
-        - {x: -78.81732, y: 54.921265}
-        - {x: -17.817322, y: -0.07873535}
-        - {x: 7.182678, y: -0.07873535}
-        - {x: 59.18268, y: 24.921265}
-        - {x: 88.18268, y: 51.921265}
-        - {x: 104.18268, y: 83.921265}
-    - name: Flames_4
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_4
       rect:
         serializedVersion: 2
         x: 1255
@@ -205,39 +156,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 123.90552, y: 168.56772}
-        - {x: 123.90552, y: 231.56772}
-        - {x: 119.90552, y: 276.56772}
-        - {x: 119.90552, y: 297.56772}
-        - {x: 94.90552, y: 290.56772}
-        - {x: 42.905518, y: 424.56772}
-        - {x: 28.905518, y: 450.56772}
-        - {x: 20.905518, y: 466.56772}
-        - {x: -3.0944824, y: 478.56772}
-        - {x: -17.094482, y: 478.56772}
-        - {x: -19.094482, y: 451.56772}
-        - {x: -44.094482, y: 407.56772}
-        - {x: -49.094482, y: 394.56772}
-        - {x: -55.094482, y: 316.56772}
-        - {x: -63.094482, y: 327.56772}
-        - {x: -69.09448, y: 329.56772}
-        - {x: -76.09448, y: 325.56772}
-        - {x: -91.09448, y: 312.56772}
-        - {x: -99.09448, y: 290.56772}
-        - {x: -118.09448, y: 248.56772}
-        - {x: -122.09448, y: 226.56772}
-        - {x: -122.09448, y: 133.56772}
-        - {x: -112.09448, y: 103.56772}
-        - {x: -99.09448, y: 68.56772}
-        - {x: -69.09448, y: 31.567719}
-        - {x: -61.094482, y: 21.567719}
-        - {x: -4.0944824, y: -0.4322815}
-        - {x: 18.905518, y: -0.4322815}
-        - {x: 70.90552, y: 28.567719}
-        - {x: 95.90552, y: 61.56772}
-        - {x: 118.90552, y: 137.56772}
-    - name: Flames_5
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_5
       rect:
         serializedVersion: 2
         x: 1594
@@ -247,36 +169,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 123.24097, y: 142.76851}
-        - {x: 126.24097, y: 163.76851}
-        - {x: 126.24097, y: 245.76851}
-        - {x: 125.24097, y: 267.7685}
-        - {x: 117.24097, y: 290.7685}
-        - {x: 114.24097, y: 289.7685}
-        - {x: 111.24097, y: 286.7685}
-        - {x: 88.24097, y: 247.76851}
-        - {x: 67.24097, y: 326.7685}
-        - {x: 39.240967, y: 374.7685}
-        - {x: 5.240967, y: 401.7685}
-        - {x: -11.759033, y: 401.7685}
-        - {x: -38.759033, y: 363.7685}
-        - {x: -47.759033, y: 328.7685}
-        - {x: -66.75903, y: 329.7685}
-        - {x: -93.75903, y: 311.7685}
-        - {x: -107.75903, y: 237.76851}
-        - {x: -119.75903, y: 237.76851}
-        - {x: -125.75903, y: 218.76851}
-        - {x: -125.75903, y: 152.76851}
-        - {x: -115.75903, y: 109.76851}
-        - {x: -100.75903, y: 71.76851}
-        - {x: -59.759033, y: 23.768509}
-        - {x: -1.7590332, y: -0.23149109}
-        - {x: 15.240967, y: -0.23149109}
-        - {x: 72.24097, y: 30.768509}
-        - {x: 89.24097, y: 49.76851}
-        - {x: 95.24097, y: 58.76851}
-    - name: Flames_6
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_6
       rect:
         serializedVersion: 2
         x: 1943
@@ -286,31 +182,10 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 122.139404, y: 150.9622}
-        - {x: 122.139404, y: 220.9622}
-        - {x: 106.139404, y: 263.96222}
-        - {x: 86.139404, y: 306.96222}
-        - {x: 70.139404, y: 317.96222}
-        - {x: 58.139404, y: 294.96222}
-        - {x: 50.139404, y: 347.96222}
-        - {x: 30.139404, y: 384.96222}
-        - {x: -3.8605957, y: 399.96222}
-        - {x: -28.860596, y: 399.96222}
-        - {x: -28.860596, y: 308.96222}
-        - {x: -100.860596, y: 244.9622}
-        - {x: -120.860596, y: 226.9622}
-        - {x: -120.860596, y: 180.9622}
-        - {x: -116.860596, y: 161.9622}
-        - {x: -88.860596, y: 81.962204}
-        - {x: -57.860596, y: 32.962204}
-        - {x: -17.860596, y: -0.03779602}
-        - {x: 4.1394043, y: -0.03779602}
-        - {x: 24.139404, y: 7.962204}
-        - {x: 56.139404, y: 35.962204}
-        - {x: 81.139404, y: 61.962204}
-        - {x: 97.139404, y: 88.962204}
-    - name: Flames_7
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flames_7
       rect:
         serializedVersion: 2
         x: 2280
@@ -320,27 +195,8 @@ TextureImporter:
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 105.36218, y: 187.91496}
-        - {x: 1.3621826, y: 352.91498}
-        - {x: -35.637817, y: 387.91498}
-        - {x: -44.637817, y: 387.91498}
-        - {x: -44.637817, y: 382.91498}
-        - {x: -42.637817, y: 371.91498}
-        - {x: -40.637817, y: 364.91498}
-        - {x: -42.637817, y: 296.91498}
-        - {x: -101.63782, y: 195.91496}
-        - {x: -104.63782, y: 186.91496}
-        - {x: -104.63782, y: 128.91496}
-        - {x: -102.63782, y: 107.91496}
-        - {x: -89.63782, y: 71.91496}
-        - {x: -66.63782, y: 37.914963}
-        - {x: -45.637817, y: 10.914963}
-        - {x: -20.637817, y: -0.08503723}
-        - {x: 2.3621826, y: -0.08503723}
-        - {x: 35.362183, y: 25.914963}
-        - {x: 62.362183, y: 41.914963}
-        - {x: 105.36218, y: 114.91496}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Game
   userData: 

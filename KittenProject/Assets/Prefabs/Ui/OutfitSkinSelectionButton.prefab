@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 11432762}
   - component: {fileID: 11428872}
   - component: {fileID: 11414244}
+  - component: {fileID: 114871842701296158}
   m_Layer: 5
   m_Name: OutfitSkinSelectionButton
   m_TagString: Untagged
@@ -753,3 +754,15 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 195890}
   m_IsPrefabParent: 1
+--- !u!114 &114871842701296158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccdb4f7393b33cd41a765c89f3e717ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickAudioSource: {fileID: 0}

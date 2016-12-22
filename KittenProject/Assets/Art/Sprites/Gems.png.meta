@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 2cb9f3bffb793e244909705fcbeba585
-timeCreated: 1439919246
+timeCreated: 1480454665
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -58,12 +58,12 @@ TextureImporter:
     21300102: gems_51
     21300104: gems_52
     21300106: gems_53
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -75,10 +75,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -89,22 +87,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: gems_0
+    - serializedVersion: 2
+      name: gems_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,18 +140,12 @@ TextureImporter:
         width: 44
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: 32.5}
-        - {x: -18, y: 31.5}
-        - {x: -22, y: 29.5}
-        - {x: -22, y: -31.5}
-        - {x: -21, y: -32.5}
-        - {x: 22, y: -32.5}
-        - {x: 22, y: 29.5}
-        - {x: 17, y: 32.5}
-    - name: gems_1
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_1
       rect:
         serializedVersion: 2
         x: 77
@@ -131,17 +153,12 @@ TextureImporter:
         width: 38
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 27.5}
-        - {x: -19, y: 20.5}
-        - {x: -19, y: -21.5}
-        - {x: -13, y: -27.5}
-        - {x: 18, y: -27.5}
-        - {x: 19, y: -25.5}
-        - {x: 19, y: 27.5}
-    - name: gems_2
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_2
       rect:
         serializedVersion: 2
         x: 148
@@ -149,18 +166,12 @@ TextureImporter:
         width: 36
         height: 58
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 29}
-        - {x: -18, y: 10}
-        - {x: -18, y: -28}
-        - {x: -16, y: -29}
-        - {x: 15, y: -29}
-        - {x: 18, y: -27}
-        - {x: 18, y: 4}
-        - {x: 8, y: 29}
-    - name: gems_3
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_3
       rect:
         serializedVersion: 2
         x: 209
@@ -168,16 +179,12 @@ TextureImporter:
         width: 43
         height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -21.5, y: 21.5}
-        - {x: -21.5, y: -21.5}
-        - {x: 20.5, y: -21.5}
-        - {x: 21.5, y: -17.5}
-        - {x: 21.5, y: 16.5}
-        - {x: 16.5, y: 21.5}
-    - name: gems_4
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_4
       rect:
         serializedVersion: 2
         x: 266
@@ -185,16 +192,12 @@ TextureImporter:
         width: 37
         height: 37
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 18.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 15.5, y: -18.5}
-        - {x: 18.5, y: -17.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_5
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_5
       rect:
         serializedVersion: 2
         x: 319
@@ -202,18 +205,12 @@ TextureImporter:
         width: 38
         height: 38
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 19}
-        - {x: -19, y: 10}
-        - {x: -19, y: -11}
-        - {x: -11, y: -19}
-        - {x: 11, y: -19}
-        - {x: 19, y: -11}
-        - {x: 19, y: 11}
-        - {x: 11, y: 19}
-    - name: gems_6
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_6
       rect:
         serializedVersion: 2
         x: 368
@@ -221,19 +218,12 @@ TextureImporter:
         width: 42
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 17.5}
-        - {x: -20, y: 16.5}
-        - {x: -21, y: 11.5}
-        - {x: -21, y: -1.5}
-        - {x: -5, y: -17.5}
-        - {x: 6, y: -17.5}
-        - {x: 21, y: -0.5}
-        - {x: 21, y: 12.5}
-        - {x: 17, y: 17.5}
-    - name: gems_7
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_7
       rect:
         serializedVersion: 2
         x: 421
@@ -241,18 +231,12 @@ TextureImporter:
         width: 38
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17, y: 20.5}
-        - {x: -19, y: 15.5}
-        - {x: -19, y: -1.5}
-        - {x: -4, y: -20.5}
-        - {x: 4, y: -20.5}
-        - {x: 19, y: -4.5}
-        - {x: 19, y: 18.5}
-        - {x: 18, y: 20.5}
-    - name: gems_8
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_8
       rect:
         serializedVersion: 2
         x: 479
@@ -260,357 +244,12 @@ TextureImporter:
         width: 33
         height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5.5, y: 21.5}
-        - {x: -15.5, y: 14.5}
-        - {x: -16.5, y: 8.5}
-        - {x: -16.5, y: -6.5}
-        - {x: -5.5, y: -20.5}
-        - {x: -4.5, y: -21.5}
-        - {x: 5.5, y: -21.5}
-        - {x: 16.5, y: -11.5}
-        - {x: 16.5, y: 8.5}
-        - {x: 8.5, y: 21.5}
-    - name: gems_9
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 308
-        width: 44
-        height: 65
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -14, y: 32.5}
-        - {x: -22, y: 27.5}
-        - {x: -22, y: -25.5}
-        - {x: -20, y: -28.5}
-        - {x: -8, y: -32.5}
-        - {x: 17, y: -32.5}
-        - {x: 22, y: -26.5}
-        - {x: 22, y: 31.5}
-        - {x: 16, y: 32.5}
-    - name: gems_10
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 313
-        width: 38
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 27.5}
-        - {x: -19, y: 24.5}
-        - {x: -19, y: -27.5}
-        - {x: 14, y: -27.5}
-        - {x: 19, y: -25.5}
-        - {x: 19, y: 27.5}
-    - name: gems_11
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 311
-        width: 36
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 14, y: 12.5}
-        - {x: 4, y: 29.5}
-        - {x: -6, y: 29.5}
-        - {x: -18, y: 5.5}
-        - {x: -18, y: -27.5}
-        - {x: -14, y: -29.5}
-        - {x: 16, y: -29.5}
-        - {x: 18, y: -25.5}
-        - {x: 18, y: -1.5}
-        - {x: 17, y: 1.5}
-    - name: gems_12
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 319
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -21.5, y: -14.5}
-        - {x: -17.5, y: -21.5}
-        - {x: 21.5, y: -21.5}
-        - {x: 21.5, y: 21.5}
-        - {x: -18.5, y: 21.5}
-        - {x: -21.5, y: 20.5}
-    - name: gems_13
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 322
-        width: 37
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 18.5}
-        - {x: -18.5, y: 14.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 18.5, y: -18.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_14
-      rect:
-        serializedVersion: 2
-        x: 319
-        y: 322
-        width: 38
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 19}
-        - {x: -19, y: 10}
-        - {x: -19, y: -11}
-        - {x: -11, y: -19}
-        - {x: 11, y: -19}
-        - {x: 19, y: -11}
-        - {x: 19, y: 11}
-        - {x: 11, y: 19}
-    - name: gems_15
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 323
-        width: 42
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -14, y: 17.5}
-        - {x: -21, y: 9.5}
-        - {x: -21, y: -3.5}
-        - {x: -4, y: -17.5}
-        - {x: 9, y: -17.5}
-        - {x: 21, y: -1.5}
-        - {x: 21, y: 11.5}
-        - {x: 14, y: 17.5}
-    - name: gems_16
-      rect:
-        serializedVersion: 2
-        x: 421
-        y: 320
-        width: 38
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17, y: 20.5}
-        - {x: -19, y: 15.5}
-        - {x: -19, y: -1.5}
-        - {x: -3, y: -20.5}
-        - {x: 5, y: -20.5}
-        - {x: 19, y: -4.5}
-        - {x: 19, y: 18.5}
-        - {x: 18, y: 20.5}
-    - name: gems_17
-      rect:
-        serializedVersion: 2
-        x: 479
-        y: 319
-        width: 33
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5.5, y: 21.5}
-        - {x: -15.5, y: 14.5}
-        - {x: -16.5, y: 13.5}
-        - {x: -16.5, y: -12.5}
-        - {x: -4.5, y: -21.5}
-        - {x: 8.5, y: -21.5}
-        - {x: 16.5, y: -11.5}
-        - {x: 16.5, y: 6.5}
-        - {x: 7.5, y: 21.5}
-    - name: gems_18
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 231
-        width: 44
-        height: 65
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13, y: 32.5}
-        - {x: -22, y: 27.5}
-        - {x: -22, y: -31.5}
-        - {x: -13, y: -32.5}
-        - {x: 15, y: -32.5}
-        - {x: 22, y: -30.5}
-        - {x: 22, y: 31.5}
-        - {x: 16, y: 32.5}
-    - name: gems_19
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 236
-        width: 38
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 27.5}
-        - {x: -19, y: 24.5}
-        - {x: -19, y: -27.5}
-        - {x: 14, y: -27.5}
-        - {x: 19, y: -25.5}
-        - {x: 19, y: 27.5}
-    - name: gems_20
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 234
-        width: 36
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: -28.5}
-        - {x: -17, y: -29.5}
-        - {x: 18, y: -29.5}
-        - {x: 18, y: 4.5}
-        - {x: 10, y: 29.5}
-        - {x: -10, y: 29.5}
-        - {x: -18, y: 1.5}
-    - name: gems_21
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 242
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13.5, y: 21.5}
-        - {x: -19.5, y: 14.5}
-        - {x: -21.5, y: 11.5}
-        - {x: -21.5, y: -11.5}
-        - {x: -14.5, y: -21.5}
-        - {x: 12.5, y: -21.5}
-        - {x: 21.5, y: -14.5}
-        - {x: 21.5, y: 12.5}
-        - {x: 14.5, y: 21.5}
-    - name: gems_22
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 245
-        width: 37
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 18.5}
-        - {x: -18.5, y: 14.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 18.5, y: -18.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_23
-      rect:
-        serializedVersion: 2
-        x: 319
-        y: 245
-        width: 38
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -10, y: 19}
-        - {x: -19, y: 10}
-        - {x: -19, y: -11}
-        - {x: -11, y: -19}
-        - {x: 18, y: -19}
-        - {x: 19, y: -15}
-        - {x: 19, y: 16}
-        - {x: 12, y: 19}
-    - name: gems_24
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 246
-        width: 42
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -14, y: 17.5}
-        - {x: -21, y: 9.5}
-        - {x: -21, y: -2.5}
-        - {x: -6, y: -17.5}
-        - {x: 4, y: -17.5}
-        - {x: 21, y: -0.5}
-        - {x: 21, y: 8.5}
-        - {x: 14, y: 17.5}
-    - name: gems_25
-      rect:
-        serializedVersion: 2
-        x: 421
-        y: 243
-        width: 38
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: 20.5}
-        - {x: -19, y: 16.5}
-        - {x: -19, y: 3.5}
-        - {x: -6, y: -20.5}
-        - {x: 9, y: -20.5}
-        - {x: 19, y: 0.5}
-        - {x: 19, y: 17.5}
-        - {x: 13, y: 20.5}
-    - name: gems_26
-      rect:
-        serializedVersion: 2
-        x: 473
-        y: 242
-        width: 34
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5, y: 21.5}
-        - {x: -15, y: 13.5}
-        - {x: -17, y: 7.5}
-        - {x: -17, y: -7.5}
-        - {x: -5, y: -21.5}
-        - {x: 6, y: -21.5}
-        - {x: 17, y: -5.5}
-        - {x: 17, y: 8.5}
-        - {x: 4, y: 21.5}
-    - name: gems_27
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_27
       rect:
         serializedVersion: 2
         x: 0
@@ -618,18 +257,12 @@ TextureImporter:
         width: 44
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 32.5}
-        - {x: -22, y: 28.5}
-        - {x: -22, y: -31.5}
-        - {x: -21, y: -32.5}
-        - {x: 21, y: -32.5}
-        - {x: 22, y: -30.5}
-        - {x: 22, y: 30.5}
-        - {x: 18, y: 32.5}
-    - name: gems_28
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_28
       rect:
         serializedVersion: 2
         x: 77
@@ -637,16 +270,12 @@ TextureImporter:
         width: 38
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 27.5}
-        - {x: -19, y: 24.5}
-        - {x: -19, y: -27.5}
-        - {x: 14, y: -27.5}
-        - {x: 19, y: -25.5}
-        - {x: 19, y: 27.5}
-    - name: gems_29
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_29
       rect:
         serializedVersion: 2
         x: 148
@@ -654,19 +283,12 @@ TextureImporter:
         width: 36
         height: 59
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 29.5}
-        - {x: -9, y: 29.5}
-        - {x: -18, y: 2.5}
-        - {x: -18, y: -26.5}
-        - {x: -14, y: -29.5}
-        - {x: 14, y: -29.5}
-        - {x: 18, y: -26.5}
-        - {x: 18, y: 4.5}
-        - {x: 13, y: 28.5}
-    - name: gems_30
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_30
       rect:
         serializedVersion: 2
         x: 209
@@ -674,18 +296,12 @@ TextureImporter:
         width: 43
         height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12.5, y: 21.5}
-        - {x: -21.5, y: 13.5}
-        - {x: -21.5, y: -16.5}
-        - {x: -18.5, y: -21.5}
-        - {x: 15.5, y: -21.5}
-        - {x: 21.5, y: -19.5}
-        - {x: 21.5, y: 13.5}
-        - {x: 15.5, y: 21.5}
-    - name: gems_31
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_31
       rect:
         serializedVersion: 2
         x: 266
@@ -693,16 +309,12 @@ TextureImporter:
         width: 37
         height: 37
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 18.5}
-        - {x: -18.5, y: 14.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 18.5, y: -18.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_32
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_32
       rect:
         serializedVersion: 2
         x: 317
@@ -710,16 +322,12 @@ TextureImporter:
         width: 40
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 20.5}
-        - {x: -20, y: 16.5}
-        - {x: -20, y: -13.5}
-        - {x: -11, y: -20.5}
-        - {x: 20, y: -20.5}
-        - {x: 20, y: 20.5}
-    - name: gems_33
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_33
       rect:
         serializedVersion: 2
         x: 368
@@ -727,18 +335,12 @@ TextureImporter:
         width: 42
         height: 35
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 17.5}
-        - {x: -21, y: 9.5}
-        - {x: -21, y: -9.5}
-        - {x: -8, y: -17.5}
-        - {x: 10, y: -17.5}
-        - {x: 21, y: -2.5}
-        - {x: 21, y: 11.5}
-        - {x: 14, y: 17.5}
-    - name: gems_34
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_34
       rect:
         serializedVersion: 2
         x: 421
@@ -746,18 +348,12 @@ TextureImporter:
         width: 38
         height: 41
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 20.5}
-        - {x: -19, y: 14.5}
-        - {x: -19, y: -1.5}
-        - {x: -5, y: -20.5}
-        - {x: 5, y: -20.5}
-        - {x: 19, y: -1.5}
-        - {x: 19, y: 14.5}
-        - {x: 16, y: 20.5}
-    - name: gems_35
+      outline: []
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: gems_35
       rect:
         serializedVersion: 2
         x: 479
@@ -765,355 +361,10 @@ TextureImporter:
         width: 33
         height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -9.5, y: 21.5}
-        - {x: -15.5, y: 18.5}
-        - {x: -16.5, y: 16.5}
-        - {x: -16.5, y: -9.5}
-        - {x: -9.5, y: -21.5}
-        - {x: 4.5, y: -21.5}
-        - {x: 16.5, y: -9.5}
-        - {x: 16.5, y: 6.5}
-        - {x: 8.5, y: 21.5}
-    - name: gems_36
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 77
-        width: 44
-        height: 65
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -8, y: 32.5}
-        - {x: -11, y: 31.5}
-        - {x: -22, y: 27.5}
-        - {x: -22, y: -31.5}
-        - {x: -20, y: -32.5}
-        - {x: 22, y: -32.5}
-        - {x: 22, y: 30.5}
-        - {x: 12, y: 32.5}
-    - name: gems_37
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 82
-        width: 38
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 27.5}
-        - {x: -19, y: 24.5}
-        - {x: -19, y: -21.5}
-        - {x: -13, y: -27.5}
-        - {x: 14, y: -27.5}
-        - {x: 19, y: -24.5}
-        - {x: 19, y: 27.5}
-    - name: gems_38
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 80
-        width: 36
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -5, y: 29.5}
-        - {x: -18, y: 11.5}
-        - {x: -18, y: -29.5}
-        - {x: 18, y: -29.5}
-        - {x: 18, y: 15.5}
-        - {x: 4, y: 29.5}
-    - name: gems_39
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 88
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 21.5}
-        - {x: -21.5, y: 20.5}
-        - {x: -21.5, y: -16.5}
-        - {x: -18.5, y: -21.5}
-        - {x: 16.5, y: -21.5}
-        - {x: 21.5, y: -19.5}
-        - {x: 21.5, y: 13.5}
-        - {x: 14.5, y: 21.5}
-    - name: gems_40
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 91
-        width: 37
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 18.5}
-        - {x: -18.5, y: 14.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 18.5, y: -18.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_41
-      rect:
-        serializedVersion: 2
-        x: 317
-        y: 89
-        width: 40
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 13, y: 20.5}
-        - {x: -20, y: 20.5}
-        - {x: -20, y: -20.5}
-        - {x: 13, y: -20.5}
-        - {x: 20, y: -13.5}
-        - {x: 20, y: 14.5}
-        - {x: 19, y: 19.5}
-    - name: gems_42
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 92
-        width: 41
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17.5, y: 17.5}
-        - {x: -20.5, y: 10.5}
-        - {x: -20.5, y: -7.5}
-        - {x: -8.5, y: -17.5}
-        - {x: 4.5, y: -17.5}
-        - {x: 20.5, y: -10.5}
-        - {x: 20.5, y: 11.5}
-        - {x: 15.5, y: 17.5}
-    - name: gems_43
-      rect:
-        serializedVersion: 2
-        x: 421
-        y: 89
-        width: 38
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17, y: 20.5}
-        - {x: -19, y: 15.5}
-        - {x: -19, y: -1.5}
-        - {x: -3, y: -20.5}
-        - {x: 4, y: -20.5}
-        - {x: 19, y: -0.5}
-        - {x: 19, y: 14.5}
-        - {x: 16, y: 20.5}
-    - name: gems_44
-      rect:
-        serializedVersion: 2
-        x: 479
-        y: 88
-        width: 33
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 3.5, y: 21.5}
-        - {x: -5.5, y: 21.5}
-        - {x: -14.5, y: 13.5}
-        - {x: -16.5, y: 8.5}
-        - {x: -16.5, y: -8.5}
-        - {x: -15.5, y: -10.5}
-        - {x: -3.5, y: -21.5}
-        - {x: 7.5, y: -21.5}
-        - {x: 16.5, y: -6.5}
-        - {x: 16.5, y: 10.5}
-        - {x: 6.5, y: 20.5}
-    - name: gems_45
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 44
-        height: 65
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13, y: 32.5}
-        - {x: -22, y: 30.5}
-        - {x: -22, y: -32.5}
-        - {x: 22, y: -32.5}
-        - {x: 22, y: 29.5}
-        - {x: 15, y: 32.5}
-    - name: gems_46
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 5
-        width: 38
-        height: 55
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 27.5}
-        - {x: -19, y: 24.5}
-        - {x: -19, y: -27.5}
-        - {x: 19, y: -27.5}
-        - {x: 19, y: 27.5}
-    - name: gems_47
-      rect:
-        serializedVersion: 2
-        x: 148
-        y: 3
-        width: 36
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -6, y: 29}
-        - {x: -18, y: 7}
-        - {x: -18, y: -27}
-        - {x: -17, y: -29}
-        - {x: 18, y: -29}
-        - {x: 18, y: 16}
-        - {x: 5, y: 29}
-    - name: gems_48
-      rect:
-        serializedVersion: 2
-        x: 209
-        y: 11
-        width: 43
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18.5, y: 21.5}
-        - {x: -21.5, y: 15.5}
-        - {x: -21.5, y: -13.5}
-        - {x: -14.5, y: -19.5}
-        - {x: -11.5, y: -21.5}
-        - {x: 13.5, y: -21.5}
-        - {x: 21.5, y: -13.5}
-        - {x: 21.5, y: 13.5}
-        - {x: 17.5, y: 21.5}
-    - name: gems_49
-      rect:
-        serializedVersion: 2
-        x: 266
-        y: 14
-        width: 37
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16.5, y: 18.5}
-        - {x: -18.5, y: 14.5}
-        - {x: -18.5, y: -13.5}
-        - {x: -13.5, y: -18.5}
-        - {x: 18.5, y: -18.5}
-        - {x: 18.5, y: 18.5}
-    - name: gems_50
-      rect:
-        serializedVersion: 2
-        x: 317
-        y: 12
-        width: 40
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 9, y: 20.5}
-        - {x: -10, y: 20.5}
-        - {x: -18, y: 14.5}
-        - {x: -20, y: 9.5}
-        - {x: -20, y: -12.5}
-        - {x: -13, y: -20.5}
-        - {x: 18, y: -20.5}
-        - {x: 20, y: -12.5}
-        - {x: 20, y: 13.5}
-        - {x: 17, y: 17.5}
-    - name: gems_51
-      rect:
-        serializedVersion: 2
-        x: 368
-        y: 15
-        width: 41
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -17.5, y: 17.5}
-        - {x: -20.5, y: 10.5}
-        - {x: -20.5, y: -8.5}
-        - {x: -9.5, y: -17.5}
-        - {x: 4.5, y: -17.5}
-        - {x: 18.5, y: -10.5}
-        - {x: 20.5, y: -6.5}
-        - {x: 20.5, y: 12.5}
-        - {x: 14.5, y: 17.5}
-    - name: gems_52
-      rect:
-        serializedVersion: 2
-        x: 421
-        y: 12
-        width: 38
-        height: 41
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -16, y: 20.5}
-        - {x: -19, y: 17.5}
-        - {x: -19, y: -0.5}
-        - {x: -7, y: -20.5}
-        - {x: 8, y: -20.5}
-        - {x: 19, y: 3.5}
-        - {x: 19, y: 16.5}
-        - {x: 15, y: 20.5}
-    - name: gems_53
-      rect:
-        serializedVersion: 2
-        x: 479
-        y: 11
-        width: 33
-        height: 43
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 3.5, y: 21.5}
-        - {x: -6.5, y: 21.5}
-        - {x: -15.5, y: 13.5}
-        - {x: -16.5, y: 7.5}
-        - {x: -16.5, y: -7.5}
-        - {x: -3.5, y: -21.5}
-        - {x: 8.5, y: -21.5}
-        - {x: 16.5, y: -7.5}
-        - {x: 16.5, y: 11.5}
-        - {x: 10.5, y: 17.5}
+      outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Game
   userData: 

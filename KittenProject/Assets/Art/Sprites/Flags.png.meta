@@ -12,12 +12,12 @@ TextureImporter:
     21300010: Flags_5
     21300012: Flags_6
     21300014: Flags_7
-  serializedVersion: 2
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -29,10 +29,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
@@ -43,22 +41,52 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
-  spriteExtrude: 0
-  spriteMeshType: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 20
+  alphaUsage: 1
   alphaIsTransparency: 1
-  textureType: 5
-  buildTargetSettings: []
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Flags_0
+    - serializedVersion: 2
+      name: Flags_0
       rect:
         serializedVersion: 2
         x: 0
@@ -69,7 +97,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_1
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_1
       rect:
         serializedVersion: 2
         x: 225
@@ -80,7 +110,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_2
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_2
       rect:
         serializedVersion: 2
         x: 437
@@ -91,7 +123,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_3
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_3
       rect:
         serializedVersion: 2
         x: 619
@@ -102,7 +136,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_4
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_4
       rect:
         serializedVersion: 2
         x: 3
@@ -113,7 +149,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_5
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_5
       rect:
         serializedVersion: 2
         x: 327
@@ -124,7 +162,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_6
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_6
       rect:
         serializedVersion: 2
         x: 514
@@ -135,7 +175,9 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
-    - name: Flags_7
+      tessellationDetail: -1
+    - serializedVersion: 2
+      name: Flags_7
       rect:
         serializedVersion: 2
         x: 782
@@ -146,6 +188,7 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
+      tessellationDetail: -1
     outline: []
   spritePackingTag: Game
   userData: 

@@ -5,12 +5,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22474318}
-  - 222: {fileID: 22201886}
-  - 114: {fileID: 11440818}
-  - 114: {fileID: 11410102}
+  - component: {fileID: 22474318}
+  - component: {fileID: 22201886}
+  - component: {fileID: 11440818}
+  - component: {fileID: 11410102}
   m_Layer: 5
   m_Name: Locked
   m_TagString: Untagged
@@ -23,11 +23,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22469306}
-  - 222: {fileID: 22201552}
-  - 114: {fileID: 11421920}
+  - component: {fileID: 22469306}
+  - component: {fileID: 22201552}
+  - component: {fileID: 11421920}
   m_Layer: 5
   m_Name: ParachuteName
   m_TagString: Untagged
@@ -40,13 +40,14 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22400682}
-  - 222: {fileID: 22277186}
-  - 114: {fileID: 11436382}
-  - 114: {fileID: 11469756}
-  - 114: {fileID: 11460794}
+  - component: {fileID: 22400682}
+  - component: {fileID: 22277186}
+  - component: {fileID: 11436382}
+  - component: {fileID: 11469756}
+  - component: {fileID: 11460794}
+  - component: {fileID: 114856203964829276}
   m_Layer: 5
   m_Name: ParachuteSkinSelectionButton
   m_TagString: Untagged
@@ -59,12 +60,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22409680}
-  - 222: {fileID: 22250020}
-  - 114: {fileID: 11488494}
-  - 114: {fileID: 11409754}
+  - component: {fileID: 22409680}
+  - component: {fileID: 22250020}
+  - component: {fileID: 11488494}
+  - component: {fileID: 11409754}
   m_Layer: 5
   m_Name: Checked
   m_TagString: Untagged
@@ -77,9 +78,9 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 224: {fileID: 22442050}
+  - component: {fileID: 22442050}
   m_Layer: 5
   m_Name: SpritePivot
   m_TagString: Untagged
@@ -334,6 +335,7 @@ RectTransform:
   - {fileID: 22474318}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 1559.4, y: 185.52}
@@ -351,6 +353,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22400682}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 61, y: -55}
@@ -368,6 +371,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22400682}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -385,6 +389,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22400682}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 15}
@@ -402,6 +407,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 22400682}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 69, y: -67}
@@ -418,3 +424,15 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 167996}
   m_IsPrefabParent: 1
+--- !u!114 &114856203964829276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 167996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccdb4f7393b33cd41a765c89f3e717ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickAudioSource: {fileID: 0}
