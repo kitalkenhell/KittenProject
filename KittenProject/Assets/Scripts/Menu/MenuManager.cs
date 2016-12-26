@@ -29,6 +29,7 @@ public class MenuManager : MonoBehaviour
     }
 
     Animator animator;
+    MenuMusicManager menuMusicManager;
 
     static Views currentView = Views.mainScreen;
     CanvasGroup currentViewCanvas;
@@ -41,6 +42,7 @@ public class MenuManager : MonoBehaviour
         isTransitioning = false;
 
         animator = GetComponent<Animator>();
+        menuMusicManager = GetComponent<MenuMusicManager>();
 
         PersistentData.IsHavingBodySkin(firstBodySkin.itemName, true);
         PersistentData.IsHavingHatSkin(firstHatSkin.itemName, true);
@@ -84,6 +86,8 @@ public class MenuManager : MonoBehaviour
 
             level = level.nextLevel;
         }
+
+        menuMusicManager.FadeInMusic();
     }
 
     void OnDestroy()
@@ -148,6 +152,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnStartGameButtonClicked()
     {
+        menuMusicManager.FadeOutMusic();
         animator.enabled = true;
     }
 

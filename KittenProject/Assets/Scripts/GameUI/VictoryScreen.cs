@@ -20,6 +20,8 @@ public class VictoryScreen : MonoBehaviour
     public Image hourglass;
     public Text getGemsLabel;
     public Text finishLevelLabel;
+    public AudioSource penSound;
+    public AudioSource whooshSound;
 
     Animator animator;
     Animator kittenAnimator;
@@ -70,6 +72,16 @@ public class VictoryScreen : MonoBehaviour
     public void ShowCoinsAndTimer()
     {
         hud.SetTrigger(showCoinsAndTimerAnimHash);
+    }
+
+    public void PlayPenSound()
+    {
+        penSound.Play();
+    }
+
+    public void PlayWhooshSound()
+    {
+        whooshSound.Play();
     }
 
     public IEnumerator RevealAwards()
