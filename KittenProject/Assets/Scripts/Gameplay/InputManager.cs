@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
 	void Update ()
     {
-        horizontalAxis = Input.GetAxis("Horizontal");
+        //horizontalAxis = Input.GetAxis("Horizontal");
         jumpButtonDown = Input.GetButton("Jump") ? true : false;
     }
 #endif
@@ -29,21 +29,25 @@ public class InputManager : MonoBehaviour
     public void LeftArrowDown()
     {
         horizontalAxis -= 1.0f;
+        ClampHorizontalAxis();
     }
 
     public void LeftArrowUp()
     {
         horizontalAxis += 1;
+        ClampHorizontalAxis();
     }
 
     public void RightArrowDown()
     {
         horizontalAxis += 1.0f;
+        ClampHorizontalAxis();
     }
 
     public void RightArrowUp()
     {
         horizontalAxis -= 1.0f;
+        ClampHorizontalAxis();
     }
 
     public void JumpDown()
@@ -54,5 +58,10 @@ public class InputManager : MonoBehaviour
     public void JumpUp()
     {
         jumpButtonDown = false;
+    }
+
+    void ClampHorizontalAxis()
+    {
+        horizontalAxis = Mathf.Clamp(horizontalAxis, -1, 1);
     }
 }
