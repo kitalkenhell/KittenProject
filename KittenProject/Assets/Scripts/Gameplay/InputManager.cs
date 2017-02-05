@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
 	void Update ()
     {
-        //horizontalAxis = Input.GetAxis("Horizontal");
+        horizontalAxis = Input.GetAxis("Horizontal");
         jumpButtonDown = Input.GetButton("Jump") ? true : false;
     }
 #endif
