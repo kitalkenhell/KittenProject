@@ -60,26 +60,29 @@ public class ObjectivesPanel : MonoBehaviour
 
     IEnumerator Show()
     {
-        LevelProperties level = CoreLevelObjects.levelProperties;
-
-        if (!wasAlreadyVisible && level.IsCompleted && (!level.HasCoinStar || !level.HasGoldenKittenStar || !level.HasTimeStar))
+        if (!wasAlreadyVisible)
         {
             yield return new WaitForSeconds(showDelay);
 
-            if (!hud.IsVisible)
+            LevelProperties level = CoreLevelObjects.levelProperties;
+
+            if (level.IsCompleted && (!level.HasCoinStar || !level.HasGoldenKittenStar || !level.HasTimeStar))
             {
-                yield return new WaitUntil(() => hud.IsVisible);
-                yield return new WaitForSeconds(showDelay);
-            }
+                if (!hud.IsVisible)
+                {
+                    yield return new WaitUntil(() => hud.IsVisible);
+                    yield return new WaitForSeconds(showDelay);
+                }
 
-            wasAlreadyVisible = true;
-            animator.SetBool(showAnimHash, true);
+                wasAlreadyVisible = true;
+                animator.SetBool(showAnimHash, true);
 
-            if (autoHide)
-            {
-                yield return new WaitForSeconds(autoHideDelay);
+                if (autoHide)
+                {
+                    yield return new WaitForSeconds(autoHideDelay);
 
-                animator.SetBool(showAnimHash, false);
+                    animator.SetBool(showAnimHash, false);
+                }
             } 
         }
     }

@@ -11,6 +11,7 @@ public class IntroCutscene : MonoBehaviour
     const float sleepAnimationDuration = 4.0f;
     const float showHudDelay = 1.0f;
     const float startTutorialDelay = 1.0f;
+    const float tapToContinueDelay = 0.3f;
 
     public SkipCutsceneButton skipButton;
     public HudController hud;
@@ -25,6 +26,7 @@ public class IntroCutscene : MonoBehaviour
     public Transform dogePivot;
     public GameObject kitten;
     public Animator tutorial;
+    public TapToContinuePanel tapToContinue;
 
     public CutsceneChatting welcomeChatting;
     public CutsceneChatting introduceChihuahuaChatting;
@@ -49,7 +51,7 @@ public class IntroCutscene : MonoBehaviour
 
         if (PersistentData.HasWatchedIntroCutscene)
         {
-            skipButton.Show(); 
+            skipButton.Show();
         }
 
         king.MoveToNextPoint();
@@ -58,6 +60,11 @@ public class IntroCutscene : MonoBehaviour
         yield return new WaitForSeconds(startChattingDelay);
 
         welcomeChatting.Chat();
+
+        yield return new WaitForSeconds(tapToContinueDelay);
+
+        tapToContinue.Show();
+
         yield return new WaitUntil(() => { return welcomeChatting.HasEnded; });
 
         lord.MoveToNextPoint();
@@ -114,7 +121,7 @@ public class IntroCutscene : MonoBehaviour
 
         yield return new WaitForSeconds(showHudDelay);
         hud.Show();
-       
+
         yield return new WaitForSeconds(startTutorialDelay);
 
         cutsceneCamera.enabled = false;
@@ -128,6 +135,7 @@ public class IntroCutscene : MonoBehaviour
         const float fadeoutDuration = 1.0f;
         const float fadedDuration = 0.6f;
 
+        tapToContinue.Hide();
         moveFade.Show();
         yield return new WaitForSeconds(fadeoutDuration);
 
@@ -147,7 +155,7 @@ public class IntroCutscene : MonoBehaviour
         afterIntroductionChatting.Skip();
         dogeWakesUpChatting.Skip();
         endingChatting.Skip();
-        
+
         yield return new WaitForSeconds(fadedDuration);
         moveFade.Hide();
 
@@ -168,7 +176,7 @@ public class IntroCutscene : MonoBehaviour
         if (canSkip)
         {
             StopAllCoroutines();
-            StartCoroutine(SkipAnimation()); 
+            StartCoroutine(SkipAnimation());
         }
     }
 }
