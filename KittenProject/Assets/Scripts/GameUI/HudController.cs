@@ -9,6 +9,12 @@ public class HudController : MonoBehaviour
 
     int showHudAnimHash;
 
+    public bool IsVisible
+    {
+        get;
+        private set;
+    }
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -16,9 +22,15 @@ public class HudController : MonoBehaviour
         showHudAnimHash = Animator.StringToHash("ShowHud");
     }
 
-    public void OnEnable()
+    void OnEnable()
     {
+        IsVisible = true;
         inputManager.Reset();
+    }
+
+    void OnDisable()
+    {
+        IsVisible = false;
     }
 
     public void Show()
@@ -26,6 +38,7 @@ public class HudController : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             animator.SetBool(showHudAnimHash, true);
+            IsVisible = true;
             inputManager.Reset();
         }
     }
@@ -34,6 +47,7 @@ public class HudController : MonoBehaviour
     {
         if (gameObject.activeInHierarchy)
         {
+            IsVisible = false;
             animator.SetBool(showHudAnimHash, false); 
         }
     }

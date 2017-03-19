@@ -6,48 +6,42 @@ public class InputManager : MonoBehaviour
     public float horizontalAxis;
     public bool jumpButtonDown;
 
-	void Start () 
+    public ButtonHover leftButton;
+    public ButtonHover rightButton;
+
+    void Start () 
     {
 	    horizontalAxis = 0;
         jumpButtonDown = false;
 	}
 	
-#if UNITY_EDITOR || UNITY_STANDALONE
 	void Update ()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
+
         horizontalAxis = Input.GetAxis("Horizontal");
         jumpButtonDown = Input.GetButton("Jump") ? true : false;
-    }
+#else
+        horizontalAxis = 0;
+
+        if (!leftButton.IsHovering || !rightButton.IsHovering)
+        { 
+            if (leftButton.IsHovering)
+            {
+                horizontalAxis = -1;
+            }
+            else if (rightButton.IsHovering)
+            {
+                horizontalAxis = 1;
+            }
+        }
 #endif
+    }
 
     public void Reset()
     {
         horizontalAxis = 0;
         jumpButtonDown = false;
-    }
-
-    public void LeftArrowDown()
-    {
-        horizontalAxis -= 1.0f;
-        ClampHorizontalAxis();
-    }
-
-    public void LeftArrowUp()
-    {
-        horizontalAxis += 1;
-        ClampHorizontalAxis();
-    }
-
-    public void RightArrowDown()
-    {
-        horizontalAxis += 1.0f;
-        ClampHorizontalAxis();
-    }
-
-    public void RightArrowUp()
-    {
-        horizontalAxis -= 1.0f;
-        ClampHorizontalAxis();
     }
 
     public void JumpDown()

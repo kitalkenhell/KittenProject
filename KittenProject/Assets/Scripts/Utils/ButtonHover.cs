@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class OnButtonHover : MonoBehaviour
+public class ButtonHover : MonoBehaviour
 {
-    public UnityEvent onButtonDown;
-    public UnityEvent onButtonUp;
-
-    public bool isHovering
+    public bool IsHovering
     {
         get;
         private set;
@@ -17,10 +14,13 @@ public class OnButtonHover : MonoBehaviour
 
     void Update()
     {
+        IsHovering = false;
+
         for (int i = 0; i < Input.touchCount; ++i)
         {
             if (Raycast(Input.GetTouch(i).position))
             {
+                IsHovering = true;
                 return;
             }
         }
@@ -28,15 +28,10 @@ public class OnButtonHover : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
         if (Raycast(Input.mousePosition))
         {
+            IsHovering = true;
             return;
         } 
 #endif
-
-        if (isHovering)
-        {
-            isHovering = false;
-            onButtonUp.Invoke(); 
-        }
     }
 
     bool Raycast(Vector3 position)
@@ -52,11 +47,6 @@ public class OnButtonHover : MonoBehaviour
         {
             if (raycastResults[j].gameObject == gameObject)
             {
-                if (!isHovering)
-                {
-                    isHovering = true;
-                    onButtonDown.Invoke(); 
-                }
                 return true;
             }
         }
