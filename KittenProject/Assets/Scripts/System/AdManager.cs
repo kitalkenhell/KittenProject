@@ -138,10 +138,6 @@ public class AdManager : MonoBehaviour
         AdManager.LastTimeVideoAdWatched = DateTime.Now;
         PersistentData.Coins += currentAdReward;
         PostOffice.PostVideoAdWatched();
-        
-#if !UNITY_EDITOR && UNITY_ANDROID
-        Android.ShowToast(string.Format(toastText, currentAdReward)); 
-#endif
     }
 
 }

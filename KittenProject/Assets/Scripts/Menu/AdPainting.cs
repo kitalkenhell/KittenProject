@@ -9,8 +9,7 @@ public class AdPainting : MonoBehaviour
     public GameObject sadPainting;
     public GameObject happyPainting;
     public GameObject normalPainting;
-
-    bool videoAdEventRegistered = false;
+    public GemsGiftScreen gemsGiftScreen;
 
     public bool SetDogIsSad()
     {
@@ -22,11 +21,8 @@ public class AdPainting : MonoBehaviour
             happyPainting.SetActive(false);
             normalPainting.SetActive(false);
 
-            if (!videoAdEventRegistered)
-            {
-                PostOffice.videoAdWatched += OnVideoAdWatched;
-                videoAdEventRegistered = true; 
-            }
+            PostOffice.videoAdWatched -= OnVideoAdWatched;
+            PostOffice.videoAdWatched += OnVideoAdWatched;
 
             return true;
         }
@@ -42,11 +38,8 @@ public class AdPainting : MonoBehaviour
 
     void UnregisterVideoAdEvent()
     {
-        if (videoAdEventRegistered)
-        {
-            videoAdEventRegistered = false;
-            PostOffice.videoAdWatched -= OnVideoAdWatched;
-        }
+        PostOffice.videoAdWatched -= OnVideoAdWatched;
+        PostOffice.videoAdWatched -= OnVideoAdClickedAndWatched;
     }
 
     void OnDestroy()
@@ -61,8 +54,20 @@ public class AdPainting : MonoBehaviour
         UnregisterVideoAdEvent();
     }
 
+    public void OnVideoAdClickedAndWatched()
+    {
+        PostOffice.videoAdWatched -= OnVideoAdClickedAndWatched;
+
+        gemsGiftScreen.Reward = AdManager.defaultVideoAdReward;
+        gemsGiftScreen.gameObject.SetActive(true);
+
+        PostOffice.videoAdWatched -= OnVideoAdWatched;
+    }
+
     public void OnWatchAdButtonClicked()
     {
+        PostOffice.videoAdWatched -= OnVideoAdClickedAndWatched;
+        PostOffice.videoAdWatched += OnVideoAdClickedAndWatched;
         AdManager.Instance.ShowVideoAd();
     }
 }

@@ -47,15 +47,18 @@ public class CoinsWidget : MonoBehaviour
 
     IEnumerator Animate()
     {
+        const float threshold = 1;
+
         changingSpeed = 0;
 
-        while ((int) currentAmount < PersistentData.Coins - 1)
+        while (Mathf.Abs(currentAmount - PersistentData.Coins) > threshold)
         {
             currentAmount = Mathf.SmoothDamp(currentAmount, PersistentData.Coins, ref changingSpeed, changingSmoothTime);
             amountLabel.text = ((int)currentAmount).ToString();
             yield return null;
         }
 
+        currentAmount = PersistentData.Coins;
         amountLabel.text = PersistentData.Coins.ToString();
         isAnimating = false;
     }

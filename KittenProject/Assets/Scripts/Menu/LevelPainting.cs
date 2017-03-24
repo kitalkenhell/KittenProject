@@ -17,10 +17,10 @@ public class LevelPainting : MonoBehaviour
     public MenuManager menu;
     public Material blackAndWhiteMaterial;
 
-    public SpriteRenderer[] spritesToGreyOut;
-
     void Start()
     {
+        SpriteRenderer[] spritesToGreyOut = GetComponentsInChildren<SpriteRenderer>();
+
         greyedOutGem.SetActive(!levelProperties.HasCoinStar);
         goldenGem.SetActive(levelProperties.HasCoinStar);
 
@@ -34,7 +34,7 @@ public class LevelPainting : MonoBehaviour
 
         levelName.text = levelProperties.levelName;
 
-        if (levelProperties.IsLocked)
+        if (levelProperties.IsLocked && spritesToGreyOut != null)
         {
             foreach (var sprite in spritesToGreyOut)
             {

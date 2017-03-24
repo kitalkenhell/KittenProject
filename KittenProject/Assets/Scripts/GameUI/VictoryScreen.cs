@@ -12,6 +12,7 @@ public class VictoryScreen : MonoBehaviour
     public Animator hud;
     public Animator adButton;
     public RaffleButton raffleButton;
+    public GemsGiftScreen gemsGiftScreen;
     public Image kittenGreyedOut;
     public Image kitten;
     public Image gemGreyedOut;
@@ -66,7 +67,7 @@ public class VictoryScreen : MonoBehaviour
 
     void OnDestroy()
     {
-        PostOffice.videoAdWatched += OnVideoAdWatched;
+        PostOffice.videoAdWatched -= OnVideoAdWatched;
     }
 
     public void ShowCoinsAndTimer()
@@ -137,16 +138,23 @@ public class VictoryScreen : MonoBehaviour
 
     public void OnPlayVideoAd()
     {
-        AdManager.Instance.ShowVideoAd(CoreLevelObjects.player.Coins * AdManager.coinsMultiplier);
         adButton.SetTrigger(hideAnimHash);
+        PostOffice.videoAdWatched -= OnVideoAdWatched;
         PostOffice.videoAdWatched += OnVideoAdWatched;
+
+        AdManager.Instance.ShowVideoAd(CoreLevelObjects.player.Coins * AdManager.coinsMultiplier);
     }
 
     public void OnVideoAdWatched()
     {
+        gemsGiftScreen.Reward = CoreLevelObjects.player.Coins * AdManager.coinsMultiplier;
+        gemsGiftScreen.gameObject.SetActive(true);
+
         if (!raffleButton.AlreadyOpenedGift && !raffleButton.gameObject.activeInHierarchy && raffleButton.CanEnter())
         {
             raffleButton.gameObject.SetActive(true);
         }
+
+        PostOffice.videoAdWatched -= OnVideoAdWatched;
     }
 }

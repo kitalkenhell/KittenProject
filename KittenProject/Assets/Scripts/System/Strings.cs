@@ -29,4 +29,9 @@ public static class Strings
     {
         public const string needMoreGems = "You need more gems!";
     }
+
+    public static class GiftScreen
+    {
+        public const string gemsReward = "{0} GEMS";
+    }
 }
